@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited ver="1" debug="1" engine="34" schema="1">
+<meta>
+<title>無限動漫</title>
+<intro>8comic僅作為免費閱覽平臺！</intro>
+<author>sakl2012</author>
+<url>https://m.comicbus.com</url>
+<expr>\.comicbus\.com</expr>
+<encode>utf-8</encode>
+</meta>
+<main dtype="1" durl="https://m.comicbus.com">
+<home>
+	<hots title="更新" showImg="2" w="3" h="4" cache="0" method="get" parse="tag_parse" url="https://m.comicbus.com/category/update_comic-1.html"/>
+	<tags title="無限動漫" cache="0" method="get" parse="tags_parse" url="https://m.comicbus.com"/>
+</home>
+<search cache="10m" method="get" parse="tag_parse" url="https://m.comicbus.com/data/search.aspx?k=@key"/>
+<tag cache="0" showImg="2" w="3" h="4"  method="get" parse="tag_parse"/>
+<book cache="10m" method="get" parse="book_parse"/>
+<section cache="1d" method="get" parse="section_parse"/>
+</main>
+<script>
+<require>
+	<item url="https://sakl2012.bitbucket.io/sited/cheerio.js" lib="cheerio" />
+</require>
+<code>
+<![CDATA[
+function uu(u){
+	return encodeURI(u.replace(/^\/\//,'https://').replace(/^\.\/|^\//,'https://m.comicbus.com/'));
+}
+function ua(u){
+	return encodeURI("https://8.twobili.com/comic/insurance_"+u[1]+".html?ch="+u[2]);
+}
+function ub(c,ti,p,f){
+	return encodeURI("https://img"+ss(c,4,2)+'.8comic.com/'+ss(c,6,1)+'/'+ti+'/'+ss(c,0,4)+'/'+nn(p)+'_'+ss(c,mm(p)+10,3,f)+'.jpg');
+}
+function ss(a,b,c,d){
+	a=a.substring(b,b+c);
+	return d==null?a.replace(/[a-z]*/gi,""):a;
+}
+function nn(n){
+	return n<10?'00'+n:n<100?'0'+n:n;
+}
+function mm(p){
+	return parseInt((p-1)/10)%10+((p-1)%10)*3;
+}
+function tags_parse(url,html){
+	var $=cheerio.load(html),l=[],m=[];
+	$('.second-nav li a').each(function(x){m[x]={title:$(this).text(),url:$(this).attr('href').replace(/-1./,'-@page.')};});
+	$('#main-nav .first-nav li a').each(function(x){l[x]=$(this).attr('href')=='#'?{group:$(this).text()}:{title:$(this).text(),url:$(this).attr('href').replace(/-1./,'-@page.').replace(/^\/\//,'https://')};});
+	m.pop();
+	return JSON.stringify(m.concat(l));
+}
+function tag_parse(url,html){
+	var $=cheerio.load(html),l=[];
+	$('#list_dl img').each(function(x){l[x]={name:$(this).parent().attr('title').replace(/<.*?>/g,'').trim(),url:uu($(this).parent().attr('href')),logo:uu($(this).attr('src').replace('m.','.'))};});
+	return JSON.stringify(l);
+}
+function book_parse(url,html){
+	var $=cheerio.load(html);
+	var b={name:$('.title').text().trim(),author:$('.tip').eq(1).text().replace(/更新|作者/g,'').trim(),logo:uu($('.cover img').attr('src')),intro:$('.full_text').text().trim(),isSectionsAsc:1,sections:[]};
+	$('.item_list a script').remove();
+	$('.item_list a').each(function(x){b.sections[x]={url:ua($(this).attr('onclick').match(/(\d+)-(\d+)/)),name:$(this).text().trim()};});
+	return JSON.stringify(b);
+}
+function section_parse(url,html){
+	var l=[],f=50,ch=parseInt(url.match(/ch=(.*)/)[1]),cs=html.match(/cs='(.*?)'/)[1],ti=html.match(/ti=(.*?);/)[1],c='';
+	for(var i=0;i<cs.length/f;i++){
+		if(ss(cs,i*f,4)!=ch)continue;
+		c=ss(cs,i*f,f,f);
+		break;
+	}
+	if(c=='')c=ss(cs,cs.length-f,f);
+	for(var p=1;p<=parseInt(ss(c,7,3));p++)l.push(ub(c,ti,p,f));
+	return JSON.stringify(l);
+}
+]]>
+</code>
+</script>
+</sited>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited ver="1" debug="1" engine="34" schema="1">
+<meta>
+<title>Gimy 劇迷</title>
+<intro></intro>
+<author>sakl2012</author>
+<url>https://gimy.app/</url>
+<expr>gimy\.app</expr>
+<encode>utf-8</encode>
+</meta>
+<main dtype="3" durl="https://gimy.app">
+<home>
+	<hots title="日本動漫" showImg="1" w="5" h="7" cache="0" method="get" parse="tag_parse" url="https://gimy.app/cat/30-%E6%97%A5%E6%9C%AC----------.html"/>
+	<tags title="Gimy 劇迷">
+		<tags cache="0" method="get" parse="tags_parseG" url="https://docs.google.com/spreadsheets/d/e/2PACX-1vQas2wLjFRhs-YHI-5GPcs-67aHMPtHCsoXGqpP0qHKwqq4BjgECLgkc82UAYySicIO3BX74VElT_hA/pub?gid=813535332&amp;output=tsv"/>
+		<tags cache="0" method="get" parse="tags_parse" url="https://gimy.app/cat/2-----------.html"/>
+		<tags cache="0" method="get" parse="tags_parse" url="https://gimy.app/cat/30-----------.html"/>
+		<tags cache="0" method="get" parse="tags_parse" url="https://gimy.app/cat/29-----------.html"/>
+	</tags>
+</home>
+<search cache="10m" method="get" parse="search_parse" url="https://gimy.app/search/-------------.html?wd=@key"/>
+<tag>
+	<tag cache="10m" showImg="1" w="5" h="7" method="get" parse="tag_parse" expr="cat"/>
+	<tag cache="10m" showImg="1" w="5" h="7" method="get" parse="search_parse" expr="search"/>
+</tag>
+<book cache="10m" method="get" parse="book_parse"/>
+<section cache="0" method="get" parse="section_parse"/>
+</main>
+<script>
+<require>
+	<item url="https://sakl2012.bitbucket.io/sited/cheerio.js" lib="cheerio" />
+</require>
+<code>
+<![CDATA[
+function uu(u){
+	u=u.replace(/^\/\//,'https://');
+	return encodeURI(u.match(/^http/)?u:'https://gimy.app/'+u.replace(/^\.\/|^\//,''));
+}
+function tags_parseG(url,html) {
+	var l=[];
+	html.split('|').forEach(function(e){
+		if (e.match(/G:/)) l.push({group:e.split(':')[1].trim()});
+		else l.push({title:e.trim(),url:"https://gimy.app/search/"+e.trim()+"----------@page---.html"});
+	});
+	return JSON.stringify(l);
+}
+function tags_parse(url,html){
+	var $=cheerio.load(html),l=[];
+	$('.item li.text').each(function(x){
+		$(this).nextAll().each(function(y){if(y>0||x==0)l.push({title:$(this).children().text(),url:uu($(this).children().attr('href').replace(/---.html/,'@page---.html'))})});
+	});
+	l.unshift({group:$('.menu-active').text()});
+	return JSON.stringify(l);
+}
+function tag_parse(url,html){	
+	var $=cheerio.load(html),l=[];
+	$('#content h5 a').each(function(x){l[x]={name:$(this).text(),url:uu($(this).attr('href')),logo:$(this).parent().parent().prev().attr('data-original')};});
+	return JSON.stringify(l);
+}
+function search_parse(url,html){	
+	var $=cheerio.load(html),l=[];
+	$('#content a span').each(function(x){l[x]={name:$(this).text(),url:uu($(this).parent().attr('href')),logo:$(this).parent().attr('data-original')};});
+	return JSON.stringify(l);
+}
+function book_parse(url,html){
+	var $=cheerio.load(html);
+	var b={name:$('.details-info h1').text().trim(),logo:$('.details-pic a').attr('style').match(/url\((.*)\)/)[1],isSectionsAsc:1,sections:[]};
+	$('.playlist .gico').each(function(x){
+		b.sections.push({name:$(this).text()});
+		$(this).parent().next().children().each(function(y){b.sections.push({name:$(this).children().text(),url:uu($(this).children().attr('href'))})});
+	});
+	return JSON.stringify(b);
+}
+function section_parse(url,html){
+	return 'WEB::file:///android_asset/playerr.html#'+html.match(/"url":"(.*?)","url_next"/)[1].replace(/\\/g,'');
+}
+]]>
+</code>
+</script>
+</sited>
