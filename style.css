@@ -289,7 +289,7 @@ a:hover {
 
 .interest-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
     gap: 25px;
     padding: 40px;
 }
@@ -330,7 +330,7 @@ a:hover {
 
 .interest-title {
     font-size: 1.25rem;
-    margin: 0 0 0.5rem;
+    margin: .75rem 0 .75rem;
 }
 
 .interest-desc, .education-details {
