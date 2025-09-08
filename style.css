@@ -411,6 +411,10 @@ a:hover {
     color: var(--primary-color);
 }
 
+.publication-item span {
+	margin: .25rem;
+}
+
 .pub-main {
     margin-bottom: 10px;
 }
