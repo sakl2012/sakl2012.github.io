@@ -32,6 +32,7 @@ body {
 	-webkit-hyphens: auto;
 	-ms-hyphens: auto;
 	hyphens: auto;
+    text-align: justify;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -240,7 +241,17 @@ a:hover {
     text-align: center;
     line-height: 44px;
     z-index: 999;
-    transition: all 0.3s ease;
+	animation-name: action;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	display: block;
+	opacity: 0;
+}
+
+.back-to-top.show, .lnk.show {
+    display: block;
+	opacity: 1;
 }
 
 .back-to-top:hover, .lnk:hover {
@@ -495,4 +506,16 @@ a:hover {
     .pub-title {
         font-size: 1.1rem;
     }
+}
+
+@keyframes action {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

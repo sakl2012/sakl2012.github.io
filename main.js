@@ -52,10 +52,16 @@
     });
 
     window.addEventListener('scroll', () => {
-        document.querySelectorAll('.back-to-top, .lnk').forEach(btn => {
-            btn.style.display = (window.scrollY > 50 ? 'block' : 'none');
-        });
+    const isScrolled = window.scrollY > 50;
+
+    document.querySelectorAll('.back-to-top, .lnk').forEach(btn => {
+        if (isScrolled) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
     });
+});
 
     // --- Dynamic Content Loader (保持不變) ---
     const CACHE_KEY = 'googleSheetsData';
