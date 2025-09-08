@@ -45,7 +45,7 @@
             let targetY = 0;
             if (targetId) {
                 const navbarHeight = document.getElementById('includeNavbar') ? document.getElementById('includeNavbar').offsetHeight : 0;
-                targetY = window.scrollY + document.getElementById(targetId).getBoundingClientRect().top - navbarHeight + 20;
+                targetY = window.scrollY + document.getElementById(targetId).getBoundingClientRect().top - navbarHeight - 10;
             }
             smoothScroll(targetY, 400);
         });
