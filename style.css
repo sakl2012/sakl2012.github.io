@@ -247,11 +247,13 @@ a:hover {
 	animation-timing-function: ease-in-out;
 	display: block;
 	opacity: 0;
+	pointer-events: none;
 }
 
 .back-to-top.show, .lnk.show {
     display: block;
 	opacity: 1;
+	pointer-events: auto;
 }
 
 .back-to-top:hover, .lnk:hover {
