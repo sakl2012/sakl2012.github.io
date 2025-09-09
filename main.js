@@ -52,7 +52,7 @@
     });
 
     window.addEventListener('scroll', () => {
-    const isScrolled = window.scrollY > 50;
+    const isScrolled = window.scrollY > 10;
 
     document.querySelectorAll('.back-to-top, .lnk').forEach(btn => {
         if (isScrolled) {
