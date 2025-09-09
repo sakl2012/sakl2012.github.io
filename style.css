@@ -487,6 +487,11 @@ a:hover {
     .publication-section.bg-primary {
         padding: 0.75rem 25px;
     }
+	
+	.interest-grid {
+		grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+	}
+
     .interest-grid, .about-card, .publication-list {
         padding: 25px;
     }
