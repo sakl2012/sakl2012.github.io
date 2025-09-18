@@ -5453,21 +5453,31 @@ const r = {
   // '\u300C': '\u300C',
   // '\u300D': '\u300D',
 };
-function f(n) {
-  const t = typeof n == "string";
-  t || console.error(
-    "The expected text signature is undefined | null | string, but an unexpected value was passed in:",
-    typeof n
-  );
-  let e = t ? n : "";
-  return e = (e == null ? void 0 : e.replace(/[^\x00-\xFF]/g, o)) || "", e;
-}
+// 幫手函式 o(n) 保持不變，因為只有 sify 會用到它
 function o(n) {
   return n in r ? r[n] : n;
 }
-const p = (n) => JSON.parse(s(JSON.stringify(n)));
-export {
-  f as sify,
-  s as tify,
-  p as tifyJson
+
+// 建立一個名為 chineseConv 的全域物件
+var chineseConv = {
+  // 將原本的函式 f 的內容直接定義為 sify 屬性
+  sify: function f(n) {
+    const t = typeof n == "string";
+    t || console.error(
+      "The expected text signature is undefined | null | string, but an unexpected value was passed in:",
+      typeof n
+    );
+    let e = t ? n : "";
+    // 這裡的 o() 會正確地呼叫到上面定義的幫手函式
+    return e = (e == null ? void 0 : e.replace(/[^\x00-\xFF]/g, o)) || "", e;
+  },
+
+  // 將檔案中已存在的 s 函式 (tify) 指派給 tify 屬性
+  tify: s,
+
+  // 將原本的函式 p 的內容直接定義為 tifyJson 屬性
+  tifyJson: function p(n) {
+    // 這裡的 s() 會正確地呼叫到上面已定義的 s (tify) 函式
+    return JSON.parse(s(JSON.stringify(n)));
+  }
 };
