@@ -28,7 +28,7 @@
 </main>
 <script>
 <require>
-	<item url="https://sakl2012.bitbucket.io/sited/cheerio.js" lib="cheerio" />
+	<item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
 </require>
 <code>
 <![CDATA[
