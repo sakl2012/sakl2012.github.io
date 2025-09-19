@@ -70,7 +70,7 @@
 <script>
     <require>
         <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
-        <item url="https://cdn.jsdelivr.net/npm/chinese-conv@3.2.2/dist/index.js" lib="chineseConv" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
     </require>
     <code>
     <![CDATA[
