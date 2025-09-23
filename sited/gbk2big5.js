@@ -127,8 +127,8 @@ var gbk2big5 = (function() {
     function traditionalized(s) {
         if (!s) return "";
         if (!oSC2TC_regexp) {
-            let pattern = Object.keys(aSC2TC);
-            let ps = pattern.join('|');
+            var pattern = Object.keys(aSC2TC);
+            var ps = pattern.join('|');
             oSC2TC_regexp = new RegExp(ps, 'g');
         }
         return s.replace(oSC2TC_regexp, function(match) {
@@ -139,8 +139,8 @@ var gbk2big5 = (function() {
     function simplized(s) {
         if (!s) return "";
         if (!oTC2SC_regexp) {
-            let pattern = Object.keys(aTC2SC);
-            let ps = pattern.join('|');
+            var pattern = Object.keys(aTC2SC);
+            var ps = pattern.join('|');
             oTC2SC_regexp = new RegExp(ps, 'g');
         }
         return s.replace(oTC2SC_regexp, function(match) {
