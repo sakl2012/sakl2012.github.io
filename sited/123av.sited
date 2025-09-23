@@ -9,7 +9,7 @@
     <encode>utf-8</encode>
 </meta>
 
-<main dtype="3" durl="https://123av.com/zh/">
+<main dtype="3" durl="https://123av.com/zh/dm9/">
     <home>
         <tags title="123AV 全部分類">
             <item group="觀看JAV" title="審查" url="https://123av.com/zh/dm9/censored?page=@page"/>
@@ -86,7 +86,7 @@
         $('.box-item-list .box-item').each(function(i, e) {
             var self = $(this);
             list.push({
-                name: chineseConv.s2t(self.find('.detail a').text().trim()),
+                name: gbk2big5.traditionalized(self.find('.detail a').text().trim()),
                 url: uu(self.find('.thumb a').attr('href')),
                 logo: self.find('.thumb img').attr('data-src') || self.find('.thumb img').attr('src')
             });
@@ -109,13 +109,13 @@
             return null;
         }
         var book = {
-            name: chineseConv.s2t(data.title),
+            name: gbk2big5.traditionalized(data.title),
             logo: data.cover,
             sections: []
         };
         data.watch.forEach(function(item) {
             book.sections.push({
-                name: chineseConv.s2t("部分 " + item.name),
+                name: gbk2big5.traditionalized("部分 " + item.name),
                 url: item.url
             });
         });
