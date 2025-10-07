@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited>
+    <meta>
+        <title>紳士漫畫</title>
+        <intro>Powered by 紳士漫畫 Copyright@ 2011 - 2025 聯繫郵箱 shenshiacg@gmail.com</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+    </meta>
+
+    <main>
+        <home url="https://www.wnacg.com/" parse="home_parse" />
+        <tags tagParse="list_parse">
+            <item title="更新" url="https://www.wnacg.com/albums-index-page-@page.html"/>
+            <item title="同人誌" url="https://www.wnacg.com/albums-index-page-@page-cate-5.html"/>
+            <item title="漢化同人誌" url="https://www.wnacg.com/albums-index-page-@page-cate-1.html"/>
+            <item title="CG畫集" url="https://www.wnacg.com/albums-index-page-@page-cate-2.html"/>
+            <item title="AI圖集" url="https://www.wnacg.com/albums-index-page-@page-cate-37.html"/>
+            <item title="3D漫畫" url="https://www.wnacg.com/albums-index-page-@page-cate-22.html"/>
+            <item title="Cosplay" url="https://www.wnacg.com/albums-index-page-@page-cate-3.html"/>
+            <item title="單行本" url="https://www.wnacg.com/albums-index-page-@page-cate-6.html"/>
+            <item title="漢化單行本" url="https://www.wnacg.com/albums-index-page-@page-cate-9.html"/>
+            <item title="雜誌短篇" url="https://www.wnacg.com/albums-index-page-@page-cate-7.html"/>
+            <item title="漢化雜誌短篇" url="https://www.wnacg.com/albums-index-page-@page-cate-10.html"/>
+            <item title="韓漫" url="https://www.wnacg.com/albums-index-page-@page-cate-19.html"/>
+            <item title="漢化韓漫" url="https://www.wnacg.com/albums-index-page-@page-cate-20.html"/>
+            <item title="月收藏排行榜" url="https://www.wnacg.com/albums-favorite_ranking-page-@page-type-month.html"/>
+            <item title="週收藏排行榜" url="https://www.wnacg.com/albums-favorite_ranking-page-@page-type-week.html"/>
+            <item title="日收藏排行榜" url="https://www.wnacg.com/albums-favorite_ranking-page-@page-type-day.html"/>
+        </tags>
+        <search parse="list_parse" url="https://www.wnacg.com/search/index.php?q=@key&amp;m=&amp;syn=yes&amp;f=_all&amp;s=create_time_DESC&amp;p=@page"/>
+        <book parseUrl="book_parse_url" parse="book_parse_api_response"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+
+    <script>
+        <![CDATA[
+    function home_parse(url, html) {
+        const $ = cheerio.load(html);
+        var list = [], groups = [];
+
+        // 2. 取得所有分類標題
+        $('.title_h2').each(function() {
+            groups.push($(this).text().trim().replace(/[\n\r\t]*/g, ""));
+        });
+
+        $('.gallary_wrap').each(function(index) {
+            var $$ = cheerio.load($(this).html());
+            const groupName = groups[index];
+
+            $$('.pic_box').each(function() {
+                var $$$ = cheerio.load($$(this).html());
+                const linkElement = $$$('a'); // 'this' 是當前的 'a' 標籤
+                const itemTitle = linkElement.attr('title')?.trim(); // ?. 可避免 title 不存在時報錯
+                const itemUrl = linkElement.attr('href');
+                const imgSrc = $$$('img').attr('src');
+
+                list.push({
+                    group: gbk2big5.traditionalized(groupName),
+                    name: gbk2big5.traditionalized(itemTitle),
+                    logo: 'https:' + imgSrc,
+                    url: "https://www.wnacg.com" + itemUrl
+                });
+            });
+        });
+
+        return JSON.stringify(list);
+    }
+
+    function list_parse(url, html) {
+        const $ = cheerio.load(html);
+        var list = [];
+
+        $('.gallary_wrap').each(function(index) {
+            var $$ = cheerio.load($(this).html());
+
+            $$('.pic_box').each(function() {
+                var $$$ = cheerio.load($$(this).html());
+                const linkElement = $$$('a'); // 'this' 是當前的 'a' 標籤
+                const itemTitle = linkElement.attr('title')?.trim(); // ?. 可避免 title 不存在時報錯
+                const itemUrl = linkElement.attr('href');
+                const imgSrc = $$$('img').attr('src');
+
+                list.push({
+                    name: gbk2big5.traditionalized(itemTitle),
+                    logo: 'https:' + imgSrc,
+                    url: "https://www.wnacg.com" + itemUrl
+                });
+            });
+        });
+
+        return JSON.stringify(list);
+    }
+
+    function book_parse_url(url, html) {
+        const $ = cheerio.load(html);
+        let maxPage = 1;
+
+        $('.paginator a').each(function() {
+            const p = parseInt($(this).text(), 10);
+
+            if (!isNaN(p) && p > maxPage) {
+                maxPage = p;
+            }
+        });
+
+        var urls = [];
+        for (let j = 1; j <= maxPage; j++) {
+            urls.push(url.replace('.html', `-page-${j}.html`));
+        }
+
+        return JSON.stringify(urls);
+    }
+
+    function book_parse_api_response(url, html) {
+        const $ = cheerio.load(html);
+
+        const sections = [];
+        $(".gallary_item").each(function(){
+            const $$ = cheerio.load($(this).html());
+            const sectionName = $$('.name', this).text().trim();
+            const sectionUrl = $$('a', this).attr("href");
+
+            // 確保成功取到值再 push
+            if (sectionName && sectionUrl) {
+                sections.push({
+                    name: sectionName,
+                    url: 'https://www.wnacg.com' + sectionUrl
+                });
+            }
+        });
+
+        const book = {
+            name: gbk2big5.traditionalized($("h2").text().trim()),
+            logo: 'https:' + $(".userwrap .uwthumb img").attr("src"),
+            sections: sections
+        };
+
+        return JSON.stringify(book);
+    }
+
+    function section_parse(url, html) {
+        const $ = cheerio.load(html);
+
+        const data = $("#imgarea img").map(function() {
+            const src = $(this).attr('src');
+            if (src) {
+                return {
+                    t: "image",
+                    d: 'https:' + src
+                };
+            }
+        }).get();
+
+        return JSON.stringify({
+            type: "article",
+            data: data
+        });
+    }
+    ]]>
+    </script>
+</sited>

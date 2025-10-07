@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited>
+    <meta>
+        <title>123AV</title>
+        <intro>最佳日本AV成人網站，永久免費JAV</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+    </meta>
+
+    <main>
+        <home url="https://123av.com/zh/dm9/" parse="home_list_parse" />
+        <tags parse="tags_parse" tagParse="list_parse" />
+        <search parse="list_parse" url="https://123av.com/zh/search?keyword=@key&amp;page=@page"/>
+        <book parse="book_parse_api_response"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+
+    <script>
+        <![CDATA[
+    // 動態解析「標籤頁」的函式
+    function tags_parse(url, html) {
+        var $ = cheerio.load(html);
+        var list = [];
+        // 遍歷 ID 為 nav 的主導覽列下的每一個分組
+        $('li.has-child').each(function() {
+            var $$ = cheerio.load($(this).html());
+			var groupElement = $(this);
+            var groupName = $$('a').first().text().trim();
+            // 在該分組下，尋找所有子項目連結
+            $$('ul li a').each(function() {
+                var itemElement = $$(this);
+                var itemTitle = itemElement.text().trim();
+                var itemUrl = itemElement.attr('href');
+                if (itemUrl && itemTitle) {
+                    list.push({
+                        group: gbk2big5.traditionalized(groupName),
+                        title: gbk2big5.traditionalized(itemTitle),
+                        url: "https://123av.com/zh/"+itemUrl+"?page=@page"
+                    });
+                }
+            });
+        });
+        return JSON.stringify(list);
+    }
+
+    function home_list_parse(url, html){
+        var $ = cheerio.load(html);
+        var list = [];
+
+        $('section').each(function(){
+            var $$ = cheerio.load($(this).html());
+            var group_name = gbk2big5.traditionalized($$("h2").text().trim());
+            $$('div.box-item').each(function() {
+                var $$$ = cheerio.load($(this).html());
+                if ($$$("div.detail a").attr('href')) list.push({group: group_name,url:"https://123av.com/zh/"+$$$("div.detail a").attr('href'), name:gbk2big5.traditionalized($$$("div.detail a").text()), logo:$$$("img").attr('data-src')});
+            });
+        });
+
+
+        return JSON.stringify(list);
+    }
+
+    // 核心的「內容列表」解析函式
+    function list_parse(url, html){
+        var $ = cheerio.load(html);
+        var list = [];
+
+        $('section div.box-item').each(function() {
+            var $$ = cheerio.load($(this).html());
+            if ($$("div.detail a").attr('href')) list.push({url:"https://123av.com/zh/"+$$("div.detail a").attr('href'), name:gbk2big5.traditionalized($$("div.detail a").text()), logo:$$("img").attr('data-src')})
+        });
+
+        return JSON.stringify(list);
+    }
+
+    // 影片播放來源的解析函式
+    function book_parse_api_response(url, html) {
+        var $ = cheerio.load(html);
+        var book = {
+            name: gbk2big5.traditionalized($("h1").text().trim()),
+            logo: $("#player").attr("data-poster"),
+            sections: [{name: "播放", url: url}]
+        };
+        return JSON.stringify(book);
+    }
+
+    function section_parse(url, html) {
+        return JSON.stringify({type:"webview_player", data: url});
+    }
+    ]]>
+    </script>
+    <WebViewInjection>
+        <![CDATA[
+            javascript:(function() {
+                console.log('--- Siteds JS Injection Started (v3) ---');
+                var player = document.getElementById('player');
+                var scenes = document.getElementById('scenes');
+
+                if (player) {
+                    console.log('Player element found!');
+
+                    document.body.style.visibility = 'hidden';
+
+                    var current = player;
+                    while (current && current.tagName !== 'BODY') {
+                        current.style.visibility = 'visible';
+                        var siblings = Array.from(current.parentNode.children);
+                        siblings.forEach(function(sibling) {
+                            if (sibling !== current) {
+                                sibling.style.display = 'none';
+                            }
+                        });
+                        current = current.parentElement;
+                    }
+
+                    if (scenes) {
+                        var current = scenes;
+                        while (current && current.tagName !== 'BODY') {
+                            current.style.visibility = 'visible';
+                            current.style.display = 'block';
+                            current = current.parentElement;
+                        }
+                    }
+
+                    document.body.style.visibility = 'visible';
+                    document.body.style.margin = '0';
+                    document.body.style.padding = '0';
+
+                    console.log('Player element maximized using parent-unhide strategy.');
+                } else {
+                    console.log('Player element not found!');
+                }
+                console.log('--- Siteds JS Injection Finished ---');
+            })();
+        ]]>
+    </WebViewInjection>
+</sited>

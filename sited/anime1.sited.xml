@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited>
+    <meta>
+        <title>Anime1.me</title>
+        <intro>Anime1.me</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+    </meta>
+
+    <main>
+        <home url="https://d1zquzjgwo9yb.cloudfront.net/" parse="home_list_parse" />
+        <search parse="list_parse" url="https://d1zquzjgwo9yb.cloudfront.net/?keyword=@key"/>
+        <book parseUrl="book_parse_url" parse="book_parse_api_response"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+
+    <script>
+        <![CDATA[
+    function home_list_parse(url, jsonString){
+        try {
+            // 步驟 1: 將 JSON 字串解析成 JavaScript 的陣列
+            const data = JSON.parse(jsonString);
+
+            // 步驟 2: 檢查解析後的資料是否為一個陣列
+            if (!Array.isArray(data)) {
+              console.error("解析後的資料不是一個陣列。");
+              return null;
+            }
+
+            // 步驟 3: 遍歷陣列，將每個子陣列映射 (map) 成一個結構化的物件
+            const formattedData = data.map(item => {
+              // 有些標題包含 HTML <a> 標籤，我們需要將其清除
+              let title = item[1];
+              const linkRegex = /<a [^>]+>(.+)<\/a>/;
+              const match = title.match(linkRegex);
+
+              if (match && match[1]) {
+                // 如果有匹配到 <a> 標籤，則取出其中的文字作為標題
+                title = match[1];
+              }
+
+              // 回傳結構化的物件
+              if (item[0]) {
+                  return {
+                    url: "https://anime1.me/?cat=" + item[0],
+                    name: title
+                  };
+              } else {
+                  return {
+                    url: "https://anime1.pw/?cat=" + item[1].match(/cat=(\d+)/),
+                    name: title
+                  };
+              }
+            });
+
+            return JSON.stringify(formattedData);
+
+        } catch (error) {
+            // 步驟 4: 如果 JSON 格式錯誤或發生其他問題，捕捉錯誤並回傳 null
+            console.error("解析 JSON 時發生錯誤:", error);
+            return null;
+        }
+    }
+
+    // 核心的「內容列表」解析函式
+    function list_parse(url, jsonString) {
+        var key = url.match(/keyword=([^&]+)/)[1];
+        try {
+            const data = JSON.parse(jsonString);
+
+            if (!Array.isArray(data)) {
+                console.error("解析後的資料不是一個陣列。");
+                return null;
+            }
+
+            // 使用 flatMap，符合條件的回傳 [物件]，不符合的回傳 []
+            const finalData = data.flatMap(item => {
+                let title = item[1];
+                const linkRegex = /<a [^>]+>(.+)<\/a>/;
+                const match = title.match(linkRegex);
+
+                if (match && match[1]) {
+                    title = match[1];
+                }
+
+                if (item[0] && title.match(key)) {
+                    // 符合條件，回傳一個包含物件的陣列
+                    return [{
+                        url: "https://anime1.me/?cat=" + item[0],
+                        name: title
+                    }];
+                } else if (title.match(key)) {
+                     // 符合條件，回傳一個包含物件的陣列
+                    return [{
+                        url: "https://anime1.pw/?cat=" + item[1].match(/cat=(\d+)/),
+                        name: title
+                    }];
+                } else {
+                    // 不符合條件，回傳空陣列，該元素將被自動移除
+                    return [];
+                }
+            });
+
+            return JSON.stringify(finalData);
+
+        } catch (error) {
+            console.error("解析 JSON 時發生錯誤:", error);
+            return null;
+        }
+    }
+
+    function book_parse_url(url, html) {
+        var $ = cheerio.load(html);
+        var urls = [];
+        urls.push(url);
+
+        // 將選擇結果存到變數中，避免重複查詢
+        var prevLink = $('div.nav-previous a');
+
+        // 正確的判斷方式：檢查集合的長度
+        if (prevLink.length > 0) {
+            // 直接在 Cheerio 物件上取得屬性
+            urls.push("CALL::" + prevLink.attr('href'));
+        }
+        return JSON.stringify(urls);
+    }
+
+    // 影片播放來源的解析函式
+    function book_parse_api_response(url, html) {
+        var $ = cheerio.load(html);
+        var sections = [];
+        $("h2 a").each(function(){
+            sections.push({name: $(this).text(), url: $(this).attr("href")});
+        });
+        var book = {
+            name: gbk2big5.traditionalized($("h1.page-title").text().trim()),
+            sections: sections
+        };
+        return JSON.stringify(book);
+    }
+
+    function section_parse(url, html) {
+        return JSON.stringify({type:"webview_player", data: url});
+    }
+    ]]>
+    </script>
+    <WebViewInjection>
+        <![CDATA[
+            javascript:(function() {
+                console.log('--- Siteds JS Injection Started (v3) ---');
+                var player = document.querySelector('.vjscontainer');
+
+                if (player) {
+                    console.log('Player element found!');
+
+                    document.body.style.visibility = 'hidden';
+
+                    var current = player;
+                    while (current && current.tagName !== 'BODY') {
+                        current.style.visibility = 'visible';
+                        var siblings = Array.from(current.parentNode.children);
+                        siblings.forEach(function(sibling) {
+                            if (sibling !== current) {
+                                sibling.style.display = 'none';
+                            }
+                        });
+                        current = current.parentElement;
+                    }
+
+                    document.body.style.visibility = 'visible';
+                    document.body.style.margin = '0';
+                    document.body.style.padding = '0';
+
+                    console.log('Player element maximized using parent-unhide strategy.');
+                } else {
+                    console.log('Player element not found!');
+                }
+                console.log('--- Siteds JS Injection Finished ---');
+            })();
+        ]]>
+    </WebViewInjection>
+</sited>

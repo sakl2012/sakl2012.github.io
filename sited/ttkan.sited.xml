@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited>
+    <meta>
+        <title>天天看小說</title>
+        <intro></intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+    </meta>
+
+    <main>
+        <home url="https://www.ttkan.co/api/nq/amp_novel_list?type=suixuan&amp;page=@page&amp;limit=100&amp;language=tw" parse="list_parse" />
+        <tags tagParse="list_parse">
+            <item title="連載" url="https://www.ttkan.co/api/nq/amp_novel_list?type=lianzai&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="玄幻" url="https://www.ttkan.co/api/nq/amp_novel_list?type=xuanhuan&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="都市" url="https://www.ttkan.co/api/nq/amp_novel_list?type=dushi&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="仙俠" url="https://www.ttkan.co/api/nq/amp_novel_list?type=xianxia&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="言情" url="https://www.ttkan.co/api/nq/amp_novel_list?type=gudaiyanqing&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="穿越" url="https://www.ttkan.co/api/nq/amp_novel_list?type=chuanyuechongsheng&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="遊戲" url="https://www.ttkan.co/api/nq/amp_novel_list?type=youxi&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="科幻" url="https://www.ttkan.co/api/nq/amp_novel_list?type=kehuan&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="懸疑" url="https://www.ttkan.co/api/nq/amp_novel_list?type=xuanyi&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="靈異" url="https://www.ttkan.co/api/nq/amp_novel_list?type=lingyi&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="歷史" url="https://www.ttkan.co/api/nq/amp_novel_list?type=lishi&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="青春" url="https://www.ttkan.co/api/nq/amp_novel_list?type=qingchun&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="軍事" url="https://www.ttkan.co/api/nq/amp_novel_list?type=junshi&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="競技" url="https://www.ttkan.co/api/nq/amp_novel_list?type=jingji&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="現言" url="https://www.ttkan.co/api/nq/amp_novel_list?type=yanqing&amp;page=@page&amp;limit=100&amp;language=tw"/>
+            <item title="其它" url="https://www.ttkan.co/api/nq/amp_novel_list?type=qita&amp;page=@page&amp;limit=100&amp;language=tw"/>
+        </tags>
+        <book parse="book_parse_api_response"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+
+    <script>
+        <![CDATA[
+    // 核心的「內容列表」解析函式
+    function list_parse(url, jsontext) {
+        // 1. 將傳入的 JSON 字串轉換為 JavaScript 物件
+        const data = JSON.parse(jsontext);
+
+        // 2. 檢查 'items' 屬性是否存在且為一個陣列
+        if (!data || !Array.isArray(data.items)) {
+            // 如果資料結構不符，回傳一個空的 JSON 陣列字串
+            return JSON.stringify([]);
+        }
+
+        const list = data.items.map(item => {
+            return {
+                logo: 'https://static.ttkan.co/cover/' + item.topic_img,
+                name: item.name,
+                url: 'https://www.ttkan.co/novel/chapters/' + item.novel_id
+            };
+        });
+
+        return JSON.stringify(list);
+    }
+
+    function book_parse_api_response(url, html) {
+        var $ = cheerio.load(html);
+        var sections = [];
+        $(".full_chapters a").each(function(){
+            if ($(this).attr("href").match(/https/)) sections.push({name: $(this).text(), url: $(this).attr("href")});
+        });
+        var book = {
+            name: gbk2big5.traditionalized($("h1.booktitle").text().trim()),
+            sections: sections
+        };
+        return JSON.stringify(book);
+    }
+
+    function section_parse(url, html) {
+        var $ = cheerio.load(html);
+        var data = [];
+        $("h1").each(function(){
+            data.push({t: "text", d: $(this).text().trim(), b:1, a:"center", s:2});
+        });
+        $(".content p").each(function(){
+            data.push({t: "text", d: $(this).text().trim()});
+        });
+        return JSON.stringify({type:"article", data: data});
+    }
+    ]]>
+    </script>
+</sited>
