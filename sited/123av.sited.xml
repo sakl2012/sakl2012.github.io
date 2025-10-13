@@ -5,6 +5,7 @@
         <intro>最佳日本AV成人網站，永久免費JAV</intro>
         <author>sakl2012</author>
         <encode>utf-8</encode>
+        <hide/>
     </meta>
 
     <main>
@@ -97,46 +98,76 @@
     <WebViewInjection>
         <![CDATA[
             javascript:(function() {
-                console.log('--- Siteds JS Injection Started (v3) ---');
-                var player = document.getElementById('player');
-                var scenes = document.getElementById('scenes');
+    // 定義一個變數來儲存定時器的 ID，以便我們可以停止它
+    let intervalId = null;
 
-                if (player) {
-                    console.log('Player element found!');
+    // 1. 定義您的核心邏輯（保持不變）
+    function runInjection() {
+        try {
+            // 您的原始腳本邏輯開始
+            var player = document.getElementById('player');
+            var scenes = document.getElementById('scenes');
 
-                    document.body.style.visibility = 'hidden';
+            if (player) {
+                document.body.style.visibility = 'hidden';
 
-                    var current = player;
+                var current = player;
+                while (current && current.tagName !== 'BODY') {
+                    current.style.visibility = 'visible';
+                    var siblings = Array.from(current.parentNode.children);
+                    siblings.forEach(function(sibling) {
+                        if (sibling !== current) {
+                            sibling.style.display = 'none';
+                        }
+                    });
+                    current = current.parentElement;
+                }
+
+                if (scenes) {
+                    var current = scenes;
                     while (current && current.tagName !== 'BODY') {
                         current.style.visibility = 'visible';
-                        var siblings = Array.from(current.parentNode.children);
-                        siblings.forEach(function(sibling) {
-                            if (sibling !== current) {
-                                sibling.style.display = 'none';
-                            }
-                        });
+                        current.style.display = 'block';
                         current = current.parentElement;
                     }
-
-                    if (scenes) {
-                        var current = scenes;
-                        while (current && current.tagName !== 'BODY') {
-                            current.style.visibility = 'visible';
-                            current.style.display = 'block';
-                            current = current.parentElement;
-                        }
-                    }
-
-                    document.body.style.visibility = 'visible';
-                    document.body.style.margin = '0';
-                    document.body.style.padding = '0';
-
-                    console.log('Player element maximized using parent-unhide strategy.');
                 } else {
-                    console.log('Player element not found!');
-                }
-                console.log('--- Siteds JS Injection Finished ---');
-            })();
+                // 如果 'player' 還沒找到，返回 false 繼續輪詢
+                return false;
+            }
+
+                document.body.style.visibility = 'visible';
+                document.body.style.margin = '0';
+                document.body.style.padding = '0';
+
+                // 成功找到並處理元素後，返回 true
+                return true;
+            } else {
+                // 如果 'player' 還沒找到，返回 false 繼續輪詢
+                return false;
+            }
+        } catch (e) {
+            // 發生其他錯誤時，返回 false 繼續輪詢
+            return false;
+        }
+    }
+
+    // 2. 啟動定時器，每 1000 毫秒（1 秒）執行一次檢查
+    intervalId = setInterval(function() {
+        if (runInjection()) {
+            // 3. 如果 runInjection() 成功返回 true，則清除定時器
+            clearInterval(intervalId);
+        }
+    }, 1000); // 1000 毫秒 = 1 秒
+
+    // 可選：設定一個最大時限，防止無限輪詢
+    setTimeout(function() {
+        if (intervalId !== null) {
+            clearInterval(intervalId);
+            console.log("Injection: Max timeout reached. Stopping interval.");
+        }
+    }, 15000); // 例如，最多只嘗試 15 秒
+
+})();
         ]]>
     </WebViewInjection>
 </sited>

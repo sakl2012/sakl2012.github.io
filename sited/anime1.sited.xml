@@ -28,7 +28,6 @@
 
             // 步驟 2: 檢查解析後的資料是否為一個陣列
             if (!Array.isArray(data)) {
-              console.error("解析後的資料不是一個陣列。");
               return null;
             }
 
@@ -61,20 +60,17 @@
             return JSON.stringify(formattedData);
 
         } catch (error) {
-            // 步驟 4: 如果 JSON 格式錯誤或發生其他問題，捕捉錯誤並回傳 null
-            console.error("解析 JSON 時發生錯誤:", error);
             return null;
         }
     }
 
     // 核心的「內容列表」解析函式
     function list_parse(url, jsonString) {
-        var key = url.match(/keyword=([^&]+)/)[1];
+        var key = decodeURIComponent(url.match(/keyword=([^&]+)/)[1]);
         try {
             const data = JSON.parse(jsonString);
 
             if (!Array.isArray(data)) {
-                console.error("解析後的資料不是一個陣列。");
                 return null;
             }
 
@@ -109,7 +105,6 @@
             return JSON.stringify(finalData);
 
         } catch (error) {
-            console.error("解析 JSON 時發生錯誤:", error);
             return null;
         }
     }
@@ -139,6 +134,7 @@
         });
         var book = {
             name: gbk2big5.traditionalized($("h1.page-title").text().trim()),
+            logo: "https://sta.anicdn.com/playerImg/8.jpg",
             sections: sections
         };
         return JSON.stringify(book);
@@ -152,12 +148,38 @@
     <WebViewInjection>
         <![CDATA[
             javascript:(function() {
-                console.log('--- Siteds JS Injection Started (v3) ---');
-                var player = document.querySelector('.vjscontainer');
+    // 定義一個變數來儲存定時器的 ID (儘管在這個無限模式下我們不會用到它，但這是良好的實踐)
+    let intervalId = null;
 
+    // 1. 定義您的核心邏輯
+    function runInjection() {
+        try {
+            // 這裡直接運行清理後的腳本
+            var player = document.querySelector('.vjscontainer');
+
+            if (player) {
+                // ⭐ 核心邏輯：成功找到並處理元素
+                document.body.style.visibility = 'hidden';
+
+                var current = player;
+                while (current && current.tagName !== 'BODY') {
+                    current.style.visibility = 'visible';
+                    var siblings = Array.from(current.parentNode.children);
+                    siblings.forEach(function(sibling) {
+                        if (sibling !== current) {
+                            sibling.style.display = 'none';
+                        }
+                    });
+                    current = current.parentElement;
+                }
+
+                document.body.style.visibility = 'visible';
+                document.body.style.margin = '0';
+                document.body.style.padding = '0';
+            } else {
+                var player = document.querySelector('.player-space');
                 if (player) {
-                    console.log('Player element found!');
-
+                    // ⭐ 核心邏輯：成功找到並處理元素
                     document.body.style.visibility = 'hidden';
 
                     var current = player;
@@ -175,13 +197,24 @@
                     document.body.style.visibility = 'visible';
                     document.body.style.margin = '0';
                     document.body.style.padding = '0';
-
-                    console.log('Player element maximized using parent-unhide strategy.');
-                } else {
-                    console.log('Player element not found!');
                 }
-                console.log('--- Siteds JS Injection Finished ---');
-            })();
+            }
+
+            // ⭐ 關鍵修改：始終返回 true/false 已經不重要，因為外層不會停止它
+            return false; // 返回 false 只是習慣，不影響這裡的無限循環
+
+        } catch (e) {
+            // 如果腳本執行失敗，捕獲錯誤但繼續輪詢
+            return false;
+        }
+    }
+
+    // 2. 啟動定時器，每 1000 毫秒（1 秒）執行一次，且永不停止
+    intervalId = setInterval(runInjection, 1000);
+
+    // 備註：在這種模式下，我們必須依賴 WebView 的銷毀來停止定時器。
+
+})();
         ]]>
     </WebViewInjection>
 </sited>

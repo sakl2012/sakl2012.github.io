@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited>
+    <meta>
+        <title>gimy 劇迷</title>
+        <intro>2016-2025 Gimy 劇迷 - 高清追劇首選</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+    </meta>
+
+    <main>
+        <home url="https://gimy.com.tw/" parse="home_list_parse" />
+        <tags tagParse="list_parse">
+            <item group="電視劇" title="陸劇" url="https://gimy.com.tw/vodtype/13-@page.html"/>
+            <item group="電視劇" title="韓劇" url="https://gimy.com.tw/vodtype/15-@page.html"/>
+            <item group="電視劇" title="美劇" url="https://gimy.com.tw/vodtype/16-@page.html"/>
+            <item group="電視劇" title="日劇" url="https://gimy.com.tw/vodtype/20-@page.html"/>
+            <item group="電視劇" title="台劇" url="https://gimy.com.tw/vodtype/14-@page.html"/>
+            <item group="電視劇" title="海外劇" url="https://gimy.com.tw/vodtype/21-@page.html"/>
+            <item group="電視劇" title="港劇" url="https://gimy.com.tw/vodtype/22-@page.html"/>
+            <item group="電視劇" title="紀錄片" url="https://gimy.com.tw/vodtype/23-@page.html"/>
+            <item group="動漫" title="全部" url="https://gimy.com.tw/vodtype/4-@page.html"/>
+            <item group="綜藝" title="全部" url="https://gimy.com.tw/vodtype/3-@page.html"/>
+            <item group="電影" title="動作片" url="https://gimy.com.tw/vodtype/6-@page.html"/>
+            <item group="電影" title="喜劇片" url="https://gimy.com.tw/vodtype/7-@page.html"/>
+            <item group="電影" title="愛情片" url="https://gimy.com.tw/vodtype/8-@page.html"/>
+            <item group="電影" title="科幻片" url="https://gimy.com.tw/vodtype/9-@page.html"/>
+            <item group="電影" title="恐怖片" url="https://gimy.com.tw/vodtype/10-@page.html"/>
+            <item group="電影" title="劇情片" url="https://gimy.com.tw/vodtype/11-@page.html"/>
+            <item group="電影" title="戰爭片" url="https://gimy.com.tw/vodtype/12-@page.html"/>
+            <item group="電影" title="動畫電影" url="https://gimy.com.tw/vodtype/24-@page.html"/>
+        </tags>
+        <search parse="search_parse" url="https://gimy.com.tw/vodsearch/@key----------@page---.html"/>
+        <book parse="book_parse"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+
+    <script>
+        <![CDATA[
+        const baseUrl = "https://gimy.com.tw";
+
+        function home_list_parse(url, html){
+            const $ = cheerio.load(html);
+            let list = [];
+            $('div.layout-box.clearfix').each(function() {
+                const $$ = cheerio.load($(this).html());
+                const group_name_raw = $$('div.box-title h3').text().trim();
+                if (group_name_raw) {
+                    const group_name = gbk2big5.traditionalized(group_name_raw);
+                    $$('li.col-md-2.col-sm-3.col-xs-4').each(function() {
+                        const $$$ = cheerio.load($(this).html());
+                        const link = $$$('a.video-pic');
+                        const videoUrl = link.attr('href');
+                        const name = link.attr('title');
+                        const logo = link.attr('data-original');
+                        if (videoUrl && name) {
+                            list.push({
+                                group: group_name,
+                                url: baseUrl + videoUrl,
+                                name: gbk2big5.traditionalized(name),
+                                logo: baseUrl + logo
+                            });
+                        }
+                    });
+                }
+            });
+            return JSON.stringify(list);
+        }
+
+        function list_parse(url, html){
+            const $ = cheerio.load(html);
+            let list = [];
+            $('div.box-video-list li.col-md-2.col-sm-3.col-xs-4').each(function() {
+                const $$ = cheerio.load($(this).html());
+                const link = $$('a.video-pic');
+                const videoUrl = link.attr('href');
+                const name = link.attr('title');
+                const logo = link.attr('data-original');
+                if (videoUrl && name) {
+                    list.push({
+                        url: baseUrl + videoUrl,
+                        name: gbk2big5.traditionalized(name),
+                        logo: baseUrl + logo
+                    });
+                }
+            });
+            return JSON.stringify(list);
+        }
+
+        function search_parse(url, html){
+            const $ = cheerio.load(html);
+            let list = [];
+            $('div.details-info-min').each(function() {
+                const $$ = cheerio.load($(this).html());
+                const link = $$('a.video-pic');
+                const videoUrl = link.attr('href');
+                const name = link.attr('title');
+                const logo = link.attr('data-original');
+                if (videoUrl && name) {
+                    list.push({
+                        url: baseUrl + videoUrl,
+                        name: gbk2big5.traditionalized(name),
+                        logo: baseUrl + logo
+                    });
+                }
+            });
+            return JSON.stringify(list);
+        }
+
+        function book_parse(url, html) {
+            const $ = cheerio.load(html);
+            let sections = [];
+            $('div.playlist').each(function() {
+                const $$ = cheerio.load($(this).html());
+                const group = $$('.gico').text().trim();
+                $$('.clearfix a').each(function() {
+                    const episodeLink = $$(this);
+                    const episodeUrl = episodeLink.attr('href');
+                    if (episodeUrl && episodeUrl.includes('/video/')) {
+                        sections.push({
+                            name: gbk2big5.traditionalized(group + ": " + episodeLink.text().trim()),
+                            url: baseUrl + episodeUrl
+                        });
+                    }
+                });
+            });
+
+            let logoUrl = null;
+            const bgStyle = $('a.video-pic').attr('style');
+            if (bgStyle) {
+                const match = bgStyle.match(/url\((.*?)\)/);
+                if (match && match[1]) {
+                    logoUrl = match[1];
+                }
+            }
+
+            const intro_default = $('span.details-content-default').text();
+            const intro_all = $('span.details-content-all').text();
+            const intro = intro_all || intro_default;
+
+            const book = {
+                name: gbk2big5.traditionalized($('h1.text-overflow').text().trim()),
+                logo: baseUrl + logoUrl,
+                intro: gbk2big5.traditionalized(intro.replace('線上看:', '').trim()),
+                sections: sections
+            };
+
+            return JSON.stringify(book);
+        }
+
+        function section_parse(url, html) {
+            return JSON.stringify({
+                type: "webview_player",
+                data: url
+            });
+        }
+        ]]>
+    </script>
+    <WebViewInjection>
+        <![CDATA[
+            javascript:(function() {
+                function cleanupAndMaximizePlayer() {
+                    try {
+                        const player = document.getElementById('zanpiancms_player');
+                        if (player) {
+                            // 將播放器從原始位置取出
+                            const playerParent = player.parentNode;
+                            playerParent.removeChild(player);
+
+                            // 清空整個 body
+                            document.body.innerHTML = '';
+
+                            // 將播放器重新加回 body
+                            document.body.appendChild(player);
+
+                            // 設置樣式使其全螢幕
+                            document.body.style.margin = '0';
+                            document.body.style.padding = '0';
+                            document.body.style.overflow = 'hidden';
+                            player.style.position = 'absolute';
+                            player.style.top = '0';
+                            player.style.left = '0';
+                            player.style.width = '100vw';
+                            player.style.height = '100vh';
+
+                            return true; // 表示已成功執行
+                        }
+                        return false; // 播放器未找到
+                    } catch (e) {
+                        return false;
+                    }
+                }
+
+                let attempts = 0;
+                const maxAttempts = 20; // 最多嘗試 10 秒
+                const intervalId = setInterval(function() {
+                    attempts++;
+                    // 如果清理成功，或達到最大嘗試次數，就停止
+                    if (cleanupAndMaximizePlayer() || attempts >= maxAttempts) {
+                        clearInterval(intervalId);
+                    }
+                }, 500); // 每 0.5 秒嘗試一次
+            })();
+        ]]>
+    </WebViewInjection>
+</sited>
