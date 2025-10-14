@@ -82,51 +82,59 @@
         return JSON.stringify(book);
     }
 
-    // ⭐【核心修正 V7 - 適用受限/無依賴 Cheerio 框架】解析文章內容頁 (Section)
-    function section_parse(url, html) {
-        const $ = cheerio.load(html);
-        const data = [];
-        
-        // 找到文章的主要容器
-        const articleContent = $('article#article-detail-content');
+// ⭐【核心修正 V11 - 解決圖文順序與圖片缺失問題 (基於字串解析)】
+function section_parse(url, html) {
+    const $ = cheerio.load(html);
+    const data = [];
+    
+    const articleContent = $('article#article-detail-content');
 
-        if (articleContent.length === 0) {
-            return JSON.stringify({type:"article", data: data});
-        }
+    if (articleContent.length === 0) {
+        return JSON.stringify({type:"article", data: data});
+    }
 
-        // 遍歷文章內容的所有直接子元素 (<p>, <center>, <div>, etc.)
-        articleContent.children().each(function() {
-            const element = $(this);
-            const elementHtml = element.html(); // 獲取當前子元素的內部 HTML
+    // 遍歷文章內容的所有直接子元素 (<p>, <center>, <div>, etc.)
+    articleContent.children().each(function() {
+        const element = $(this);
+        const elementHtml = element.html() || ''; 
 
-            // ------------------------------------
-            // 1. 處理圖片相關元素 (center, div, 或 p 內的 img)
-            // ------------------------------------
-            // 重新加載子元素 HTML 以便查找所有圖片 (模擬 .find('img'))
-            const $$$ = cheerio.load(elementHtml || ''); 
-            
-            $$$('img').each(function() {
-                const imgNode = $$$(this);
-                let src = imgNode.attr('src') || imgNode.attr('data-src');
-                
-                if (src) {
-                    if (src.startsWith('//')) {
-                        src = 'https:' + src;
-                    }
-                    src = src.replace(/^http:/, 'https:');
-                    
-                    if (!src.includes('default_thumbnail.png')) {
-                        data.push({ t: "image", d: src });
-                    }
+        // ----------------------------------------------------
+        // 1. 處理嵌入元素 (div.twitter-tweet) - 避免複雜解析
+        // ----------------------------------------------------
+        if (element.is('div')) {
+             const elementClass = element.attr('class') || '';
+             if (elementClass.includes('twitter-tweet')) {
+                const $$$$ = cheerio.load(elementHtml);
+                const iframe = $$$$('iframe');
+                if (iframe.length > 0) {
+                    data.push({ t: "text", d: gbk2big5.traditionalized("[外部內容: 嵌入式內容]") });
+                    return; 
                 }
-            });
+             }
+        }
+        
+        // ----------------------------------------------------
+        // 2. 處理圖文混合元素 (P, Hx, BLOCKQUOTE 等)
+        // ----------------------------------------------------
+        if (element.is('p') || element.is('h1, h2, h3, h4, h5, h6') || element.is('li') || element.is('blockquote') || element.is('center')) {
+            if (!elementHtml) return;
+
+            // 使用正則表達式將圖片標籤從內容中分離出來，同時保留順序
+            // 匹配圖片標籤或任意非圖片/非標籤文本 (包括 <br>)
+            const regex = /<img[^>]*src="([^"]+)"[^>]*>|([\s\S]*?(?=<img|$))/gi;
+            let match;
+            let lastIndex = 0;
             
-            // ------------------------------------
-            // 2. 處理文字相關元素 (p, h1-h6, blockquote, li)
-            // ------------------------------------
-            if (element.is('p') || element.is('h1, h2, h3, h4, h5, h6') || element.is('li') || element.is('blockquote')) {
-                if (elementHtml) {
-                    let rawHtml = elementHtml;
+            // 確保元素本身是 <center> 時，也能被正確解析，先移除頂層 <center>
+            let cleanHtml = elementHtml.replace(/^<center>|<\/center>$/gi, ''); 
+
+            while ((match = regex.exec(cleanHtml)) !== null) {
+                // 處理匹配到的文本部分 (match[2])
+                let textChunk = match[2];
+                if (textChunk && textChunk.trim().length > 0) {
+                    
+                    // ------------------ 文本處理邏輯 ------------------
+                    let rawHtml = textChunk;
 
                     // 1. 臨時標記 <strong> 內部的內容 (保留粗體資訊)
                     rawHtml = rawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
@@ -136,17 +144,11 @@
                     rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1'); 
                     rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1'); 
                     
-                    // 3. 移除 img 和 center 標籤 (移除圖片和它的容器，只留文字/br)
-                    rawHtml = rawHtml.replace(/<img[^>]*>/gi, ''); 
-                    rawHtml = rawHtml.replace(/<center[^>]*>([\s\S]*?)<\/center>/gi, '$1'); 
-
-                    // 4. 移除所有其他不必要的 HTML 標籤
+                    // 3. 移除所有其他不必要的 HTML 標籤
                     let text = rawHtml.replace(/<(?!\/?br\s*\/?)[^>]+>/gi, '');
 
-                    // 5. 將 <br> 替換為換行
+                    // 4. 將 <br> 替換為換行並清理
                     text = text.replace(/<br\s*\/?>/gi, '\n').trim();
-                    
-                    // 6. 清理多餘的空白和換行
                     text = text.replace(/(\n[ \t]*){2,}/g, '\n\n');
                     text = text.replace(/^[ \t]+/gm, ''); 
                     
@@ -156,7 +158,6 @@
                         lines.forEach(line => {
                             line = line.trim();
                             if (line) {
-                                // 分割出粗體和普通文本段落
                                 const parts = line.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
 
                                 parts.forEach(part => {
@@ -164,37 +165,42 @@
                                     let partText = part.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim(); 
                                     
                                     if (partText) {
-                                        let item = { t: "text", d: gbk2big5.traditionalized(cheerio.load('<x>'+partText+'</x>')('x').text()) };
-                                        if (partIsBold) {
-                                            item.b = 1;
-                                        }
-                                        data.push(item);
+                                        // V9 解碼技巧
+                                        let decodedText = cheerio.load('<div>' + partText + '</div>')('div').text();
+                                        
+                                        data.push({ t: "text", d: gbk2big5.traditionalized(decodedText), b: partIsBold ? 1 : undefined });
                                     }
                                 });
                             }
                         });
                     }
                 }
-            }
-            
-            // ------------------------------------
-            // 3. 處理嵌入元素 (div.twitter-tweet 等)
-            // ------------------------------------
-            if (element.is('div')) {
-                 const elementClass = element.attr('class') || '';
-                 if (elementClass.includes('twitter-tweet')) {
-                    // 重新載入 div HTML 查找 iframe
-                    const $$$$ = cheerio.load(elementHtml || '');
-                    const iframe = $$$$('iframe');
-                    if (iframe.length > 0) {
-                        data.push({ t: "text", d: gbk2big5.traditionalized("[外部內容: 嵌入式內容]") });
-                    }
-                 }
-            }
-        });
 
-        return JSON.stringify({type:"article", data: data});
-    }
+                // 處理匹配到的圖片部分 (match[1] 是 src 屬性)
+                let src = match[1];
+                if (src) {
+                    // ------------------ 圖片處理邏輯 ------------------
+                    if (src.startsWith('//')) {
+                        src = 'https:' + src;
+                    }
+                    src = src.replace(/^http:/, 'https:');
+                    
+                    if (!src.includes('default_thumbnail.png')) {
+                        data.push({ t: "image", d: src });
+                    }
+                }
+                
+                lastIndex = regex.lastIndex;
+            }
+        }
+        // ------------------------------------
+        // 3. 處理 <center> 標籤內部的裸圖片 (如果它不是 p 或 div)
+        // 由於我們在 2 中已經包含了 element.is('center') 的處理，這部分應被 2 處理。
+        // ------------------------------------
+    });
+
+    return JSON.stringify({type:"article", data: data});
+}
     ]]>
 </script>
 </sited>
