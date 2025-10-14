@@ -81,54 +81,63 @@
         return JSON.stringify(book);
     }
 
-    // ⭐【核心修正 V4】解析文章內容頁 (Section)，針對複雜行內樣式和嵌入內容優化
+    // ⭐【核心修正 V5 - 無依賴 Cheerio 專用】解析文章內容頁 (Section)
     function section_parse(url, html) {
         const $ = cheerio.load(html);
         const data = [];
         
-        // 找到文章的主要容器
+        // 找到文章的主要容器的 HTML
         const articleContent = $('article#article-detail-content');
-
+        const articleHtml = articleContent.html();
+        
         if (articleContent.length === 0) {
             return JSON.stringify({type:"article", data: data});
         }
 
-        // 遍歷 articleContent 的所有直接子元素 (<p>, <center>, <div>, etc.)
-        articleContent.children().each(function() {
-            const element = $(this);
+        // 重新加載 article 內容以獲得所有頂級子元素 (如 p, center, div)
+        // 這裡 $$ 指的是 article 內容為根的新 Cheerio 實例
+        const $$ = cheerio.load(articleHtml);
+
+        // 遍歷 article 內的**所有頂層子元素**
+        // 這裡我們需要依賴 $$.root().children() 來獲取 P, CENTER, DIV 等
+        $$.root().children().each(function() {
+            const element = $$(this); // 現在 element 是當前子元素
+            const elementHtml = element.html();
             
+            // 由於無法使用 element.is()，我們必須依賴於標籤名（如果環境支持）
+            // 在受限環境下，我們試圖獲取原始節點的標籤名稱
+            const tagName = this.name ? this.name.toLowerCase() : ''; 
+
             // ------------------------------------
-            // 1. 處理文字相關元素 (p, h1-h6, blockquote, li)
+            // 1.1 處理文字相關元素 (p, h1-h6, blockquote, li)
             // ------------------------------------
-            // 排除明顯的非內容元素 (例如包含 Twitter 嵌入的 div)
-            if (element.is('p') || element.is('h1, h2, h3, h4, h5, h6') || element.is('li') || element.is('blockquote')) {
-                // 克隆元素並移除所有圖片、影片等非文字內容
-                const textElement = element.clone();
-                // 移除圖片和 center 標籤，圖片會在後面單獨處理
-                textElement.find('img, center, iframe, script, style, .gallery').remove(); 
-                
-                let rawHtml = textElement.html();
-                
-                if (rawHtml) {
-                    // 1. **核心優化**：處理嵌套的強/粗體標籤，確保所有粗體內容都被標記
-                    // 臨時標記 <strong> 內部的內容
-                    rawHtml = rawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
+            if (tagName === 'p' || tagName === 'blockquote' || tagName === 'li' || 
+                (tagName.length === 2 && tagName.startsWith('h') && !isNaN(parseInt(tagName[1])))) 
+            {
+                if (elementHtml) {
+                    // 由於 elementHtml 包含了嵌套標籤，我們需要再次使用字符串處理來提取
+                    let textRawHtml = elementHtml;
                     
-                    // 2. 移除 a/span/font 標籤，保留內容 (這是因為顏色/字體資訊對純文本閱讀器無用)
-                    // 使用 [\s\S]*? 來匹配包含換行的內容
-                    rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1'); 
-                    rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1'); 
-                    rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1'); 
+                    // 1. 臨時標記 <strong> 內部的內容
+                    textRawHtml = textRawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
                     
-                    // 3. 移除所有其他不必要的 HTML 標籤 (除了 BR 和換行標記)
-                    let text = rawHtml.replace(/<(?!\/?br\s*\/?)[^>]+>/gi, '');
+                    // 2. 移除 a/span/font 標籤，保留內容 
+                    textRawHtml = textRawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1'); 
+                    textRawHtml = textRawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1'); 
+                    textRawHtml = textRawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1'); 
                     
-                    // 4. 將 <br> 替換為換行
+                    // 3. 移除 img 標籤 (避免重複處理)
+                    textRawHtml = textRawHtml.replace(/<img[^>]*>/gi, ''); 
+
+                    // 4. 移除所有其他不必要的 HTML 標籤 (除了 BR 和換行標記)
+                    let text = textRawHtml.replace(/<(?!\/?br\s*\/?)[^>]+>/gi, '');
+                    
+                    // 5. 將 <br> 替換為換行
                     text = text.replace(/<br\s*\/?>/gi, '\n').trim();
                     
-                    // 5. 清理多餘的空白和換行
+                    // 6. 清理多餘的空白和換行
                     text = text.replace(/(\n[ \t]*){2,}/g, '\n\n');
-                    text = text.replace(/^[ \t]+/gm, ''); // 移除行首空白
+                    text = text.replace(/^[ \t]+/gm, ''); 
                     
                     if (text) {
                         const lines = text.split('\n');
@@ -141,7 +150,6 @@
 
                                 parts.forEach(part => {
                                     let partIsBold = part.startsWith('@@BOLD@@');
-                                    // 移除標記並清理文本
                                     let partText = part.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim(); 
                                     
                                     if (partText) {
@@ -157,43 +165,46 @@
                     }
                 }
             }
-
-            // ------------------------------------
-            // 2. 處理圖片相關元素 (p, center, div, 或 img 本身)
-            // ------------------------------------
-            // 尋找元素本身或其內部所有的 img 標籤
-            let images = element.is('img') ? element : element.find('img');
             
+            // ------------------------------------
+            // 1.2 處理圖片相關元素 (center, div, 或 img 本身)
+            // ------------------------------------
+            
+            // 重新加載子元素 HTML 以便查找圖片
+            // 即使是 <p>，內部也可能有圖片
+            const $$$ = cheerio.load(elementHtml || ''); 
+            
+            let images = $$$('img');
+
             images.each(function() {
-                const imgNode = $(this);
-                let src = imgNode.attr('src') || imgNode.attr('data-src'); // 考慮 lazy loading
+                const imgNode = $$(this);
+                let src = imgNode.attr('src') || imgNode.attr('data-src');
                 
                 if (src) {
-                    // 修正協定和 http
                     if (src.startsWith('//')) {
                         src = 'https:' + src;
                     }
                     src = src.replace(/^http:/, 'https:');
                     
-                    // 檢查是否為 ClickMe 的縮圖預設圖，如果是則忽略
-                    if (src.includes('default_thumbnail.png')) {
-                        return; // 跳過此圖片
+                    if (!src.includes('default_thumbnail.png')) {
+                        data.push({ t: "image", d: src });
                     }
-                    
-                    data.push({ t: "image", d: src });
                 }
             });
             
             // ------------------------------------
-            // 3. 處理其他嵌入元素 (Twitter, YouTube 等)
+            // 1.3 處理嵌入元素 (div.twitter-tweet)
             // ------------------------------------
-            if (element.is('div.twitter-tweet') || element.is('script')) {
-                 // 找到 iframe 的 src 作為嵌入內容
-                 const iframe = element.find('iframe');
-                 let iframeSrc = iframe.attr('src');
-                 if (iframeSrc) {
-                     // 輸出一個文字提示，因為插件可能不支援 iframe
-                     data.push({ t: "text", d: gbk2big5.traditionalized("[外部內容: 嵌入式內容]") });
+            if (tagName === 'div') {
+                 // 這裡我們需要一種方式檢查 class，假設 element.attr('class') 可用
+                 const elementClass = element.attr('class') || '';
+                 if (elementClass.includes('twitter-tweet')) {
+                    // 檢查是否有 iframe 存在
+                    const $$$$ = cheerio.load(elementHtml || '');
+                    const iframe = $$$$('iframe');
+                    if (iframe.length > 0) {
+                        data.push({ t: "text", d: gbk2big5.traditionalized("[外部內容: 嵌入式內容]") });
+                    }
                  }
             }
         });
@@ -201,5 +212,4 @@
         return JSON.stringify({type:"article", data: data});
     }
     ]]>
-</script>
-</sited>
+</script></sited>
