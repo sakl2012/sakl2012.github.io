@@ -5,6 +5,8 @@
         <intro>點我一下 分享無價</intro>
         <author>sakl2012</author>
         <encode>utf-8</encode>
+        <url>clickme.net</url>
+        <updateUrl>https://sakl2012.github.io/sited/clickme.sited.xml</updateUrl>
         <hide/>
     </meta>
 
@@ -32,7 +34,7 @@
             <item group="成人站" title="情趣用品" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=sextoys&amp;device=&amp;limit=18&amp;page=@page"/>
             <item group="成人站" title="18禁情報" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=r18news&amp;device=&amp;limit=18&amp;page=@page"/>
         </tags>
-        <search parse="list_parse" parseUrl="search_parse_url" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=article&amp;subtype=search&amp;subtypeSlug=@key&amp;device=&amp;limit=18&amp;page=@page"/>
+        <search parse="list_parse" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=article&amp;subtype=search&amp;subtypeSlug=@key&amp;device=&amp;limit=18&amp;page=@page"/>
         <book parse="book_parse"/>
         <section parse="section_parse"/>
     </main>
@@ -41,106 +43,157 @@
         <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
         <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
     </require>
-
-    <script>
-        <![CDATA[
-        // 核心的「內容列表」解析函式
-        function list_parse(url, jsontext) {
-            try {
-                const response = JSON.parse(jsontext);
-                if (!response || !response.data || !Array.isArray(response.data.items)) {
-                    return JSON.stringify([]);
-                }
-                const list = response.data.items.map(item => ({
-                    logo: item.thumbnail.replace(/^http:/, 'https:'),
-                    name: gbk2big5.traditionalized(item.title),
-                    // API 回傳的 URL 可能是 http，手動換成 https 增加安全性
-                    url: item.url.replace(/^http:/, 'https:')
-                }));
-                return JSON.stringify(list);
-            } catch (error) {
+<script>
+    <![CDATA[
+    // 核心的「內容列表」解析函式
+    function list_parse(url, jsontext) {
+        try {
+            const response = JSON.parse(jsontext);
+            if (!response || !response.data || !Array.isArray(response.data.items)) {
                 return JSON.stringify([]);
             }
+            const list = response.data.items.map(item => ({
+                logo: item.thumbnail.replace(/^http:/, 'https:'),
+                name: gbk2big5.traditionalized(item.title),
+                // API 回傳的 URL 可能是 http，手動換成 https 增加安全性
+                url: item.url.replace(/^http:/, 'https:')
+            }));
+            return JSON.stringify(list);
+        } catch (error) {
+            return JSON.stringify([]);
         }
+    }
 
-        function search_parse_url(url, html) {
-            var $ = cheerio.load(html);
-            var urls = [];
-            urls.push(url);
+    function search_parse_url(url, html) {
+        var $ = cheerio.load(html);
+        var urls = [];
+        urls.push(url);
 
-            // 將選擇結果存到變數中，避免重複查詢
-            var prevLink = $('div.nav-previous a');
+        // 將選擇結果存到變數中，避免重複查詢
+        var prevLink = $('div.nav-previous a');
 
-            // 正確的判斷方式：檢查集合的長度
-            if (prevLink.length > 0) {
-                // 直接在 Cheerio 物件上取得屬性
-                urls.push("CALL::" + prevLink.attr('href'));
-            }
-            return JSON.stringify(urls);
+        // 正確的判斷方式：檢查集合的長度
+        if (prevLink.length > 0) {
+            // 直接在 Cheerio 物件上取得屬性
+            urls.push("CALL::" + prevLink.attr('href'));
         }
+        return JSON.stringify(urls);
+    }
 
-        // 解析文章詳情頁 (Book)，僅作導航用途
-        function book_parse(url, html) {
-            const $ = cheerio.load(html);
-            const name = $('meta[property="og:title"]').attr('content') || $('title').text();
-            const logo = $('meta[property="og:image"]').attr('content');
-            const sections = [{
-                name: "閱讀全文",
-                url: url.replace(/^http:/, 'https:')
-            }];
-            const book = {
-                name: gbk2big5.traditionalized(name),
-                logo: logo,
-                intro: gbk2big5.traditionalized("點擊下方 '閱讀全文' 開始閱讀"),
-                sections: sections
-            };
-            return JSON.stringify(book);
-        }
+    // 解析文章詳情頁 (Book)，僅作導航用途
+    function book_parse(url, html) {
+        const $ = cheerio.load(html);
+        const name = $('meta[property="og:title"]').attr('content') || $('title').text();
+        const logo = $('meta[property="og:image"]').attr('content');
+        const sections = [{
+            name: "閱讀全文",
+            url: url.replace(/^http:/, 'https:')
+        }];
+        const book = {
+            name: gbk2big5.traditionalized(name),
+            logo: logo,
+            intro: gbk2big5.traditionalized("點擊下方 '閱讀全文' 開始閱讀"),
+            sections: sections
+        };
+        return JSON.stringify(book);
+    }
 
-        // ⭐【核心修正】解析文章內容頁 (Section)，僅處理圖文
-        function section_parse(url, html) {
-            const $ = cheerio.load(html);
-            const data = [];
+    // ⭐【核心修正】解析文章內容頁 (Section)，處理圖文和基本格式
+    function section_parse(url, html) {
+        const $ = cheerio.load(html);
+        const data = [];
 
-            // 找到文章的主要容器
-            const articleContent = $('article#article-detail-content');
+        // 找到文章的主要容器
+        const articleContent = $('article#article-detail-content');
 
-            // 遍歷容器內的所有直接子元素 (<p>, <div> 等)
-            // 這種結構下，內容通常都在一個 <p> 標籤內
-            articleContent.children().each(function() {
-                const container = $(this);
-
-                // 處理容器內的所有節點，包括文字和 <br>
-                container.contents().each(function() {
-                    const node = $(this);
-
-                    // 處理文字節點 (文字、<span>, <strong>, <a>)
-                    if (this.type === 'text' || (this.type === 'tag' && (node.is('span') || node.is('strong') || node.is('a')))) {
-                        const text = node.text().trim();
-                        if (text) {
-                            let item = { t: "text", d: gbk2big5.traditionalized(text) };
-                            if (node.is('strong') || node.find('strong').length > 0) {
-                                item.b = 1; // 標記為粗體
-                            }
-                            data.push(item);
-                        }
-                    }
-                    // 處理圖片節點
-                    else if (this.type === 'tag' && node.is('img')) {
-                        let src = node.attr('src');
-                        if (src) {
-                            if (src.startsWith('//')) {
-                                src = 'https:' + src;
-                            }
-                            data.push({ t: "image", d: src });
-                        }
-                    }
-                    // 其他所有標籤 (如 iframe, br) 都會被忽略
-                });
-            });
-
+        if (articleContent.length === 0) {
             return JSON.stringify({type:"article", data: data});
         }
-        ]]>
-    </script>
+
+        // 遍歷主要容器的**所有子元素**，處理段落和圖片
+        articleContent.children().each(function() {
+            const element = $(this);
+            
+            // 1. 處理圖片 (<img>)
+            // 尋找元素本身或其內部所有的 img 標籤
+            let images = element.is('img') ? element : element.find('img');
+            
+            images.each(function() {
+                const imgNode = $(this);
+                let src = imgNode.attr('src') || imgNode.attr('data-src'); // 考慮 lazy loading
+                
+                if (src) {
+                    // 修正協定
+                    if (src.startsWith('//')) {
+                        src = 'https:' + src;
+                    }
+                    // 修正 http 到 https
+                    src = src.replace(/^http:/, 'https:');
+                    
+                    // 檢查是否為ClickMe的縮圖預設圖，如果是則忽略
+                    if (src.includes('default_thumbnail.png')) {
+                        return; // 跳過此圖片
+                    }
+                    
+                    data.push({ t: "image", d: src });
+                }
+            });
+
+            // 2. 處理文字
+            // 排除圖片元素，並提取文字內容
+            if (element.is('p') || element.is('div') || element.is('h1, h2, h3, h4, h5, h6') || element.is('li') || element.is('blockquote')) {
+                // 克隆元素並移除所有圖片，以便只提取文字
+                const textElement = element.clone();
+                textElement.find('img, iframe, script, style, .gallery').remove(); 
+                
+                // 提取純文字，並將 <br> 替換為換行符，處理基本格式 (如 <strong>)
+                let rawText = textElement.html();
+                if (rawText) {
+                    // 1. 將 <strong> 包裹的文字暫時標記，以便後續區分粗體
+                    rawText = rawText.replace(/<strong>(.*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
+                    
+                    // 2. 將 <br> 替換為換行
+                    rawText = rawText.replace(/<br\s*\/?>/gi, '\n');
+                    
+                    // 3. 移除其他 HTML 標籤
+                    let cleanText = rawText.replace(/<[^>]+>/g, '').trim();
+                    
+                    // 4. 清理多餘的空白和換行
+                    cleanText = cleanText.replace(/(\n[ \t]*){2,}/g, '\n\n');
+                    cleanText = cleanText.replace(/^[ \t]+/gm, ''); // 移除行首空白
+                    
+                    if (cleanText) {
+                        const lines = cleanText.split('\n');
+
+                        lines.forEach(line => {
+                            line = line.trim();
+                            if (line) {
+                                // 分割出粗體和普通文本段落
+                                const parts = line.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+
+                                parts.forEach(part => {
+                                    let isBold = part.startsWith('@@BOLD@@');
+                                    let text = part.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim();
+                                    
+                                    if (text) {
+                                        let item = { t: "text", d: gbk2big5.traditionalized(text) };
+                                        if (isBold) {
+                                            item.b = 1;
+                                        }
+                                        data.push(item);
+                                    }
+                                });
+                                
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        // 最後返回
+        return JSON.stringify({type:"article", data: data});
+    }
+    ]]>
+</script>
 </sited>

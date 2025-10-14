@@ -5,6 +5,8 @@
         <intro>2016-2025 Gimy 劇迷 - 高清追劇首選</intro>
         <author>sakl2012</author>
         <encode>utf-8</encode>
+        <url>gimy.com.tw</url>
+        <updateUrl>https://sakl2012.github.io/sited/gimy.sited.xml</updateUrl>
     </meta>
 
     <main>

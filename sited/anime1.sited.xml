@@ -5,6 +5,8 @@
         <intro>Anime1.me</intro>
         <author>sakl2012</author>
         <encode>utf-8</encode>
+        <url>anime1.me</url>
+        <updateUrl>https://sakl2012.github.io/sited/anime1.sited.xml</updateUrl>
     </meta>
 
     <main>
