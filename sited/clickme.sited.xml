@@ -28,7 +28,6 @@
             <item group="成人站" title="最新" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=new&amp;device=&amp;limit=18&amp;page=@page"/>
             <item group="成人站" title="女優" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=avgirl&amp;device=&amp;limit=18&amp;page=@page"/>
             <item group="成人站" title="A片" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=av&amp;device=&amp;limit=18&amp;page=@page"/>
-            <item group="成人站" title="妹子" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=beauty&amp;device=&amp;limit=18&amp;page=@page"/>
             <item group="成人站" title="性知識" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=r18sex&amp;device=&amp;limit=18&amp;page=@page"/>
             <item group="成人站" title="A漫" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=hcomic&amp;device=&amp;limit=18&amp;page=@page"/>
             <item group="成人站" title="情趣用品" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=sextoys&amp;device=&amp;limit=18&amp;page=@page"/>
