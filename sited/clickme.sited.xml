@@ -63,7 +63,6 @@
             return JSON.stringify([]);
         }
     }
-
     // 解析文章詳情頁 (Book)，僅作導航用途
     function book_parse(url, html) {
         const $ = cheerio.load(html);
@@ -82,11 +81,11 @@
         return JSON.stringify(book);
     }
 
-    // ⭐【核心修正】解析文章內容頁 (Section)，處理圖文和基本格式
+    // ⭐【核心修正 V4】解析文章內容頁 (Section)，針對複雜行內樣式和嵌入內容優化
     function section_parse(url, html) {
         const $ = cheerio.load(html);
         const data = [];
-
+        
         // 找到文章的主要容器
         const articleContent = $('article#article-detail-content');
 
@@ -94,60 +93,45 @@
             return JSON.stringify({type:"article", data: data});
         }
 
-        // 遍歷主要容器的**所有子元素**，處理段落和圖片
+        // 遍歷 articleContent 的所有直接子元素 (<p>, <center>, <div>, etc.)
         articleContent.children().each(function() {
             const element = $(this);
             
-            // 1. 處理圖片 (<img>)
-            // 尋找元素本身或其內部所有的 img 標籤
-            let images = element.is('img') ? element : element.find('img');
-            
-            images.each(function() {
-                const imgNode = $(this);
-                let src = imgNode.attr('src') || imgNode.attr('data-src'); // 考慮 lazy loading
-                
-                if (src) {
-                    // 修正協定
-                    if (src.startsWith('//')) {
-                        src = 'https:' + src;
-                    }
-                    // 修正 http 到 https
-                    src = src.replace(/^http:/, 'https:');
-                    
-                    // 檢查是否為ClickMe的縮圖預設圖，如果是則忽略
-                    if (src.includes('default_thumbnail.png')) {
-                        return; // 跳過此圖片
-                    }
-                    
-                    data.push({ t: "image", d: src });
-                }
-            });
-
-            // 2. 處理文字
-            // 排除圖片元素，並提取文字內容
-            if (element.is('p') || element.is('div') || element.is('h1, h2, h3, h4, h5, h6') || element.is('li') || element.is('blockquote')) {
-                // 克隆元素並移除所有圖片，以便只提取文字
+            // ------------------------------------
+            // 1. 處理文字相關元素 (p, h1-h6, blockquote, li)
+            // ------------------------------------
+            // 排除明顯的非內容元素 (例如包含 Twitter 嵌入的 div)
+            if (element.is('p') || element.is('h1, h2, h3, h4, h5, h6') || element.is('li') || element.is('blockquote')) {
+                // 克隆元素並移除所有圖片、影片等非文字內容
                 const textElement = element.clone();
-                textElement.find('img, iframe, script, style, .gallery').remove(); 
+                // 移除圖片和 center 標籤，圖片會在後面單獨處理
+                textElement.find('img, center, iframe, script, style, .gallery').remove(); 
                 
-                // 提取純文字，並將 <br> 替換為換行符，處理基本格式 (如 <strong>)
-                let rawText = textElement.html();
-                if (rawText) {
-                    // 1. 將 <strong> 包裹的文字暫時標記，以便後續區分粗體
-                    rawText = rawText.replace(/<strong>(.*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
+                let rawHtml = textElement.html();
+                
+                if (rawHtml) {
+                    // 1. **核心優化**：處理嵌套的強/粗體標籤，確保所有粗體內容都被標記
+                    // 臨時標記 <strong> 內部的內容
+                    rawHtml = rawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
                     
-                    // 2. 將 <br> 替換為換行
-                    rawText = rawText.replace(/<br\s*\/?>/gi, '\n');
+                    // 2. 移除 a/span/font 標籤，保留內容 (這是因為顏色/字體資訊對純文本閱讀器無用)
+                    // 使用 [\s\S]*? 來匹配包含換行的內容
+                    rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1'); 
+                    rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1'); 
+                    rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1'); 
                     
-                    // 3. 移除其他 HTML 標籤
-                    let cleanText = rawText.replace(/<[^>]+>/g, '').trim();
+                    // 3. 移除所有其他不必要的 HTML 標籤 (除了 BR 和換行標記)
+                    let text = rawHtml.replace(/<(?!\/?br\s*\/?)[^>]+>/gi, '');
                     
-                    // 4. 清理多餘的空白和換行
-                    cleanText = cleanText.replace(/(\n[ \t]*){2,}/g, '\n\n');
-                    cleanText = cleanText.replace(/^[ \t]+/gm, ''); // 移除行首空白
+                    // 4. 將 <br> 替換為換行
+                    text = text.replace(/<br\s*\/?>/gi, '\n').trim();
                     
-                    if (cleanText) {
-                        const lines = cleanText.split('\n');
+                    // 5. 清理多餘的空白和換行
+                    text = text.replace(/(\n[ \t]*){2,}/g, '\n\n');
+                    text = text.replace(/^[ \t]+/gm, ''); // 移除行首空白
+                    
+                    if (text) {
+                        const lines = text.split('\n');
 
                         lines.forEach(line => {
                             line = line.trim();
@@ -156,26 +140,64 @@
                                 const parts = line.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
 
                                 parts.forEach(part => {
-                                    let isBold = part.startsWith('@@BOLD@@');
-                                    let text = part.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim();
+                                    let partIsBold = part.startsWith('@@BOLD@@');
+                                    // 移除標記並清理文本
+                                    let partText = part.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim(); 
                                     
-                                    if (text) {
-                                        let item = { t: "text", d: gbk2big5.traditionalized(text) };
-                                        if (isBold) {
+                                    if (partText) {
+                                        let item = { t: "text", d: gbk2big5.traditionalized(partText) };
+                                        if (partIsBold) {
                                             item.b = 1;
                                         }
                                         data.push(item);
                                     }
                                 });
-                                
                             }
                         });
                     }
                 }
             }
+
+            // ------------------------------------
+            // 2. 處理圖片相關元素 (p, center, div, 或 img 本身)
+            // ------------------------------------
+            // 尋找元素本身或其內部所有的 img 標籤
+            let images = element.is('img') ? element : element.find('img');
+            
+            images.each(function() {
+                const imgNode = $(this);
+                let src = imgNode.attr('src') || imgNode.attr('data-src'); // 考慮 lazy loading
+                
+                if (src) {
+                    // 修正協定和 http
+                    if (src.startsWith('//')) {
+                        src = 'https:' + src;
+                    }
+                    src = src.replace(/^http:/, 'https:');
+                    
+                    // 檢查是否為 ClickMe 的縮圖預設圖，如果是則忽略
+                    if (src.includes('default_thumbnail.png')) {
+                        return; // 跳過此圖片
+                    }
+                    
+                    data.push({ t: "image", d: src });
+                }
+            });
+            
+            // ------------------------------------
+            // 3. 處理其他嵌入元素 (Twitter, YouTube 等)
+            // ------------------------------------
+            if (element.is('div.twitter-tweet') || element.is('script')) {
+                 // 找到 iframe 的 src 作為嵌入內容
+                 const iframe = element.find('iframe');
+                 let iframeSrc = iframe.attr('src');
+                 if (iframeSrc) {
+                     // 輸出一個文字提示，因為插件可能不支援 iframe
+                     data.push({ t: "text", d: gbk2big5.traditionalized("[外部內容: 嵌入式內容]") });
+                 }
+            }
         });
 
-        // 最後返回
         return JSON.stringify({type:"article", data: data});
     }
     ]]>
