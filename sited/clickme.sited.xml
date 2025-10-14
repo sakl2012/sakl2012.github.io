@@ -164,7 +164,7 @@
                                     let partText = part.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim(); 
                                     
                                     if (partText) {
-                                        let item = { t: "text", d: gbk2big5.traditionalized(cheerio.load('<div>'+partText+'</div>')('div').text()) };
+                                        let item = { t: "text", d: gbk2big5.traditionalized(cheerio.load('<p>'+partText+'</p>')('p').text()) };
                                         if (partIsBold) {
                                             item.b = 1;
                                         }
