@@ -64,22 +64,6 @@
         }
     }
 
-    function search_parse_url(url, html) {
-        var $ = cheerio.load(html);
-        var urls = [];
-        urls.push(url);
-
-        // 將選擇結果存到變數中，避免重複查詢
-        var prevLink = $('div.nav-previous a');
-
-        // 正確的判斷方式：檢查集合的長度
-        if (prevLink.length > 0) {
-            // 直接在 Cheerio 物件上取得屬性
-            urls.push("CALL::" + prevLink.attr('href'));
-        }
-        return JSON.stringify(urls);
-    }
-
     // 解析文章詳情頁 (Book)，僅作導航用途
     function book_parse(url, html) {
         const $ = cheerio.load(html);
