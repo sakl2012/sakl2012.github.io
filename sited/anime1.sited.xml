@@ -132,7 +132,7 @@
         var $ = cheerio.load(html);
         var sections = [];
         $("h2 a").each(function(){
-            sections.push({name: $(this).text(), url: $(this).attr("href")});
+            sections.push({name: $(this).text().match(/\[\d+\]/)[0], url: $(this).attr("href")});
         });
         var book = {
             name: gbk2big5.traditionalized($("h1.page-title").text().trim()),
