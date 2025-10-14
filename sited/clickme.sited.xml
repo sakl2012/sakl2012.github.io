@@ -82,124 +82,127 @@
         return JSON.stringify(book);
     }
 
-// ⭐【核心修正 V10 - 解決圖文順序問題】解析文章內容頁 (Section)
-function section_parse(url, html) {
-    const $ = cheerio.load(html);
-    const data = [];
-    
-    // 找到文章的主要容器
-    const articleContent = $('article#article-detail-content');
-
-    if (articleContent.length === 0) {
-        return JSON.stringify({type:"article", data: data});
-    }
-
-    // 遍歷文章內容的所有直接子元素 (<p>, <center>, <div>, etc.)
-    articleContent.children().each(function() {
-        const element = $(this);
+    // ⭐【核心修正 V10 - 文本流處理策略】解決順序、嵌套和遺失圖片問題
+    function section_parse(url, html) {
+        const $ = cheerio.load(html);
+        const data = [];
         
-        // ----------------------------------------------------
-        // 1. 處理嵌入元素 (div.twitter-tweet) - 在這裡先處理非圖文的頂級元素
-        // ----------------------------------------------------
-        if (element.is('div')) {
-             const elementClass = element.attr('class') || '';
-             if (elementClass.includes('twitter-tweet')) {
-                const elementHtml = element.html() || '';
-                const $$$$ = cheerio.load(elementHtml);
-                const iframe = $$$$('iframe');
-                if (iframe.length > 0) {
-                    data.push({ t: "text", d: gbk2big5.traditionalized("[外部內容: 嵌入式內容]") });
-                    return; // 處理完畢，跳過這個 DIV
-                }
-             }
+        // 1. 獲取文章內容容器的內部 HTML
+        let rawHtml = $('article#article-detail-content').html() || '';
+
+        if (!rawHtml) {
+            return JSON.stringify({type:"article", data: data});
         }
         
-        // ----------------------------------------------------
-        // 2. 處理圖文混合元素 (P 或 CENTER)
-        // ----------------------------------------------------
-        // 我們將整個元素的 HTML 重新載入，並遍歷它的所有內容節點。
-        const elementHtml = element.html() || '';
-        const $$ = cheerio.load(elementHtml);
+        // 2. 替換特殊區塊為文本標記 (例如廣告或嵌入內容的 DIV)
+        // 必須先將這些區塊移除，避免干擾後續的標籤處理
+        const tempDiv = cheerio.load(rawHtml);
         
-        // **關鍵步驟：遍歷元素內部的所有頂級節點 (包括文本節點)**
-        $$.root().contents().each(function() {
-            const node = $$(this);
-            // 嘗試獲取節點類型，由於 Cheerio 限制，我們可能需要依賴 this.type
-            const nodeType = this.type; 
+        // 替換 Twitter 嵌入的 div
+        tempDiv('div.twitter-tweet').each(function() {
+            rawHtml = rawHtml.replace($$(this).toString(), "@@TEXT@@[外部內容: 嵌入式內容]@@/TEXT@@");
+        });
+        
+        // 移除其他不需要的 DIV (如廣告)
+        tempDiv('div').each(function() {
+            const divContent = $$(this).html() || '';
+            // 如果 div 內只包含廣告或空，則移除整個 div
+            if (divContent.includes('ads-300x250') || divContent.includes('sitemaji_banner') || divContent.trim() === '') {
+                 rawHtml = rawHtml.replace($$(this).toString(), "");
+            }
+        });
 
-            // 2.1 處理圖片節點
-            if (nodeType === 'tag' && node.is('img')) {
-                let src = node.attr('src') || node.attr('data-src');
-                if (src) {
-                    if (src.startsWith('//')) {
-                        src = 'https:' + src;
-                    }
-                    src = src.replace(/^http:/, 'https:');
-                    
-                    if (!src.includes('default_thumbnail.png')) {
-                        data.push({ t: "image", d: src });
-                    }
-                }
+
+        // 3. 替換圖片標籤為唯一的文本標記
+        // 使用正則表達式尋找所有 img 標籤
+        rawHtml = rawHtml.replace(/<img[^>]*src\s*=\s*(['"])(.*?)\1[^>]*>/gi, (match, quote, src) => {
+            // 修正協定
+            if (src.startsWith('//')) {
+                src = 'https:' + src;
+            }
+            // 修正 http 到 https
+            src = src.replace(/^http:/, 'https:');
+            
+            // 忽略預設縮圖
+            if (src.includes('default_thumbnail.png')) {
+                return ''; 
             }
             
-            // 2.2 處理文本節點 (文本, strong, span, a, br)
-            else if (nodeType === 'text' || node.is('strong') || node.is('span') || node.is('a') || node.is('br') || node.is('center')) {
-                 
-                // 由於文本, span, strong, a, br 都在一起，我們需要手動提取和清理
-                // 我們只在遇到 <br> 時才應該將累積的文本輸出
-                
-                let currentHtml = node.toString(); // 獲取當前節點的原始 HTML/文本
-                
-                // 臨時標記 <strong> 內部的內容
-                currentHtml = currentHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
-                
-                // 移除 a/span/font 標籤，保留內容
-                currentHtml = currentHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1'); 
-                currentHtml = currentHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1'); 
-                currentHtml = currentHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1'); 
-                
-                // 移除所有其他不必要的 HTML 標籤 (除了 BR)
-                let text = currentHtml.replace(/<(?!\/?br\s*\/?)[^>]+>/gi, '');
+            return `\n@@IMG@@${src}@@/IMG@@\n`; // 在圖片前後加入換行符，確保單獨成行
+        });
+        
+        // 4. 處理粗體標籤
+        // 臨時標記 <strong> 內部的內容
+        rawHtml = rawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
+        
+        // 5. 移除所有其他 HTML 標籤，保留內容和換行符
+        
+        // 移除 a/span/font 標籤，保留內容 (移除樣式和連結標籤)
+        rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1'); 
+        rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1'); 
+        rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1'); 
+        rawHtml = rawHtml.replace(/<center[^>]*>([\s\S]*?)<\/center>/gi, '$1'); // 移除 center
 
-                // 將 <br> 替換為換行符，以便分段
-                text = text.replace(/<br\s*\/?>/gi, '\n').trim(); 
-                
-                if (text) {
-                    const lines = text.split('\n');
+        // 將 <br> 替換為換行
+        rawHtml = rawHtml.replace(/<br\s*\/?>/gi, '\n');
+        
+        // 移除所有剩餘的 HTML 標籤
+        let textStream = rawHtml.replace(/<[^>]+>/g, '');
 
-                    lines.forEach(line => {
-                        line = line.trim();
-                        if (line) {
-                            // 分割出粗體和普通文本段落
-                            const parts = line.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+        // 6. 清理並分割文本流
 
-                            parts.forEach(part => {
-                                let partIsBold = part.startsWith('@@BOLD@@');
-                                let partText = part.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim(); 
-                                
-                                if (partText) {
-                                    // 使用 V9 的解碼技巧
-                                    let decodedText = cheerio.load('<div>' + partText + '</div>')('div').text();
-                                    
-                                    let item = { t: "text", d: gbk2big5.traditionalized(decodedText) };
-                                    if (partIsBold) {
-                                        item.b = 1;
-                                    }
-                                    data.push(item);
-                                }
-                            });
+        // 清理多餘的空白和換行
+        textStream = textStream.replace(/(\n[ \t]*){2,}/g, '\n\n');
+        textStream = textStream.replace(/^[ \t]+/gm, ''); 
+        
+        const lines = textStream.split('\n');
+
+        // 7. 遍歷文本流，將標記轉換為結構化數據
+        lines.forEach(line => {
+            line = line.trim();
+            if (!line) return;
+
+            // 分割出 IMG, BOLD, 和普通文本
+            const parts = line.split(/(@@IMG@@.*?@@\/IMG@@|@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+
+            parts.forEach(part => {
+                part = part.trim();
+                if (!part) return;
+
+                // 處理圖片
+                if (part.startsWith('@@IMG@@')) {
+                    const src = part.replace('@@IMG@@', '').replace('@@/IMG@@', '').trim();
+                    data.push({ t: "image", d: src });
+                }
+                // 處理文本 (可能包含粗體)
+                else {
+                    // 分割文本以處理行內的粗體
+                    const textParts = part.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+                    
+                    textParts.forEach(textPart => {
+                        textPart = textPart.trim();
+                        if (!textPart) return;
+
+                        let partIsBold = textPart.startsWith('@@BOLD@@');
+                        let partText = textPart.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim(); 
+                        
+                        if (partText) {
+                            // 使用 Cheerio 解碼技巧
+                            let decodedText = cheerio.load('<div>' + partText + '</div>')('div').text();
+                            
+                            let item = { t: "text", d: gbk2big5.traditionalized(decodedText) };
+                            if (partIsBold) {
+                                item.b = 1;
+                            }
+                            data.push(item);
                         }
                     });
                 }
-            }
-            // 忽略其他標籤 (如 <center> 容器本身，因為我們已經遍歷它的內容)
-            
+            });
         });
-        
-    });
 
-    return JSON.stringify({type:"article", data: data});
-}
+        return JSON.stringify({type:"article", data: data});
+    }
     ]]>
 </script>
 </sited>
