@@ -35,7 +35,6 @@
             <item group="成人站" title="18禁情報" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=r18&amp;subtype=category&amp;subtypeSlug=r18news&amp;device=&amp;limit=18&amp;page=@page"/>
         </tags>
         <search parse="list_parse" url="https://api.clickme.net/article/list?key=clickme&amp;articleType=article&amp;subtype=search&amp;subtypeSlug=@key&amp;device=&amp;limit=18&amp;page=@page"/>
-        <book parse="book_parse"/>
         <section parse="section_parse"/>
     </main>
 
@@ -43,8 +42,8 @@
         <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
         <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
     </require>
-<script>
-    <![CDATA[
+    <script>
+        <![CDATA[
     // 核心的「內容列表」解析函式
     function list_parse(url, jsontext) {
         try {
@@ -64,45 +63,28 @@
         }
     }
 
-    // 解析文章詳情頁 (Book)，僅作導航用途
-    function book_parse(url, html) {
-        const $ = cheerio.load(html);
-        const name = $('meta[property="og:title"]').attr('content') || $('title').text();
-        const logo = $('meta[property="og:image"]').attr('content');
-        const sections = [{
-            name: "閱讀全文",
-            url: url.replace(/^http:/, 'https:')
-        }];
-        const book = {
-            name: gbk2big5.traditionalized(name),
-            logo: logo,
-            intro: gbk2big5.traditionalized("點擊下方 '閱讀全文' 開始閱讀"),
-            sections: sections
-        };
-        return JSON.stringify(book);
-    }
-
     // ⭐【核心修正 V10 - 文本流處理策略】解決順序、嵌套和遺失圖片問題
     function section_parse(url, html) {
         const $ = cheerio.load(html);
         const data = [];
-        
+        data.push({ t: "text", d: gbk2big5.traditionalized($('meta[property="og:title"]').attr('content') || $('title').text()), b: 1, s: 4 });
+
         // 1. 獲取文章內容容器的內部 HTML
         let rawHtml = $('article#article-detail-content').html() || '';
 
         if (!rawHtml) {
             return JSON.stringify({type:"article", data: data});
         }
-        
+
         // 2. 替換特殊區塊為文本標記 (例如廣告或嵌入內容的 DIV)
         // 必須先將這些區塊移除，避免干擾後續的標籤處理
         const tempDiv = cheerio.load(rawHtml);
-        
+
         // 替換 Twitter 嵌入的 div
         tempDiv('div.twitter-tweet').each(function() {
             rawHtml = rawHtml.replace($$(this).toString(), "@@TEXT@@[外部內容: 嵌入式內容]@@/TEXT@@");
         });
-        
+
         // 移除其他不需要的 DIV (如廣告)
         tempDiv('div').each(function() {
             const divContent = $$(this).html() || '';
@@ -122,30 +104,30 @@
             }
             // 修正 http 到 https
             src = src.replace(/^http:/, 'https:');
-            
+
             // 忽略預設縮圖
             if (src.includes('default_thumbnail.png')) {
-                return ''; 
+                return '';
             }
-            
+
             return `\n@@IMG@@${src}@@/IMG@@\n`; // 在圖片前後加入換行符，確保單獨成行
         });
-        
+
         // 4. 處理粗體標籤
         // 臨時標記 <strong> 內部的內容
         rawHtml = rawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
-        
+
         // 5. 移除所有其他 HTML 標籤，保留內容和換行符
-        
+
         // 移除 a/span/font 標籤，保留內容 (移除樣式和連結標籤)
-        rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1'); 
-        rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1'); 
-        rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1'); 
+        rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1');
+        rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1');
+        rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1');
         rawHtml = rawHtml.replace(/<center[^>]*>([\s\S]*?)<\/center>/gi, '$1'); // 移除 center
 
         // 將 <br> 替換為換行
         rawHtml = rawHtml.replace(/<br\s*\/?>/gi, '\n');
-        
+
         // 移除所有剩餘的 HTML 標籤
         let textStream = rawHtml.replace(/<[^>]+>/g, '');
 
@@ -153,8 +135,8 @@
 
         // 清理多餘的空白和換行
         textStream = textStream.replace(/(\n[ \t]*){2,}/g, '\n\n');
-        textStream = textStream.replace(/^[ \t]+/gm, ''); 
-        
+        textStream = textStream.replace(/^[ \t]+/gm, '');
+
         const lines = textStream.split('\n');
 
         // 7. 遍歷文本流，將標記轉換為結構化數據
@@ -178,18 +160,18 @@
                 else {
                     // 分割文本以處理行內的粗體
                     const textParts = part.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
-                    
+
                     textParts.forEach(textPart => {
                         textPart = textPart.trim();
                         if (!textPart) return;
 
                         let partIsBold = textPart.startsWith('@@BOLD@@');
-                        let partText = textPart.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim(); 
-                        
+                        let partText = textPart.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim();
+
                         if (partText) {
                             // 使用 Cheerio 解碼技巧
                             let decodedText = cheerio.load('<div>' + partText + '</div>')('div').text();
-                            
+
                             let item = { t: "text", d: gbk2big5.traditionalized(decodedText) };
                             if (partIsBold) {
                                 item.b = 1;
@@ -204,5 +186,5 @@
         return JSON.stringify({type:"article", data: data});
     }
     ]]>
-</script>
+    </script>
 </sited>

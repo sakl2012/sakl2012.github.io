@@ -12,12 +12,10 @@
 
     <main>
         <home url="https://123av.com/zh/dm9/" parse="home_list_parse" />
-        <tags parse="tags_parse" tagParse="list_parse" />
+        <tags parse="tags_parse" tagParse="list_parse" url="https://123av.com/zh/actresses?sort=most_viewed_week" />
         <search parse="list_parse" url="https://123av.com/zh/search?keyword=@key&amp;page=@page"/>
-        <book parse="book_parse_api_response"/>
         <section parse="section_parse"/>
     </main>
-
     <require>
         <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
         <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
@@ -34,18 +32,37 @@
             var $$ = cheerio.load($(this).html());
 			var groupElement = $(this);
             var groupName = $$('a').first().text().trim();
+            if (groupName.match(/列表|更多站点/)) return;
             // 在該分組下，尋找所有子項目連結
             $$('ul li a').each(function() {
                 var itemElement = $$(this);
                 var itemTitle = itemElement.text().trim();
                 var itemUrl = itemElement.attr('href');
+                if (itemTitle.match(/热门女演员/)) return;
                 if (itemUrl && itemTitle) {
-                    list.push({
-                        group: gbk2big5.traditionalized(groupName),
-                        title: gbk2big5.traditionalized(itemTitle),
-                        url: "https://123av.com/zh/"+itemUrl+"?page=@page"
-                    });
+                    if (!groupName.match(/观看JAV/)) {
+                        list.push({
+                            group: gbk2big5.traditionalized(groupName),
+                            title: gbk2big5.traditionalized(itemTitle),
+                            url: "https://123av.com/zh/"+itemUrl+"?page=@page&sort=trending"
+                        });
+                    }
+                    else {
+                        list.push({
+                            group: gbk2big5.traditionalized(groupName),
+                            title: gbk2big5.traditionalized(itemTitle),
+                            url: "https://123av.com/zh/"+itemUrl+"?page=@page"
+                        });
+                    }
                 }
+            });
+        });
+        $('.star a').each(function() {
+            var $$ = cheerio.load($(this).html());
+            list.push({
+                group: gbk2big5.traditionalized("本週熱門女優"),
+                title: gbk2big5.traditionalized($$('.name').text()),
+                url: "https://123av.com/zh/"+$(this).attr('href')+"?page=@page&sort=most_viewed_week"
             });
         });
         return JSON.stringify(list);
@@ -81,17 +98,6 @@
         return JSON.stringify(list);
     }
 
-    // 影片播放來源的解析函式
-    function book_parse_api_response(url, html) {
-        var $ = cheerio.load(html);
-        var book = {
-            name: gbk2big5.traditionalized($("h1").text().trim()),
-            logo: $("#player").attr("data-poster"),
-            sections: [{name: "播放", url: url}]
-        };
-        return JSON.stringify(book);
-    }
-
     function section_parse(url, html) {
         return JSON.stringify({type:"webview_player", data: url});
     }
@@ -109,6 +115,8 @@
             // 您的原始腳本邏輯開始
             var player = document.getElementById('player');
             var scenes = document.getElementById('scenes');
+            var title = document.querySelector('.d-flex h1');
+            var content = document.querySelector('.content');
 
             if (player) {
                 document.body.style.visibility = 'hidden';
@@ -133,9 +141,28 @@
                         current = current.parentElement;
                     }
                 } else {
-                // 如果 'player' 還沒找到，返回 false 繼續輪詢
-                return false;
-            }
+                    return false;
+                }
+                if (title) {
+                    var current = title;
+                    while (current && current.tagName !== 'BODY') {
+                        current.style.visibility = 'visible';
+                        current.style.display = 'block';
+                        current = current.parentElement;
+                    }
+                } else {
+                    return false;
+                }
+                if (content) {
+                    var current = content;
+                    while (current && current.tagName !== 'BODY') {
+                        current.style.visibility = 'visible';
+                        current.style.display = 'block';
+                        current = current.parentElement;
+                    }
+                } else {
+                    return false;
+                }
 
                 document.body.style.visibility = 'visible';
                 document.body.style.margin = '0';
