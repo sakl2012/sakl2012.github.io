@@ -124,7 +124,8 @@
                     const episodeUrl = episodeLink.attr('href');
                     if (episodeUrl && episodeUrl.includes('/video/')) {
                         sections.push({
-                            name: gbk2big5.traditionalized(group + ": " + episodeLink.text().trim()),
+                            group: gbk2big5.traditionalized(group),
+                            name: gbk2big5.traditionalized(episodeLink.text().trim()),
                             url: baseUrl + episodeUrl
                         });
                     }
