@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited>
+    <meta>
+        <title>卡卡洛普</title>
+        <intro>重要聲明：本網站為提供內容及檔案上載之平台，內容發佈者請確保所提供之檔案/內容無任何違法或牴觸法令之虞。卡卡洛普無法調解版權歸屬等相關法律糾紛，對所有上載之檔案和內容不負任何法律責任，一切檔案內容及言論為內容發佈者個人意見，並非本網站立場。</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+        <url>gamme.com.tw</url>
+        <updateUrl>https://sakl2012.github.io/sited/gamme.sited.xml</updateUrl>
+        <hide/>
+    </meta>
+
+    <main>
+        <home url="https://news.gamme.com.tw/category/all/page@page" parse="list_parse"/>
+        <tags tagParse="list_parse">
+            <item group="宅宅新聞" title="正妹" url="https://news.gamme.com.tw/category/hotchick/page@page"/>
+            <item group="宅宅新聞" title="動漫" url="https://news.gamme.com.tw/category/anime/page@page"/>
+            <item group="宅宅新聞" title="電影" url="https://news.gamme.com.tw/category/movies/page@page"/>
+            <item group="宅宅新聞" title="新奇" url="https://news.gamme.com.tw/category/fresh/page@page"/>
+            <item group="宅宅新聞" title="寵物" url="https://news.gamme.com.tw/category/pets/page@page"/>
+            <item group="宅宅新聞" title="型男" url="https://news.gamme.com.tw/category/hotguy/page@page"/>
+            <item group="宅宅新聞" title="KUSO" url="https://news.gamme.com.tw/category/kuso/page@page"/>
+            <item group="宅宅新聞" title="詭異" url="https://news.gamme.com.tw/category/myst/page@page"/>
+            <item group="宅宅新聞" title="娛樂" url="https://news.gamme.com.tw/category/entertainment/page@page"/>
+            <item group="宅宅新聞" title="科技" url="https://news.gamme.com.tw/category/3c/page@page"/>
+            <item group="宅宅新聞" title="美食" url="https://news.gamme.com.tw/category/tasty/page@page"/>
+            <item group="宅宅新聞" title="遊戲" url="https://news.gamme.com.tw/category/gaming/page@page"/>
+            <item group="宅宅新聞" title="玩具" url="https://news.gamme.com.tw/category/toy/page@page"/>
+            <item group="宅宅新聞" title="設計" url="https://news.gamme.com.tw/category/design/page@page"/>
+            <item group="宅宅新聞" title="潮流" url="https://news.gamme.com.tw/category/trend/page@page"/>
+            <item group="宅宅新聞" title="汽車" url="https://news.gamme.com.tw/category/car/page@page"/>
+            <item group="宅宅新聞" title="精華" url="https://news.gamme.com.tw/category/feature/page@page"/>
+            <item group="西斯新聞" title="最新" url="https://sexynews.gamme.com.tw/category/all/page@page"/>
+            <item group="西斯新聞" title="正妹" url="https://sexynews.gamme.com.tw/category/hotchick/page@page"/>
+            <item group="西斯新聞" title="動漫" url="https://sexynews.gamme.com.tw/category/anime/page@page"/>
+            <item group="西斯新聞" title="電影" url="https://sexynews.gamme.com.tw/category/movies/page@page"/>
+            <item group="西斯新聞" title="新奇" url="https://sexynews.gamme.com.tw/category/fresh/page@page"/>
+            <item group="西斯新聞" title="型男" url="https://sexynews.gamme.com.tw/category/hotguy/page@page"/>
+            <item group="西斯新聞" title="KUSO" url="https://sexynews.gamme.com.tw/category/kuso/page@page"/>
+            <item group="西斯新聞" title="娛樂" url="https://sexynews.gamme.com.tw/category/entertainment/page@page"/>
+            <item group="西斯新聞" title="遊戲" url="https://sexynews.gamme.com.tw/category/gaming/page@page"/>
+            <item group="西斯新聞" title="玩具" url="https://sexynews.gamme.com.tw/category/toy/page@page"/>
+            <item group="西斯新聞" title="精華" url="https://sexynews.gamme.com.tw/category/feature/page@page"/>
+            <item group="情報局" title="最新" url="https://kn.gamme.com.tw/category/all/page@page"/>
+            <item group="情報局" title="遊戲" url="https://kn.gamme.com.tw/category/gaming/page@page"/>
+            <item group="情報局" title="科技" url="https://kn.gamme.com.tw/category/3c/page@page"/>
+            <item group="情報局" title="電影" url="https://kn.gamme.com.tw/category/movies/page@page"/>
+            <item group="情報局" title="汽機車" url="https://kn.gamme.com.tw/category/motor/page@page"/>
+            <item group="情報局" title="美妝" url="https://kn.gamme.com.tw/category/cosm/page@page"/>
+            <item group="情報局" title="時尚" url="https://kn.gamme.com.tw/category/fashion/page@page"/>
+            <item group="情報局" title="追星" url="https://kn.gamme.com.tw/category/star/page@page"/>
+            <item group="情報局" title="生活" url="https://kn.gamme.com.tw/category/life/page@page"/>
+            <item group="情報局" title="動漫" url="https://kn.gamme.com.tw/category/anime/page@page"/>
+        </tags>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+    <script>
+		<![CDATA[
+		// 核心的「內容列表」解析函式 - 適用於卡卡洛普 HTML 結構
+		function list_parse(url, html) {
+			const $ = cheerio.load(html);
+			const list = [];
+			
+			// 核心選擇器：涵蓋所有已知的列表項容器 (List-4, main-article, ul li)
+			const selector = 'div.List-4, div.main-article, div#category_new ul li, section ul li';
+
+			$(selector).each(function() {
+				const element = $(this);
+				
+				const linkNode = element.find('h3 a'); 
+				const imgNode = element.find('img');
+				
+				const backupLinkNode = element.find('> a[rel="bookmark"], > a'); 
+
+				let itemUrl = linkNode.attr('href') || backupLinkNode.attr('href');
+				let itemName = linkNode.text().trim() || backupLinkNode.attr('title'); 
+				let itemLogo = imgNode.attr('src') || imgNode.attr('data-src');
+
+				if (itemUrl && itemName) {
+					
+					if (itemUrl.includes('r.php?id=') || itemUrl.includes('links.php?id=')) {
+						 return; 
+					}
+					
+					if (itemLogo) {
+						if (itemLogo.startsWith('//')) {
+							itemLogo = 'https:' + itemLogo;
+						}
+						itemLogo = itemLogo.replace(/^http:/, 'https:');
+						
+						if (itemLogo.includes('no-150x110.gif')) {
+							itemLogo = null; 
+						}
+					}
+					
+					list.push({
+						logo: itemLogo,
+						name: gbk2big5.traditionalized(itemName.trim()),
+						url: itemUrl.replace(/^http:/, 'https:') 
+					});
+				}
+			});
+			
+			return JSON.stringify(list);
+		}
+
+		// ⭐【核心修正 V18 - 圖片延遲載入和內容淨化優化】
+		function section_parse(url, html) {
+			const $ = cheerio.load(html);
+			const data = [];
+			
+			// 輸出文章標題作為第一個粗體文本項
+			data.push({ t: "text", d: gbk2big5.traditionalized($('h1.title').text() || $('meta[property="og:title"]').attr('content') || $('title').text()), b: 1, s: 4 });
+
+			// 1. 獲取文章內容容器的內部 HTML
+			let rawHtml = $('#entry').html() || '';
+			
+			if (!rawHtml) {
+				return JSON.stringify({type:"article", data: data});
+			}
+			
+			// 2. 內容淨化：移除不必要的區塊 (使用 Cheerio 輔助淨化)
+			const contentPurger = cheerio.load(rawHtml);
+			
+			// 移除底部的廣告、分享和相關新聞區塊
+			contentPurger('.social_block').remove();
+			contentPurger('section.related_show').remove();
+			contentPurger('div.sidead_336280').remove();
+			contentPurger('.tags').remove(); 
+			contentPurger('.photovia').remove(); // 移除圖說來源
+			contentPurger('p:contains("原汁原味的內容在這裡")').remove(); // 移除原汁原味連結
+			contentPurger('p.tags').remove(); // 移除文章標籤段落
+			contentPurger('a[title="加入收藏"]').remove(); // 移除頂部收藏按鈕
+
+			rawHtml = contentPurger.html() || '';
+			
+			// 3. 替換 IFRAME 和 SCRIPT 為文本標記
+			
+			// 3.1. 處理 IFRAME (Tiktok, Youtube, Facebook)
+			rawHtml = rawHtml.replace(/<iframe[^>]*src\s*=\s*(['"])(.*?)\1[^>]*>[\s\S]*?<\/iframe>/gi, (match, quote, src) => {
+				let embedType = '嵌入式內容';
+				if (src.includes('instagram')) embedType = 'Instagram';
+				else if (src.includes('facebook')) embedType = 'Facebook';
+				else if (src.includes('youtube') || src.includes('youtu.be')) embedType = 'YouTube';
+				else if (src.includes('tiktok')) embedType = 'TikTok';
+
+				return `\n@@EMBED@@[外部內容: ${embedType} 嵌入]@@/EMBED@@\n`;
+			});
+			
+			// 3.2. 移除所有外部的 <script> 標籤
+			rawHtml = rawHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+			
+			
+			// 4. 替換圖片標籤為唯一的文本標記
+			// ⭐ 核心修正點：同時捕獲 src 和 data-src 的值
+			rawHtml = rawHtml.replace(/<img[^>]*\s*(?:src|data-src)\s*=\s*(['"])(.*?)\1[^>]*>/gi, (match, attrName, quote, src) => {
+				let imageUrl = src;
+
+				if (imageUrl.startsWith('//')) {
+					imageUrl = 'https:' + imageUrl;
+				}
+				imageUrl = imageUrl.replace(/^http:/, 'https:');
+
+				// 忽略灰色預載圖片和預設縮圖
+				if (imageUrl.includes('/imgs/grey.gif') || imageUrl.includes('default_pic.png') || imageUrl.includes('data:image')) {
+					return '';
+				}
+
+				return `\n@@IMG@@${imageUrl}@@/IMG@@\n`;
+			});
+			
+			// 5. 處理粗體標籤
+			rawHtml = rawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
+
+			// 6. 移除所有其他 HTML 標籤，保留內容和換行符
+
+			// 6.1. 移除圖說標籤 <pre> (將其轉換為普通文本，並在前後添加換行)
+			rawHtml = rawHtml.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, '\n$1\n');
+
+			// 6.2. 移除 a/span/font/center 標籤，保留內容
+			rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1');
+			rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1');
+			rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1');
+			rawHtml = rawHtml.replace(/<center[^>]*>([\s\S]*?)<\/center>/gi, '$1'); 
+			
+			// 移除普通 DIV（需要小心，但由於我們只處理 entry 內的內容，這裡移除大多數 DIV 是安全的）
+			rawHtml = rawHtml.replace(/<div[^>]*>([\s\S]*?)<\/div>/gi, '$1'); 
+
+
+			// 6.3. 將 <p> 結束標籤替換為兩個換行符（段落）
+			rawHtml = rawHtml.replace(/<\/p>/gi, '\n\n');
+			
+			// 6.4. 將 <br> 替換為一個換行
+			rawHtml = rawHtml.replace(/<br\s*\/?>/gi, '\n');
+
+			// 移除所有剩餘的 HTML 標籤
+			let textStream = rawHtml.replace(/<[^>]+>/g, '');
+
+			// 7. 清理並分割文本流
+
+			// 清理多餘的空白和換行
+			textStream = textStream.replace(/(\n[ \t]*){2,}/g, '\n\n');
+			textStream = textStream.replace(/^[ \t]+/gm, '');
+
+			const lines = textStream.split('\n');
+
+			// 8. 遍歷文本流，將標記轉換為結構化數據
+			lines.forEach(line => {
+				line = line.trim();
+				if (!line) return;
+
+				// 分割出 IMG, EMBED, BOLD, 和普通文本
+				const parts = line.split(/(@@IMG@@.*?@@\/IMG@@|@@EMBED@@.*?@@\/EMBED@@|@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+
+				parts.forEach(part => {
+					part = part.trim();
+					if (!part) return;
+
+					// 處理圖片
+					if (part.startsWith('@@IMG@@')) {
+						const src = part.replace('@@IMG@@', '').replace('@@/IMG@@', '').trim();
+						data.push({ t: "image", d: src });
+					}
+					// 處理嵌入內容
+					else if (part.startsWith('@@EMBED@@')) {
+						const text = part.replace('@@EMBED@@', '').replace('@@/EMBED@@', '').trim();
+						let decodedText = cheerio.load('<div>' + text + '</div>')('div').text();
+						data.push({ t: "text", d: gbk2big5.traditionalized(decodedText) });
+					}
+					// 處理文本 (可能包含粗體)
+					else {
+						const textParts = part.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+
+						textParts.forEach(textPart => {
+							textPart = textPart.trim();
+							if (!textPart) return;
+
+							let partIsBold = textPart.startsWith('@@BOLD@@');
+							let partText = textPart.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim();
+
+							if (partText) {
+								let decodedText = cheerio.load('<div>' + partText + '</div>')('div').text();
+
+								let item = { t: "text", d: gbk2big5.traditionalized(decodedText) };
+								if (partIsBold) {
+									item.b = 1;
+								}
+								data.push(item);
+							}
+						});
+					}
+				});
+			});
+
+			return JSON.stringify({type:"article", data: data});
+		}
+		]]>
+	</script>
+</sited>
