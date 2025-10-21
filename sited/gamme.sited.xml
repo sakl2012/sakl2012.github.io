@@ -41,16 +41,16 @@
             <item group="西斯新聞" title="遊戲" url="https://sexynews.gamme.com.tw/category/gaming/page@page"/>
             <item group="西斯新聞" title="玩具" url="https://sexynews.gamme.com.tw/category/toy/page@page"/>
             <item group="西斯新聞" title="精華" url="https://sexynews.gamme.com.tw/category/feature/page@page"/>
-            <item group="情報局" title="最新" url="https://kn.gamme.com.tw/category/all/page@page"/>
-            <item group="情報局" title="遊戲" url="https://kn.gamme.com.tw/category/gaming/page@page"/>
-            <item group="情報局" title="科技" url="https://kn.gamme.com.tw/category/3c/page@page"/>
-            <item group="情報局" title="電影" url="https://kn.gamme.com.tw/category/movies/page@page"/>
-            <item group="情報局" title="汽機車" url="https://kn.gamme.com.tw/category/motor/page@page"/>
-            <item group="情報局" title="美妝" url="https://kn.gamme.com.tw/category/cosm/page@page"/>
-            <item group="情報局" title="時尚" url="https://kn.gamme.com.tw/category/fashion/page@page"/>
-            <item group="情報局" title="追星" url="https://kn.gamme.com.tw/category/star/page@page"/>
-            <item group="情報局" title="生活" url="https://kn.gamme.com.tw/category/life/page@page"/>
-            <item group="情報局" title="動漫" url="https://kn.gamme.com.tw/category/anime/page@page"/>
+            <item group="情報局" title="最新" url="https://kn.gamme.com.tw/category/all/page/@page"/>
+            <item group="情報局" title="遊戲" url="https://kn.gamme.com.tw/category/gaming/page/@page"/>
+            <item group="情報局" title="科技" url="https://kn.gamme.com.tw/category/3c/page/@page"/>
+            <item group="情報局" title="電影" url="https://kn.gamme.com.tw/category/movies/page/@page"/>
+            <item group="情報局" title="汽機車" url="https://kn.gamme.com.tw/category/motor/page/@page"/>
+            <item group="情報局" title="美妝" url="https://kn.gamme.com.tw/category/cosm/page/@page"/>
+            <item group="情報局" title="時尚" url="https://kn.gamme.com.tw/category/fashion/page/@page"/>
+            <item group="情報局" title="追星" url="https://kn.gamme.com.tw/category/star/page/@page"/>
+            <item group="情報局" title="生活" url="https://kn.gamme.com.tw/category/life/page/@page"/>
+            <item group="情報局" title="動漫" url="https://kn.gamme.com.tw/category/anime/page/@page"/>
         </tags>
         <section parse="section_parse"/>
     </main>
@@ -60,205 +60,260 @@
         <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
     </require>
     <script>
-		<![CDATA[
-		// 核心的「內容列表」解析函式 - 適用於卡卡洛普 HTML 結構
-		function list_parse(url, html) {
-			const $ = cheerio.load(html);
-			const list = [];
-			
-			// 核心選擇器：涵蓋所有已知的列表項容器 (List-4, main-article, ul li)
-			const selector = 'div.List-4, div.main-article, div#category_new ul li, section ul li';
+        <![CDATA[
+    // 輔助函式：安全地執行繁體化轉換
+    function safeTraditionalize(text) {
+        // 檢查 gbk2big5 是否存在且其方法是否為函式
+        if (typeof gbk2big5 !== 'undefined' && typeof gbk2big5.traditionalized === 'function') {
+            return gbk2big5.traditionalized(text);
+        }
+        return text; // 如果環境不支持轉換，則返回原文本
+    }
 
-			$(selector).each(function() {
-				const element = $(this);
-				
-				const linkNode = element.find('h3 a'); 
-				const imgNode = element.find('img');
-				
-				const backupLinkNode = element.find('> a[rel="bookmark"], > a'); 
+    // 核心的「內容列表」解析函式
+    function list_parse(url, html) {
+        const $ = cheerio.load(html);
+        const list = [];
 
-				let itemUrl = linkNode.attr('href') || backupLinkNode.attr('href');
-				let itemName = linkNode.text().trim() || backupLinkNode.attr('title'); 
-				let itemLogo = imgNode.attr('src') || imgNode.attr('data-src');
+        const selector = '#category_new li, .main-article, .List-4';
 
-				if (itemUrl && itemName) {
-					
-					if (itemUrl.includes('r.php?id=') || itemUrl.includes('links.php?id=')) {
-						 return; 
-					}
-					
-					if (itemLogo) {
-						if (itemLogo.startsWith('//')) {
-							itemLogo = 'https:' + itemLogo;
-						}
-						itemLogo = itemLogo.replace(/^http:/, 'https:');
-						
-						if (itemLogo.includes('no-150x110.gif')) {
-							itemLogo = null; 
-						}
-					}
-					
-					list.push({
-						logo: itemLogo,
-						name: gbk2big5.traditionalized(itemName.trim()),
-						url: itemUrl.replace(/^http:/, 'https:') 
-					});
-				}
-			});
-			
-			return JSON.stringify(list);
-		}
+        $(selector).each(function() {
+            const element = $(this);
+            const elementHtml = element.html();
 
-		// ⭐【核心修正 V18 - 圖片延遲載入和內容淨化優化】
-		function section_parse(url, html) {
-			const $ = cheerio.load(html);
-			const data = [];
-			
-			// 輸出文章標題作為第一個粗體文本項
-			data.push({ t: "text", d: gbk2big5.traditionalized($('h1.title').text() || $('meta[property="og:title"]').attr('content') || $('title').text()), b: 1, s: 4 });
+            // 無依賴 Cheerio 模式：使用 cheerio.load($(this).html()) 模擬 .find()
+            const $$ = cheerio.load(elementHtml);
 
-			// 1. 獲取文章內容容器的內部 HTML
-			let rawHtml = $('#entry').html() || '';
-			
-			if (!rawHtml) {
-				return JSON.stringify({type:"article", data: data});
-			}
-			
-			// 2. 內容淨化：移除不必要的區塊 (使用 Cheerio 輔助淨化)
-			const contentPurger = cheerio.load(rawHtml);
-			
-			// 移除底部的廣告、分享和相關新聞區塊
-			contentPurger('.social_block').remove();
-			contentPurger('section.related_show').remove();
-			contentPurger('div.sidead_336280').remove();
-			contentPurger('.tags').remove(); 
-			contentPurger('.photovia').remove(); // 移除圖說來源
-			contentPurger('p:contains("原汁原味的內容在這裡")').remove(); // 移除原汁原味連結
-			contentPurger('p.tags').remove(); // 移除文章標籤段落
-			contentPurger('a[title="加入收藏"]').remove(); // 移除頂部收藏按鈕
+            const linkNode = $$('h3 a');
+            const imgNode = $$('img');
+            const backupLinkNode = $$('a');
 
-			rawHtml = contentPurger.html() || '';
-			
-			// 3. 替換 IFRAME 和 SCRIPT 為文本標記
-			
-			// 3.1. 處理 IFRAME (Tiktok, Youtube, Facebook)
-			rawHtml = rawHtml.replace(/<iframe[^>]*src\s*=\s*(['"])(.*?)\1[^>]*>[\s\S]*?<\/iframe>/gi, (match, quote, src) => {
-				let embedType = '嵌入式內容';
-				if (src.includes('instagram')) embedType = 'Instagram';
-				else if (src.includes('facebook')) embedType = 'Facebook';
-				else if (src.includes('youtube') || src.includes('youtu.be')) embedType = 'YouTube';
-				else if (src.includes('tiktok')) embedType = 'TikTok';
+            let itemUrl = linkNode.attr('href') || backupLinkNode.attr('href');
+            let itemName = linkNode.text().trim() || backupLinkNode.attr('title') || linkNode.attr('title');
 
-				return `\n@@EMBED@@[外部內容: ${embedType} 嵌入]@@/EMBED@@\n`;
-			});
-			
-			// 3.2. 移除所有外部的 <script> 標籤
-			rawHtml = rawHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-			
-			
-			// 4. 替換圖片標籤為唯一的文本標記
-			// ⭐ 核心修正點：同時捕獲 src 和 data-src 的值
-			rawHtml = rawHtml.replace(/<img[^>]*\s*(?:src|data-src)\s*=\s*(['"])(.*?)\1[^>]*>/gi, (match, attrName, quote, src) => {
-				let imageUrl = src;
-
-				if (imageUrl.startsWith('//')) {
-					imageUrl = 'https:' + imageUrl;
-				}
-				imageUrl = imageUrl.replace(/^http:/, 'https:');
-
-				// 忽略灰色預載圖片和預設縮圖
-				if (imageUrl.includes('/imgs/grey.gif') || imageUrl.includes('default_pic.png') || imageUrl.includes('data:image')) {
-					return '';
-				}
-
-				return `\n@@IMG@@${imageUrl}@@/IMG@@\n`;
-			});
-			
-			// 5. 處理粗體標籤
-			rawHtml = rawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
-
-			// 6. 移除所有其他 HTML 標籤，保留內容和換行符
-
-			// 6.1. 移除圖說標籤 <pre> (將其轉換為普通文本，並在前後添加換行)
-			rawHtml = rawHtml.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, '\n$1\n');
-
-			// 6.2. 移除 a/span/font/center 標籤，保留內容
-			rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1');
-			rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1');
-			rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1');
-			rawHtml = rawHtml.replace(/<center[^>]*>([\s\S]*?)<\/center>/gi, '$1'); 
-			
-			// 移除普通 DIV（需要小心，但由於我們只處理 entry 內的內容，這裡移除大多數 DIV 是安全的）
-			rawHtml = rawHtml.replace(/<div[^>]*>([\s\S]*?)<\/div>/gi, '$1'); 
+            // 修正點：優先 data-original，其次 data-src，最後 src
+            let itemLogo = imgNode.attr('data-original') || imgNode.attr('data-src') || imgNode.attr('src');
 
 
-			// 6.3. 將 <p> 結束標籤替換為兩個換行符（段落）
-			rawHtml = rawHtml.replace(/<\/p>/gi, '\n\n');
-			
-			// 6.4. 將 <br> 替換為一個換行
-			rawHtml = rawHtml.replace(/<br\s*\/?>/gi, '\n');
+            if (itemUrl && itemName) {
 
-			// 移除所有剩餘的 HTML 標籤
-			let textStream = rawHtml.replace(/<[^>]+>/g, '');
+                // 🚨 廣告過濾邏輯
+                if (itemUrl.includes('r.php?id=') || itemUrl.includes('links.php?id=')) {
+                     return;
+                }
 
-			// 7. 清理並分割文本流
+                // 修正圖片協議
+                if (itemLogo) {
+                    if (itemLogo.startsWith('//')) {
+                        itemLogo = 'https:' + itemLogo;
+                    }
+                    itemLogo = itemLogo.replace(/^http:/, 'https:');
 
-			// 清理多餘的空白和換行
-			textStream = textStream.replace(/(\n[ \t]*){2,}/g, '\n\n');
-			textStream = textStream.replace(/^[ \t]+/gm, '');
+                    if (itemLogo.includes('no-150x110.gif')) {
+                        itemLogo = null;
+                    }
+                }
 
-			const lines = textStream.split('\n');
+                list.push({
+                    logo: itemLogo,
+                    name: safeTraditionalize(itemName.trim()),
+                    url: itemUrl.replace(/^http:/, 'https:')
+                });
+            }
+        });
 
-			// 8. 遍歷文本流，將標記轉換為結構化數據
-			lines.forEach(line => {
-				line = line.trim();
-				if (!line) return;
+        return JSON.stringify(list);
+    }
 
-				// 分割出 IMG, EMBED, BOLD, 和普通文本
-				const parts = line.split(/(@@IMG@@.*?@@\/IMG@@|@@EMBED@@.*?@@\/EMBED@@|@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+    // ⭐【核心修正 V21 - section_parse 圖片載入順序修正】
+    function section_parse(url, html) {
+        const $ = cheerio.load(html);
+        const data = [];
 
-				parts.forEach(part => {
-					part = part.trim();
-					if (!part) return;
+        // 輸出文章標題作為第一個粗體文本項
+        data.push({
+            t: "text",
+            d: safeTraditionalize($('h1.title').text() || $('meta[property="og:title"]').attr('content') || $('title').text()),
+            b: 1,
+            s: 4
+        });
 
-					// 處理圖片
-					if (part.startsWith('@@IMG@@')) {
-						const src = part.replace('@@IMG@@', '').replace('@@/IMG@@', '').trim();
-						data.push({ t: "image", d: src });
-					}
-					// 處理嵌入內容
-					else if (part.startsWith('@@EMBED@@')) {
-						const text = part.replace('@@EMBED@@', '').replace('@@/EMBED@@', '').trim();
-						let decodedText = cheerio.load('<div>' + text + '</div>')('div').text();
-						data.push({ t: "text", d: gbk2big5.traditionalized(decodedText) });
-					}
-					// 處理文本 (可能包含粗體)
-					else {
-						const textParts = part.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+        // 1. 獲取文章內容容器的內部 HTML
+        let rawHtml = $('#entry').html() || '';
 
-						textParts.forEach(textPart => {
-							textPart = textPart.trim();
-							if (!textPart) return;
+        if (typeof rawHtml !== 'string') {
+            rawHtml = '';
+        }
 
-							let partIsBold = textPart.startsWith('@@BOLD@@');
-							let partText = textPart.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim();
+        if (!rawHtml) {
+            return JSON.stringify({type:"article", data: data});
+        }
 
-							if (partText) {
-								let decodedText = cheerio.load('<div>' + partText + '</div>')('div').text();
+        // 2. 內容淨化：移除不必要的區塊 (使用 Cheerio 輔助淨化)
+        const contentPurger = cheerio.load(rawHtml);
 
-								let item = { t: "text", d: gbk2big5.traditionalized(decodedText) };
-								if (partIsBold) {
-									item.b = 1;
-								}
-								data.push(item);
-							}
-						});
-					}
-				});
-			});
+        // 移除底部的廣告、分享和相關新聞區塊
+        contentPurger('.social_block').remove();
+        contentPurger('section.related_show').remove();
+        contentPurger('div.sidead_336280').remove();
+        contentPurger('.tags').remove();
+        contentPurger('.photovia').remove();
+        contentPurger('p:contains("原汁原味的內容在這裡")').remove();
+        contentPurger('p.tags').remove();
+        contentPurger('a[title="加入收藏"]').remove();
 
-			return JSON.stringify({type:"article", data: data});
-		}
-		]]>
-	</script>
+        rawHtml = contentPurger.html() || '';
+
+        // 3. 替換 IFRAME 和 SCRIPT 為文本標記
+
+        // 3.1. 處理 IFRAME (Tiktok, Youtube, Facebook)
+        rawHtml = rawHtml.replace(/<iframe[^>]*src\s*=\s*(['"])(.*?)\1[^>]*>[\s\S]*?<\/iframe>/gi, function(match, quote, src) {
+            let embedType = '嵌入式內容';
+            if (src.includes('instagram')) embedType = 'Instagram';
+            else if (src.includes('facebook')) embedType = 'Facebook';
+            else if (src.includes('youtube') || src.includes('youtu.be')) embedType = 'YouTube';
+            else if (src.includes('tiktok')) embedType = 'TikTok';
+
+            return `\n@@EMBED@@[外部內容: ${embedType} 嵌入]@@/EMBED@@\n`;
+        });
+
+        // 3.2. 移除所有外部的 <script> 標籤
+        rawHtml = rawHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+
+
+        // 4. 替換圖片標籤為唯一的文本標記
+        // ⭐ 核心修正點：使用多步驟替換，優先使用 data-original/data-src 的值
+
+        let processedHtml = rawHtml;
+        let finalImageUrls = [];
+
+        // --- 4.1. 步驟一：處理並移除所有包含 data-original 或 data-src 的 img 標籤 ---
+        // 這種模式下，src 幾乎都是佔位符
+        const lazyLoadRegex = /<img[^>]*\s*(?:data-original|data-src)\s*=\s*(['"])(.*?)\1[^>]*>/gi;
+
+        processedHtml = processedHtml.replace(lazyLoadRegex, function(match, quote, src) {
+            // 這是延遲載入的真實 URL
+            let imageUrl = src;
+
+            if (imageUrl.startsWith('//')) {
+                imageUrl = 'https:' + imageUrl;
+            }
+            imageUrl = imageUrl.replace(/^http:/, 'https:');
+
+            if (imageUrl.includes('default_pic.png') || imageUrl.includes('data:image')) {
+                return ''; // 忽略無效圖
+            }
+
+            // 由於無法保證順序，我們將標記插入文本流
+            return `\n@@IMG@@${imageUrl}@@/IMG@@\n`;
+        });
+
+        // --- 4.2. 步驟二：處理殘留的 img 標籤（這些是沒有 data-original/data-src 的標準 src） ---
+        const standardSrcRegex = /<img[^>]*\s*src\s*=\s*(['"])(.*?)\1[^>]*>/gi;
+
+        processedHtml = processedHtml.replace(standardSrcRegex, function(match, quote, src) {
+            let imageUrl = src;
+
+            // 忽略灰色佔位符
+            if (imageUrl.includes('/imgs/grey.gif') || imageUrl.includes('default_pic.png')) {
+                return '';
+            }
+
+            if (imageUrl.startsWith('//')) {
+                imageUrl = 'https:' + imageUrl;
+            }
+            imageUrl = imageUrl.replace(/^http:/, 'https:');
+
+            return `\n@@IMG@@${imageUrl}@@/IMG@@\n`;
+        });
+
+        rawHtml = processedHtml; // 將處理後的 HTML 重新賦值給 rawHtml
+
+        // 5. 處理粗體標籤
+        rawHtml = rawHtml.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '@@BOLD@@$1@@/BOLD@@');
+
+        // 6. 移除所有其他 HTML 標籤，保留內容和換行符
+
+        // 6.1. 移除圖說標籤 <pre> (將其轉換為普通文本，並在前後添加換行)
+        rawHtml = rawHtml.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, '\n$1\n');
+
+        // 6.2. 移除 a/span/font/center 標籤，保留內容
+        rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1');
+        rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1');
+        rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1');
+        rawHtml = rawHtml.replace(/<center[^>]*>([\s\S]*?)<\/center>/gi, '$1');
+
+        // 移除普通 DIV
+        rawHtml = rawHtml.replace(/<div[^>]*>([\s\S]*?)<\/div>/gi, '$1');
+
+
+        // 6.3. 將 <p> 結束標籤替換為兩個換行符（段落）
+        rawHtml = rawHtml.replace(/<\/p>/gi, '\n\n');
+
+        // 6.4. 將 <br> 替換為一個換行
+        rawHtml = rawHtml.replace(/<br\s*\/?>/gi, '\n');
+
+        // 移除所有剩餘的 HTML 標籤
+        let textStream = rawHtml.replace(/<[^>]+>/g, '');
+
+        // 7. 清理並分割文本流
+
+        // 清理多餘的空白和換行
+        textStream = textStream.replace(/(\n[ \t]*){2,}/g, '\n\n');
+        textStream = textStream.replace(/^[ \t]+/gm, '');
+
+        const lines = textStream.split('\n');
+
+        // 8. 遍歷文本流，將標記轉換為結構化數據
+        lines.forEach(line => {
+            line = line.trim();
+            if (!line) return;
+
+            // 分割出 IMG, EMBED, BOLD, 和普通文本
+            const parts = line.split(/(@@IMG@@.*?@@\/IMG@@|@@EMBED@@.*?@@\/EMBED@@|@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+
+            parts.forEach(part => {
+                part = part.trim();
+                if (!part) return;
+
+                // 處理圖片
+                if (part.startsWith('@@IMG@@')) {
+                    const src = part.replace('@@IMG@@', '').replace('@@/IMG@@', '').trim();
+                    data.push({ t: "image", d: src });
+                }
+                // 處理嵌入內容
+                else if (part.startsWith('@@EMBED@@')) {
+                    const text = part.replace('@@EMBED@@', '').replace('@@/EMBED@@', '').trim();
+                    let decodedText = cheerio.load('<div>' + text + '</div>')('div').text();
+                    data.push({ t: "text", d: safeTraditionalize(decodedText) });
+                }
+                // 處理文本 (可能包含粗體)
+                else {
+                    const textParts = part.split(/(@@BOLD@@.*?@@\/BOLD@@)/g).filter(p => p.trim() !== '');
+
+                    textParts.forEach(textPart => {
+                        textPart = textPart.trim();
+                        if (!textPart) return;
+
+                        let partIsBold = textPart.startsWith('@@BOLD@@');
+                        let partText = textPart.replace(/@@BOLD@@|@@\/BOLD@@/g, '').trim();
+
+                        if (partText) {
+                            let decodedText = cheerio.load('<div>' + partText + '</div>')('div').text();
+
+                            let item = { t: "text", d: safeTraditionalize(decodedText) };
+                            if (partIsBold) {
+                                item.b = 1;
+                            }
+                            data.push(item);
+                        }
+                    });
+                }
+            });
+        });
+
+        return JSON.stringify({type:"article", data: data});
+    }
+    ]]>
+    </script>
 </sited>
