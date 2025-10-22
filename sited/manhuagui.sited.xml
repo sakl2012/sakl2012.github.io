@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited>
+    <meta>
+        <title>看漫畫</title>
+        <intro>@2013-2020 看漫畫</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+        <url>manhuagui.com</url>
+        <updateUrl>https://sakl2012.github.io/sited/manhuagui.sited.xml</updateUrl>
+        <hide/>
+    </meta>
+
+    <main>
+        <home url="https://m.manhuagui.com/update/?page=@page&amp;ajax=1" parse="list_parse" />
+        <tags tagParse="list_parse">
+            <item title="日本" url="https://m.manhuagui.com/list/japan/?page=@page&amp;ajax=1"/>
+			<item title="港台" url="https://m.manhuagui.com/list/hongkong/?page=@page&amp;ajax=1"/>
+			<item title="其它" url="https://m.manhuagui.com/list/other/?page=@page&amp;ajax=1"/>
+			<item title="歐美" url="https://m.manhuagui.com/list/europe/?page=@page&amp;ajax=1"/>
+			<item title="內地" url="https://m.manhuagui.com/list/china/?page=@page&amp;ajax=1"/>
+			<item title="韓國" url="https://m.manhuagui.com/list/korea/?page=@page&amp;ajax=1"/>
+			<item title="熱血" url="https://m.manhuagui.com/list/rexue/?page=@page&amp;ajax=1"/>
+			<item title="冒險" url="https://m.manhuagui.com/list/maoxian/?page=@page&amp;ajax=1"/>
+			<item title="魔幻" url="https://m.manhuagui.com/list/mohuan/?page=@page&amp;ajax=1"/>
+			<item title="神鬼" url="https://m.manhuagui.com/list/shengui/?page=@page&amp;ajax=1"/>
+			<item title="搞笑" url="https://m.manhuagui.com/list/gaoxiao/?page=@page&amp;ajax=1"/>
+			<item title="萌系" url="https://m.manhuagui.com/list/mengxi/?page=@page&amp;ajax=1"/>
+			<item title="愛情" url="https://m.manhuagui.com/list/aiqing/?page=@page&amp;ajax=1"/>
+			<item title="科幻" url="https://m.manhuagui.com/list/kehuan/?page=@page&amp;ajax=1"/>
+			<item title="魔法" url="https://m.manhuagui.com/list/mofa/?page=@page&amp;ajax=1"/>
+			<item title="格鬥" url="https://m.manhuagui.com/list/gedou/?page=@page&amp;ajax=1"/>
+			<item title="武俠" url="https://m.manhuagui.com/list/wuxia/?page=@page&amp;ajax=1"/>
+			<item title="機戰" url="https://m.manhuagui.com/list/jizhan/?page=@page&amp;ajax=1"/>
+			<item title="戰爭" url="https://m.manhuagui.com/list/zhanzheng/?page=@page&amp;ajax=1"/>
+			<item title="競技" url="https://m.manhuagui.com/list/jingji/?page=@page&amp;ajax=1"/>
+			<item title="體育" url="https://m.manhuagui.com/list/tiyu/?page=@page&amp;ajax=1"/>
+			<item title="校園" url="https://m.manhuagui.com/list/xiaoyuan/?page=@page&amp;ajax=1"/>
+			<item title="生活" url="https://m.manhuagui.com/list/shenghuo/?page=@page&amp;ajax=1"/>
+			<item title="勵志" url="https://m.manhuagui.com/list/lizhi/?page=@page&amp;ajax=1"/>
+			<item title="歷史" url="https://m.manhuagui.com/list/lishi/?page=@page&amp;ajax=1"/>
+			<item title="偽娘" url="https://m.manhuagui.com/list/weiniang/?page=@page&amp;ajax=1"/>
+			<item title="宅男" url="https://m.manhuagui.com/list/zhainan/?page=@page&amp;ajax=1"/>
+			<item title="腐女" url="https://m.manhuagui.com/list/funv/?page=@page&amp;ajax=1"/>
+			<item title="耽美" url="https://m.manhuagui.com/list/danmei/?page=@page&amp;ajax=1"/>
+			<item title="百合" url="https://m.manhuagui.com/list/baihe/?page=@page&amp;ajax=1"/>
+			<item title="後宮" url="https://m.manhuagui.com/list/hougong/?page=@page&amp;ajax=1"/>
+			<item title="治愈" url="https://m.manhuagui.com/list/zhiyu/?page=@page&amp;ajax=1"/>
+			<item title="美食" url="https://m.manhuagui.com/list/meishi/?page=@page&amp;ajax=1"/>
+			<item title="推理" url="https://m.manhuagui.com/list/tuili/?page=@page&amp;ajax=1"/>
+			<item title="懸疑" url="https://m.manhuagui.com/list/xuanyi/?page=@page&amp;ajax=1"/>
+			<item title="恐怖" url="https://m.manhuagui.com/list/kongbu/?page=@page&amp;ajax=1"/>
+			<item title="四格" url="https://m.manhuagui.com/list/sige/?page=@page&amp;ajax=1"/>
+			<item title="職場" url="https://m.manhuagui.com/list/zhichang/?page=@page&amp;ajax=1"/>
+			<item title="偵探" url="https://m.manhuagui.com/list/zhentan/?page=@page&amp;ajax=1"/>
+			<item title="社會" url="https://m.manhuagui.com/list/shehui/?page=@page&amp;ajax=1"/>
+			<item title="音樂" url="https://m.manhuagui.com/list/yinyue/?page=@page&amp;ajax=1"/>
+			<item title="舞蹈" url="https://m.manhuagui.com/list/wudao/?page=@page&amp;ajax=1"/>
+			<item title="雜志" url="https://m.manhuagui.com/list/zazhi/?page=@page&amp;ajax=1"/>
+			<item title="黑道" url="https://m.manhuagui.com/list/heidao/?page=@page&amp;ajax=1"/>
+			<item title="少女" url="https://m.manhuagui.com/list/shaonv/?page=@page&amp;ajax=1"/>
+			<item title="少年" url="https://m.manhuagui.com/list/shaonian/?page=@page&amp;ajax=1"/>
+			<item title="青年" url="https://m.manhuagui.com/list/qingnian/?page=@page&amp;ajax=1"/>
+			<item title="兒童" url="https://m.manhuagui.com/list/ertong/?page=@page&amp;ajax=1"/>
+			<item title="通用" url="https://m.manhuagui.com/list/tongyong/?page=@page&amp;ajax=1"/>
+        </tags>
+        <search parse="search_parse" url="https://m.manhuagui.com/s/@key_o1.html"/>
+        <book parse="book_parse"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+        <item url="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js" lib="LZString" />
+    </require>
+
+    <script>
+        <![CDATA[
+    function list_parse(url, html) {
+        const $ = cheerio.load(html);
+        var list = [];
+        $('li a').each(function(index) {
+            var $$ = cheerio.load($(this).html());
+			list.push({
+				name: gbk2big5.traditionalized($$('h3').text()),
+				logo: 'https:' + $$('img')attr('data-src'),
+				url: "https://m.manhuagui.com/" + $(this).attr('href')
+			});
+        });
+        return JSON.stringify(list);
+    }
+	
+    function search_parse(url, html) {
+        const $ = cheerio.load(html);
+        var list = [];
+        $('.cont-list li a').each(function(index) {
+            var $$ = cheerio.load($(this).html());
+			list.push({
+				name: gbk2big5.traditionalized($$('h3').text()),
+				logo: 'https:' + $$('img')attr('data-src'),
+				url: "https://m.manhuagui.com" + $(this).attr('href')
+			});
+        });
+        return JSON.stringify(list);
+    }
+
+    function book_parse(url, html) {
+        const $ = cheerio.load(html);
+        const sections = [];
+        $("#__VIEWSTATE").each(function(){
+            const $$ = cheerio.load(LZString.decompressFromBase64($(this).attr('value')));
+            const sectionName = $$('li a').text().trim();
+            const sectionUrl = $$('li a').attr("href");
+            if (sectionName && sectionUrl) {
+                sections.push({
+                    name: gbk2big5.traditionalized(sectionName),
+                    url: "https://m.manhuagui.com"+sectionUrl
+                });
+            }
+        });
+        $("#chapterList").each(function(){
+            const $$ = cheerio.load($(this).html());
+            const sectionName = $$('li a').text().trim();
+            const sectionUrl = $$('li a').attr("href");
+            if (sectionName && sectionUrl) {
+                sections.push({
+                    name: gbk2big5.traditionalizedsectionName),
+                    url: "https://m.manhuagui.com"+sectionUrl
+                });
+            }
+        });
+        const book = {
+            name: gbk2big5.traditionalized($("h1").text().trim()),
+            logo: 'https:' + $(".book-detail img").attr("src"),
+            sections: sections.reverse()
+        };
+        return JSON.stringify(book);
+    }
+	
+	function decodeMangaImages(url, html) {
+		// 1. 提取混淆腳本
+		const scriptPattern = /window\["\\x65\\x76\\x61\\x6c"\]\((function\([\s\S]*?)(\)[\s\S]*)\)\s*<\/script>/;
+		const match = html.match(scriptPattern);
+
+		if (!match) {
+			// console.error("未找到混淆腳本。");
+			return null;
+		}
+
+		// 完整的混淆程式碼字串
+		const fullObfuscatedScript = match[1] + match[2];
+		
+		// 2. 從混淆腳本中提取參數 (p, a, c, k)
+		// 匹配 '...}(\'p\',a,c,\'k\'[\'\\x73\\x70\\x6c\\x69\\x63\'](\'|\'),0,{})'
+		const paramPattern = /}\('([^']*)',(\d+),(\d+),'([^']*)'\['\\x73\\x70\\x6c\\x69\\x63']\('\\x7c'\),(\d+),{}\)\)/;
+		const paramMatch = fullObfuscatedScript.match(paramPattern);
+
+		if (!paramMatch) {
+			// console.error("無法匹配混淆腳本中的參數。");
+			return null;
+		}
+
+		let p = paramMatch[1];       // p: 被壓縮的程式碼字串
+		const a = parseInt(paramMatch[2], 10); // a: 基數
+		let c = parseInt(paramMatch[3], 10); // c: 計數器
+		const k_string = paramMatch[4]; // k: 字典字串
+
+		// 3. 嵌入 p.a.c.k.e.r 解碼邏輯
+		
+		// 這是混淆函式內部的 'e' 函式
+		const e = function (num) {
+			return (num < a ? "" : e(parseInt(num / a))) + ((num = num % a) > 35 ? String.fromCharCode(num + 29) : num.toString(36));
+		};
+
+		// 拆分字典字串 k
+		const k = k_string.split('|');
+
+		// 執行解碼替換
+		while (c--) {
+			if (k[c]) {
+				// 使用正規表達式進行全域且完整的詞彙替換
+				// 由於正則表達式需要先將 e(c) 轉義以防特殊字符問題，但 p.a.c.k.e.r 的關鍵字通常是安全字符
+				// 這裡我們假設 e(c) 輸出的是數字或字母，直接替換
+				const regex = new RegExp('\\b' + e(c) + '\\b', 'g');
+				p = p.replace(regex, k[c]);
+			}
+		}
+		
+		// 4. 解析解碼後的程式碼字串
+		
+		// 解碼後的字串類似: J.Q({"v":u,"t":"s",...})
+		// 替換後的關鍵字是: 'J.Q' -> 'SMH.reader'
+		// 數據結構的鍵是: 'b' -> 'images', 't' -> 'chapterTitle', 'v' -> 'bookName', 'L'/'D' -> 'sl'
+		
+		// 為了安全地提取數據，我們將解碼後的字串轉換成有效的 JSON 格式，然後解析。
+		// 原始字串格式 (部分解碼後): SMH.reader({"bookName":"...","chapterTitle":"...","images":["/path1.webp",...],"sl":{"e":...,"m":"..."}})
+		
+		// 從 p 中提取 SMH.reader 呼叫中的物件字面量
+		const dataMatch = p.match(/SMH\.reader\(([^)]+)\)/);
+		if (!dataMatch) {
+			// console.error("無法解析 SMH.reader 數據結構。");
+			return null;
+		}
+
+		const dataString = dataMatch[1];
+		
+		// 將 JavaScript 物件字面量轉換為有效的 JSON 格式
+		// 這裡我們需要手動將鍵名加上引號，並處理屬性值的替換。
+		
+		// 根據您提供的解碼字典 (上一個問題的字串)，已識別的鍵名對應如下：
+		// 't' -> 'chapterTitle'
+		// 'v' -> 'bookName'
+		// 'b' -> 'images'
+		// 'L' -> 'sl' (sl 是一個子物件，包含加密參數 'e' 和 'm')
+		
+		// 我們只關心 'b' (images) 和 'L' (sl)
+		const jsonKeys = {
+			'b': 'images', 
+			'D': 'sl',     // 這是字典 k 中 D 替換的結果，但實際在 p 中是 L 的替換
+			'v': 'bookName', 
+			't': 'chapterTitle',
+			'r': 'chapterId',
+			'p': 'page',
+			'o': 'count', // 頁數總數
+			's': 'host', // 圖片伺服器主機名
+			'n': 'host_i',
+			'w': 'status',
+			'h': 'block_cc'
+		};
+
+		// 由於 p 已經是完全解碼的 JavaScript 物件字面量，我們可以使用正規表達式精確提取所需數據
+		
+		let imagePaths = [];
+		let sl = {};
+		let host = '';
+
+		try {
+			// 提取 images (b)
+			const imagesMatch = dataString.match(/"images":\[(.*?)\]/);
+			if (imagesMatch) {
+				// 解析圖片路徑陣列字串 (需要先移除引號，再用逗號分割，並重新加入引號)
+				imagePaths = JSON.parse('[' + imagesMatch[1] + ']');
+			}
+			
+			// 提取 sl (L/D) 簽名參數
+			const slMatch = dataString.match(/"sl":\{"e":(\d+),"m":"([^"]+)"\}/);
+			if (slMatch) {
+				 sl = { e: slMatch[1], m: slMatch[2] };
+			}
+			
+			// 提取 host (t) 伺服器前綴
+			const hostMatch = dataString.match(/"host":"([^"]+)"/);
+			if (hostMatch) {
+				host = hostMatch[1];
+			}
+
+		} catch (e) {
+			// console.error("提取數據失敗:", e);
+			return null;
+		}
+
+		if (imagePaths.length === 0 || !host) {
+			// console.error("未找到圖片路徑或伺服器主機名。");
+			return null;
+		}
+
+		// 5. 構造完整的圖片 URL
+		const protocol = new URL(url).protocol; // 提取 http: 或 https:
+		const domain = host + ".hamreus.com"; // 網站的圖片伺服器域名結構
+
+		const imageList = imagePaths.map(path => {
+			let fullUrl = `${protocol}//${domain}${path}`;
+			
+			// 附加簽名參數 (sl)
+			if (sl.e && sl.m) {
+				fullUrl += `?e=${sl.e}&m=${sl.m}`;
+			}
+			return fullUrl;
+		});
+
+		return imageList;
+	}
+
+    function section_parse(url, html) {
+		const imageList = decodeMangaImages(url, html);
+		if (!imageList || imageList.length === 0) {
+			const emptyData = [];
+			return JSON.stringify({
+				type: "article",
+				data: emptyData
+			});
+		}
+
+		const data = imageList.map(fullImageUrl => {
+			const src = fullImageUrl.startsWith('http:') ? 'https' + fullImageUrl.substring(4) : fullImageUrl;
+			return {
+				t: "image",
+				d: src,
+				referer: "https://m.manhuagui.com/"
+			};
+		});
+		return JSON.stringify({
+			type: "article",
+			data: data
+		});
+	}
+    ]]>
+    </script>
+</sited>
