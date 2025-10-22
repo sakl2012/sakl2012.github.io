@@ -10,57 +10,57 @@
     </meta>
 
     <main>
-        <home url="https://m.manhuagui.com/update/?page=@page&amp;ajax=1" parse="list_parse" />
+        <home url="https://m.manhuagui.com/update/?page=@page&amp;ajax=1" parse="list_parse" referer="https://m.manhuagui.com/"/>
         <tags tagParse="list_parse">
-            <item title="日本" url="https://m.manhuagui.com/list/japan/?page=@page&amp;ajax=1"/>
-			<item title="港台" url="https://m.manhuagui.com/list/hongkong/?page=@page&amp;ajax=1"/>
-			<item title="其它" url="https://m.manhuagui.com/list/other/?page=@page&amp;ajax=1"/>
-			<item title="歐美" url="https://m.manhuagui.com/list/europe/?page=@page&amp;ajax=1"/>
-			<item title="內地" url="https://m.manhuagui.com/list/china/?page=@page&amp;ajax=1"/>
-			<item title="韓國" url="https://m.manhuagui.com/list/korea/?page=@page&amp;ajax=1"/>
-			<item title="熱血" url="https://m.manhuagui.com/list/rexue/?page=@page&amp;ajax=1"/>
-			<item title="冒險" url="https://m.manhuagui.com/list/maoxian/?page=@page&amp;ajax=1"/>
-			<item title="魔幻" url="https://m.manhuagui.com/list/mohuan/?page=@page&amp;ajax=1"/>
-			<item title="神鬼" url="https://m.manhuagui.com/list/shengui/?page=@page&amp;ajax=1"/>
-			<item title="搞笑" url="https://m.manhuagui.com/list/gaoxiao/?page=@page&amp;ajax=1"/>
-			<item title="萌系" url="https://m.manhuagui.com/list/mengxi/?page=@page&amp;ajax=1"/>
-			<item title="愛情" url="https://m.manhuagui.com/list/aiqing/?page=@page&amp;ajax=1"/>
-			<item title="科幻" url="https://m.manhuagui.com/list/kehuan/?page=@page&amp;ajax=1"/>
-			<item title="魔法" url="https://m.manhuagui.com/list/mofa/?page=@page&amp;ajax=1"/>
-			<item title="格鬥" url="https://m.manhuagui.com/list/gedou/?page=@page&amp;ajax=1"/>
-			<item title="武俠" url="https://m.manhuagui.com/list/wuxia/?page=@page&amp;ajax=1"/>
-			<item title="機戰" url="https://m.manhuagui.com/list/jizhan/?page=@page&amp;ajax=1"/>
-			<item title="戰爭" url="https://m.manhuagui.com/list/zhanzheng/?page=@page&amp;ajax=1"/>
-			<item title="競技" url="https://m.manhuagui.com/list/jingji/?page=@page&amp;ajax=1"/>
-			<item title="體育" url="https://m.manhuagui.com/list/tiyu/?page=@page&amp;ajax=1"/>
-			<item title="校園" url="https://m.manhuagui.com/list/xiaoyuan/?page=@page&amp;ajax=1"/>
-			<item title="生活" url="https://m.manhuagui.com/list/shenghuo/?page=@page&amp;ajax=1"/>
-			<item title="勵志" url="https://m.manhuagui.com/list/lizhi/?page=@page&amp;ajax=1"/>
-			<item title="歷史" url="https://m.manhuagui.com/list/lishi/?page=@page&amp;ajax=1"/>
-			<item title="偽娘" url="https://m.manhuagui.com/list/weiniang/?page=@page&amp;ajax=1"/>
-			<item title="宅男" url="https://m.manhuagui.com/list/zhainan/?page=@page&amp;ajax=1"/>
-			<item title="腐女" url="https://m.manhuagui.com/list/funv/?page=@page&amp;ajax=1"/>
-			<item title="耽美" url="https://m.manhuagui.com/list/danmei/?page=@page&amp;ajax=1"/>
-			<item title="百合" url="https://m.manhuagui.com/list/baihe/?page=@page&amp;ajax=1"/>
-			<item title="後宮" url="https://m.manhuagui.com/list/hougong/?page=@page&amp;ajax=1"/>
-			<item title="治愈" url="https://m.manhuagui.com/list/zhiyu/?page=@page&amp;ajax=1"/>
-			<item title="美食" url="https://m.manhuagui.com/list/meishi/?page=@page&amp;ajax=1"/>
-			<item title="推理" url="https://m.manhuagui.com/list/tuili/?page=@page&amp;ajax=1"/>
-			<item title="懸疑" url="https://m.manhuagui.com/list/xuanyi/?page=@page&amp;ajax=1"/>
-			<item title="恐怖" url="https://m.manhuagui.com/list/kongbu/?page=@page&amp;ajax=1"/>
-			<item title="四格" url="https://m.manhuagui.com/list/sige/?page=@page&amp;ajax=1"/>
-			<item title="職場" url="https://m.manhuagui.com/list/zhichang/?page=@page&amp;ajax=1"/>
-			<item title="偵探" url="https://m.manhuagui.com/list/zhentan/?page=@page&amp;ajax=1"/>
-			<item title="社會" url="https://m.manhuagui.com/list/shehui/?page=@page&amp;ajax=1"/>
-			<item title="音樂" url="https://m.manhuagui.com/list/yinyue/?page=@page&amp;ajax=1"/>
-			<item title="舞蹈" url="https://m.manhuagui.com/list/wudao/?page=@page&amp;ajax=1"/>
-			<item title="雜志" url="https://m.manhuagui.com/list/zazhi/?page=@page&amp;ajax=1"/>
-			<item title="黑道" url="https://m.manhuagui.com/list/heidao/?page=@page&amp;ajax=1"/>
-			<item title="少女" url="https://m.manhuagui.com/list/shaonv/?page=@page&amp;ajax=1"/>
-			<item title="少年" url="https://m.manhuagui.com/list/shaonian/?page=@page&amp;ajax=1"/>
-			<item title="青年" url="https://m.manhuagui.com/list/qingnian/?page=@page&amp;ajax=1"/>
-			<item title="兒童" url="https://m.manhuagui.com/list/ertong/?page=@page&amp;ajax=1"/>
-			<item title="通用" url="https://m.manhuagui.com/list/tongyong/?page=@page&amp;ajax=1"/>
+            <item title="日本" url="https://m.manhuagui.com/list/japan/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="港台" url="https://m.manhuagui.com/list/hongkong/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="其它" url="https://m.manhuagui.com/list/other/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="歐美" url="https://m.manhuagui.com/list/europe/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="內地" url="https://m.manhuagui.com/list/china/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="韓國" url="https://m.manhuagui.com/list/korea/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="熱血" url="https://m.manhuagui.com/list/rexue/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="冒險" url="https://m.manhuagui.com/list/maoxian/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="魔幻" url="https://m.manhuagui.com/list/mohuan/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="神鬼" url="https://m.manhuagui.com/list/shengui/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="搞笑" url="https://m.manhuagui.com/list/gaoxiao/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="萌系" url="https://m.manhuagui.com/list/mengxi/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="愛情" url="https://m.manhuagui.com/list/aiqing/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="科幻" url="https://m.manhuagui.com/list/kehuan/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="魔法" url="https://m.manhuagui.com/list/mofa/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="格鬥" url="https://m.manhuagui.com/list/gedou/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="武俠" url="https://m.manhuagui.com/list/wuxia/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="機戰" url="https://m.manhuagui.com/list/jizhan/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="戰爭" url="https://m.manhuagui.com/list/zhanzheng/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="競技" url="https://m.manhuagui.com/list/jingji/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="體育" url="https://m.manhuagui.com/list/tiyu/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="校園" url="https://m.manhuagui.com/list/xiaoyuan/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="生活" url="https://m.manhuagui.com/list/shenghuo/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="勵志" url="https://m.manhuagui.com/list/lizhi/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="歷史" url="https://m.manhuagui.com/list/lishi/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="偽娘" url="https://m.manhuagui.com/list/weiniang/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="宅男" url="https://m.manhuagui.com/list/zhainan/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="腐女" url="https://m.manhuagui.com/list/funv/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="耽美" url="https://m.manhuagui.com/list/danmei/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="百合" url="https://m.manhuagui.com/list/baihe/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="後宮" url="https://m.manhuagui.com/list/hougong/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="治愈" url="https://m.manhuagui.com/list/zhiyu/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="美食" url="https://m.manhuagui.com/list/meishi/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="推理" url="https://m.manhuagui.com/list/tuili/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="懸疑" url="https://m.manhuagui.com/list/xuanyi/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="恐怖" url="https://m.manhuagui.com/list/kongbu/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="四格" url="https://m.manhuagui.com/list/sige/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="職場" url="https://m.manhuagui.com/list/zhichang/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="偵探" url="https://m.manhuagui.com/list/zhentan/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="社會" url="https://m.manhuagui.com/list/shehui/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="音樂" url="https://m.manhuagui.com/list/yinyue/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="舞蹈" url="https://m.manhuagui.com/list/wudao/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="雜志" url="https://m.manhuagui.com/list/zazhi/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="黑道" url="https://m.manhuagui.com/list/heidao/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="少女" url="https://m.manhuagui.com/list/shaonv/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="少年" url="https://m.manhuagui.com/list/shaonian/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="青年" url="https://m.manhuagui.com/list/qingnian/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="兒童" url="https://m.manhuagui.com/list/ertong/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
+			<item title="通用" url="https://m.manhuagui.com/list/tongyong/?page=@page&amp;ajax=1" referer="https://m.manhuagui.com/"/>
         </tags>
         <search parse="search_parse" url="https://m.manhuagui.com/s/@key_o1.html"/>
         <book parse="book_parse"/>
