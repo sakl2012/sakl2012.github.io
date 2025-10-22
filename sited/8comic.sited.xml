@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited>
+    <meta>
+        <title>無限動漫</title>
+        <intro>8comic僅作為免費閱覽平臺，如涉及他方權益，請聯絡：comictocomic@hotmail.com</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+        <url>8comic.com</url>
+        <updateUrl>https://sakl2012.github.io/sited/8comic.sited.xml</updateUrl>
+    </meta>
+    <main>
+        <home url="https://www.8comic.com/comic/u-@page.html" parse="list_parse"/>
+        <tags tagParse="list_parse">
+            <item group="格鬥系列" title="武鬥類" url="https://www.8comic.com/comic/24-@page.html"/>
+			<item group="格鬥系列" title="刀劍類" url="https://www.8comic.com/comic/4-@page.html"/>
+			<item group="格鬥系列" title="熱血類" url="https://www.8comic.com/comic/58-@page.html"/>
+			<item group="格鬥系列" title="戰國類" url="https://www.8comic.com/comic/65-@page.html"/>
+			<item group="格鬥系列" title="妖魔類" url="https://www.8comic.com/comic/8-@page.html"/>
+			<item group="格鬥系列" title="冒險類" url="https://www.8comic.com/comic/6-@page.html"/>
+			<item group="競技系列" title="足球類" url="https://www.8comic.com/comic/33-@page.html"/>
+			<item group="競技系列" title="籃球類" url="https://www.8comic.com/comic/34-@page.html"/>
+			<item group="競技系列" title="棒球類" url="https://www.8comic.com/comic/35-@page.html"/>
+			<item group="競技系列" title="網球類" url="https://www.8comic.com/comic/36-@page.html"/>
+			<item group="競技系列" title="搏擊類" url="https://www.8comic.com/comic/37-@page.html"/>
+			<item group="競技系列" title="棋牌類" url="https://www.8comic.com/comic/38-@page.html"/>
+			<item group="競技系列" title="賽車類" url="https://www.8comic.com/comic/39-@page.html"/>
+			<item group="競技系列" title="亨飪類" url="https://www.8comic.com/comic/16-@page.html"/>
+			<item group="競技系列" title="排球類" url="https://www.8comic.com/comic/315-@page.html"/>
+			<item group="競技系列" title="其他競技" url="https://www.8comic.com/comic/313-@page.html"/>
+			<item group="少女系列" title="少女幻想" url="https://www.8comic.com/comic/15-@page.html"/>
+			<item group="少女系列" title="少女職業" url="https://www.8comic.com/comic/42-@page.html"/>
+			<item group="少女系列" title="校園戀愛" url="https://www.8comic.com/comic/14-@page.html"/>
+			<item group="少女系列" title="成人戀愛" url="https://www.8comic.com/comic/43-@page.html"/>
+			<item group="少女系列" title="魔法少女" url="https://www.8comic.com/comic/66-@page.html"/>
+			<item group="少女系列" title="生活親情" url="https://www.8comic.com/comic/307-@page.html"/>
+			<item group="少女系列" title="性別轉換" url="https://www.8comic.com/comic/309-@page.html"/>
+			<item group="少女系列" title="同性愛戀" url="https://www.8comic.com/comic/412-@page.html"/>
+			<item group="少女系列" title="少女其他" url="https://www.8comic.com/comic/44-@page.html"/>
+			<item group="青春系列" title="同窗類" url="https://www.8comic.com/comic/46-@page.html"/>
+			<item group="青春系列" title="超能類" url="https://www.8comic.com/comic/57-@page.html"/>
+			<item group="青春系列" title="魔法類" url="https://www.8comic.com/comic/3-@page.html"/>
+			<item group="青春系列" title="超時代類" url="https://www.8comic.com/comic/63-@page.html"/>
+			<item group="青春系列" title="歷險類" url="https://www.8comic.com/comic/67-@page.html"/>
+			<item group="青春系列" title="校園類" url="https://www.8comic.com/comic/26-@page.html"/>
+			<item group="青春系列" title="生活類" url="https://www.8comic.com/comic/45-@page.html"/>
+			<item group="青春系列" title="偽娘類" url="https://www.8comic.com/comic/308-@page.html"/>
+			<item group="青春系列" title="懸疑類" url="https://www.8comic.com/comic/392-@page.html"/>
+			<item group="休閑系列" title="童真類" url="https://www.8comic.com/comic/47-@page.html"/>
+			<item group="休閑系列" title="爆笑類" url="https://www.8comic.com/comic/48-@page.html"/>
+			<item group="休閑系列" title="惡搞類" url="https://www.8comic.com/comic/49-@page.html"/>
+			<item group="休閑系列" title="動物類" url="https://www.8comic.com/comic/64-@page.html"/>
+			<item group="職業系列" title="偵探類" url="https://www.8comic.com/comic/5-@page.html"/>
+			<item group="職業系列" title="警察類" url="https://www.8comic.com/comic/51-@page.html"/>
+			<item group="職業系列" title="醫生類" url="https://www.8comic.com/comic/52-@page.html"/>
+			<item group="職業系列" title="槍擊類" url="https://www.8comic.com/comic/27-@page.html"/>
+			<item group="職業系列" title="其他職業" url="https://www.8comic.com/comic/53-@page.html"/>
+			<item group="科幻懸疑" title="機械類" url="https://www.8comic.com/comic/7-@page.html"/>
+			<item group="科幻懸疑" title="戰爭類" url="https://www.8comic.com/comic/17-@page.html"/>
+			<item group="科幻懸疑" title="恐怖類" url="https://www.8comic.com/comic/19-@page.html"/>
+			<item group="科幻懸疑" title="奇幻類" url="https://www.8comic.com/comic/410-@page.html"/>
+			<item group="科幻懸疑" title="改造人類" url="https://www.8comic.com/comic/25-@page.html"/>
+			<item group="科幻懸疑" title="短篇類" url="https://www.8comic.com/comic/18-@page.html"/>
+			<item group="陸漫係列" title="玄幻修仙" url="https://www.8comic.com/comic/54-@page.html"/>
+			<item group="陸漫係列" title="現代生活" url="https://www.8comic.com/comic/419-@page.html"/>
+			<item group="陸漫係列" title="港漫係列" url="https://www.8comic.com/comic/9-@page.html"/>
+        </tags>
+        <search parse="list_parse" url="https://www.8comic.com/search/?key=@key&amp;page=@page"/>
+        <book parse="book_parse"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+        <item url="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js" lib="LZString" />
+    </require>
+
+    <script>
+        <![CDATA[
+    function list_parse(url, html) {
+        const $ = cheerio.load(html);
+        var list = [];
+        $('.row a.comicpic_col6').each(function(index) {
+            var $$ = cheerio.load($(this).html());
+			list.push({
+				name: gbk2big5.traditionalized($$('.comicpic_col6_name').text().trim()),
+				logo: 'https://www.8comic.com' + $$('img').attr('src'),
+				url: "https://www.8comic.com" + $(this).attr('href')
+			});
+        });
+        return JSON.stringify(list);
+    }
+
+    function book_parse(url, html) {
+        const $ = cheerio.load(html);
+        const sections = [];
+        $("#rp_tb_comic_0 a.eps_a").each(function(){
+            const sectionName = $(this).text().trim();
+            const sectionUrl = $(this).attr("onclick").match(/(\d+?)-(\d+?).html/);
+            if (sectionName && sectionUrl) {
+                sections.push({
+                    name: gbk2big5.traditionalizedsectionName),
+                    url: "https://articles.onemoreplace.tw/online/new-"+sectionUrl[1]+".html?ch="+sectionUrl[2]
+                });
+            }
+        });
+        const book = {
+            name: gbk2big5.traditionalized($(".h2").text().trim()),
+            logo: 'https://www.8comic.com' + $(".item-cover img").attr("src"),
+            sections: sections
+        };
+        return JSON.stringify(book);
+    }
+	
+    function section_parse(url, html) {
+        const $ = cheerio.load(html);
+		if (!imageList || imageList.length === 0) {
+			const emptyData = [];
+			return JSON.stringify({
+				type: "article",
+				data: emptyData
+			});
+		}
+
+		const data = imageList.map(fullImageUrl => {
+			const src = fullImageUrl.startsWith('http:') ? 'https' + fullImageUrl.substring(4) : fullImageUrl;
+			return {
+				t: "image",
+				d: src
+			};
+		});
+		return JSON.stringify({
+			type: "article",
+			data: data
+		});
+	}
+    ]]>
+    </script>
+</sited>
