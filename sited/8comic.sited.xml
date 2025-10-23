@@ -115,6 +115,7 @@
     function section_parse(url, html) {
         const $ = cheerio.load(html);
         const scriptContent = $('script[language="javascript"]').text();
+
         if (!scriptContent || scriptContent.length < 10) {
             return JSON.stringify({ type: "article", data: [] });
         }
@@ -136,8 +137,7 @@
             return unescape(decoded_str);
         }
         function substring_func(str, start, length){
-            if(length==null) length=40;
-            return (str+'').substring(start, start+length);
+             return (str+'').substring(start, start + (length == null ? 40 : length));
         }
         function nn(n){
             return n<10?'00'+n:n<100?'0'+n:n;
@@ -151,7 +151,9 @@
 
         function decode_url_part(index, main_str){
              if(decode_url_part_cache[index]) return decode_url_part_cache[index];
-             if (!main_str || main_str.length < 47 + index * 6 + 6) return '';
+             if (!main_str || main_str.length < 47 + index * 6 + 6) {
+                 return '';
+             }
              const start = main_str.length - 47 - index * 6;
              const end = main_str.length - 47 - index * 6 + 6;
              const result = unescape_func(main_str.substring(start, end));
@@ -165,29 +167,48 @@
         let formula_cache = {};
 
         try {
-            const v49_match = scriptContent.match(/i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*-\s*2\s*\)/);
+            const v49_regex_pattern = /i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*-\s*2\s*\)/;
+            const v49_match = scriptContent.match(v49_regex_pattern);
+            if (!v49_match) throw new Error("v49 match failed");
             v49_name = v49_match[1];
-            num_val_49 = parseInt(scriptContent.match(new RegExp("var\\s+" + v49_name + "\\s*=\\s*([0-9]+);"))[1]);
+            const v49_val_regex = new RegExp("var\\s+" + v49_name + "\\s*=\\s*([0-9]+);");
+            const v49_val_match = scriptContent.match(v49_val_regex);
+            if (!v49_val_match) throw new Error("v49 value match failed");
+            num_val_49 = parseInt(v49_val_match[1]);
             base_lookup[v49_name + "-2"] = (i) => i * (num_val_49 - 2);
 
-            const v48_match = scriptContent.match(/i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*-\s*1\s*\)/);
+            const v48_regex_pattern = /i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*-\s*1\s*\)/;
+            const v48_match = scriptContent.match(v48_regex_pattern);
+            if (!v48_match) throw new Error("v48 match failed");
             v48_name = v48_match[1];
-            num_val_48 = parseInt(scriptContent.match(new RegExp("var\\s+" + v48_name + "\\s*=\\s*([0-9]+);"))[1]);
+            const v48_val_regex = new RegExp("var\\s+" + v48_name + "\\s*=\\s*([0-9]+);");
+            const v48_val_match = scriptContent.match(v48_val_regex);
+            if (!v48_val_match) throw new Error("v48 value match failed");
+            num_val_48 = parseInt(v48_val_match[1]);
             base_lookup[v48_name + "-1"] = (i) => i * (num_val_48 - 1);
 
-            const v46_match = scriptContent.match(/i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*\+\s*1\s*\)/);
+            const v46_regex_pattern = /i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*\+\s*1\s*\)/;
+            const v46_match = scriptContent.match(v46_regex_pattern);
+            if (!v46_match) throw new Error("v46 match failed");
             v46_name = v46_match[1];
-            num_val_46 = parseInt(scriptContent.match(new RegExp("var\\s+" + v46_name + "\\s*=\\s*([0-9]+);"))[1]);
+            const v46_val_regex = new RegExp("var\\s+" + v46_name + "\\s*=\\s*([0-9]+);");
+            const v46_val_match = scriptContent.match(v46_val_regex);
+             if (!v46_val_match) throw new Error("v46 value match failed");
+            num_val_46 = parseInt(v46_val_match[1]);
             base_lookup[v46_name + "+1"] = (i) => i * (num_val_46 + 1);
 
         } catch (e) {
+            console.error("Error extracting dynamic constants:", e); // Keep error log
             return JSON.stringify({ type: "article", data: [] });
         }
 
         function get_formula(var_name) {
-            if (formula_cache[var_name]) return formula_cache[var_name];
+            if (formula_cache[var_name]) {
+                return formula_cache[var_name];
+            }
 
-            const regex = new RegExp("var\\s+" + var_name + "\\s*=\\s*lc\\(.*?i\\s*\\*\\s*\\((.+?)\\)\\s*\\+\\s*([0-9]+)(?:,([0-9]+))?.*?\\);");
+            const regex_pattern = "var\\s+" + var_name + "\\s*=\\s*lc\\(.*?i\\s*\\*\\s*\\((.+?)\\)\\s*\\+\\s*([0-9]+)(?:,([0-9]+))?.*?\\);";
+            const regex = new RegExp(regex_pattern);
             const match = scriptContent.match(regex);
 
             if (!match) {
@@ -197,7 +218,8 @@
             const base_str = match[1].replace(/\s/g, '');
             const base_func = base_lookup[base_str];
             const offset = parseInt(match[2]);
-            const length = match[3] ? parseInt(match[3]) : null;
+            // Use explicit check for undefined captured group
+            const length = match[3] !== undefined ? parseInt(match[3]) : null;
 
             if (!base_func) {
                 return null;
@@ -209,39 +231,69 @@
         }
 
         try {
-            const str_matches = scriptContent.matchAll(/var\s+[a-zA-Z0-9_]+\s*=\s*'([^']+?)';/g);
+            const str_matches_regex = /var\s+[a-zA-Z0-9_]+\s*=\s*'([^']+?)';/g;
+            const str_matches = scriptContent.matchAll(str_matches_regex);
+            let foundMainStr = false;
             for (const match of str_matches) {
                 if (match[1].length > 500) {
                     main_encoded_str = match[1];
+                    foundMainStr = true;
                     break;
                 }
             }
-            if (main_encoded_str === '') {
-                return JSON.stringify({ type: "article", data: [] });
+            if (!foundMainStr) {
+                 return JSON.stringify({ type: "article", data: [] });
             }
 
-            const chs_ti_match = scriptContent.match(/var\s+chs=([0-9]+);var\s+ti=([0-9]+);/);
-            const chs = parseInt(chs_ti_match[1]);
+            const chs_ti_regex = /var\s+chs=([0-9]+);var\s+ti=([0-9]+);/;
+            const chs_ti_match = scriptContent.match(chs_ti_regex);
+            if (!chs_ti_match) throw new Error("chs & ti match failed");
+            const chs = parseInt(chs_ti_match[1]); // Still parse chs for potential fallback
             const ti = chs_ti_match[2];
 
             let current_ch_str = '1';
             let current_part_str = '0';
-            const url_ch_match = url.match(/ch=([0-9]+)([a-zA-Z]?)/);
+            const url_ch_regex = /ch=([0-9]+)([a-zA-Z]?)/;
+            const url_ch_match = url.match(url_ch_regex);
             if (url_ch_match) {
                 current_ch_str = url_ch_match[1];
                 if (url_ch_match[2]) {
                     current_part_str = url_ch_match[2];
                 }
             } else {
-                const js_ch_match = scriptContent.match(new RegExp("if\\(ch=='')\\s*ch=([0-9]+);"));
-                if (js_ch_match) current_ch_str = js_ch_match[1];
+                const js_ch_regex_pattern = "if\\(ch=='')\\s*ch=([0-9]+);";
+                const js_ch_regex = new RegExp(js_ch_regex_pattern);
+                const js_ch_match = scriptContent.match(js_ch_regex);
+                if (js_ch_match) {
+                    current_ch_str = js_ch_match[1];
+                }
             }
 
-            const ch_var_name = scriptContent.match(/if\s*\(\s*([a-zA-Z0-9_]+)\s*==\s*ch/)[1];
-            const ps_var_name = scriptContent.match(/\)\s*;\s*ps\s*=\s*([a-zA-Z0-9_]+)\s*;\s*if\s*\(/)[1];
-            const part_var_name = scriptContent.match(/part\s*==\s*([a-zA-Z0-9_]+)\)/)[1];
-            const pg9_var_name = scriptContent.match(/\(\s*([a-zA-Z0-9_]+)\s*,\s*0\s*,\s*1\s*\)/)[1];
-            const k66_var_name = scriptContent.match(/\(\s*([a-zA-Z0-9_]+)\s*,\s*mm\(j\)\s*,\s*3\s*\)/)[1];
+            let match;
+            const ch_var_regex = /if\s*\(\s*([a-zA-Z0-9_]+)\s*==\s*ch/;
+            match = scriptContent.match(ch_var_regex);
+            if (!match) throw new Error("ch_var_name match failed");
+            const ch_var_name = match[1];
+
+            const ps_var_regex = /\)\s*;\s*ps\s*=\s*([a-zA-Z0-9_]+)\s*;\s*if\s*\(/;
+            match = scriptContent.match(ps_var_regex);
+             if (!match) throw new Error("ps_var_name match failed");
+            const ps_var_name = match[1];
+
+            const part_var_regex = /part\s*==\s*([a-zA-Z0-9_]+)\)/;
+            match = scriptContent.match(part_var_regex);
+            if (!match) throw new Error("part_var_name match failed");
+            const part_var_name = match[1];
+
+            const pg9_var_regex = /\(\s*([a-zA-Z0-9_]+)\s*,\s*0\s*,\s*1\s*\)/;
+            match = scriptContent.match(pg9_var_regex);
+            if (!match) throw new Error("pg9_var_name match failed");
+            const pg9_var_name = match[1];
+
+            const k66_var_regex = /\(\s*([a-zA-Z0-9_]+)\s*,\s*mm\(j\)\s*,\s*3\s*\)/;
+            match = scriptContent.match(k66_var_regex);
+            if (!match) throw new Error("k66_var_name match failed");
+            const k66_var_name = match[1];
 
             const ch_formula = get_formula(ch_var_name);
             const ps_formula = get_formula(ps_var_name);
@@ -249,21 +301,49 @@
             const pg9_formula = get_formula(pg9_var_name);
             const k66_formula = get_formula(k66_var_name);
 
+            if (!ch_formula || !ps_formula || !part_formula || !pg9_formula || !k66_formula) {
+                 return JSON.stringify({ type: "article", data: [] });
+            }
+
+            let loop_limit = 0;
+            const loop_limit_regex_pattern = "for\\s*\\(\\s*var\\s+i\\s*=\\s*0\\s*;\\s*i\\s*<\\s*([0-9]+)\\s*;.*?if\\s*\\(\\s*" + ch_var_name + "\\s*==\\s*ch";
+            const loop_limit_regex = new RegExp(loop_limit_regex_pattern);
+            const loop_limit_match = scriptContent.match(loop_limit_regex);
+
+            if (loop_limit_match && loop_limit_match[1]) {
+                loop_limit = parseInt(loop_limit_match[1]);
+            } else {
+                 console.error("Could not find loop limit! Using fallback chs:", chs); // Keep critical error log
+                 loop_limit = chs; // Fallback, less reliable
+            }
+
             var imageList = [];
             var currentSectionIndex = -1;
             let ch_val, part_val, ps, pg9_719, k66vp831a4_part;
 
-            for (var i = 0; i < chs; i++){
-                const part_num = lc(substring_func(main_encoded_str, part_formula.base(i) + part_formula.offset, part_formula.length));
+            for (var i = 0; i < loop_limit; i++){
+                try {
+                    const part_base_offset = part_formula.base(i) + part_formula.offset;
+                    const part_len = part_formula.length;
+                    const part_str_segment = substring_func(main_encoded_str, part_base_offset, part_len);
+                    if (part_str_segment === null || part_str_segment === undefined) { continue; }
+                    const part_num = lc(part_str_segment);
 
-                if (part_num == current_part_str) {
-                    const chapter_num = lc(substring_func(main_encoded_str, ch_formula.base(i) + ch_formula.offset, ch_formula.length));
+                    if (part_num == current_part_str) {
+                         const ch_base_offset = ch_formula.base(i) + ch_formula.offset;
+                         const ch_len = ch_formula.length;
+                         const ch_str_segment = substring_func(main_encoded_str, ch_base_offset, ch_len);
+                         if (ch_str_segment === null || ch_str_segment === undefined) { continue; }
+                         const chapter_num = lc(ch_str_segment);
 
-                    if (chapter_num == current_ch_str) {
-                        currentSectionIndex = i;
-                        ch_val = chapter_num;
-                        break;
+                         if (chapter_num == current_ch_str) {
+                            currentSectionIndex = i;
+                            ch_val = chapter_num;
+                            break;
+                        }
                     }
+                } catch (loopError) {
+                     console.error(`Error inside currentSectionIndex loop (i=${i}):`, loopError); // Keep error log
                 }
             }
 
@@ -272,38 +352,52 @@
 
                 ps = lc(substring_func(main_encoded_str, ps_formula.base(i) + ps_formula.offset, ps_formula.length));
                 pg9_719 = lc(substring_func(main_encoded_str, pg9_formula.base(i) + pg9_formula.offset, pg9_formula.length));
+                // Handle potential null length for k66_formula
                 k66vp831a4_part = substring_func(main_encoded_str, k66_formula.base(i) + k66_formula.offset, k66_formula.length);
                 part_val = lc(substring_func(main_encoded_str, part_formula.base(i) + part_formula.offset, part_formula.length));
 
                 for(var j = 1; j <= ps; j++){
-                    const part1 = decode_url_part(4, main_encoded_str);
-                    const part2 = substring_func(pg9_719, 0, 1);
-                    const part3 = decode_url_part(3, main_encoded_str);
-                    const part4 = decode_url_part(2, main_encoded_str);
-                    const part5 = decode_url_part(3, main_encoded_str);
-                    const part6 = substring_func(pg9_719, 1, 1);
-                    const part7 = ti;
-                    const part8 = ch_val + (part_val == "0" ? "" : part_val);
-                    const part9 = nn(j);
-                    const part10 = substring_func(k66vp831a4_part, mm(j), 3);
-                    const part11 = decode_url_part(1, main_encoded_str);
+                    try {
+                        const part1 = decode_url_part(4, main_encoded_str);
+                        // Ensure pg9_719 is treated as a string for substring_func
+                        const pg9_719_str = String(pg9_719);
+                        const part2 = substring_func(pg9_719_str, 0, 1);
+                        const part3 = decode_url_part(3, main_encoded_str);
+                        const part4 = decode_url_part(2, main_encoded_str);
+                        const part5 = decode_url_part(3, main_encoded_str);
+                        const part6 = substring_func(pg9_719_str, 1, 1);
+                        const part7 = ti;
+                        // Ensure ch_val and part_val are treated as strings for concatenation
+                        const part8 = String(ch_val) + (String(part_val) == "0" ? "" : String(part_val));
+                        const part9 = nn(j);
+                        const part10 = substring_func(k66vp831a4_part, mm(j), 3);
+                        const part11 = decode_url_part(1, main_encoded_str);
 
-                    let encodedUrl = '';
-                    encodedUrl += '%2f' + '%2f' + part1 + part2 + '%2e' + '%38' + part3 + part4 + part5 + '%2f' + part6 + '%2f' + part7 + '%2f' + part8 + '%2f' + part9 + '%5f' + part10 + '%2e' + part11;
+                        let encodedUrl = '';
+                        encodedUrl += '%2f%2f' + part1 + part2 + '%2e%38' + part3 + part4 + part5 + '%2f' + part6 + '%2f' + part7 + '%2f' + part8 + '%2f' + part9 + '%5f' + part10 + '%2e' + part11;
 
-                    const fullImageUrl = 'https:' + unescape(encodedUrl);
-                    imageList.push(fullImageUrl);
+                        const fullImageUrl = 'https:' + unescape(encodedUrl);
+                        imageList.push(fullImageUrl);
+
+                    } catch (loopError) {
+                         console.error("Error inside image generation loop (j=" + j + "):", loopError); // Keep error log
+                    }
                 }
+            } else {
+                 console.error("Cannot generate image URLs: currentSectionIndex not found."); // Keep error log
             }
 
         } catch (e) {
+            console.error("Error during main logic execution:", e); // Keep error log
+            console.error("Stack trace:", e.stack); // Keep error log
             return JSON.stringify({ type: "article", data: [] });
         }
 
         var data = imageList.map(fullImageUrl => {
             return {
                 t: "image",
-                d: fullImageUrl
+                d: fullImageUrl,
+                referer: "https://www.8comic.com/" // Assuming this is constant
             };
         });
 
