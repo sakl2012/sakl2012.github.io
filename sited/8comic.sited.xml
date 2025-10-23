@@ -107,6 +107,8 @@
         const book = {
             name: gbk2big5.traditionalized($(".h2").text().trim()),
             logo: 'https://www.8comic.com' + $(".item-cover img").attr("src"),
+			intro: gbk2big5.traditionalized($(".item_info_detail").text().trim()),
+			author: gbk2big5.traditionalized($(".item-info-author").text().trim()),
             sections: sections
         };
         return JSON.stringify(book);
