@@ -96,11 +96,11 @@
         const sections = [];
         $("#rp_tb_comic_0 a.eps_a").each(function(){
             const sectionName = $(this).text().trim();
-            const sectionUrl = $(this).attr("onclick").match(/(\d+?)-(\d+?).html/);
+            const sectionUrl = $(this).attr("onclick").match(/'(.*)'/)[1];
             if (sectionName && sectionUrl) {
                 sections.push({
                     name: gbk2big5.traditionalized(sectionName),
-                    url: "https://articles.onemoreplace.tw/online/new-"+sectionUrl[1]+".html?ch="+sectionUrl[2]
+                    url: "https://articles.onemoreplace.tw/online/new-"+sectionUrl.replace("-",".html?ch=")
                 });
             }
         });
@@ -118,7 +118,7 @@
         if (!scriptContent || scriptContent.length < 10) {
             return JSON.stringify({ type: "article", data: [] });
         }
-        
+
         function lc(l){
             if(l.length!=2 ) return l;
             var az="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -145,10 +145,10 @@
         function mm(p){
             return (parseInt((p-1)/10)%10)+(((p-1)%10)*3);
         }
-    
+
         let decode_url_part_cache = {};
-        let main_encoded_str = ''; 
-    
+        let main_encoded_str = '';
+
         function decode_url_part(index, main_str){
              if(decode_url_part_cache[index]) return decode_url_part_cache[index];
              if (!main_str || main_str.length < 47 + index * 6 + 6) return '';
@@ -158,60 +158,60 @@
              decode_url_part_cache[index] = result;
              return result;
         }
-    
+
         let num_val_49, num_val_48, num_val_46;
         let v49_name, v48_name, v46_name;
         let base_lookup = {};
         let formula_cache = {};
-    
+
         try {
             const v49_match = scriptContent.match(/i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*-\s*2\s*\)/);
             v49_name = v49_match[1];
             num_val_49 = parseInt(scriptContent.match(new RegExp("var\\s+" + v49_name + "\\s*=\\s*([0-9]+);"))[1]);
             base_lookup[v49_name + "-2"] = (i) => i * (num_val_49 - 2);
-    
+
             const v48_match = scriptContent.match(/i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*-\s*1\s*\)/);
             v48_name = v48_match[1];
             num_val_48 = parseInt(scriptContent.match(new RegExp("var\\s+" + v48_name + "\\s*=\\s*([0-9]+);"))[1]);
             base_lookup[v48_name + "-1"] = (i) => i * (num_val_48 - 1);
-    
+
             const v46_match = scriptContent.match(/i\s*\*\s*\(\s*([a-zA-Z0-9_]+)\s*\+\s*1\s*\)/);
             v46_name = v46_match[1];
             num_val_46 = parseInt(scriptContent.match(new RegExp("var\\s+" + v46_name + "\\s*=\\s*([0-9]+);"))[1]);
             base_lookup[v46_name + "+1"] = (i) => i * (num_val_46 + 1);
-    
+
         } catch (e) {
             return JSON.stringify({ type: "article", data: [] });
         }
-    
+
         function get_formula(var_name) {
             if (formula_cache[var_name]) return formula_cache[var_name];
-            
+
             const regex = new RegExp("var\\s+" + var_name + "\\s*=\\s*lc\\(.*?i\\s*\\*\\s*\\((.+?)\\)\\s*\\+\\s*([0-9]+)(?:,([0-9]+))?.*?\\);");
             const match = scriptContent.match(regex);
-            
+
             if (!match) {
                 return null;
             }
-    
-            const base_str = match[1].replace(/\s/g, ''); 
+
+            const base_str = match[1].replace(/\s/g, '');
             const base_func = base_lookup[base_str];
             const offset = parseInt(match[2]);
             const length = match[3] ? parseInt(match[3]) : null;
-    
+
             if (!base_func) {
                 return null;
             }
-    
+
             const formula = { base: base_func, offset: offset, length: length };
             formula_cache[var_name] = formula;
             return formula;
         }
-    
+
         try {
             const str_matches = scriptContent.matchAll(/var\s+[a-zA-Z0-9_]+\s*=\s*'([^']+?)';/g);
             for (const match of str_matches) {
-                if (match[1].length > 500) { 
+                if (match[1].length > 500) {
                     main_encoded_str = match[1];
                     break;
                 }
@@ -219,11 +219,11 @@
             if (main_encoded_str === '') {
                 return JSON.stringify({ type: "article", data: [] });
             }
-    
+
             const chs_ti_match = scriptContent.match(/var\s+chs=([0-9]+);var\s+ti=([0-9]+);/);
             const chs = parseInt(chs_ti_match[1]);
             const ti = chs_ti_match[2];
-    
+
             let current_ch_str = '1';
             let current_part_str = '0';
             const url_ch_match = url.match(/ch=([0-9]+)([a-zA-Z]?)/);
@@ -236,45 +236,45 @@
                 const js_ch_match = scriptContent.match(new RegExp("if\\(ch=='')\\s*ch=([0-9]+);"));
                 if (js_ch_match) current_ch_str = js_ch_match[1];
             }
-    
+
             const ch_var_name = scriptContent.match(/if\s*\(\s*([a-zA-Z0-9_]+)\s*==\s*ch/)[1];
             const ps_var_name = scriptContent.match(/\)\s*;\s*ps\s*=\s*([a-zA-Z0-9_]+)\s*;\s*if\s*\(/)[1];
             const part_var_name = scriptContent.match(/part\s*==\s*([a-zA-Z0-9_]+)\)/)[1];
             const pg9_var_name = scriptContent.match(/\(\s*([a-zA-Z0-9_]+)\s*,\s*0\s*,\s*1\s*\)/)[1];
             const k66_var_name = scriptContent.match(/\(\s*([a-zA-Z0-9_]+)\s*,\s*mm\(j\)\s*,\s*3\s*\)/)[1];
-    
+
             const ch_formula = get_formula(ch_var_name);
             const ps_formula = get_formula(ps_var_name);
             const part_formula = get_formula(part_var_name);
             const pg9_formula = get_formula(pg9_var_name);
-            const k66_formula = get_formula(k66_var_name); 
-    
+            const k66_formula = get_formula(k66_var_name);
+
             var imageList = [];
             var currentSectionIndex = -1;
             let ch_val, part_val, ps, pg9_719, k66vp831a4_part;
-    
+
             for (var i = 0; i < chs; i++){
                 const part_num = lc(substring_func(main_encoded_str, part_formula.base(i) + part_formula.offset, part_formula.length));
-    
+
                 if (part_num == current_part_str) {
                     const chapter_num = lc(substring_func(main_encoded_str, ch_formula.base(i) + ch_formula.offset, ch_formula.length));
-                    
+
                     if (chapter_num == current_ch_str) {
                         currentSectionIndex = i;
-                        ch_val = chapter_num; 
+                        ch_val = chapter_num;
                         break;
                     }
                 }
             }
-        
+
             if (currentSectionIndex != -1) {
                 var i = currentSectionIndex;
-                
+
                 ps = lc(substring_func(main_encoded_str, ps_formula.base(i) + ps_formula.offset, ps_formula.length));
                 pg9_719 = lc(substring_func(main_encoded_str, pg9_formula.base(i) + pg9_formula.offset, pg9_formula.length));
-                k66vp831a4_part = substring_func(main_encoded_str, k66_formula.base(i) + k66_formula.offset, k66_formula.length); 
+                k66vp831a4_part = substring_func(main_encoded_str, k66_formula.base(i) + k66_formula.offset, k66_formula.length);
                 part_val = lc(substring_func(main_encoded_str, part_formula.base(i) + part_formula.offset, part_formula.length));
-    
+
                 for(var j = 1; j <= ps; j++){
                     const part1 = decode_url_part(4, main_encoded_str);
                     const part2 = substring_func(pg9_719, 0, 1);
@@ -287,26 +287,26 @@
                     const part9 = nn(j);
                     const part10 = substring_func(k66vp831a4_part, mm(j), 3);
                     const part11 = decode_url_part(1, main_encoded_str);
-    
+
                     let encodedUrl = '';
                     encodedUrl += '%2f' + '%2f' + part1 + part2 + '%2e' + '%38' + part3 + part4 + part5 + '%2f' + part6 + '%2f' + part7 + '%2f' + part8 + '%2f' + part9 + '%5f' + part10 + '%2e' + part11;
-    
+
                     const fullImageUrl = 'https:' + unescape(encodedUrl);
                     imageList.push(fullImageUrl);
                 }
             }
-    
+
         } catch (e) {
             return JSON.stringify({ type: "article", data: [] });
         }
-    
+
         var data = imageList.map(fullImageUrl => {
             return {
                 t: "image",
                 d: fullImageUrl
             };
         });
-    
+
         return JSON.stringify({
             type: "article",
             data: data
