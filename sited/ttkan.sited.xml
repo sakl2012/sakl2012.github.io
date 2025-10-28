@@ -69,7 +69,7 @@
             if ($(this).attr("href").match(/https/)) sections.push({name: $(this).text(), url: $(this).attr("href")});
         });
         var book = {
-            name: gbk2big5.traditionalized($("h1.booktitle").text().trim()),
+            name: gbk2big5.traditionalized($("h1").text().trim()),
 			logo: $(".novel_info amp-img").attr('src'),
 			intro: gbk2big5.traditionalized($(".description").text().trim()),
             sections: sections
