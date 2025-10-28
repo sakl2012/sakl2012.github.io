@@ -70,6 +70,8 @@
         });
         var book = {
             name: gbk2big5.traditionalized($("h1.booktitle").text().trim()),
+			logo: $(".novel_info amp-img").attr('src'),
+			intro: gbk2big5.traditionalized($(".description").text().trim()),
             sections: sections
         };
         return JSON.stringify(book);
