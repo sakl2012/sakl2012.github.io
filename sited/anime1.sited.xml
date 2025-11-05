@@ -12,7 +12,7 @@
     <main>
         <home url="https://d1zquzjgwo9yb.cloudfront.net/" parse="home_list_parse" />
         <search parse="list_parse" url="https://d1zquzjgwo9yb.cloudfront.net/?keyword=@key"/>
-        <book parseUrl="book_parse_url" parse="book_parse_api_response"/>
+        <book parseUrl="book_parse_url" parse="book_parse_api_response" reverse="1"/>
         <section parse="section_parse"/>
     </main>
 

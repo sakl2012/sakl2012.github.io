@@ -125,6 +125,19 @@
         return JSON.stringify(list);
     }
 
+    function convertYouTubeEmbedLink(embedLink) {
+      const regex = /https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9_-]+)/;
+      const match = embedLink.match(regex);
+
+      if (match && match[1]) {
+        const videoId = match[1];
+        return `https://m.youtube.com/watch?v=${videoId}`;
+      } else {
+        // 如果連結不符合預期的格式，返回原始連結或拋出錯誤
+        return embedLink;
+      }
+    }
+
     // ⭐【核心修正 V21 - section_parse 圖片載入順序修正】
     function section_parse(url, html) {
         const $ = cheerio.load(html);
@@ -171,10 +184,16 @@
             let embedType = '嵌入式內容';
             if (src.includes('instagram')) embedType = 'Instagram';
             else if (src.includes('facebook')) embedType = 'Facebook';
-            else if (src.includes('youtube') || src.includes('youtu.be')) embedType = 'YouTube';
+            else if (src.includes('youtube') || src.includes('youtu.be')) {
+                embedType = 'YouTube';
+                src = convertYouTubeEmbedLink(src);
+            }
             else if (src.includes('tiktok')) embedType = 'TikTok';
 
-            return `\n@@EMBED@@[外部內容: ${embedType} 嵌入]@@/EMBED@@\n`;
+            return `\n@@EMBED@@${src}@@/EMBED@@\n`;
+        });
+        rawHtml = rawHtml.replace(/<a[^>]*href\s*=\s*(['"])(.*?)\1[^>]*>([\s\S]*?)<\/a>/gi, function(match, quote, src, txt) {
+            return `${txt}\n@@EMBED@@${src}@@/EMBED@@\n`;
         });
 
         // 3.2. 移除所有外部的 <script> 標籤
@@ -285,7 +304,7 @@
                 else if (part.startsWith('@@EMBED@@')) {
                     const text = part.replace('@@EMBED@@', '').replace('@@/EMBED@@', '').trim();
                     let decodedText = cheerio.load('<div>' + text + '</div>')('div').text();
-                    data.push({ t: "text", d: safeTraditionalize(decodedText) });
+                    data.push({ t: "iframe", d: safeTraditionalize(decodedText) });
                 }
                 // 處理文本 (可能包含粗體)
                 else {

@@ -61,12 +61,23 @@
             return JSON.stringify([]);
         }
     }
+    function convertYouTubeEmbedLink(embedLink) {
+      const regex = /https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9_-]+)/;
+      const match = embedLink.match(regex);
 
+      if (match && match[1]) {
+        const videoId = match[1];
+        return `https://m.youtube.com/watch?v=${videoId}`;
+      } else {
+        // 如果連結不符合預期的格式，返回原始連結或拋出錯誤
+        return embedLink;
+      }
+    }
 // ⭐【核心修正 V11 - 文本流處理策略】增強媒體嵌入處理
 function section_parse(url, html) {
     const $ = cheerio.load(html);
     const data = [];
-    
+
     // 輸出文章標題作為第一個粗體文本項
     data.push({ t: "text", d: gbk2big5.traditionalized($('meta[property="og:title"]').attr('content') || $('title').text()), b: 1, s: 4 });
 
@@ -76,24 +87,30 @@ function section_parse(url, html) {
     if (!rawHtml) {
         return JSON.stringify({type:"article", data: data});
     }
-    
+
     // 2. 替換 IFRAME 和 SCRIPT 為文本標記
-    
+
     // 2.1. 處理 IFRAME (Instagram, Facebook, Youtube)
     // 找到所有的 iframe，並將其替換為一個通用的文本標記
-    rawHtml = rawHtml.replace(/<iframe[^>]*src\s*=\s*(['"])(.*?)\1[^>]*>[\s\S]*?<\/iframe>/gi, (match, quote, src) => {
+    rawHtml = rawHtml.replace(/<iframe[^>]*src\s*=\s*(['"])(.*?)\1[^>]*>[\s\S]*?<\/iframe>/gi, function(match, quote, src) {
         let embedType = '嵌入式內容';
         if (src.includes('instagram')) embedType = 'Instagram';
         else if (src.includes('facebook')) embedType = 'Facebook';
-        else if (src.includes('youtube') || src.includes('youtu.be')) embedType = 'YouTube';
+        else if (src.includes('youtube') || src.includes('youtu.be')) {
+            embedType = 'YouTube';
+            src = convertYouTubeEmbedLink(src);
+        }
+        else if (src.includes('tiktok')) embedType = 'TikTok';
 
-        // 確保在標記前後有換行符
-        return `\n@@EMBED@@[外部內容: ${embedType} 嵌入]@@/EMBED@@\n`;
+        return `\n@@EMBED@@${src}@@/EMBED@@\n`;
     });
-    
+    rawHtml = rawHtml.replace(/<a[^>]*href\s*=\s*(['"])(.*?)\1[^>]*>([\s\S]*?)<\/a>/gi, function(match, quote, src, txt) {
+        return `${txt}\n@@EMBED@@${src}@@/EMBED@@\n`;
+    });
+
     // 2.2. 移除所有外部的 <script> 標籤 (如 Instagram 的 embed.js)
     rawHtml = rawHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-    
+
     // 2.3. 移除其他不需要的 DIV (例如廣告)
     // 我們無法使用 Cheerio 的 .find().each()，只能盡力用正則移除常見的廣告結構
     rawHtml = rawHtml.replace(/<div[^>]*class\s*=\s*(['"])[^>]*ads-300x250[\s\S]*?<\/div>/gi, '');
@@ -127,7 +144,7 @@ function section_parse(url, html) {
     rawHtml = rawHtml.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1');
     rawHtml = rawHtml.replace(/<a[^>]*>([\s\S]*?)<\/a>/gi, '$1');
     rawHtml = rawHtml.replace(/<font[^>]*>([\s\S]*?)<\/font>/gi, '$1');
-    rawHtml = rawHtml.replace(/<center[^>]*>([\s\S]*?)<\/center>/gi, '$1'); 
+    rawHtml = rawHtml.replace(/<center[^>]*>([\s\S]*?)<\/center>/gi, '$1');
 
     // 將 <br> 替換為換行
     rawHtml = rawHtml.replace(/<br\s*\/?>/gi, '\n');
@@ -165,7 +182,7 @@ function section_parse(url, html) {
                 const text = part.replace('@@EMBED@@', '').replace('@@/EMBED@@', '').trim();
                 // 嵌入內容作為普通文本輸出
                 let decodedText = cheerio.load('<div>' + text + '</div>')('div').text();
-                data.push({ t: "text", d: gbk2big5.traditionalized(decodedText) });
+                data.push({ t: "iframe", d: gbk2big5.traditionalized(decodedText) });
             }
             // 處理文本 (可能包含粗體)
             else {
