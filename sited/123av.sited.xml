@@ -99,7 +99,7 @@
     }
 
     function section_parse(url, html) {
-        return JSON.stringify({type:"webview_player", data: url});
+        return JSON.stringify({type:"webview", data: url});
     }
     ]]>
     </script>

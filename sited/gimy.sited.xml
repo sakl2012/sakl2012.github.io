@@ -157,7 +157,7 @@
 
         function section_parse(url, html) {
             return JSON.stringify({
-                type: "webview_player",
+                type: "webview",
                 data: url
             });
         }
