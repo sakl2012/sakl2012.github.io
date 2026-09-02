@@ -3,93 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4-Zone 動態防禦三倉全景策略系統</title>
+    <title>4-Zone 動態防禦三倉策略系統</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary: #1e3c72;
-            --primary-dark: #162d56;
-            --accent: #00f2fe;
-            --success: #27ae60;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --info: #3498db;
-            --bg: #f4f7f6;
+            --primary: #0f172a;
+            --accent-blue: #0284c7;
+            --accent-cyan: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --bg: #f8fafc;
             --card-bg: #ffffff;
-            --text-main: #2c3e50;
-            --text-muted: #7f8c8d;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
             --border: #e2e8f0;
         }
 
         * { box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 0; padding: 15px; background-color: var(--bg); color: var(--text-main); line-height: 1.5; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.5;
+        }
         .container { max-width: 1280px; margin: 0 auto; }
         
-        h1 { text-align: center; color: #1a252f; margin: 5px 0 3px; font-size: 26px; font-weight: 800; }
-        .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 20px; font-size: 14px; }
-        
-        /* 即時多幣種行情跑馬條 */
+        /* 頁首標題與連線狀態 */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .brand-title { font-size: 20px; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px; }
+        .live-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* 幣種行情列 */
         .ticker-bar {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
-            padding: 8px 12px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            margin-bottom: 20px;
+            padding: 6px 4px 12px 4px;
             scrollbar-width: thin;
         }
         .ticker-chip {
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
-            background: #f8fafc;
+            padding: 5px 10px;
+            background: white;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
         }
-        .ticker-sym { color: #475569; }
+        .ticker-sym { color: #64748b; }
         .ticker-price { font-weight: 700; color: #0f172a; }
         .ticker-chg.up { color: var(--success); }
         .ticker-chg.down { color: var(--danger); }
 
-        /* 即時狀態指示燈看板 */
-        .live-alert-card {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        /* ================= 核心置頂：智能持倉即時指令中心 ================= */
+        .command-center {
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
             color: white;
-            padding: 22px 26px;
-            border-radius: 14px;
+            border-radius: 16px;
+            padding: 24px;
             margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(30, 60, 114, 0.22);
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25);
+            border: 1px solid #334155;
+        }
+        
+        .cc-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .zone-signal-wrap { display: flex; flex-direction: column; gap: 4px; }
+        .zone-tag { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 600; }
+        .zone-main-title { font-size: 32px; font-weight: 900; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+
+        .market-metrics-row {
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px 16px;
+            border-radius: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .metric-inline { font-size: 13px; color: #cbd5e1; }
+        .metric-inline strong { color: white; font-size: 15px; font-weight: 700; }
+
+        /* 換倉警戒線監控條 */
+        .zone-threshold-alert {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #334155;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 10px;
+            font-size: 13px;
         }
-        .live-alert-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.88; margin-bottom: 4px; }
-        .live-alert-zone { font-size: 28px; font-weight: 800; color: var(--accent); }
-        .live-setting-box { background: rgba(255, 255, 255, 0.14); padding: 14px 18px; border-radius: 10px; font-size: 13px; line-height: 1.7; flex: 1; min-width: 320px; }
-        .btn-refresh {
-            background: rgba(255,255,255,0.22);
-            border: 1px solid rgba(255,255,255,0.4);
-            color: white;
-            border-radius: 6px;
-            padding: 4px 10px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-refresh:hover { background: rgba(255,255,255,0.35); }
+        .alert-target { display: flex; align-items: center; gap: 6px; font-weight: 600; }
 
-        /* 實盤資金分配計算機 */
+        /* 三倉即時設定巨型卡片區 */
+        .live-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+        .live-card {
+            background: #ffffff;
+            color: #0f172a;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-top: 6px solid #0284c7;
+            position: relative;
+        }
+        .live-card.card-A { border-top-color: #f59e0b; }
+        .live-card.card-B { border-top-color: #8b5cf6; }
+        .live-card.card-C { border-top-color: #10b981; }
+
+        .card-top-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .card-name { font-size: 17px; font-weight: 800; color: #0f172a; }
+        .card-weight-badge {
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        /* 幣種比例顯示條 */
+        .ratio-bars-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .ratio-bar-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 6px 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #edf2f7;
+        }
+        .ratio-coin { display: flex; align-items: center; gap: 8px; color: #1e293b; font-weight: 700; }
+        .ratio-val { font-size: 16px; font-weight: 800; color: #0284c7; }
+
+        .rebalance-threshold-tag {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f0fdf4;
+            border: 1px dashed #86efac;
+            color: #166534;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* ================= 實盤資金試算 ================= */
         .calc-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 22px;
             margin-bottom: 25px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.04);
@@ -103,7 +237,7 @@
             gap: 12px;
             margin-bottom: 16px;
         }
-        .calc-title { font-size: 17px; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 8px; }
+        .calc-title { font-size: 17px; font-weight: 800; color: #0f172a; }
         .calc-input-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .calc-input {
             padding: 8px 12px;
@@ -111,12 +245,11 @@
             border-radius: 8px;
             font-size: 15px;
             font-weight: 700;
-            width: 140px;
-            color: #1e3c72;
+            width: 130px;
+            color: #0f172a;
             outline: none;
-            transition: border-color 0.2s;
         }
-        .calc-input:focus { border-color: #2a5298; }
+        .calc-input:focus { border-color: #0284c7; }
         .quick-btn {
             padding: 5px 10px;
             background: #f1f5f9;
@@ -126,9 +259,8 @@
             font-weight: 600;
             color: #475569;
             cursor: pointer;
-            transition: all 0.15s;
         }
-        .quick-btn:hover { background: #e2e8f0; color: #0f172a; }
+        .quick-btn:hover { background: #e2e8f0; }
 
         .calc-results-grid {
             display: grid;
@@ -147,12 +279,13 @@
             display: flex;
             justify-content: space-between;
             color: #334155;
+            font-weight: 700;
         }
         .calc-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 0;
+            padding: 5px 0;
             font-size: 13px;
             border-bottom: 1px dashed #e2e8f0;
         }
@@ -160,21 +293,22 @@
         .calc-item-amt { font-weight: 700; color: #0f172a; }
         .calc-item-qty { font-size: 11px; color: var(--text-muted); margin-left: 6px; }
 
-        /* 回測指標卡片 */
+        /* 指標卡片 */
         .summary-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .metric-card { background: white; padding: 18px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.04); text-align: center; }
-        .metric-title { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-        .metric-value { font-size: 22px; font-weight: 700; color: var(--text-main); }
+        .metric-card { background: white; padding: 16px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); text-align: center; border: 1px solid #f1f5f9; }
+        .metric-title { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-weight: 600; }
+        .metric-value { font-size: 20px; font-weight: 800; color: var(--text-main); }
         .metric-value.positive { color: var(--success); }
         .metric-value.negative { color: var(--danger); }
 
-        /* 圖表容器 */
+        /* 圖表 */
         .chart-card {
             background: white;
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 14px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.04);
             margin-bottom: 25px;
+            border: 1px solid #f1f5f9;
         }
         .chart-header {
             display: flex;
@@ -184,7 +318,7 @@
             gap: 10px;
             margin-bottom: 15px;
         }
-        .chart-title { font-size: 16px; font-weight: 700; color: #1e293b; }
+        .chart-title { font-size: 16px; font-weight: 800; color: #0f172a; }
         .timeframe-group { display: flex; gap: 6px; }
         .tf-btn {
             padding: 4px 12px;
@@ -195,27 +329,18 @@
             font-weight: 600;
             color: #475569;
             cursor: pointer;
-            transition: all 0.2s;
         }
-        .tf-btn.active, .tf-btn:hover { background: #1e3c72; color: white; border-color: #1e3c72; }
-        .chart-wrapper { height: 380px; position: relative; }
+        .tf-btn.active, .tf-btn:hover { background: #0f172a; color: white; border-color: #0f172a; }
+        .chart-wrapper { height: 360px; position: relative; }
 
-        /* 三倉配置指引卡片 */
-        .allocation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 25px; }
-        .alloc-card { background: white; border-radius: 10px; padding: 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.04); border-top: 4px solid var(--info); }
-        .alloc-card.card-A { border-top-color: var(--warning); }
-        .alloc-card.card-B { border-top-color: #9b59b6; }
-        .alloc-card.card-C { border-top-color: var(--success); }
-        .alloc-card h3 { margin-top: 0; font-size: 16px; display: flex; justify-content: space-between; align-items: center; }
-        .alloc-badge { font-size: 12px; padding: 3px 8px; border-radius: 6px; background: #ecf0f1; color: #555; }
-
-        /* 表格區塊與操作列 */
+        /* 表格區塊 */
         .table-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.04);
             margin-bottom: 30px;
+            border: 1px solid #f1f5f9;
         }
         .table-toolbar {
             display: flex;
@@ -227,7 +352,7 @@
         }
         .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
         .tab-btn {
-            padding: 6px 14px;
+            padding: 6px 12px;
             border: 1px solid var(--border);
             background: #f8fafc;
             border-radius: 8px;
@@ -235,24 +360,23 @@
             font-weight: 600;
             color: #475569;
             cursor: pointer;
-            transition: all 0.2s;
         }
         .tab-btn.active {
-            background: #1e3c72;
+            background: #0f172a;
             color: white;
-            border-color: #1e3c72;
+            border-color: #0f172a;
         }
         .search-box {
             padding: 6px 12px;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 13px;
-            width: 200px;
+            width: 180px;
             outline: none;
         }
 
         .table-container {
-            max-height: 540px;
+            max-height: 520px;
             overflow-y: auto;
             overflow-x: auto;
             border: 1px solid #edf2f7;
@@ -262,7 +386,7 @@
         th, td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; }
         th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2) { text-align: left; }
         thead th {
-            background-color: #1e293b;
+            background-color: #0f172a;
             color: white;
             position: sticky;
             top: 0;
@@ -271,15 +395,15 @@
         }
         
         .zone-badge { padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; display: inline-block; }
-        .zone-1 .zone-badge { background-color: #27ae60; }
-        .zone-2 .zone-badge { background-color: #3498db; }
-        .zone-3 .zone-badge { background-color: #f39c12; }
-        .zone-4 .zone-badge { background-color: #e74c3c; }
+        .zone-1 .zone-badge { background-color: #10b981; }
+        .zone-2 .zone-badge { background-color: #0284c7; }
+        .zone-3 .zone-badge { background-color: #f59e0b; }
+        .zone-4 .zone-badge { background-color: #ef4444; }
         
-        .zone-1 { background-color: rgba(39, 174, 96, 0.03); }
-        .zone-2 { background-color: rgba(52, 152, 219, 0.03); }
-        .zone-3 { background-color: rgba(243, 156, 18, 0.03); }
-        .zone-4 { background-color: rgba(231, 76, 60, 0.03); }
+        .zone-1 { background-color: rgba(16, 185, 129, 0.03); }
+        .zone-2 { background-color: rgba(2, 132, 199, 0.03); }
+        .zone-3 { background-color: rgba(245, 158, 11, 0.03); }
+        .zone-4 { background-color: rgba(239, 68, 68, 0.03); }
 
         .pagination {
             display: flex;
@@ -301,22 +425,26 @@
             font-size: 12px;
         }
         .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-        .page-btn:not(:disabled):hover { background: #f1f5f9; }
 
         @media (max-width: 768px) {
-            .live-alert-card { padding: 16px; }
-            .live-setting-box { min-width: 100%; }
-            .calc-input-wrap { width: 100%; }
-            .calc-input { flex: 1; }
+            body { padding: 10px; }
+            .command-center { padding: 16px; }
+            .zone-main-title { font-size: 24px; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>4-Zone 動態防禦三倉全景策略系統</h1>
-    <div class="subtitle">Core-Satellite-Alpha 宏觀架構 (A 20% / B 60% / C 20%) | 幣安即時聯動監控</div>
+    <!-- 頂部標題列 -->
+    <div class="page-header">
+        <h1 class="brand-title">📊 4-Zone 動態防禦三倉策略系統</h1>
+        <div class="live-status-pill">
+            <span class="pulse-dot"></span>
+            <span id="liveStatusText">幣安即時連線中 (每 30 秒自動刷新)</span>
+        </div>
+    </div>
 
-    <!-- 即時多幣種行情列 -->
+    <!-- 關聯代幣即時行情跑馬條 -->
     <div class="ticker-bar" id="tickerBar">
         <div class="ticker-chip"><span class="ticker-sym">BTC:</span> <span class="ticker-price" id="t-BTC">載入中...</span></div>
         <div class="ticker-chip"><span class="ticker-sym">SOL:</span> <span class="ticker-price" id="t-SOL">--</span></div>
@@ -327,36 +455,122 @@
         <div class="ticker-chip"><span class="ticker-sym">PAXG:</span> <span class="ticker-price" id="t-PAXG">--</span></div>
     </div>
 
-    <!-- 即時狀態與操作指引看板 -->
-    <div class="live-alert-card" id="liveAlertCard">
-        <div>
-            <div class="live-alert-title" id="liveAlertStatusTitle">⚡ 當前即時市場狀態 (即時連線中...)</div>
-            <div class="live-alert-zone" id="liveZoneDisplay">Zone 2 (牛市巡航階段)</div>
-            <div style="font-size: 13px; margin-top: 5px; opacity: 0.9;" id="livePriceInfo">
-                BTC 當前約 <strong id="liveBtcPrice">$76,700</strong> | 200日均線約 <strong id="liveMa200">$69,538</strong> | 比值: <strong id="liveRatio">1.10</strong>
+    <!-- ================= 0秒對照：智能持倉即時指令中心 ================= -->
+    <div class="command-center">
+        <div class="cc-top-row">
+            <div class="zone-signal-wrap">
+                <div class="zone-tag">⚡ 當前即時市場信號</div>
+                <div class="zone-main-title" id="liveZoneDisplay">Zone 2 (牛市巡航階段)</div>
             </div>
-            <div style="font-size: 11px; margin-top: 6px; opacity: 0.8;" id="liveUpdateTime">
-                🟢 幣安即時連線中 | 初始化載入中... (每 30 秒自動刷新)
+            <div class="market-metrics-row">
+                <div class="metric-inline">BTC 當前價: <strong id="liveBtcPrice">$--</strong></div>
+                <div style="color: #475569;">|</div>
+                <div class="metric-inline">200日均線 (MA200): <strong id="liveMa200">$--</strong></div>
+                <div style="color: #475569;">|</div>
+                <div class="metric-inline">當前比值: <strong id="liveRatio" style="color: #38bdf8;">--</strong></div>
+                <button onclick="fetchLiveMarketData()" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; margin-left: 6px;">🔄 刷新</button>
             </div>
         </div>
-        <div class="live-setting-box" id="liveSettingBox">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <strong>🎯 幣安智能持倉「當前應設定之參數」：</strong>
-                <button class="btn-refresh" onclick="fetchLiveMarketData()">🔄 立即刷新</button>
+
+        <!-- 換倉警戒線監控 -->
+        <div class="zone-threshold-alert">
+            <div style="color: #94a3b8; font-weight: 600;">🎯 換倉安全監控：</div>
+            <div class="alert-target" id="downwardAlert">🔻 跌回 Zone 1 警戒價：<span style="color: #4ade80;">BTC < $-- (--%)</span></div>
+            <div class="alert-target" id="upwardAlert">🔺 升至 Zone 3 警戒價：<span style="color: #fbbf24;">BTC ≥ $-- (--%)</span></div>
+        </div>
+
+        <!-- 三倉當前應設定參數卡片 -->
+        <div class="live-cards-grid">
+            <!-- A 倉 -->
+            <div class="live-card card-A">
+                <div>
+                    <div class="card-top-head">
+                        <span class="card-name">📦 A 倉：核心防禦 (Core)</span>
+                        <span class="card-weight-badge">佔總資金 20%</span>
+                    </div>
+                    <div class="ratio-bars-container" id="cardA_ratios">
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🟠 BTC</span>
+                            <span class="ratio-val" id="valA_BTC">58%</span>
+                        </div>
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🟡 PAXG (黃金)</span>
+                            <span class="ratio-val" id="valA_PAXG">42%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rebalance-threshold-tag">
+                    <span>幣安智能持倉設定</span>
+                    <span>再平衡偏差閾值：5%</span>
+                </div>
             </div>
-            • <strong>A 倉 (Core 20%)</strong>：<code id="liveParamA">BTC 58% / PAXG 42%</code> (偏差 5%)<br>
-            • <strong>B 倉 (Sat 60%)</strong>：<code id="liveParamB">SOL 25% / TAO 15% / PAXG 60%</code> (偏差 5%)<br>
-            • <strong>C 倉 (Alpha 20%)</strong>：<code id="liveParamC">AAVE 38% / NEAR 22% / LINK 11% / PAXG 29%</code> (偏差 <strong>10%</strong>)
+
+            <!-- B 倉 -->
+            <div class="live-card card-B">
+                <div>
+                    <div class="card-top-head">
+                        <span class="card-name">🚀 B 倉：主力爆發 (Satellite)</span>
+                        <span class="card-weight-badge">佔總資金 60%</span>
+                    </div>
+                    <div class="ratio-bars-container" id="cardB_ratios">
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🟣 SOL</span>
+                            <span class="ratio-val" id="valB_SOL">25%</span>
+                        </div>
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🔵 TAO</span>
+                            <span class="ratio-val" id="valB_TAO">15%</span>
+                        </div>
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🟡 PAXG (黃金)</span>
+                            <span class="ratio-val" id="valB_PAXG">60%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rebalance-threshold-tag">
+                    <span>幣安智能持倉設定</span>
+                    <span>再平衡偏差閾值：5%</span>
+                </div>
+            </div>
+
+            <!-- C 倉 -->
+            <div class="live-card card-C">
+                <div>
+                    <div class="card-top-head">
+                        <span class="card-name">⚡ C 倉：敘事輪動 (Alpha)</span>
+                        <span class="card-weight-badge">佔總資金 20%</span>
+                    </div>
+                    <div class="ratio-bars-container" id="cardC_ratios">
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🔵 AAVE</span>
+                            <span class="ratio-val" id="valC_AAVE">38%</span>
+                        </div>
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🟢 NEAR</span>
+                            <span class="ratio-val" id="valC_NEAR">22%</span>
+                        </div>
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🔷 LINK</span>
+                            <span class="ratio-val" id="valC_LINK">11%</span>
+                        </div>
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🟡 PAXG (黃金)</span>
+                            <span class="ratio-val" id="valC_PAXG">29%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rebalance-threshold-tag">
+                    <span>幣安智能持倉設定</span>
+                    <span style="color: #b45309;">再平衡偏差閾值：10%</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- 實盤資金分配計算機 -->
     <div class="calc-card">
         <div class="calc-header">
-            <div class="calc-title">
-                <span>🧮 實盤資金分配試算</span>
-                <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依當前市場 Zone 動態試算各倉分配與預估顆數）</span>
-            </div>
+            <div class="calc-title">🧮 實盤金額試算（按當前設定自動拆分）</div>
             <div class="calc-input-wrap">
                 <label style="font-size: 13px; font-weight: 600; color: #475569;">總投資金額 (USD):</label>
                 <input type="number" id="calcTotalCapital" class="calc-input" value="10000" min="100" step="500" oninput="updateCalculator()">
@@ -369,11 +583,11 @@
             </div>
         </div>
         <div class="calc-results-grid" id="calcResultsGrid">
-            <!-- 動態注入 A / B / C 倉結果 -->
+            <!-- JS 動態渲染計算明細 -->
         </div>
     </div>
 
-    <!-- 策略回測總體成效 -->
+    <!-- 回測成果指標 -->
     <div class="summary-container">
         <div class="metric-card">
             <div class="metric-title">初始本金</div>
@@ -397,44 +611,10 @@
         </div>
     </div>
 
-    <!-- 三倉詳細架構指引 -->
-    <div class="allocation-grid">
-        <div class="alloc-card card-A">
-            <h3>A 倉：核心防禦 (Core) <span class="alloc-badge">總資金 20%</span></h3>
-            <p style="font-size: 13px; color: #7f8c8d;">資產：BTC + PAXG | 偏差閾值：<strong>5%</strong></p>
-            <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
-                <li id="card-A-z1"><strong>Zone 1 (熊底)</strong>：BTC 74% / PAXG 26%</li>
-                <li id="card-A-z2"><strong>Zone 2 (巡航)</strong>：<span style="color: #2980b9; font-weight: bold;">BTC 58% / PAXG 42% (當前)</span></li>
-                <li id="card-A-z3"><strong>Zone 3 (警戒)</strong>：BTC 37% / PAXG 63%</li>
-                <li id="card-A-z4"><strong>Zone 4 (逃頂)</strong>：BTC 5% / PAXG 95%</li>
-            </ul>
-        </div>
-        <div class="alloc-card card-B">
-            <h3>B 倉：主力爆發 (Satellite) <span class="alloc-badge">總資金 60%</span></h3>
-            <p style="font-size: 13px; color: #7f8c8d;">資產：SOL + TAO + PAXG | 偏差閾值：<strong>5%</strong></p>
-            <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
-                <li id="card-B-z1"><strong>Zone 1 (熊底)</strong>：SOL 26% / TAO 29% / PAXG 45%</li>
-                <li id="card-B-z2"><strong>Zone 2 (巡航)</strong>：<span style="color: #2980b9; font-weight: bold;">SOL 25% / TAO 15% / PAXG 60% (當前)</span></li>
-                <li id="card-B-z3"><strong>Zone 3 (警戒)</strong>：SOL 18% / TAO 19% / PAXG 63%</li>
-                <li id="card-B-z4"><strong>Zone 4 (逃頂)</strong>：SOL 7% / TAO 13% / PAXG 80%</li>
-            </ul>
-        </div>
-        <div class="alloc-card card-C">
-            <h3>C 倉：敘事輪動 (Alpha) <span class="alloc-badge">總資金 20%</span></h3>
-            <p style="font-size: 13px; color: #7f8c8d;">資產：AAVE + LINK + NEAR + PAXG | 偏差閾值：<strong>10%</strong></p>
-            <ul style="font-size: 13px; line-height: 1.8; padding-left: 18px;">
-                <li id="card-C-z1"><strong>Zone 1 (熊底)</strong>：AAVE 36% / LINK 25% / NEAR 11% / PAXG 27%</li>
-                <li id="card-C-z2"><strong>Zone 2 (巡航)</strong>：<span style="color: #2980b9; font-weight: bold;">AAVE 38% / NEAR 22% / LINK 11% / PAXG 29% (當前)</span></li>
-                <li id="card-C-z3"><strong>Zone 3 (警戒)</strong>：LINK 44% / NEAR 8% / AAVE 0% / PAXG 48%</li>
-                <li id="card-C-z4"><strong>Zone 4 (逃頂)</strong>：PAXG 66% / NEAR 21% / LINK 8% / AAVE 5%</li>
-            </ul>
-        </div>
-    </div>
-
     <!-- 資產走勢圖表 -->
     <div class="chart-card">
         <div class="chart-header">
-            <div class="chart-title">📈 ABC 三倉合併總資產淨值走勢</div>
+            <div class="chart-title">📈 ABC 三倉合併總資產走勢</div>
             <div class="timeframe-group">
                 <button class="tf-btn" onclick="setTimeframe('1M')">近1月</button>
                 <button class="tf-btn" onclick="setTimeframe('6M')">近半年</button>
@@ -447,7 +627,7 @@
         </div>
     </div>
 
-    <!-- 歷史數據與調倉明細表格 -->
+    <!-- 調倉日誌與回測明細表格 -->
     <div class="table-card">
         <div class="table-toolbar">
             <div class="filter-tabs">
@@ -456,8 +636,8 @@
                 <button class="tab-btn" id="tab-all" onclick="setFilter('all')">📜 全部歷史紀錄</button>
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
-                <input type="text" id="tableSearch" class="search-box" placeholder="🔍 搜尋日期/動作/Zone..." oninput="onSearchChange()">
-                <button class="tab-btn" id="sortToggleBtn" onclick="toggleSort()" title="切換排序順序">⬇️ 最新在前</button>
+                <input type="text" id="tableSearch" class="search-box" placeholder="🔍 搜尋紀錄..." oninput="onSearchChange()">
+                <button class="tab-btn" id="sortToggleBtn" onclick="toggleSort()">⬇️ 最新在前</button>
             </div>
         </div>
 
@@ -495,18 +675,15 @@
     </div>
 </div>
 
-<!-- 引入提取出的壓縮回測數據庫 -->
+<!-- 壓縮回測數據庫 -->
 <script src="history_data.js"></script>
 
 <script>
-    // --- 幣種與配置規則設定 ---
+    // --- 4-Zone 配置定義 ---
     const ZONE_CONFIGS = {
         1: {
             name: 'Zone 1 (熊底防禦階段)',
-            color: '#27ae60',
-            A: 'BTC 74% / PAXG 26%',
-            B: 'SOL 26% / TAO 29% / PAXG 45%',
-            C: 'AAVE 36% / LINK 25% / NEAR 11% / PAXG 27%',
+            color: '#10b981',
             ratios: {
                 A: { BTC: 0.74, PAXG: 0.26 },
                 B: { SOL: 0.26, TAO: 0.29, PAXG: 0.45 },
@@ -515,10 +692,7 @@
         },
         2: {
             name: 'Zone 2 (牛市巡航階段)',
-            color: '#00f2fe',
-            A: 'BTC 58% / PAXG 42%',
-            B: 'SOL 25% / TAO 15% / PAXG 60%',
-            C: 'AAVE 38% / NEAR 22% / LINK 11% / PAXG 29%',
+            color: '#38bdf8',
             ratios: {
                 A: { BTC: 0.58, PAXG: 0.42 },
                 B: { SOL: 0.25, TAO: 0.15, PAXG: 0.60 },
@@ -527,10 +701,7 @@
         },
         3: {
             name: 'Zone 3 (過熱警戒階段)',
-            color: '#f39c12',
-            A: 'BTC 37% / PAXG 63%',
-            B: 'SOL 18% / TAO 19% / PAXG 63%',
-            C: 'LINK 44% / NEAR 8% / AAVE 0% / PAXG 48%',
+            color: '#fbbf24',
             ratios: {
                 A: { BTC: 0.37, PAXG: 0.63 },
                 B: { SOL: 0.18, TAO: 0.19, PAXG: 0.63 },
@@ -539,10 +710,7 @@
         },
         4: {
             name: 'Zone 4 (極度貪婪/逃頂階段)',
-            color: '#e74c3c',
-            A: 'BTC 5% / PAXG 95%',
-            B: 'SOL 7% / TAO 13% / PAXG 80%',
-            C: 'PAXG 66% / NEAR 21% / LINK 8% / AAVE 5%',
+            color: '#ef4444',
             ratios: {
                 A: { BTC: 0.05, PAXG: 0.95 },
                 B: { SOL: 0.07, TAO: 0.13, PAXG: 0.80 },
@@ -551,49 +719,38 @@
         }
     };
 
-    const ZONE_RAW_TEXTS = {
-        A: {
-            1: '<strong>Zone 1 (熊底)</strong>：BTC 74% / PAXG 26%',
-            2: '<strong>Zone 2 (巡航)</strong>：BTC 58% / PAXG 42%',
-            3: '<strong>Zone 3 (警戒)</strong>：BTC 37% / PAXG 63%',
-            4: '<strong>Zone 4 (逃頂)</strong>：BTC 5% / PAXG 95%'
-        },
-        B: {
-            1: '<strong>Zone 1 (熊底)</strong>：SOL 26% / TAO 29% / PAXG 45%',
-            2: '<strong>Zone 2 (巡航)</strong>：SOL 25% / TAO 15% / PAXG 60%',
-            3: '<strong>Zone 3 (警戒)</strong>：SOL 18% / TAO 19% / PAXG 63%',
-            4: '<strong>Zone 4 (逃頂)</strong>：SOL 7% / TAO 13% / PAXG 80%'
-        },
-        C: {
-            1: '<strong>Zone 1 (熊底)</strong>：AAVE 36% / LINK 25% / NEAR 11% / PAXG 27%',
-            2: '<strong>Zone 2 (巡航)</strong>：AAVE 38% / NEAR 22% / LINK 11% / PAXG 29%',
-            3: '<strong>Zone 3 (警戒)</strong>：LINK 44% / NEAR 8% / AAVE 0% / PAXG 48%',
-            4: '<strong>Zone 4 (逃頂)</strong>：PAXG 66% / NEAR 21% / LINK 8% / AAVE 5%'
-        }
+    const COIN_ICONS = {
+        BTC: '🟠 BTC',
+        PAXG: '🟡 PAXG (黃金)',
+        SOL: '🟣 SOL',
+        TAO: '🔵 TAO',
+        AAVE: '🔵 AAVE',
+        NEAR: '🟢 NEAR',
+        LINK: '🔷 LINK'
     };
 
     let currentZone = 2;
     let latestPrices = { BTC: 76700, SOL: 98, TAO: 216, AAVE: 126, LINK: 11, NEAR: 1.85, PAXG: 4370 };
+    let currentMa200 = 69538;
 
-    // --- 幣安行情拉取 ---
+    // --- 幣安行情與即時信號 ---
     async function fetchLiveMarketData() {
-        const statusTitle = document.getElementById('liveAlertStatusTitle');
-        const updateTimeEl = document.getElementById('liveUpdateTime');
+        const statusText = document.getElementById('liveStatusText');
         try {
-            if (statusTitle) statusTitle.innerText = '⚡ 當前即時市場狀態 (正在從幣安拉取最新數據...)';
+            if (statusText) statusText.innerText = '正在從幣安拉取最新行情...';
 
             // 1. 抓取 200 日 K 線計算 MA200
             const klinesRes = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=200');
-            if (!klinesRes.ok) throw new Error('Klines fetch failed: ' + klinesRes.status);
+            if (!klinesRes.ok) throw new Error('Klines failed: ' + klinesRes.status);
             const klines = await klinesRes.json();
             
             let sumClose = 0;
             for (let i = 0; i < klines.length; i++) {
                 sumClose += parseFloat(klines[i][4]);
             }
-            const ma200 = sumClose / klines.length;
+            currentMa200 = sumClose / klines.length;
 
-            // 2. 批量抓取所有幣種 24hr 價格與漲跌
+            // 2. 批量抓取幣種 24hr 價格
             const symbols = ["BTCUSDT", "SOLUSDT", "TAOUSDT", "AAVEUSDT", "LINKUSDT", "NEARUSDT", "PAXGUSDT"];
             const tickerRes = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(symbols))}`);
             if (tickerRes.ok) {
@@ -615,9 +772,9 @@
             }
 
             const curBtcPrice = latestPrices.BTC;
-            const ratio = curBtcPrice / ma200;
+            const ratio = curBtcPrice / currentMa200;
 
-            // 3. 判斷 Zone
+            // 3. 判定 Zone
             if (ratio < 1.0) currentZone = 1;
             else if (ratio < 1.25) currentZone = 2;
             else if (ratio < 1.40) currentZone = 3;
@@ -625,51 +782,86 @@
 
             const config = ZONE_CONFIGS[currentZone];
 
-            // 4. 更新頂部看板
+            // 4. 更新頂部指標
             const zoneDisplay = document.getElementById('liveZoneDisplay');
             if (zoneDisplay) {
                 zoneDisplay.innerText = config.name;
                 zoneDisplay.style.color = config.color;
             }
-            
             document.getElementById('liveBtcPrice').innerText = '$' + curBtcPrice.toLocaleString('en-US', { maximumFractionDigits: 0 });
-            document.getElementById('liveMa200').innerText = '$' + Math.round(ma200).toLocaleString('en-US');
+            document.getElementById('liveMa200').innerText = '$' + Math.round(currentMa200).toLocaleString('en-US');
             document.getElementById('liveRatio').innerText = ratio.toFixed(2);
-            
-            document.getElementById('liveParamA').innerText = config.A;
-            document.getElementById('liveParamB').innerText = config.B;
-            document.getElementById('liveParamC').innerText = config.C;
+
+            // 5. 更新換倉警戒線
+            updateZoneAlerts(curBtcPrice, currentMa200, currentZone);
+
+            // 6. 更新三倉卡片數值
+            renderLiveCardRatios('cardA_ratios', config.ratios.A);
+            renderLiveCardRatios('cardB_ratios', config.ratios.B);
+            renderLiveCardRatios('cardC_ratios', config.ratios.C);
+
+            // 7. 更新計算機
+            updateCalculator();
 
             const nowStr = new Date().toLocaleTimeString('zh-TW', { hour12: false });
-            if (updateTimeEl) {
-                updateTimeEl.innerHTML = `🟢 幣安即時連線中 | 最後更新：${nowStr} (每 30 秒自動刷新)`;
-            }
-            if (statusTitle) {
-                statusTitle.innerText = '⚡ 當前即時市場狀態 (幣安即時信號)';
-            }
-
-            // 5. 更新卡片 (當前) 高亮標記
-            ['A', 'B', 'C'].forEach(c => {
-                [1, 2, 3, 4].forEach(z => {
-                    const el = document.getElementById(`card-${c}-z${z}`);
-                    if (el) {
-                        const rawText = ZONE_RAW_TEXTS[c][z];
-                        el.innerHTML = (z === currentZone) ? `<span style="color: #2980b9; font-weight: bold;">${rawText} (當前)</span>` : rawText;
-                    }
-                });
-            });
-
-            // 6. 更新計算機
-            updateCalculator();
+            if (statusText) statusText.innerText = `幣安即時連線中 | 最後更新：${nowStr} (每 30 秒自動刷新)`;
 
         } catch (err) {
             console.error('Fetch live price failed:', err);
-            if (statusTitle) statusTitle.innerText = '⚡ 當前即時市場狀態 (幣安連線暫時中斷)';
-            if (updateTimeEl) updateTimeEl.innerText = '⚠️ 無法取得幣安即時行情：' + err.message;
+            if (statusText) statusText.innerText = '⚠️ 幣安連線中斷，顯示預設值';
         }
     }
 
-    // --- 實盤資金分配計算機 ---
+    function renderLiveCardRatios(containerId, ratiosObj) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        let html = '';
+        for (const [coin, pct] of Object.entries(ratiosObj)) {
+            const icon = COIN_ICONS[coin] || coin;
+            html += `
+                <div class="ratio-bar-row">
+                    <span class="ratio-coin">${icon}</span>
+                    <span class="ratio-val">${Math.round(pct * 100)}%</span>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+    }
+
+    function updateZoneAlerts(btcPrice, ma200, zone) {
+        const downEl = document.getElementById('downwardAlert');
+        const upEl = document.getElementById('upwardAlert');
+        if (!downEl || !upEl) return;
+
+        if (zone === 2) {
+            const dropTarget = ma200 * 1.0;
+            const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
+            const riseTarget = ma200 * 1.25;
+            const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
+
+            downEl.innerHTML = `🔻 跌回 <strong>Zone 1</strong> 觸發價：<span style="color: #4ade80;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
+            upEl.innerHTML = `🔺 升至 <strong>Zone 3</strong> 觸發價：<span style="color: #fbbf24;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
+        } else if (zone === 1) {
+            const riseTarget = ma200 * 1.0;
+            const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
+            downEl.innerHTML = `🛡️ 當前處於熊底最防禦階段 (Zone 1)`;
+            upEl.innerHTML = `🔺 突破至 <strong>Zone 2</strong> 觸發價：<span style="color: #38bdf8;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
+        } else if (zone === 3) {
+            const dropTarget = ma200 * 1.25;
+            const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
+            const riseTarget = ma200 * 1.40;
+            const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
+            downEl.innerHTML = `🔻 降回 <strong>Zone 2</strong> 觸發價：<span style="color: #38bdf8;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
+            upEl.innerHTML = `🔺 進入 <strong>Zone 4 逃頂</strong> 觸發價：<span style="color: #f87171;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
+        } else if (zone === 4) {
+            const dropTarget = ma200 * 1.40;
+            const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
+            downEl.innerHTML = `🔻 降回 <strong>Zone 3</strong> 觸發價：<span style="color: #fbbf24;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
+            upEl.innerHTML = `🚨 當前處於極度貪婪/逃頂階段 (Zone 4)`;
+        }
+    }
+
+    // --- 實盤資金試算 ---
     function setCapital(amt) {
         document.getElementById('calcTotalCapital').value = amt;
         updateCalculator();
@@ -681,7 +873,6 @@
         const container = document.getElementById('calcResultsGrid');
         if (!container) return;
 
-        // 各倉總金額
         const capA = total * 0.20;
         const capB = total * 0.60;
         const capC = total * 0.20;
@@ -716,23 +907,23 @@
 
         container.innerHTML = `
             <div class="calc-subbox">
-                <h4><span>📦 A 倉 (Core 20%)</span> <span style="color: #2a5298; font-weight: 700;">$${Math.round(capA).toLocaleString()}</span></h4>
+                <h4><span>📦 A 倉 (Core 20%)</span> <span style="color: #0284c7; font-weight: 700;">$${Math.round(capA).toLocaleString()}</span></h4>
                 ${resA.html}
             </div>
             <div class="calc-subbox">
-                <h4><span>🚀 B 倉 (Satellite 60%)</span> <span style="color: #2a5298; font-weight: 700;">$${Math.round(capB).toLocaleString()}</span></h4>
+                <h4><span>🚀 B 倉 (Satellite 60%)</span> <span style="color: #0284c7; font-weight: 700;">$${Math.round(capB).toLocaleString()}</span></h4>
                 ${resB.html}
             </div>
             <div class="calc-subbox">
-                <h4><span>⚡ C 倉 (Alpha 20%)</span> <span style="color: #2a5298; font-weight: 700;">$${Math.round(capC).toLocaleString()}</span></h4>
+                <h4><span>⚡ C 倉 (Alpha 20%)</span> <span style="color: #0284c7; font-weight: 700;">$${Math.round(capC).toLocaleString()}</span></h4>
                 ${resC.html}
             </div>
-            <div class="calc-subbox" style="background: #eff6ff; border-color: #bfdbfe;">
-                <h4><span>🛡️ 全組合 PAXG 總避險部位</span> <span style="color: #1d4ed8; font-weight: 800;">${totalPaxgPct}%</span></h4>
+            <div class="calc-subbox" style="background: #f0fdf4; border-color: #bbf7d0;">
+                <h4><span>🛡️ 全組合 PAXG 總避險部位</span> <span style="color: #166534; font-weight: 800;">${totalPaxgPct}%</span></h4>
                 <div class="calc-item" style="border-bottom: none; margin-top: 8px;">
-                    <span>PAXG 避險總市值</span>
+                    <span>PAXG 避險總額</span>
                     <div>
-                        <span class="calc-item-amt" style="color: #1d4ed8; font-size: 15px;">$${Math.round(totalPaxg).toLocaleString()}</span>
+                        <span class="calc-item-amt" style="color: #166534; font-size: 15px;">$${Math.round(totalPaxg).toLocaleString()}</span>
                         <span class="calc-item-qty">≈ ${(totalPaxg / (latestPrices.PAXG || 4370)).toFixed(2)} 顆</span>
                     </div>
                 </div>
@@ -740,13 +931,12 @@
         `;
     }
 
-    // --- 圖表初始化與時間區間切換 ---
+    // --- 圖表 ---
     let equityChartInstance = null;
     function initChart() {
         if (!window.HISTORICAL_DATA || HISTORICAL_DATA.length === 0) return;
         const ctx = document.getElementById('equityChart').getContext('2d');
         
-        // 採樣約 300 點保證平滑渲染
         const step = Math.max(1, Math.floor(HISTORICAL_DATA.length / 300));
         const sampled = [];
         for (let i = 0; i < HISTORICAL_DATA.length; i += step) {
@@ -766,8 +956,8 @@
                 datasets: [{
                     label: 'ABC 三倉合併總資產 (USD)',
                     data: data,
-                    borderColor: '#1e3c72',
-                    backgroundColor: 'rgba(30, 60, 114, 0.08)',
+                    borderColor: '#0f172a',
+                    backgroundColor: 'rgba(15, 23, 42, 0.06)',
                     borderWidth: 2.5,
                     pointRadius: 0,
                     fill: true,
@@ -788,7 +978,7 @@
                     }
                 },
                 scales: {
-                    y: { beginAtZero: false, grid: { color: '#f0f0f0' } },
+                    y: { beginAtZero: false, grid: { color: '#f1f5f9' } },
                     x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } }
                 }
             }
@@ -821,9 +1011,9 @@
         equityChartInstance.update();
     }
 
-    // --- 表格分頁、篩選與排序邏輯 ---
-    let currentFilter = 'rebal'; // 'rebal', '30d', 'all'
-    let isSortDesc = true; // 預設最新在前
+    // --- 表格分頁與篩選 ---
+    let currentFilter = 'rebal';
+    let isSortDesc = true;
     let searchQuery = '';
     let currentPage = 1;
     const pageSize = 20;
@@ -860,7 +1050,6 @@
         if (!window.HISTORICAL_DATA) return;
         let list = HISTORICAL_DATA;
 
-        // 1. 條件過濾
         if (currentFilter === 'rebal') {
             list = list.filter(r => r.act && r.act !== '-');
         } else if (currentFilter === '30d') {
@@ -869,7 +1058,6 @@
             list = list.filter(r => new Date(r.d) >= cutoff);
         }
 
-        // 2. 關鍵字搜尋
         if (searchQuery) {
             list = list.filter(r => 
                 r.d.toLowerCase().includes(searchQuery) ||
@@ -879,7 +1067,6 @@
             );
         }
 
-        // 3. 排序
         filteredRecords = [...list];
         if (isSortDesc) {
             filteredRecords.reverse();
@@ -914,7 +1101,6 @@
             `).join('');
         }
 
-        // 分頁指示器
         document.getElementById('pageSummary').innerText = `顯示 ${filteredRecords.length > 0 ? start + 1 : 0}-${end} 筆，共 ${filteredRecords.length} 筆紀錄`;
         document.getElementById('pageIndicator').innerText = `${currentPage} / ${totalPages}`;
         document.getElementById('btnFirst').disabled = (currentPage <= 1);
