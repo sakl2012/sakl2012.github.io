@@ -62,7 +62,7 @@
             border-radius: 50%;
             display: inline-block;
             box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse 2s infinite;
+            animation: pulse 1.5s infinite;
         }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
@@ -82,14 +82,15 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 5px 10px;
+            padding: 6px 12px;
             background: white;
             border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             white-space: nowrap;
             box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            transition: background 0.3s;
         }
         .ticker-sym { color: #64748b; }
         .ticker-price { font-weight: 700; color: #0f172a; }
@@ -338,7 +339,7 @@
         <h1 class="brand-title">📊 4-Zone 動態防禦三倉策略系統</h1>
         <div class="live-status-pill">
             <span class="pulse-dot"></span>
-            <span id="liveStatusText">幣安即時連線中 (每 30 秒自動刷新)</span>
+            <span id="liveStatusText">⚡ 幣安 WebSocket 實時秒級串流中</span>
         </div>
     </div>
 
@@ -361,12 +362,11 @@
                 <div class="zone-main-title" id="liveZoneDisplay">Zone 2 (牛市巡航階段)</div>
             </div>
             <div class="market-metrics-row">
-                <div class="metric-inline">BTC 當前價: <strong id="liveBtcPrice">$--</strong></div>
+                <div class="metric-inline">BTC 即時價: <strong id="liveBtcPrice">$--</strong></div>
                 <div style="color: #475569;">|</div>
                 <div class="metric-inline">200日均線 (MA200): <strong id="liveMa200">$--</strong></div>
                 <div style="color: #475569;">|</div>
                 <div class="metric-inline">當前比值: <strong id="liveRatio" style="color: #38bdf8;">--</strong></div>
-                <button onclick="fetchLiveMarketData()" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; margin-left: 6px;">🔄 刷新</button>
             </div>
         </div>
 
@@ -599,102 +599,144 @@
     let currentZone = 2;
     let latestPrices = { BTC: 76700, SOL: 98, TAO: 216, AAVE: 126, LINK: 11, NEAR: 1.85, PAXG: 4370 };
     let currentMa200 = 69538;
+    let wsInstance = null;
 
-    // --- 幣安行情與即時信號 ---
-    async function fetchLiveMarketData() {
-        const statusText = document.getElementById('liveStatusText');
+    // --- 抓取 200 日 K 線計算 MA200 ---
+    async function syncMa200() {
         try {
-            if (statusText) statusText.innerText = '正在從幣安拉取最新行情...';
-
-            // 1. 抓取 200 日 K 線計算 MA200
-            const klinesRes = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=200');
-            if (!klinesRes.ok) throw new Error('Klines failed: ' + klinesRes.status);
-            const klines = await klinesRes.json();
-            
-            let sumClose = 0;
-            for (let i = 0; i < klines.length; i++) {
-                sumClose += parseFloat(klines[i][4]);
+            const res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=200');
+            if (res.ok) {
+                const klines = await res.json();
+                let sum = 0;
+                for (let i = 0; i < klines.length; i++) {
+                    sum += parseFloat(klines[i][4]);
+                }
+                currentMa200 = sum / klines.length;
+                document.getElementById('liveMa200').innerText = '$' + Math.round(currentMa200).toLocaleString('en-US');
+                updateMetricsAndZone();
             }
-            currentMa200 = sumClose / klines.length;
+        } catch (e) {
+            console.error('Failed to sync MA200:', e);
+        }
+    }
 
-            // 2. 批量抓取幣種 24hr 價格
-            const symbols = ["BTCUSDT", "SOLUSDT", "TAOUSDT", "AAVEUSDT", "LINKUSDT", "NEARUSDT", "PAXGUSDT"];
-            const tickerRes = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(symbols))}`);
-            if (tickerRes.ok) {
-                const tickers = await tickerRes.json();
-                tickers.forEach(t => {
-                    const sym = t.symbol.replace('USDT', '');
-                    const p = parseFloat(t.lastPrice);
-                    const chg = parseFloat(t.priceChangePercent);
-                    latestPrices[sym] = p;
+    // --- WebSocket 即時秒級串流 (Binance Live Stream) ---
+    function initWebSocketStream() {
+        const streams = [
+            'btcusdt@ticker',
+            'solusdt@ticker',
+            'taousdt@ticker',
+            'aaveusdt@ticker',
+            'linkusdt@ticker',
+            'nearusdt@ticker',
+            'paxgusdt@ticker'
+        ].join('/');
 
-                    const el = document.getElementById(`t-${sym}`);
-                    if (el) {
-                        const priceFormat = p >= 1000 ? '$' + Math.round(p).toLocaleString() : (p >= 10 ? '$' + p.toFixed(2) : '$' + p.toFixed(3));
+        const wsUrl = `wss://stream.binance.com:9443/stream?streams=${streams}`;
+
+        try {
+            wsInstance = new WebSocket(wsUrl);
+
+            wsInstance.onopen = () => {
+                const statusText = document.getElementById('liveStatusText');
+                if (statusText) statusText.innerText = '⚡ 幣安 WebSocket 實時秒級串流中';
+            };
+
+            wsInstance.onmessage = (event) => {
+                const msg = JSON.parse(event.data);
+                if (msg && msg.data) {
+                    const data = msg.data;
+                    const sym = data.s.replace('USDT', '');
+                    const curPrice = parseFloat(data.c);
+                    const chg = parseFloat(data.P);
+
+                    latestPrices[sym] = curPrice;
+
+                    // 1. 即時刷新上方跑馬條
+                    const chipEl = document.getElementById(`t-${sym}`);
+                    if (chipEl) {
+                        const priceFormat = curPrice >= 1000 ? '$' + Math.round(curPrice).toLocaleString() : (curPrice >= 10 ? '$' + curPrice.toFixed(2) : '$' + curPrice.toFixed(3));
                         const chgClass = chg >= 0 ? 'up' : 'down';
                         const chgSign = chg >= 0 ? '+' : '';
-                        el.innerHTML = `${priceFormat} <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
+                        chipEl.innerHTML = `${priceFormat} <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
                     }
-                });
-            }
 
-            const curBtcPrice = latestPrices.BTC;
-            const ratio = curBtcPrice / currentMa200;
+                    // 2. 如果是 BTC 更新，即刻觸發比值與 Zone 重算
+                    if (sym === 'BTC') {
+                        document.getElementById('liveBtcPrice').innerText = '$' + curPrice.toLocaleString('en-US', { maximumFractionDigits: 0 });
+                        updateMetricsAndZone();
+                    }
+                }
+            };
 
-            // 3. 判定 Zone
-            if (ratio < 1.0) currentZone = 1;
-            else if (ratio < 1.25) currentZone = 2;
-            else if (ratio < 1.40) currentZone = 3;
-            else currentZone = 4;
+            wsInstance.onerror = (err) => {
+                console.warn('WebSocket error, falling back to REST poll:', err);
+                fallbackPoll();
+            };
 
+            wsInstance.onclose = () => {
+                console.warn('WebSocket closed, reconnecting in 3s...');
+                setTimeout(initWebSocketStream, 3000);
+            };
+
+        } catch (err) {
+            console.error('WebSocket connection failed:', err);
+            fallbackPoll();
+        }
+    }
+
+    // --- 即時計算比值與更新 UI ---
+    function updateMetricsAndZone() {
+        const curBtcPrice = latestPrices.BTC;
+        if (!curBtcPrice || !currentMa200) return;
+
+        const ratio = curBtcPrice / currentMa200;
+        document.getElementById('liveRatio').innerText = ratio.toFixed(3);
+
+        // 判定 Zone
+        let newZone = 2;
+        if (ratio < 1.0) newZone = 1;
+        else if (ratio < 1.25) newZone = 2;
+        else if (ratio < 1.40) newZone = 3;
+        else newZone = 4;
+
+        if (newZone !== currentZone) {
+            currentZone = newZone;
             const config = ZONE_CONFIGS[currentZone];
-
-            // 4. 更新頂部指標
             const zoneDisplay = document.getElementById('liveZoneDisplay');
             if (zoneDisplay) {
                 zoneDisplay.innerText = config.name;
                 zoneDisplay.style.color = config.color;
             }
-            document.getElementById('liveBtcPrice').innerText = '$' + curBtcPrice.toLocaleString('en-US', { maximumFractionDigits: 0 });
-            document.getElementById('liveMa200').innerText = '$' + Math.round(currentMa200).toLocaleString('en-US');
-            document.getElementById('liveRatio').innerText = ratio.toFixed(2);
-
-            // 5. 更新換倉警戒線
-            updateZoneAlerts(curBtcPrice, currentMa200, currentZone);
-
-            // 6. 更新三倉卡片數值
             renderLiveCardRatios('cardA_ratios', config.ratios.A);
             renderLiveCardRatios('cardB_ratios', config.ratios.B);
             renderLiveCardRatios('cardC_ratios', config.ratios.C);
-
-            // 7. 更新對照表高亮
-            [1, 2, 3, 4].forEach(z => {
-                const row = document.getElementById(`row-zone-${z}`);
-                if (row) {
-                    if (z === currentZone) {
-                        row.classList.add('row-active-zone');
-                        if (!row.querySelector('.active-tag')) {
-                            const tdFirst = row.querySelector('td:first-child');
-                            if (tdFirst) tdFirst.innerHTML += ` <span class="active-tag">現正運行</span>`;
-                        }
-                    } else {
-                        row.classList.remove('row-active-zone');
-                        const tag = row.querySelector('.active-tag');
-                        if (tag) tag.remove();
-                    }
-                }
-            });
-
-            // 8. 更新計算機
-            updateCalculator();
-
-            const nowStr = new Date().toLocaleTimeString('zh-TW', { hour12: false });
-            if (statusText) statusText.innerText = `幣安即時連線中 | 最後更新：${nowStr} (每 30 秒自動刷新)`;
-
-        } catch (err) {
-            console.error('Fetch live price failed:', err);
-            if (statusText) statusText.innerText = '⚠️ 幣安連線中斷，顯示預設值';
+            updateTableActiveRow();
         }
+
+        // 更新安全警戒價
+        updateZoneAlerts(curBtcPrice, currentMa200, currentZone);
+        // 更新計算機
+        updateCalculator();
+    }
+
+    function updateTableActiveRow() {
+        [1, 2, 3, 4].forEach(z => {
+            const row = document.getElementById(`row-zone-${z}`);
+            if (row) {
+                if (z === currentZone) {
+                    row.classList.add('row-active-zone');
+                    if (!row.querySelector('.active-tag')) {
+                        const tdFirst = row.querySelector('td:first-child');
+                        if (tdFirst) tdFirst.innerHTML += ` <span class="active-tag">現正運行</span>`;
+                    }
+                } else {
+                    row.classList.remove('row-active-zone');
+                    const tag = row.querySelector('.active-tag');
+                    if (tag) tag.remove();
+                }
+            }
+        });
     }
 
     function renderLiveCardRatios(containerId, ratiosObj) {
@@ -816,10 +858,38 @@
         `;
     }
 
-    // --- 頁面就緒 ---
+    // --- 備用 1 秒輪詢 (Fallback Polling) ---
+    async function fallbackPoll() {
+        try {
+            const symbols = ["BTCUSDT", "SOLUSDT", "TAOUSDT", "AAVEUSDT", "LINKUSDT", "NEARUSDT", "PAXGUSDT"];
+            const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(symbols))}`);
+            if (res.ok) {
+                const tickers = await res.json();
+                tickers.forEach(t => {
+                    const sym = t.symbol.replace('USDT', '');
+                    latestPrices[sym] = parseFloat(t.lastPrice);
+                    const chg = parseFloat(t.priceChangePercent);
+                    const chipEl = document.getElementById(`t-${sym}`);
+                    if (chipEl) {
+                        const p = latestPrices[sym];
+                        const priceFormat = p >= 1000 ? '$' + Math.round(p).toLocaleString() : (p >= 10 ? '$' + p.toFixed(2) : '$' + p.toFixed(3));
+                        const chgClass = chg >= 0 ? 'up' : 'down';
+                        const chgSign = chg >= 0 ? '+' : '';
+                        chipEl.innerHTML = `${priceFormat} <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
+                    }
+                });
+                document.getElementById('liveBtcPrice').innerText = '$' + latestPrices.BTC.toLocaleString('en-US', { maximumFractionDigits: 0 });
+                updateMetricsAndZone();
+            }
+        } catch (e) {}
+    }
+
+    // --- 初始化 ---
     document.addEventListener('DOMContentLoaded', () => {
-        fetchLiveMarketData();
-        setInterval(fetchLiveMarketData, 30000);
+        syncMa200();
+        initWebSocketStream();
+        // 每 5 分鐘同步一次 MA200
+        setInterval(syncMa200, 300000);
     });
 </script>
 </body>
