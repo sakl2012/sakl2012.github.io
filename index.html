@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4-Zone 動態防禦三倉策略系統</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary: #0f172a;
@@ -30,7 +29,7 @@
             color: var(--text-main);
             line-height: 1.5;
         }
-        .container { max-width: 1280px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: 0 auto; }
         
         /* 頁首標題與連線狀態 */
         .page-header {
@@ -76,7 +75,7 @@
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding: 6px 4px 12px 4px;
+            padding: 4px 2px 14px 2px;
             scrollbar-width: thin;
         }
         .ticker-chip {
@@ -199,7 +198,7 @@
             align-items: center;
             font-size: 14px;
             font-weight: 600;
-            padding: 6px 10px;
+            padding: 8px 12px;
             background: #f8fafc;
             border-radius: 8px;
             border: 1px solid #edf2f7;
@@ -293,138 +292,37 @@
         .calc-item-amt { font-weight: 700; color: #0f172a; }
         .calc-item-qty { font-size: 11px; color: var(--text-muted); margin-left: 6px; }
 
-        /* 指標卡片 */
-        .summary-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .metric-card { background: white; padding: 16px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); text-align: center; border: 1px solid #f1f5f9; }
-        .metric-title { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-weight: 600; }
-        .metric-value { font-size: 20px; font-weight: 800; color: var(--text-main); }
-        .metric-value.positive { color: var(--success); }
-        .metric-value.negative { color: var(--danger); }
-
-        /* 圖表 */
-        .chart-card {
+        /* ================= 四階段全景對照表 ================= */
+        .matrix-card {
             background: white;
-            padding: 20px;
             border-radius: 14px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+            padding: 22px;
             margin-bottom: 25px;
-            border: 1px solid #f1f5f9;
-        }
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .chart-title { font-size: 16px; font-weight: 800; color: #0f172a; }
-        .timeframe-group { display: flex; gap: 6px; }
-        .tf-btn {
-            padding: 4px 12px;
-            border: 1px solid var(--border);
-            background: #f8fafc;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #475569;
-            cursor: pointer;
-        }
-        .tf-btn.active, .tf-btn:hover { background: #0f172a; color: white; border-color: #0f172a; }
-        .chart-wrapper { height: 360px; position: relative; }
-
-        /* 表格區塊 */
-        .table-card {
-            background: white;
-            border-radius: 14px;
-            padding: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-            margin-bottom: 30px;
             border: 1px solid #f1f5f9;
         }
-        .table-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-        .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
-        .tab-btn {
-            padding: 6px 12px;
-            border: 1px solid var(--border);
-            background: #f8fafc;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #475569;
-            cursor: pointer;
-        }
-        .tab-btn.active {
-            background: #0f172a;
-            color: white;
-            border-color: #0f172a;
-        }
-        .search-box {
-            padding: 6px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 13px;
-            width: 180px;
-            outline: none;
-        }
-
-        .table-container {
-            max-height: 520px;
-            overflow-y: auto;
-            overflow-x: auto;
-            border: 1px solid #edf2f7;
-            border-radius: 8px;
-        }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: right; }
-        th, td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; }
-        th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2) { text-align: left; }
-        thead th {
-            background-color: #0f172a;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 5;
-            font-weight: 600;
-        }
+        .matrix-title { font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
         
-        .zone-badge { padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; display: inline-block; }
-        .zone-1 .zone-badge { background-color: #10b981; }
-        .zone-2 .zone-badge { background-color: #0284c7; }
-        .zone-3 .zone-badge { background-color: #f59e0b; }
-        .zone-4 .zone-badge { background-color: #ef4444; }
+        .matrix-table-wrap { overflow-x: auto; border: 1px solid #edf2f7; border-radius: 10px; }
+        .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+        .matrix-table th, .matrix-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; white-space: nowrap; }
+        .matrix-table th { background: #0f172a; color: white; font-weight: 600; }
         
-        .zone-1 { background-color: rgba(16, 185, 129, 0.03); }
-        .zone-2 { background-color: rgba(2, 132, 199, 0.03); }
-        .zone-3 { background-color: rgba(245, 158, 11, 0.03); }
-        .zone-4 { background-color: rgba(239, 68, 68, 0.03); }
+        .row-active-zone { background: #f0f9ff !important; font-weight: 700; border-left: 4px solid #0284c7; }
+        .active-tag { background: #0284c7; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
 
-        .pagination {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
+        /* 幣安設定指南小卡 */
+        .guide-card {
+            background: #fffbeb;
+            border: 1px solid #fef3c7;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
             font-size: 13px;
-            color: var(--text-muted);
+            color: #92400e;
+            line-height: 1.7;
         }
-        .page-controls { display: flex; gap: 5px; }
-        .page-btn {
-            padding: 4px 10px;
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .guide-card strong { color: #78350f; }
 
         @media (max-width: 768px) {
             body { padding: 10px; }
@@ -491,11 +389,11 @@
                     <div class="ratio-bars-container" id="cardA_ratios">
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🟠 BTC</span>
-                            <span class="ratio-val" id="valA_BTC">58%</span>
+                            <span class="ratio-val">58%</span>
                         </div>
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🟡 PAXG (黃金)</span>
-                            <span class="ratio-val" id="valA_PAXG">42%</span>
+                            <span class="ratio-val">42%</span>
                         </div>
                     </div>
                 </div>
@@ -515,15 +413,15 @@
                     <div class="ratio-bars-container" id="cardB_ratios">
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🟣 SOL</span>
-                            <span class="ratio-val" id="valB_SOL">25%</span>
+                            <span class="ratio-val">25%</span>
                         </div>
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🔵 TAO</span>
-                            <span class="ratio-val" id="valB_TAO">15%</span>
+                            <span class="ratio-val">15%</span>
                         </div>
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🟡 PAXG (黃金)</span>
-                            <span class="ratio-val" id="valB_PAXG">60%</span>
+                            <span class="ratio-val">60%</span>
                         </div>
                     </div>
                 </div>
@@ -543,19 +441,19 @@
                     <div class="ratio-bars-container" id="cardC_ratios">
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🔵 AAVE</span>
-                            <span class="ratio-val" id="valC_AAVE">38%</span>
+                            <span class="ratio-val">38%</span>
                         </div>
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🟢 NEAR</span>
-                            <span class="ratio-val" id="valC_NEAR">22%</span>
+                            <span class="ratio-val">22%</span>
                         </div>
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🔷 LINK</span>
-                            <span class="ratio-val" id="valC_LINK">11%</span>
+                            <span class="ratio-val">11%</span>
                         </div>
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🟡 PAXG (黃金)</span>
-                            <span class="ratio-val" id="valC_PAXG">29%</span>
+                            <span class="ratio-val">29%</span>
                         </div>
                     </div>
                 </div>
@@ -587,96 +485,65 @@
         </div>
     </div>
 
-    <!-- 回測成果指標 -->
-    <div class="summary-container">
-        <div class="metric-card">
-            <div class="metric-title">初始本金</div>
-            <div class="metric-value">$10,000</div>
+    <!-- 四階段全景對照標準表 -->
+    <div class="matrix-card">
+        <div class="matrix-title">
+            <span>📋 4-Zone 四階段完整配置對照表</span>
+            <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值自動切換）</span>
         </div>
-        <div class="metric-card">
-            <div class="metric-title">4年最終資產 (2026)</div>
-            <div class="metric-value">$29,354.84</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-title">淨利潤 (ROI)</div>
-            <div class="metric-value positive">+193.5%</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-title">歷史最大回撤 (Max DD)</div>
-            <div class="metric-value negative">-39.4%</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-title">卡瑪比率 (Calmar)</div>
-            <div class="metric-value">4.91</div>
-        </div>
-    </div>
-
-    <!-- 資產走勢圖表 -->
-    <div class="chart-card">
-        <div class="chart-header">
-            <div class="chart-title">📈 ABC 三倉合併總資產走勢</div>
-            <div class="timeframe-group">
-                <button class="tf-btn" onclick="setTimeframe('1M')">近1月</button>
-                <button class="tf-btn" onclick="setTimeframe('6M')">近半年</button>
-                <button class="tf-btn" onclick="setTimeframe('1Y')">近1年</button>
-                <button class="tf-btn active" onclick="setTimeframe('ALL')">全部歷史</button>
-            </div>
-        </div>
-        <div class="chart-wrapper">
-            <canvas id="equityChart"></canvas>
-        </div>
-    </div>
-
-    <!-- 調倉日誌與回測明細表格 -->
-    <div class="table-card">
-        <div class="table-toolbar">
-            <div class="filter-tabs">
-                <button class="tab-btn active" id="tab-rebal" onclick="setFilter('rebal')">🎯 僅看調倉/換倉事件</button>
-                <button class="tab-btn" id="tab-30d" onclick="setFilter('30d')">📅 最近 30 天</button>
-                <button class="tab-btn" id="tab-all" onclick="setFilter('all')">📜 全部歷史紀錄</button>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <input type="text" id="tableSearch" class="search-box" placeholder="🔍 搜尋紀錄..." oninput="onSearchChange()">
-                <button class="tab-btn" id="sortToggleBtn" onclick="toggleSort()">⬇️ 最新在前</button>
-            </div>
-        </div>
-
-        <div class="table-container">
-            <table>
+        <div class="matrix-table-wrap">
+            <table class="matrix-table">
                 <thead>
                     <tr>
-                        <th>時間</th>
-                        <th>狀態與動作</th>
-                        <th>BTC價格</th>
-                        <th>BTC/MA200</th>
-                        <th>總資產淨值</th>
-                        <th>A 倉總值 (配比%)</th>
-                        <th>B 倉總值 (配比%)</th>
-                        <th>C 倉總值 (配比%)</th>
-                        <th>總 PAXG 避險市值</th>
+                        <th>市場階段 (Zone)</th>
+                        <th>比值門檻 (BTC/MA200)</th>
+                        <th>A 倉 (Core 20% | 閾值 5%)</th>
+                        <th>B 倉 (Sat 60% | 閾值 5%)</th>
+                        <th>C 倉 (Alpha 20% | 閾值 10%)</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-                    <!-- 動態渲染分頁數據 -->
+                <tbody>
+                    <tr id="row-zone-1">
+                        <td><strong>Zone 1 (熊底防禦)</strong></td>
+                        <td>&lt; 1.00</td>
+                        <td>BTC 74% / PAXG 26%</td>
+                        <td>SOL 26% / TAO 29% / PAXG 45%</td>
+                        <td>AAVE 36% / LINK 25% / NEAR 11% / PAXG 27%</td>
+                    </tr>
+                    <tr id="row-zone-2" class="row-active-zone">
+                        <td><strong>Zone 2 (牛市巡航)</strong> <span class="active-tag" id="zone2-tag">現正運行</span></td>
+                        <td>1.00 ~ 1.25</td>
+                        <td>BTC 58% / PAXG 42%</td>
+                        <td>SOL 25% / TAO 15% / PAXG 60%</td>
+                        <td>AAVE 38% / NEAR 22% / LINK 11% / PAXG 29%</td>
+                    </tr>
+                    <tr id="row-zone-3">
+                        <td><strong>Zone 3 (過熱警戒)</strong></td>
+                        <td>1.25 ~ 1.40</td>
+                        <td>BTC 37% / PAXG 63%</td>
+                        <td>SOL 18% / TAO 19% / PAXG 63%</td>
+                        <td>LINK 44% / NEAR 8% / AAVE 0% / PAXG 48%</td>
+                    </tr>
+                    <tr id="row-zone-4">
+                        <td><strong>Zone 4 (極度貪婪/逃頂)</strong></td>
+                        <td>&ge; 1.40</td>
+                        <td>BTC 5% / PAXG 95%</td>
+                        <td>SOL 7% / TAO 13% / PAXG 80%</td>
+                        <td>PAXG 66% / NEAR 21% / LINK 8% / AAVE 5%</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
+    </div>
 
-        <div class="pagination">
-            <div id="pageSummary">顯示 1-20 筆，共 0 筆</div>
-            <div class="page-controls">
-                <button class="page-btn" id="btnFirst" onclick="goToPage(1)">首頁</button>
-                <button class="page-btn" id="btnPrev" onclick="goToPage(currentPage - 1)">上一頁</button>
-                <span style="padding: 4px 8px; font-weight: 600;" id="pageIndicator">1 / 1</span>
-                <button class="page-btn" id="btnNext" onclick="goToPage(currentPage + 1)">下一頁</button>
-                <button class="page-btn" id="btnLast" onclick="goToPage(totalPages)">末頁</button>
-            </div>
-        </div>
+    <!-- 幣安操作指南 -->
+    <div class="guide-card">
+        <strong>💡 幣安智能持倉設定步驟：</strong><br>
+        1. 打開幣安 App ➔ 點擊底部「交易」➔ 頂部選擇「策略」➔「智能持倉（Rebalance Bot）」。<br>
+        2. 分別建立 3 組自定義持倉（A 倉、B 倉、C 倉），填入上方對應之幣種與百分比。<br>
+        3. 再平衡模式選擇「按比例偏差觸發」（A 倉與 B 倉填 <strong>5%</strong>，C 倉填 <strong>10%</strong>）。
     </div>
 </div>
-
-<!-- 壓縮回測數據庫 -->
-<script src="history_data.js"></script>
 
 <script>
     // --- 4-Zone 配置定義 ---
@@ -800,7 +667,25 @@
             renderLiveCardRatios('cardB_ratios', config.ratios.B);
             renderLiveCardRatios('cardC_ratios', config.ratios.C);
 
-            // 7. 更新計算機
+            // 7. 更新對照表高亮
+            [1, 2, 3, 4].forEach(z => {
+                const row = document.getElementById(`row-zone-${z}`);
+                if (row) {
+                    if (z === currentZone) {
+                        row.classList.add('row-active-zone');
+                        if (!row.querySelector('.active-tag')) {
+                            const tdFirst = row.querySelector('td:first-child');
+                            if (tdFirst) tdFirst.innerHTML += ` <span class="active-tag">現正運行</span>`;
+                        }
+                    } else {
+                        row.classList.remove('row-active-zone');
+                        const tag = row.querySelector('.active-tag');
+                        if (tag) tag.remove();
+                    }
+                }
+            });
+
+            // 8. 更新計算機
             updateCalculator();
 
             const nowStr = new Date().toLocaleTimeString('zh-TW', { hour12: false });
@@ -931,194 +816,8 @@
         `;
     }
 
-    // --- 圖表 ---
-    let equityChartInstance = null;
-    function initChart() {
-        if (!window.HISTORICAL_DATA || HISTORICAL_DATA.length === 0) return;
-        const ctx = document.getElementById('equityChart').getContext('2d');
-        
-        const step = Math.max(1, Math.floor(HISTORICAL_DATA.length / 300));
-        const sampled = [];
-        for (let i = 0; i < HISTORICAL_DATA.length; i += step) {
-            sampled.push(HISTORICAL_DATA[i]);
-        }
-        if (sampled[sampled.length - 1] !== HISTORICAL_DATA[HISTORICAL_DATA.length - 1]) {
-            sampled.push(HISTORICAL_DATA[HISTORICAL_DATA.length - 1]);
-        }
-
-        const labels = sampled.map(r => r.d.split(' ')[0]);
-        const data = sampled.map(r => parseFloat(r.val.replace(/[$,]/g, '')));
-
-        equityChartInstance = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'ABC 三倉合併總資產 (USD)',
-                    data: data,
-                    borderColor: '#0f172a',
-                    backgroundColor: 'rgba(15, 23, 42, 0.06)',
-                    borderWidth: 2.5,
-                    pointRadius: 0,
-                    fill: true,
-                    tension: 0.15
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'top' },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return ' 總資產: $' + Number(context.parsed.y).toLocaleString();
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: { beginAtZero: false, grid: { color: '#f1f5f9' } },
-                    x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } }
-                }
-            }
-        });
-    }
-
-    function setTimeframe(tf) {
-        document.querySelectorAll('.timeframe-group .tf-btn').forEach(btn => btn.classList.remove('active'));
-        if (event && event.target) event.target.classList.add('active');
-        if (!equityChartInstance || !window.HISTORICAL_DATA) return;
-
-        let filtered = HISTORICAL_DATA;
-        const now = new Date(HISTORICAL_DATA[HISTORICAL_DATA.length - 1].d);
-        if (tf === '1M') {
-            const cutoff = new Date(now); cutoff.setMonth(cutoff.getMonth() - 1);
-            filtered = HISTORICAL_DATA.filter(r => new Date(r.d) >= cutoff);
-        } else if (tf === '6M') {
-            const cutoff = new Date(now); cutoff.setMonth(cutoff.getMonth() - 6);
-            filtered = HISTORICAL_DATA.filter(r => new Date(r.d) >= cutoff);
-        } else if (tf === '1Y') {
-            const cutoff = new Date(now); cutoff.setFullYear(cutoff.getFullYear() - 1);
-            filtered = HISTORICAL_DATA.filter(r => new Date(r.d) >= cutoff);
-        }
-
-        const labels = filtered.map(r => r.d.split(' ')[0]);
-        const data = filtered.map(r => parseFloat(r.val.replace(/[$,]/g, '')));
-
-        equityChartInstance.data.labels = labels;
-        equityChartInstance.data.datasets[0].data = data;
-        equityChartInstance.update();
-    }
-
-    // --- 表格分頁與篩選 ---
-    let currentFilter = 'rebal';
-    let isSortDesc = true;
-    let searchQuery = '';
-    let currentPage = 1;
-    const pageSize = 20;
-    let filteredRecords = [];
-    let totalPages = 1;
-
-    function initTable() {
-        applyFilter();
-    }
-
-    function setFilter(f) {
-        currentFilter = f;
-        document.querySelectorAll('.filter-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-        const activeBtn = document.getElementById(`tab-${f}`);
-        if (activeBtn) activeBtn.classList.add('active');
-        currentPage = 1;
-        applyFilter();
-    }
-
-    function toggleSort() {
-        isSortDesc = !isSortDesc;
-        const btn = document.getElementById('sortToggleBtn');
-        if (btn) btn.innerText = isSortDesc ? '⬇️ 最新在前' : '⬆️ 最舊在前';
-        applyFilter();
-    }
-
-    function onSearchChange() {
-        searchQuery = document.getElementById('tableSearch').value.toLowerCase().trim();
-        currentPage = 1;
-        applyFilter();
-    }
-
-    function applyFilter() {
-        if (!window.HISTORICAL_DATA) return;
-        let list = HISTORICAL_DATA;
-
-        if (currentFilter === 'rebal') {
-            list = list.filter(r => r.act && r.act !== '-');
-        } else if (currentFilter === '30d') {
-            const lastDate = new Date(HISTORICAL_DATA[HISTORICAL_DATA.length - 1].d);
-            const cutoff = new Date(lastDate); cutoff.setDate(cutoff.getDate() - 30);
-            list = list.filter(r => new Date(r.d) >= cutoff);
-        }
-
-        if (searchQuery) {
-            list = list.filter(r => 
-                r.d.toLowerCase().includes(searchQuery) ||
-                r.act.toLowerCase().includes(searchQuery) ||
-                `zone ${r.z}`.toLowerCase().includes(searchQuery) ||
-                r.p.toLowerCase().includes(searchQuery)
-            );
-        }
-
-        filteredRecords = [...list];
-        if (isSortDesc) {
-            filteredRecords.reverse();
-        }
-
-        totalPages = Math.max(1, Math.ceil(filteredRecords.length / pageSize));
-        if (currentPage > totalPages) currentPage = totalPages;
-        renderTablePage();
-    }
-
-    function renderTablePage() {
-        const tbody = document.getElementById('tableBody');
-        const start = (currentPage - 1) * pageSize;
-        const end = Math.min(start + pageSize, filteredRecords.length);
-        const pageItems = filteredRecords.slice(start, end);
-
-        if (pageItems.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 30px; color: #94a3b8;">無符合條件之紀錄</td></tr>`;
-        } else {
-            tbody.innerHTML = pageItems.map(r => `
-                <tr class="zone-${r.z}">
-                    <td>${r.d}</td>
-                    <td><span class="zone-badge zone-${r.z}">Zone ${r.z}</span><br><small>${r.act}</small></td>
-                    <td>${r.p}</td>
-                    <td>${r.r}</td>
-                    <td><strong>${r.val}</strong></td>
-                    <td>${r.a}</td>
-                    <td>${r.b}</td>
-                    <td>${r.c}</td>
-                    <td>${r.g}</td>
-                </tr>
-            `).join('');
-        }
-
-        document.getElementById('pageSummary').innerText = `顯示 ${filteredRecords.length > 0 ? start + 1 : 0}-${end} 筆，共 ${filteredRecords.length} 筆紀錄`;
-        document.getElementById('pageIndicator').innerText = `${currentPage} / ${totalPages}`;
-        document.getElementById('btnFirst').disabled = (currentPage <= 1);
-        document.getElementById('btnPrev').disabled = (currentPage <= 1);
-        document.getElementById('btnNext').disabled = (currentPage >= totalPages);
-        document.getElementById('btnLast').disabled = (currentPage >= totalPages);
-    }
-
-    function goToPage(p) {
-        if (p < 1 || p > totalPages) return;
-        currentPage = p;
-        renderTablePage();
-    }
-
     // --- 頁面就緒 ---
     document.addEventListener('DOMContentLoaded', () => {
-        initTable();
-        initChart();
         fetchLiveMarketData();
         setInterval(fetchLiveMarketData, 30000);
     });
