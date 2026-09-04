@@ -318,12 +318,60 @@
             border: 1px solid #fef3c7;
             border-radius: 12px;
             padding: 16px 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-size: 13px;
             color: #92400e;
             line-height: 1.7;
         }
         .guide-card strong { color: #78350f; }
+
+        .ai-prompt-card {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 5px solid #6366f1;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 30px;
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.7;
+        }
+        .ai-prompt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .ai-prompt-title { font-size: 15px; font-weight: 800; color: #1e1b4b; display: flex; align-items: center; gap: 8px; }
+        .prompt-copy-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12.5px;
+            color: #0f172a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+        }
+        .copy-btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .copy-btn:hover { background: #4f46e5; }
 
         @media (max-width: 768px) {
             body { padding: 10px; }
@@ -548,6 +596,41 @@
         &nbsp;&nbsp;&nbsp;• <strong>進場鐵律</strong>：飛哥首次發文推薦某幣安現貨新標的 ➔ 提撥 5% 伏擊買入（❌ <strong>絕不買二線補漲替代品</strong>）。<br>
         &nbsp;&nbsp;&nbsp;• <strong>停利鐵律</strong>：飛哥發文慶祝該幣大賺或翻倍時 ➔ <strong>毫不猶豫市價全賣換回 PAXG 黃金</strong>！<br>
         &nbsp;&nbsp;&nbsp;• <strong>止損保護</strong>：持有超過 14 天未見炫耀文或浮虧達 -15% ➔ 強制清倉換回 PAXG。
+    </div>
+
+    <!-- AI 專用互動提示詞中心 (專門協助爬文與調倉) -->
+    <div class="ai-prompt-card">
+        <div class="ai-prompt-header">
+            <div class="ai-prompt-title">🤖 AI 助理專用指令庫 (複製後直接丟給 AI 執行實時爬文)</div>
+            <span style="font-size: 11px; background: #e0e7ff; color: #4338ca; padding: 3px 8px; border-radius: 4px; font-weight: 700;">Prompt Templates</span>
+        </div>
+        <p style="margin: 0 0 10px 0; color: #475569;">
+            當您想檢查「D 倉是否該進場或停利」時，直接複製以下提示詞丟給 AI，AI 就會自動抓取幣安廣場最新貼文並為您進行量化審計：
+        </p>
+
+        <div>
+            <strong>1. 檢查最新喊單（是否有符合 5% 現貨進場的新獵物？）：</strong>
+            <div class="prompt-copy-box">
+                <span id="p1">請幫我爬取幣安廣場「K线人生飞哥」過去 48 小時的最新貼文，檢查他是否有首次提及或推薦任何「幣安現貨買得到」的新標的？請過濾掉二線補漲替代品與鏈上土狗，並評估是否符合 D 倉提撥 5% 現貨伏擊的進場條件。</span>
+                <button class="copy-btn" onclick="copyPrompt('p1', this)">點擊複製</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <strong>2. 檢查獲利了結信號（手中持倉是否該清倉換回黃金 PAXG？）：</strong>
+            <div class="prompt-copy-box">
+                <span id="p2">請幫我檢索幣安廣場「K线人生飞哥」最新發文，確認他是否發布了針對 [輸入您的幣種，如 ENA/USELESS] 的慶祝/炫耀/翻倍文？如果是，請通知我立即清倉該現貨換回 PAXG 黃金；若未發文，請檢視目前持有天數與盈虧狀態。</span>
+                <button class="copy-btn" onclick="copyPrompt('p2', this)">點擊複製</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <strong>3. 全盤審視 D 倉健康度與整體配置：</strong>
+            <div class="prompt-copy-box">
+                <span id="p3">請幫我同時檢視目前 BTC 即時比值（Zone 狀態）與飛哥在幣安廣場的最新動態，綜合評估我的 ABC 主力智能持倉與 D 倉機動獵手目前各自應維持怎樣的最新持倉？</span>
+                <button class="copy-btn" onclick="copyPrompt('p3', this)">點擊複製</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -897,6 +980,22 @@
         // 每 5 分鐘同步一次 MA200
         setInterval(syncMa200, 300000);
     });
+
+    // --- 複製提示詞工具函數 ---
+    function copyPrompt(elementId, btnElement) {
+        const text = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = btnElement.innerText;
+            btnElement.innerText = "✅ 已複製！";
+            btnElement.style.background = "#10b981";
+            setTimeout(() => {
+                btnElement.innerText = originalText;
+                btnElement.style.background = "#6366f1";
+            }, 2000);
+        }).catch(err => {
+            alert("複製失敗，請手動選取複製。");
+        });
+    }
 </script>
 </body>
 </html>
