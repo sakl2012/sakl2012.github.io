@@ -374,6 +374,23 @@
         }
         .copy-btn:hover { background: #4f46e5; }
 
+        .audit-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #0284c7;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.7;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .audit-title { font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .audit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 10px; }
+        .audit-item { background: #f8fafc; border: 1px solid #edf2f7; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; }
+        .audit-item strong { color: #0369a1; display: block; margin-bottom: 4px; font-size: 13px; }
+
         @media (max-width: 768px) {
             body { padding: 10px; }
             .command-center { padding: 16px; }
@@ -627,6 +644,32 @@
         &nbsp;&nbsp;&nbsp;• <strong>進場鐵律</strong>：飛哥首次發文推薦某幣安現貨新標的 ➔ 提撥 5% 伏擊買入（❌ <strong>絕不買二線補漲替代品</strong>）。<br>
         &nbsp;&nbsp;&nbsp;• <strong>停利鐵律</strong>：飛哥發文慶祝該幣大賺或翻倍時 ➔ <strong>毫不猶豫市價全賣換回 PAXG 黃金</strong>！<br>
         &nbsp;&nbsp;&nbsp;• <strong>止損保護</strong>：持有超過 14 天未見炫耀文或浮虧達 -15% ➔ 強制清倉換回 PAXG。
+    </div>
+
+    <!-- 爬文與選幣客觀驗證原則 (防割韭菜核心工序) -->
+    <div class="audit-card">
+        <div class="audit-title">🛡️ D 倉爬文審計四大硬核原則（防踏空 / 防詐騙 / 防事後諸葛亮）</div>
+        <p style="margin: 0 0 10px 0; color: #475569;">
+            為了避免被 KOL「事後改口」或「廣撒網倖存者偏差」誤導，每次委託 AI 爬取幣安廣場貼文時，必須嚴格執行以下 4 道客觀檢驗工序：
+        </p>
+        <div class="audit-grid">
+            <div class="audit-item">
+                <strong>1. 實時歷史 K 線對齊 (Kline Cross-Audit)</strong>
+                比對貼文發布當天的幣安 1h/1d 真實 K 線，確認其推薦價格確實落在當日成交區間內，徹底杜絕「暴漲後才發文吹噓」的馬後炮行為。
+            </div>
+            <div class="audit-item">
+                <strong>2. 發文時間戳與走勢檢驗 (Timestamp Proof)</strong>
+                嚴格調取貼文底層時間戳（Timestamp），確認是「起漲前首發推薦」還是「行情已經翻倍後的慶祝出貨文」。
+            </div>
+            <div class="audit-item">
+                <strong>3. 只做首推真龍頭 (No Catch-up Traps)</strong>
+                嚴格過濾「錯過某幣改買某替代品」的二線補漲陷阱（歷史勝率不足 45%）。只聚焦於博主第一時間首發、具備做市商點火動量的標的。
+            </div>
+            <div class="audit-item">
+                <strong>4. 幣安現貨深度過濾 (Binance Spot Liquidity)</strong>
+                必須是幣安現貨直接可下單、流動性前 100 大且無下架風險的正規資產。鏈上買不到的土狗或微盤 DEX 項目一律直接標註【略過】。
+            </div>
+        </div>
     </div>
 
     <!-- AI 專用互動提示詞中心 (專門協助爬文與調倉) -->
