@@ -169,6 +169,7 @@
         .live-card.card-A { border-top-color: #f59e0b; }
         .live-card.card-B { border-top-color: #8b5cf6; }
         .live-card.card-C { border-top-color: #10b981; }
+        .live-card.card-D { border-top-color: #ef4444; }
 
         .card-top-head {
             display: flex;
@@ -508,6 +509,36 @@
                 <div class="rebalance-threshold-tag">
                     <span>幣安智能持倉設定</span>
                     <span style="color: #b45309;">再平衡偏差閾值：10%</span>
+                </div>
+            </div>
+
+            <!-- D 倉 (即時爬文動態更新) -->
+            <div class="live-card card-D">
+                <div>
+                    <div class="card-top-head">
+                        <span class="card-name">🎯 D 倉：飛哥獵手 (現貨狙擊)</span>
+                        <span class="card-weight-badge" style="background:#fee2e2; color:#b91c1c;">機動獨立倉</span>
+                    </div>
+                    <div class="ratio-bars-container" id="cardD_ratios">
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🟡 PAXG (黃金保險箱)</span>
+                            <span class="ratio-val" style="color:#16a34a;">95%</span>
+                        </div>
+                        <div class="ratio-bar-row" style="background: #fff7ed; border-color: #ffedd5;">
+                            <span class="ratio-coin">🎯 5% 現貨伏擊槽 (USDT待命)</span>
+                            <span class="ratio-val" style="color:#ea580c;">5%</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; color: #64748b; line-height: 1.6; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
+                        <strong>📡 最新爬文即時判定 (2026-09-04)：</strong><br>
+                        • <strong>$USELESS</strong>：已暴漲 +180% 慶祝，現貨未上架 ➔ <span style="color:#dc2626; font-weight:700;">不追</span><br>
+                        • <strong>$PONS</strong>：鏈上 DEX 投機微盤 ➔ <span style="color:#dc2626; font-weight:700;">略過</span><br>
+                        • <strong>$ENA</strong>：現價 $0.17 震盪，待解鎖回踩 $0.13~$0.15 ➔ <span style="color:#d97706; font-weight:700;">雷達鎖定中</span>
+                    </div>
+                </div>
+                <div class="rebalance-threshold-tag" style="background:#fef2f2; border-color:#fca5a5; color:#991b1b;">
+                    <span>操作模式：手動現貨買賣</span>
+                    <span>翻倍或慶祝時全清換回 PAXG</span>
                 </div>
             </div>
         </div>
