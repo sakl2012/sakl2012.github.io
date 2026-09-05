@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4-Zone 動態防禦三倉 + D倉獵手策略系統</title>
+    
+    <!-- PWA 配置 (支援 Android / iOS 手機獨立 App 安裝) -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="4-Zone策略">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <style>
         :root {
             --primary: #0f172a;
@@ -58,6 +68,12 @@
         .pulse-dot {
             width: 8px;
             height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 1.5s infinite;
+        }
             background-color: #10b981;
             border-radius: 50%;
             display: inline-block;
@@ -403,9 +419,12 @@
     <!-- 頂部標題列 -->
     <div class="page-header">
         <h1 class="brand-title">📊 4-Zone 動態防禦三倉 + D倉獵手策略系統</h1>
-        <div class="live-status-pill">
-            <span class="pulse-dot"></span>
-            <span id="liveStatusText">⚡ 幣安 WebSocket 實時秒級串流中</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:5px 12px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
+            <div class="live-status-pill">
+                <span class="pulse-dot"></span>
+                <span id="liveStatusText">⚡ 幣安 WebSocket 實時秒級串流中</span>
+            </div>
         </div>
     </div>
 
@@ -548,11 +567,11 @@
                         </div>
                     </div>
                     <div style="font-size: 12px; color: #64748b; line-height: 1.6; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
-                        <strong>📡 最新爬文審計判定 (2026-09-04 18:50)：</strong><br>
-                        • <strong>$TAO (AI龍頭)</strong>：強烈看好補漲潛力 ➔ <span style="color:#2563eb; font-weight:700;">已在 B 倉配置 (15%)，D 倉不重複追</span><br>
-                        • <strong>$GIGGLE</strong>：震盪洗盤接替行情中 ➔ <span style="color:#d97706; font-weight:700;">待確認現貨深度，暫不追高</span><br>
-                        • <strong>$ENA</strong>：現價 <span id="d-live-ena" style="font-weight:700; color:#0f172a;">$0.168</span>，待回踩 $0.13~$0.15 ➔ <span style="color:#d97706; font-weight:700;">5% 伏擊槽鎖定中</span><br>
-                        • <strong>$USELESS / $PONS</strong>：暴漲後慶祝 / 微盤 ➔ <span style="color:#dc2626; font-weight:700;">嚴格略過</span>
+                        <strong>📡 最新爬文審計判定 (2026-09-05 15:15)：</strong><br>
+                        • <strong>$TAO / $VIRTUAL (AI Agent主線)</strong>：TAO 已在 B 倉配置 (15%)；VIRTUAL 納入追蹤 ➔ <span style="color:#2563eb; font-weight:700;">D 倉不重複追高</span><br>
+                        • <strong>$ENA</strong>：現價 <span id="d-live-ena" style="font-weight:700; color:#0f172a;">$0.168</span>，待解鎖回踩 $0.13~$0.15 ➔ <span style="color:#d97706; font-weight:700;">5% 伏擊槽鎖定中</span><br>
+                        • <strong>$GIGGLE / $HYPE / $TRUMP</strong>：震盪洗盤 / 定投觀察池 ➔ <span style="color:#d97706; font-weight:700;">無首推現貨信號前觀望</span><br>
+                        • <strong>$USELESS / $PONS</strong>：暴漲慶祝文 / 鏈上微盤 ➔ <span style="color:#dc2626; font-weight:700;">嚴格略過</span>
                     </div>
                 </div>
                 <div class="rebalance-threshold-tag" style="background:#fef2f2; border-color:#fca5a5; color:#991b1b;">
@@ -1092,19 +1111,33 @@
         setInterval(syncMa200, 300000);
     });
 
-    // --- 複製提示詞工具函數 ---
-    function copyPrompt(elementId, btnElement) {
-        const text = document.getElementById(elementId).innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            const originalText = btnElement.innerText;
-            btnElement.innerText = "✅ 已複製！";
-            btnElement.style.background = "#10b981";
-            setTimeout(() => {
-                btnElement.innerText = originalText;
-                btnElement.style.background = "#6366f1";
-            }, 2000);
-        }).catch(err => {
-            alert("複製失敗，請手動選取複製。");
+    // --- PWA 支援與 Android 安裝邏輯 ---
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const btn = document.getElementById('btnPwaInstall');
+        if (btn) btn.style.display = 'inline-flex';
+    });
+
+    function installPWA() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => {
+                deferredPrompt = null;
+                const btn = document.getElementById('btnPwaInstall');
+                if (btn) btn.style.display = 'none';
+            });
+        } else {
+            alert("💡 Android 安裝提示：\n請點擊瀏覽器右上角選單 (⋮) ➔ 點選「加到主畫面」或「安裝應用程式」即可！");
+        }
+    }
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js').catch(err => {
+                console.log('SW registration note:', err);
+            });
         });
     }
 </script>
