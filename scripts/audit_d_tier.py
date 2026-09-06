@@ -17,8 +17,7 @@ def get_tw_time():
     return now.strftime('%Y-%m-%d %H:%M')
 
 def query_gemini(api_key, prompt):
-    # Try gemini-1.5-flash
-    models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash']
+    models = ['gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-pro-latest']
     for model in models:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
         headers = {'Content-Type': 'application/json'}
@@ -35,8 +34,10 @@ def query_gemini(api_key, prompt):
             req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'), headers=headers)
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.loads(resp.read().decode('utf-8'))
-                text = data['candidates'][0]['content']['parts'][0]['text']
-                return text.strip()
+                parts = data['candidates'][0]['content']['parts']
+                text = "".join([p.get('text', '') for p in parts if 'text' in p])
+                if text:
+                    return text.strip()
         except Exception as e:
             print(f"Error querying {model}: {e}")
             continue
