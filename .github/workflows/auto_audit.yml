@@ -1,0 +1,42 @@
+name: 4-Zone D-Tier AI Auto Audit
+
+on:
+  schedule:
+    # 每 4 小時執行一次 (00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC)
+    - cron: '0 */4 * * *'
+  workflow_dispatch: # 支援手動隨時在 GitHub 後台點擊執行
+
+permissions:
+  contents: write
+
+jobs:
+  audit-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run D-Tier Gemini Audit
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/audit_d_tier.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add index.html
+            git commit -m "🤖 [Auto AI Audit] Update D-Tier sniper assessment (24/7 Gemini)"
+            git push origin main
+            echo "Changes successfully pushed to GitHub Pages!"
+          else
+            echo "No changes detected. Website is already up to date."
+          fi
