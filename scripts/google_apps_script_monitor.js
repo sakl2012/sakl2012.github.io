@@ -1,7 +1,8 @@
 /**
- * 4-Zone 抗脆弱策略 (ABC 三倉全自動最佳化版) - Google Apps Script 自動監控與 Email 警報
+ * 5-Zone 階梯防脆弱策略 (ABC 三倉全自動最佳化版) - Google Apps Script 自動監控與 Email 警報
  * 主力：Binance Vision (免 451 封鎖) | 備援：OKX / Bybit | 具備防崩潰與自動切換機制
- * 最新架構：已取消 D 倉，資金配比 A 20% / B 55% / C 25%，C 倉升級為四星輪動 (AAVE/SUI/LINK/NEAR/PAXG)
+ * 最新架構：升級為 5-Zone 階梯狀態機 (Zone 0 深熊底 ~ Zone 4 牛頂逃頂)
+ * 資金配比：A 20% / B 55% / C 25%，C 倉四星輪動 (AAVE/SUI/LINK/NEAR/PAXG)
  */
 
 const YOUR_EMAIL = "sakl19930909@gmail.com"; // 您的信箱
@@ -24,22 +25,32 @@ function checkZoneAndAlert() {
     
     // 3. 讀取之前的 Zone 狀態 (預設為 2)
     const props = PropertiesService.getScriptProperties();
-    let currentZone = parseInt(props.getProperty("CURRENT_ZONE")) || 2;
+    let currentZone = parseInt(props.getProperty("CURRENT_ZONE"));
+    if (isNaN(currentZone)) currentZone = 2;
     let newZone = currentZone;
     
-    // 4. 狀態機邏輯 (依據 4-Zone 狀態機邏輯圖)
-    if (currentZone === 1) {
-      if (ratioSma72 > 1.02) newZone = 2;
+    // 4. 狀態機邏輯 (5-Zone 階梯防脆弱狀態機，含 72h SMA 平滑防插針)
+    if (currentZone === 0) {
+      // 在極限深熊底，若 72h SMA 回升突破 0.82 則脫離深熊進入初熊防守
+      if (ratioSma72 > 0.82) newZone = 1;
+    }
+    else if (currentZone === 1) {
+      // 初熊防禦期：若持續下破 0.78 則進入 Zone 0 深熊抄底；若反彈突破 1.02 則回歸 Zone 2
+      if (ratioSma72 < 0.78) newZone = 0;
+      else if (ratioSma72 > 1.02) newZone = 2;
     } 
     else if (currentZone === 2) {
+      // 牛市巡航期：若 72h SMA 跌破 0.98 進入 Zone 1 防守；若比值突破 1.25 進入 Zone 3
       if (ratioSma72 < 0.98) newZone = 1;
       else if (ratio > 1.25) newZone = 3;
     } 
     else if (currentZone === 3) {
+      // 過熱警戒期：若回跌低於 1.15 回降 Zone 2；若破 1.40 進入 Zone 4 逃頂
       if (ratio < 1.15) newZone = 2;
       else if (ratio > 1.40) newZone = 4;
     } 
     else if (currentZone === 4) {
+      // 極限逃頂期：回跌低於 1.30 回降 Zone 3
       if (ratio < 1.30) newZone = 3;
     }
     
@@ -50,9 +61,15 @@ function checkZoneAndAlert() {
     // 5. 判斷是否切換並發送 Email
     if (newZone !== currentZone) {
       const allocationText = getAllocationConfig(newZone);
-      const zoneNames = ["", "熊底防禦", "牛市巡航", "過熱警戒", "極度貪婪/逃頂"];
+      const zoneNames = {
+        0: "深熊大底 (頂級抄底模式)",
+        1: "初熊防禦 (防刀緩衝模式)",
+        2: "牛市巡航 (健康起飛模式)",
+        3: "過熱警戒 (階梯獲利模式)",
+        4: "極度貪婪/逃頂 (避險保命模式)"
+      };
       
-      const subject = `🚨 4-Zone 策略狀態切換：Zone ${newZone} (${zoneNames[newZone]})`;
+      const subject = `🚨 5-Zone 策略狀態切換：Zone ${newZone} (${zoneNames[newZone]})`;
       const body = `
 自動監控機器人發現市場狀態改變！
 
@@ -88,11 +105,17 @@ ${allocationText}
 // === 取得對應 Zone 的持倉配置文字 (ABC 四星全賽道輪動版) ===
 // ==========================================================
 function getAllocationConfig(zone) {
-  if (zone === 1) {
-    return `【Zone 1: 熊底防禦】(超跌蓄勢進攻模式)
-👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 74% | PAXG 26%
-👉 🅱️ 持倉 B (Sat 55% | 偏差5%): SOL 26% | TAO 29% | PAXG 45%
-👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 25% | SUI 20% | LINK 15% | NEAR 15% | PAXG 25%`;
+  if (zone === 0) {
+    return `【Zone 0: 深熊大底】(極限抄底進攻模式 - 釋放黃金儲備)
+👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 80% | PAXG 20%
+👉 🅱️ 持倉 B (Sat 55% | 偏差5%): SOL 30% | TAO 35% | PAXG 35%
+👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 30% | SUI 25% | LINK 15% | NEAR 15% | PAXG 15%`;
+  }
+  else if (zone === 1) {
+    return `【Zone 1: 初熊防禦】(防刀緩衝期 - 提高黃金避險不接飛刀)
+👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 50% | PAXG 50%
+👉 🅱️ 持倉 B (Sat 55% | 偏差5%): SOL 18% | TAO 17% | PAXG 65%
+👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 20% | SUI 15% | LINK 15% | NEAR 10% | PAXG 40%`;
   } 
   else if (zone === 2) {
     return `【Zone 2: 牛市巡航】(穩健起飛模式 - 現正運行 ⭐)
@@ -108,8 +131,8 @@ function getAllocationConfig(zone) {
   } 
   else if (zone === 4) {
     return `【Zone 4: 極度貪婪/逃頂】(全面避險保命模式)
-👉 🅰️ 持倉 A (Core 20% | 偏差5%): PAXG 95% | BTC 5%
-👉 🅱️ 持倉 B (Sat 55% | 偏差5%): PAXG 80% | TAO 13% | SOL 7%
+👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 5% | PAXG 95%
+👉 🅱️ 持倉 B (Sat 55% | 偏差5%): SOL 7% | TAO 13% | PAXG 80%
 👉 🅲 持倉 C (Alpha 25% | 偏差10%): PAXG 75% | AAVE 8% | LINK 7% | SUI 5% | NEAR 5%`;
   } 
   else {
