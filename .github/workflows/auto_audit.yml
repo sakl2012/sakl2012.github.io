@@ -33,7 +33,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           if [ -n "$(git status --porcelain)" ]; then
-            git add index.html
+            git add index.html audit_data.json
             git commit -m "🤖 [Auto AI Audit] Update D-Tier sniper assessment (24/7 Gemini)"
             git push origin main
             echo "Changes successfully pushed to GitHub Pages!"

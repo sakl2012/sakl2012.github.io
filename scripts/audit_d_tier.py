@@ -122,23 +122,38 @@ def main():
         print(f"WARNING: Gemini returned malformed or truncated HTML: {audit_html[:100]}... Aborting update.")
         return
 
-    index_path = os.path.join(os.path.dirname(__file__), '..', 'index.html')
-    if not os.path.exists(index_path):
-        index_path = 'index.html'
+    repo_root = os.path.join(os.path.dirname(__file__), '..')
+    json_path = os.path.join(repo_root, 'audit_data.json')
+    index_path = os.path.join(repo_root, 'index.html')
 
-    with open(index_path, 'r', encoding='utf-8') as f:
-        content = f.read()
+    # 1. 寫入解耦的 audit_data.json（資料純淨，無破版風險）
+    audit_data = {
+        "updated_at": tw_time,
+        "audit_html": audit_html,
+        "market_context": market_context
+    }
+    try:
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(audit_data, f, ensure_ascii=False, indent=2)
+        print(f"Successfully saved {json_path} with latest audit data.")
+    except Exception as e:
+        print(f"Error saving audit_data.json: {e}")
 
-    pattern = r'<!-- D_TIER_AUDIT_START -->.*?<!-- D_TIER_AUDIT_END -->'
-    replacement = f'<!-- D_TIER_AUDIT_START -->\n                    {audit_html}\n                    <!-- D_TIER_AUDIT_END -->'
+    # 2. 同步更新 index.html 的初始靜態區塊（作為無 JS 或 SEO 回退備用）
+    if os.path.exists(index_path):
+        with open(index_path, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-    if re.search(pattern, content, flags=re.DOTALL):
-        new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
-        with open(index_path, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        print("Successfully updated index.html with new D-tier audit assessment!")
-    else:
-        print("Could not find D_TIER_AUDIT_START / D_TIER_AUDIT_END markers in index.html.")
+        pattern = r'<!-- D_TIER_AUDIT_START -->.*?<!-- D_TIER_AUDIT_END -->'
+        replacement = f'<!-- D_TIER_AUDIT_START -->\n                    {audit_html}\n                    <!-- D_TIER_AUDIT_END -->'
+
+        if re.search(pattern, content, flags=re.DOTALL):
+            new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
+            with open(index_path, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+            print("Successfully updated index.html fallback content!")
+        else:
+            print("Could not find D_TIER_AUDIT_START / D_TIER_AUDIT_END markers in index.html.")
 
 if __name__ == '__main__':
     main()
