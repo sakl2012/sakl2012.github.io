@@ -112,6 +112,11 @@ def main():
     audit_html = re.sub(r'^```html\s*', '', audit_html, flags=re.MULTILINE)
     audit_html = re.sub(r'^```\s*$', '', audit_html, flags=re.MULTILINE).strip()
 
+    # 嚴格防禦性校驗：確保生成的 HTML 是完整的 <div>...</div> 區塊且標籤閉合
+    if not (audit_html.startswith('<div') and audit_html.endswith('</div>')):
+        print(f"WARNING: Gemini returned malformed or truncated HTML: {audit_html[:100]}... Aborting update.")
+        return
+
     index_path = os.path.join(os.path.dirname(__file__), '..', 'index.html')
     if not os.path.exists(index_path):
         index_path = 'index.html'
