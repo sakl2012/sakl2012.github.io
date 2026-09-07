@@ -27,14 +27,19 @@ def query_gemini(api_key, prompt):
             }],
             "generationConfig": {
                 "temperature": 0.2,
-                "maxOutputTokens": 800
+                "maxOutputTokens": 2048
             }
         }
         try:
             req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'), headers=headers)
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.loads(resp.read().decode('utf-8'))
-                parts = data['candidates'][0]['content']['parts']
+                candidate = data.get('candidates', [{}])[0]
+                finish_reason = candidate.get('finishReason', '')
+                if finish_reason and finish_reason != 'STOP':
+                    print(f"Warning: {model} finishReason is '{finish_reason}', not 'STOP'. Skipping candidate.")
+                    continue
+                parts = candidate.get('content', {}).get('parts', [])
                 text = "".join([p.get('text', '') for p in parts if 'text' in p])
                 if text:
                     return text.strip()
