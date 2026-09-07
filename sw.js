@@ -1,4 +1,4 @@
-const CACHE_NAME = '4zone-pwa-v1';
+const CACHE_NAME = '4zone-pwa-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -26,13 +26,23 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // 對幣安 API 與 WebSocket 請求放行不快取
-  if (e.request.url.includes('binance.com')) {
+  // 對幣安 API 與外部請求直接連網
+  if (!e.request.url.startsWith(self.location.origin) || e.request.url.includes('binance.com')) {
     return;
   }
+
+  // Network-First 策略：優先向伺服器拉取最新頁面與代碼，失敗時（如離線）才回退到快取
   e.respondWith(
-    caches.match(e.request).then((res) => {
-      return res || fetch(e.request);
-    })
+    fetch(e.request)
+      .then((networkRes) => {
+        if (networkRes && networkRes.status === 200) {
+          const resClone = networkRes.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, resClone));
+        }
+        return networkRes;
+      })
+      .catch(() => {
+        return caches.match(e.request);
+      })
   );
 });

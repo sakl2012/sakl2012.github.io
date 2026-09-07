@@ -1138,7 +1138,19 @@
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js').catch(err => {
+            navigator.serviceWorker.register('./sw.js').then(reg => {
+                // 主動檢查遠端是否有新的 Service Worker / 頁面更新
+                reg.update();
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            console.log('新版本已就緒，自動刷新快取...');
+                            window.location.reload();
+                        }
+                    });
+                });
+            }).catch(err => {
                 console.log('SW registration note:', err);
             });
         });
