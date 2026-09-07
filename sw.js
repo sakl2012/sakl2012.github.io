@@ -1,8 +1,7 @@
-const CACHE_NAME = '4zone-pwa-v3';
+const CACHE_NAME = '4zone-pwa-v4';
 const ASSETS = [
   './',
   './index.html',
-  './audit_data.json',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'

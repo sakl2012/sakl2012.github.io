@@ -15,32 +15,32 @@ from datetime import datetime, timezone, timedelta
 DATA_CACHE_DIR = os.path.join(os.path.dirname(__file__), "data_cache")
 os.makedirs(DATA_CACHE_DIR, exist_ok=True)
 
-SYMBOLS = ["BTCUSDT", "SOLUSDT", "TAOUSDT", "AAVEUSDT", "LINKUSDT", "NEARUSDT", "PAXGUSDT"]
+SYMBOLS = ["BTCUSDT", "SOLUSDT", "TAOUSDT", "AAVEUSDT", "SUIUSDT", "LINKUSDT", "NEARUSDT", "PAXGUSDT"]
 
 ZONE_CONFIGS = {
     1: {
         "name": "Zone 1 (Bear Bottom)",
         "A": {"BTC": 0.74, "PAXG": 0.26},
         "B": {"SOL": 0.26, "TAO": 0.29, "PAXG": 0.45},
-        "C": {"AAVE": 0.36, "LINK": 0.25, "NEAR": 0.11, "PAXG": 0.27}
+        "C": {"AAVE": 0.25, "SUI": 0.20, "LINK": 0.15, "NEAR": 0.15, "PAXG": 0.25}
     },
     2: {
         "name": "Zone 2 (Bull Cruise)",
         "A": {"BTC": 0.58, "PAXG": 0.42},
         "B": {"SOL": 0.25, "TAO": 0.15, "PAXG": 0.60},
-        "C": {"AAVE": 0.38, "NEAR": 0.22, "LINK": 0.11, "PAXG": 0.29}
+        "C": {"AAVE": 0.30, "SUI": 0.15, "LINK": 0.15, "NEAR": 0.10, "PAXG": 0.30}
     },
     3: {
         "name": "Zone 3 (Overheat Alert)",
         "A": {"BTC": 0.37, "PAXG": 0.63},
         "B": {"SOL": 0.18, "TAO": 0.19, "PAXG": 0.63},
-        "C": {"LINK": 0.44, "NEAR": 0.08, "AAVE": 0.00, "PAXG": 0.48}
+        "C": {"AAVE": 0.20, "SUI": 0.10, "LINK": 0.15, "NEAR": 0.10, "PAXG": 0.45}
     },
     4: {
         "name": "Zone 4 (Greed/Top-Escape)",
         "A": {"BTC": 0.05, "PAXG": 0.95},
         "B": {"SOL": 0.07, "TAO": 0.13, "PAXG": 0.80},
-        "C": {"PAXG": 0.66, "NEAR": 0.21, "LINK": 0.08, "AAVE": 0.05}
+        "C": {"PAXG": 0.75, "AAVE": 0.08, "LINK": 0.07, "SUI": 0.05, "NEAR": 0.05}
     }
 }
 

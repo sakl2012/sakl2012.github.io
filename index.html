@@ -185,7 +185,6 @@
         .live-card.card-A { border-top-color: #f59e0b; }
         .live-card.card-B { border-top-color: #8b5cf6; }
         .live-card.card-C { border-top-color: #10b981; }
-        .live-card.card-D { border-top-color: #ef4444; }
 
         .card-top-head {
             display: flex;
@@ -418,7 +417,7 @@
 <div class="container">
     <!-- 頂部標題列 -->
     <div class="page-header">
-        <h1 class="brand-title">📊 4-Zone 動態防禦三倉 + D倉獵手策略系統</h1>
+        <h1 class="brand-title">📊 4-Zone 動態防禦三倉全自動策略系統</h1>
         <div style="display: flex; align-items: center; gap: 8px;">
             <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:5px 12px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
             <div class="live-status-pill">
@@ -434,9 +433,9 @@
         <div class="ticker-chip"><span class="ticker-sym">SOL:</span> <span class="ticker-price" id="t-SOL">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">TAO:</span> <span class="ticker-price" id="t-TAO">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">AAVE:</span> <span class="ticker-price" id="t-AAVE">--</span></div>
+        <div class="ticker-chip"><span class="ticker-sym">SUI:</span> <span class="ticker-price" id="t-SUI">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">LINK:</span> <span class="ticker-price" id="t-LINK">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">NEAR:</span> <span class="ticker-price" id="t-NEAR">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">ENA:</span> <span class="ticker-price" id="t-ENA">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">PAXG:</span> <span class="ticker-price" id="t-PAXG">--</span></div>
     </div>
 
@@ -463,14 +462,14 @@
             <div class="alert-target" id="upwardAlert">🔺 升至 Zone 3 警戒價：<span style="color: #fbbf24;">BTC ≥ $-- (--%)</span></div>
         </div>
 
-        <!-- 四倉當前應設定參數卡片 -->
+        <!-- 三倉當前應設定參數卡片 (100% 全自動智能持倉) -->
         <div class="live-cards-grid">
             <!-- A 倉 -->
             <div class="live-card card-A">
                 <div>
                     <div class="card-top-head">
                         <span class="card-name">📦 A 倉：核心防禦 (Core)</span>
-                        <span class="card-weight-badge">佔主力資金 20%</span>
+                        <span class="card-weight-badge">佔總資金 20%</span>
                     </div>
                     <div class="ratio-bars-container" id="cardA_ratios">
                         <div class="ratio-bar-row">
@@ -494,7 +493,7 @@
                 <div>
                     <div class="card-top-head">
                         <span class="card-name">🚀 B 倉：主力爆發 (Satellite)</span>
-                        <span class="card-weight-badge">佔主力資金 60%</span>
+                        <span class="card-weight-badge">佔總資金 55%</span>
                     </div>
                     <div class="ratio-bars-container" id="cardB_ratios">
                         <div class="ratio-bar-row">
@@ -521,67 +520,35 @@
             <div class="live-card card-C">
                 <div>
                     <div class="card-top-head">
-                        <span class="card-name">⚡ C 倉：敘事輪動 (Alpha)</span>
-                        <span class="card-weight-badge">佔主力資金 20%</span>
+                        <span class="card-name">⚡ C 倉：四星輪動 (Alpha)</span>
+                        <span class="card-weight-badge">佔總資金 25%</span>
                     </div>
                     <div class="ratio-bars-container" id="cardC_ratios">
                         <div class="ratio-bar-row">
-                            <span class="ratio-coin">🔵 AAVE</span>
-                            <span class="ratio-val">38%</span>
+                            <span class="ratio-coin">🔵 AAVE (DeFi)</span>
+                            <span class="ratio-val">30%</span>
                         </div>
                         <div class="ratio-bar-row">
-                            <span class="ratio-coin">🟢 NEAR</span>
-                            <span class="ratio-val">22%</span>
+                            <span class="ratio-coin">🟢 SUI (Move公鏈)</span>
+                            <span class="ratio-val">15%</span>
                         </div>
                         <div class="ratio-bar-row">
-                            <span class="ratio-coin">🔷 LINK</span>
-                            <span class="ratio-val">11%</span>
+                            <span class="ratio-coin">🔷 LINK (預言機)</span>
+                            <span class="ratio-val">15%</span>
                         </div>
                         <div class="ratio-bar-row">
-                            <span class="ratio-coin">🟡 PAXG (黃金)</span>
-                            <span class="ratio-val">29%</span>
+                            <span class="ratio-coin">🟠 NEAR (AI鏈抽象)</span>
+                            <span class="ratio-val">10%</span>
+                        </div>
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🟡 PAXG (黃金池)</span>
+                            <span class="ratio-val">30%</span>
                         </div>
                     </div>
                 </div>
                 <div class="rebalance-threshold-tag">
                     <span>幣安智能持倉設定</span>
                     <span style="color: #b45309;">再平衡偏差閾值：10%</span>
-                </div>
-            </div>
-
-            <!-- D 倉 (即時爬文動態更新) -->
-            <div class="live-card card-D">
-                <div>
-                    <div class="card-top-head">
-                        <span class="card-name">🎯 D 倉：飛哥獵手 (現貨狙擊)</span>
-                        <span class="card-weight-badge" style="background:#fee2e2; color:#b91c1c;">機動獨立倉</span>
-                    </div>
-                    <div class="ratio-bars-container" id="cardD_ratios">
-                        <div class="ratio-bar-row">
-                            <span class="ratio-coin">🟡 PAXG (黃金保險箱)</span>
-                            <span class="ratio-val" style="color:#16a34a;">95%</span>
-                        </div>
-                        <div class="ratio-bar-row" style="background: #fff7ed; border-color: #ffedd5;">
-                            <span class="ratio-coin">🎯 5% 現貨伏擊槽 (USDT待命)</span>
-                            <span class="ratio-val" style="color:#ea580c;">5%</span>
-                        </div>
-                    </div>
-                    <!-- D_TIER_AUDIT_START -->
-                    <div id="dTierAuditContainer">
-                    <div style="font-size: 12px; color: #64748b; line-height: 1.6; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
-    <strong>📡 最新爬文審計判定 (2026-09-07 17:48)：</strong><br>
-    • <strong>$LINK (衝至 $13.41, +9.2%) & $AAVE ($134.09)</strong>：DeFi 龍頭強勢爆發 ➔ <span style="color:#2563eb; font-weight:700;">C 倉持倉已精準捕獲，D 倉不重複追高</span><br>
-    • <strong>$TAO ($269.8, +14.4%) & $SOL ($105)</strong>：AI 主線狂飆 + 9/9 升級 ➔ <span style="color:#2563eb; font-weight:700;">B 倉自動重倉吃肉，坐享主升浪</span><br>
-    • <strong>$ENA</strong>：現價 <span id="d-live-ena" style="font-weight:700; color:#0f172a;">$0.170</span> 震盪回踩，持續等待 $0.13~$0.15 最佳區間 ➔ <span style="color:#d97706; font-weight:700;">5% 機動伏擊槽待命中</span><br>
-    • <strong>$NEAR (9/10 NEAR Day)</strong>：AI 公鏈敘事 ➔ <span style="color:#2563eb; font-weight:700;">C 倉已覆蓋，無需額外手動追買</span><br>
-    • <strong>其他鏈上事件 ($STX 質押 / $COMP 機構市場) / 暴漲曬單</strong>：非真龍頭或已暴漲 ➔ <span style="color:#dc2626; font-weight:700;">嚴格略過</span>
-</div>
-                    </div>
-                    <!-- D_TIER_AUDIT_END -->
-                </div>
-                <div class="rebalance-threshold-tag" style="background:#fef2f2; border-color:#fca5a5; color:#991b1b;">
-                    <span>操作模式：手動現貨買賣</span>
-                    <span>翻倍或慶祝時全清換回 PAXG</span>
                 </div>
             </div>
         </div>
@@ -611,7 +578,7 @@
     <div class="matrix-card">
         <div class="matrix-title">
             <span>📋 4-Zone 四階段完整配置對照表</span>
-            <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值自動切換）</span>
+            <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值全自動切換）</span>
         </div>
         <div class="matrix-table-wrap">
             <table class="matrix-table">
@@ -620,9 +587,8 @@
                         <th>市場階段 (Zone)</th>
                         <th>比值門檻 (BTC/MA200)</th>
                         <th>A 倉 (Core 20% | 閾值 5%)</th>
-                        <th>B 倉 (Sat 60% | 閾值 5%)</th>
-                        <th>C 倉 (Alpha 20% | 閾值 10%)</th>
-                        <th>D 倉 (機動獵手 | 手動狙擊)</th>
+                        <th>B 倉 (Sat 55% | 閾值 5%)</th>
+                        <th>C 倉 (Alpha 25% | 閾值 10%)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -631,119 +597,51 @@
                         <td>&lt; 1.00</td>
                         <td>BTC 74% / PAXG 26%</td>
                         <td>SOL 26% / TAO 29% / PAXG 45%</td>
-                        <td>AAVE 36% / LINK 25% / NEAR 11% / PAXG 27%</td>
-                        <td style="color:#dc2626;">PAXG 95% + 5% 現貨伏擊槽</td>
+                        <td>AAVE 25% / SUI 20% / LINK 15% / NEAR 15% / PAXG 25%</td>
                     </tr>
                     <tr id="row-zone-2" class="row-active-zone">
                         <td><strong>Zone 2 (牛市巡航)</strong> <span class="active-tag" id="zone2-tag">現正運行</span></td>
                         <td>1.00 ~ 1.25</td>
                         <td>BTC 58% / PAXG 42%</td>
                         <td>SOL 25% / TAO 15% / PAXG 60%</td>
-                        <td>AAVE 38% / NEAR 22% / LINK 11% / PAXG 29%</td>
-                        <td style="color:#dc2626;">PAXG 95% + 5% 現貨伏擊槽</td>
+                        <td>AAVE 30% / SUI 15% / LINK 15% / NEAR 10% / PAXG 30%</td>
                     </tr>
                     <tr id="row-zone-3">
                         <td><strong>Zone 3 (過熱警戒)</strong></td>
                         <td>1.25 ~ 1.40</td>
                         <td>BTC 37% / PAXG 63%</td>
                         <td>SOL 18% / TAO 19% / PAXG 63%</td>
-                        <td>LINK 44% / NEAR 8% / AAVE 0% / PAXG 48%</td>
-                        <td style="color:#dc2626;">PAXG 95% + 5% 現貨伏擊槽</td>
+                        <td>AAVE 20% / SUI 10% / LINK 15% / NEAR 10% / PAXG 45%</td>
                     </tr>
                     <tr id="row-zone-4">
                         <td><strong>Zone 4 (極度貪婪/逃頂)</strong></td>
                         <td>&ge; 1.40</td>
                         <td>BTC 5% / PAXG 95%</td>
                         <td>SOL 7% / TAO 13% / PAXG 80%</td>
-                        <td>PAXG 66% / NEAR 21% / LINK 8% / AAVE 5%</td>
-                        <td style="color:#dc2626;">PAXG 95% + 5% 現貨伏擊槽</td>
+                        <td>PAXG 75% / AAVE 8% / LINK 7% / SUI 5% / NEAR 5%</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
-            ※ 註：ABC 倉由幣安智能持倉機器人依 Zone 全自動再平衡；D 倉為獨立機動獵手倉（95% PAXG 保險箱 + 5% 伏擊槽），不隨 BTC 宏觀 Zone 切換，純依首發貼文買入、翻倍炫耀文市價清倉換回 PAXG。
+            ※ 註：ABC 三組持倉全部由幣安智能持倉（Rebalance Bot）機器人 100% 全自動再平衡運行，徹底告別手動操作與盯盤焦慮。
         </div>
     </div>
 
     <!-- 幣安操作指南 -->
     <div class="guide-card">
-        <strong>💡 幣安實盤配置與操作指南：</strong><br>
-        1. <strong>主力航空母艦 (ABC 智能持倉 100% 自動)</strong>：<br>
-        &nbsp;&nbsp;&nbsp;• 打開幣安 App ➔ 點擊底部「交易」➔ 頂部選擇「策略」➔「智能持倉（Rebalance Bot）」。<br>
-        &nbsp;&nbsp;&nbsp;• 建立 3 組自定義持倉（A 倉 20% | B 倉 60% | C 倉 20%），填入上方對應之幣種與百分比。<br>
-        &nbsp;&nbsp;&nbsp;• 再平衡模式選擇「按比例偏差觸發」（A 倉與 B 倉填 <strong>5%</strong>，C 倉填 <strong>10%</strong>）。<br><br>
-        2. <strong>機動獵手狙擊 (D 倉 - 專屬跟隨飛哥首發短線現貨)</strong>：<br>
-        &nbsp;&nbsp;&nbsp;• <strong>平時狀態</strong>：機動資金 95% 停泊在 PAXG 黃金保險箱（零風險抗通膨），5% USDT 待命。<br>
-        &nbsp;&nbsp;&nbsp;• <strong>進場鐵律</strong>：飛哥首次發文推薦某幣安現貨新標的 ➔ 提撥 5% 伏擊買入（❌ <strong>絕不買二線補漲替代品</strong>）。<br>
-        &nbsp;&nbsp;&nbsp;• <strong>停利鐵律</strong>：飛哥發文慶祝該幣大賺或翻倍時 ➔ <strong>毫不猶豫市價全賣換回 PAXG 黃金</strong>！<br>
-        &nbsp;&nbsp;&nbsp;• <strong>止損保護</strong>：持有超過 14 天未見炫耀文或浮虧達 -15% ➔ 強制清倉換回 PAXG。
-    </div>
-
-    <!-- 爬文與選幣客觀驗證原則 (防割韭菜核心工序) -->
-    <div class="audit-card">
-        <div class="audit-title">🛡️ D 倉爬文審計四大硬核原則（防踏空 / 防詐騙 / 防事後諸葛亮）</div>
-        <p style="margin: 0 0 10px 0; color: #475569;">
-            為了避免被 KOL「事後改口」或「廣撒網倖存者偏差」誤導，每次委託 AI 爬取幣安廣場貼文時，必須嚴格執行以下 4 道客觀檢驗工序：
-        </p>
-        <div class="audit-grid">
-            <div class="audit-item">
-                <strong>1. 實時歷史 K 線對齊 (Kline Cross-Audit)</strong>
-                比對貼文發布當天的幣安 1h/1d 真實 K 線，確認其推薦價格確實落在當日成交區間內，徹底杜絕「暴漲後才發文吹噓」的馬後炮行為。
-            </div>
-            <div class="audit-item">
-                <strong>2. 發文時間戳與走勢檢驗 (Timestamp Proof)</strong>
-                嚴格調取貼文底層時間戳（Timestamp），確認是「起漲前首發推薦」還是「行情已經翻倍後的慶祝出貨文」。
-            </div>
-            <div class="audit-item">
-                <strong>3. 只做首推真龍頭 (No Catch-up Traps)</strong>
-                嚴格過濾「錯過某幣改買某替代品」的二線補漲陷阱（歷史勝率不足 45%）。只聚焦於博主第一時間首發、具備做市商點火動量的標的。
-            </div>
-            <div class="audit-item">
-                <strong>4. 幣安現貨深度過濾 (Binance Spot Liquidity)</strong>
-                必須是幣安現貨直接可下單、流動性前 100 大且無下架風險的正規資產。鏈上買不到的土狗或微盤 DEX 項目一律直接標註【略過】。
-            </div>
-        </div>
-    </div>
-
-    <!-- AI 專用互動提示詞中心 (專門協助爬文與調倉) -->
-    <div class="ai-prompt-card">
-        <div class="ai-prompt-header">
-            <div class="ai-prompt-title">🤖 AI 助理專用指令庫 (複製後直接丟給 AI 執行實時爬文)</div>
-            <span style="font-size: 11px; background: #e0e7ff; color: #4338ca; padding: 3px 8px; border-radius: 4px; font-weight: 700;">Prompt Templates</span>
-        </div>
-        <p style="margin: 0 0 10px 0; color: #475569;">
-            當您想檢查「D 倉是否該進場或停利」時，直接複製以下提示詞丟給 AI，AI 就會自動抓取幣安廣場最新貼文並為您進行量化審計：
-        </p>
-
-        <div>
-            <strong>1. 檢查最新喊單（是否有符合 5% 現貨進場的新獵物？）：</strong>
-            <div class="prompt-copy-box">
-                <span id="p1">請幫我爬取幣安廣場「K线人生飞哥」過去 48 小時的最新貼文，檢查他是否有首次提及或推薦任何「幣安現貨買得到」的新標的？請過濾掉二線補漲替代品與鏈上土狗，並評估是否符合 D 倉提撥 5% 現貨伏擊的進場條件。</span>
-                <button class="copy-btn" onclick="copyPrompt('p1', this)">點擊複製</button>
-            </div>
-        </div>
-
-        <div style="margin-top: 10px;">
-            <strong>2. 檢查獲利了結信號（手中持倉是否該清倉換回黃金 PAXG？）：</strong>
-            <div class="prompt-copy-box">
-                <span id="p2">請幫我檢索幣安廣場「K线人生飞哥」最新發文，確認他是否發布了針對 [輸入您的幣種，如 ENA/USELESS] 的慶祝/炫耀/翻倍文？如果是，請通知我立即清倉該現貨換回 PAXG 黃金；若未發文，請檢視目前持有天數與盈虧狀態。</span>
-                <button class="copy-btn" onclick="copyPrompt('p2', this)">點擊複製</button>
-            </div>
-        </div>
-
-        <div style="margin-top: 10px;">
-            <strong>3. 全盤審視 D 倉健康度與整體配置：</strong>
-            <div class="prompt-copy-box">
-                <span id="p3">請幫我同時檢視目前 BTC 即時比值（Zone 狀態）與飛哥在幣安廣場的最新動態，綜合評估我的 ABC 主力智能持倉與 D 倉機動獵手目前各自應維持怎樣的最新持倉？</span>
-                <button class="copy-btn" onclick="copyPrompt('p3', this)">點擊複製</button>
-            </div>
-        </div>
+        <strong>💡 幣安實盤配置與操作指南（100% 全自動託管）：</strong><br>
+        1. <strong>打開幣安 App</strong> ➔ 點擊底部「交易」➔ 頂部選擇「策略」➔「智能持倉（Rebalance Bot）」。<br>
+        2. <strong>建立 3 組自定義持倉</strong>（依上方計算機分配資金）：<br>
+        &nbsp;&nbsp;&nbsp;• <strong>A 倉 (20% 資金)</strong>：按當前 Zone 比例設定 BTC / PAXG，再平衡偏差閾值設 <strong>5%</strong>。<br>
+        &nbsp;&nbsp;&nbsp;• <strong>B 倉 (55% 資金)</strong>：按當前 Zone 比例設定 SOL / TAO / PAXG，再平衡偏差閾值設 <strong>5%</strong>。<br>
+        &nbsp;&nbsp;&nbsp;• <strong>C 倉 (25% 資金)</strong>：按當前 Zone 比例設定 AAVE / SUI / LINK / NEAR / PAXG，再平衡偏差閾值設 <strong>10%</strong>。<br>
+        3. <strong>自動巡航模式</strong>：機器人會在波動產生偏差時毫秒級自動高拋低吸，在牛市頂部（Zone 4）時自動將 80%~95% 利潤安全鎖定至 PAXG 黃金保險箱！
     </div>
 </div>
 
 <script>
-    // --- 4-Zone 配置定義 ---
+    // --- 4-Zone 配置定義 (A:20%, B:55%, C:25% 100%全自動三倉) ---
     const ZONE_CONFIGS = {
         1: {
             name: 'Zone 1 (熊底防禦階段)',
@@ -751,7 +649,7 @@
             ratios: {
                 A: { BTC: 0.74, PAXG: 0.26 },
                 B: { SOL: 0.26, TAO: 0.29, PAXG: 0.45 },
-                C: { AAVE: 0.36, LINK: 0.25, NEAR: 0.11, PAXG: 0.27 }
+                C: { AAVE: 0.25, SUI: 0.20, LINK: 0.15, NEAR: 0.15, PAXG: 0.25 }
             }
         },
         2: {
@@ -760,7 +658,7 @@
             ratios: {
                 A: { BTC: 0.58, PAXG: 0.42 },
                 B: { SOL: 0.25, TAO: 0.15, PAXG: 0.60 },
-                C: { AAVE: 0.38, NEAR: 0.22, LINK: 0.11, PAXG: 0.29 }
+                C: { AAVE: 0.30, SUI: 0.15, LINK: 0.15, NEAR: 0.10, PAXG: 0.30 }
             }
         },
         3: {
@@ -769,7 +667,7 @@
             ratios: {
                 A: { BTC: 0.37, PAXG: 0.63 },
                 B: { SOL: 0.18, TAO: 0.19, PAXG: 0.63 },
-                C: { LINK: 0.44, NEAR: 0.08, AAVE: 0.00, PAXG: 0.48 }
+                C: { AAVE: 0.20, SUI: 0.10, LINK: 0.15, NEAR: 0.10, PAXG: 0.45 }
             }
         },
         4: {
@@ -778,7 +676,7 @@
             ratios: {
                 A: { BTC: 0.05, PAXG: 0.95 },
                 B: { SOL: 0.07, TAO: 0.13, PAXG: 0.80 },
-                C: { PAXG: 0.66, NEAR: 0.21, LINK: 0.08, AAVE: 0.05 }
+                C: { PAXG: 0.75, AAVE: 0.08, LINK: 0.07, SUI: 0.05, NEAR: 0.05 }
             }
         }
     };
@@ -789,13 +687,13 @@
         SOL: '🟣 SOL',
         TAO: '🔵 TAO',
         AAVE: '🔵 AAVE',
-        NEAR: '🟢 NEAR',
+        SUI: '🟢 SUI',
         LINK: '🔷 LINK',
-        ENA: '🟣 ENA'
+        NEAR: '🟠 NEAR'
     };
 
     let currentZone = 2;
-    let latestPrices = { BTC: 76700, SOL: 98, TAO: 216, AAVE: 126, LINK: 11, NEAR: 1.85, ENA: 0.168, PAXG: 4370 };
+    let latestPrices = { BTC: 79400, SOL: 105, TAO: 269, AAVE: 134, SUI: 0.80, LINK: 13.4, NEAR: 2.35, PAXG: 4370 };
     let currentMa200 = 69538;
     let wsInstance = null;
 
@@ -825,9 +723,9 @@
             'solusdt@ticker',
             'taousdt@ticker',
             'aaveusdt@ticker',
+            'suiusdt@ticker',
             'linkusdt@ticker',
             'nearusdt@ticker',
-            'enausdt@ticker',
             'paxgusdt@ticker'
         ].join('/');
 
@@ -835,11 +733,6 @@
 
         try {
             wsInstance = new WebSocket(wsUrl);
-
-            wsInstance.onopen = () => {
-                const statusText = document.getElementById('liveStatusText');
-                if (statusText) statusText.innerText = '⚡ 幣安 WebSocket 實時秒級串流中';
-            };
 
             wsInstance.onmessage = (event) => {
                 const msg = JSON.parse(event.data);
@@ -851,7 +744,7 @@
 
                     latestPrices[sym] = curPrice;
 
-                    // 1. 即時刷新上方跑馬條
+                    // 更新頂部行情小卡
                     const chipEl = document.getElementById(`t-${sym}`);
                     if (chipEl) {
                         const priceFormat = curPrice >= 1000 ? '$' + Math.round(curPrice).toLocaleString() : (curPrice >= 1 ? '$' + curPrice.toFixed(2) : '$' + curPrice.toFixed(4));
@@ -860,15 +753,7 @@
                         chipEl.innerHTML = `${priceFormat} <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
                     }
 
-                    // 2. 如果是 ENA 更新，即時刷新 D 倉雷達價格
-                    if (sym === 'ENA') {
-                        const enaEl = document.getElementById('d-live-ena');
-                        if (enaEl) {
-                            enaEl.innerText = '$' + curPrice.toFixed(3);
-                        }
-                    }
-
-                    // 3. 如果是 BTC 更新，即刻觸發比值與 Zone 重算
+                    // 如果是 BTC 價格更新，重新計算比值與監控
                     if (sym === 'BTC') {
                         document.getElementById('liveBtcPrice').innerText = '$' + curPrice.toLocaleString('en-US', { maximumFractionDigits: 0 });
                         updateMetricsAndZone();
@@ -877,17 +762,14 @@
             };
 
             wsInstance.onerror = (err) => {
-                console.warn('WebSocket error, falling back to REST poll:', err);
+                console.log('WS Error, switching to fallback:', err);
                 fallbackPoll();
             };
 
             wsInstance.onclose = () => {
-                console.warn('WebSocket closed, reconnecting in 3s...');
-                setTimeout(initWebSocketStream, 3000);
+                setTimeout(initWebSocketStream, 5000);
             };
-
-        } catch (err) {
-            console.error('WebSocket connection failed:', err);
+        } catch (e) {
             fallbackPoll();
         }
     }
@@ -950,12 +832,13 @@
         const container = document.getElementById(containerId);
         if (!container) return;
         let html = '';
-        for (const [coin, pct] of Object.entries(ratiosObj)) {
+        for (const [coin, ratio] of Object.entries(ratiosObj)) {
             const icon = COIN_ICONS[coin] || coin;
+            const pct = Math.round(ratio * 100);
             html += `
                 <div class="ratio-bar-row">
                     <span class="ratio-coin">${icon}</span>
-                    <span class="ratio-val">${Math.round(pct * 100)}%</span>
+                    <span class="ratio-val">${pct}%</span>
                 </div>
             `;
         }
@@ -968,15 +851,14 @@
         if (!downEl || !upEl) return;
 
         if (zone === 2) {
-            const dropTarget = ma200 * 1.0;
+            const dropTarget = ma200 * 1.00;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
             const riseTarget = ma200 * 1.25;
             const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
-
             downEl.innerHTML = `🔻 跌回 <strong>Zone 1</strong> 觸發價：<span style="color: #4ade80;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
-            upEl.innerHTML = `🔺 升至 <strong>Zone 3</strong> 觸發價：<span style="color: #fbbf24;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
+            upEl.innerHTML = `🔺 突破至 <strong>Zone 3</strong> 觸發價：<span style="color: #fbbf24;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
         } else if (zone === 1) {
-            const riseTarget = ma200 * 1.0;
+            const riseTarget = ma200 * 1.00;
             const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
             downEl.innerHTML = `🛡️ 當前處於熊底最防禦階段 (Zone 1)`;
             upEl.innerHTML = `🔺 突破至 <strong>Zone 2</strong> 觸發價：<span style="color: #38bdf8;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
@@ -1007,9 +889,10 @@
         const container = document.getElementById('calcResultsGrid');
         if (!container) return;
 
+        // 全自動三倉分配：A 20%, B 55%, C 25%
         const capA = total * 0.20;
-        const capB = total * 0.60;
-        const capC = total * 0.20;
+        const capB = total * 0.55;
+        const capC = total * 0.25;
 
         const renderItems = (itemsObj, totalSubCap) => {
             let html = '';
@@ -1041,36 +924,19 @@
 
         container.innerHTML = `
             <div class="calc-subbox">
-                <h4><span>📦 A 倉 (Core 20%)</span> <span style="color: #0284c7; font-weight: 700;">$${Math.round(capA).toLocaleString()}</span></h4>
+                <h4><span>📦 A 倉 (Core 20%)</span> <span style="color: #f59e0b; font-weight: 700;">$${Math.round(capA).toLocaleString()}</span></h4>
                 ${resA.html}
             </div>
             <div class="calc-subbox">
-                <h4><span>🚀 B 倉 (Satellite 60%)</span> <span style="color: #0284c7; font-weight: 700;">$${Math.round(capB).toLocaleString()}</span></h4>
+                <h4><span>🚀 B 倉 (Sat 55%)</span> <span style="color: #8b5cf6; font-weight: 700;">$${Math.round(capB).toLocaleString()}</span></h4>
                 ${resB.html}
             </div>
             <div class="calc-subbox">
-                <h4><span>⚡ C 倉 (Alpha 20%)</span> <span style="color: #0284c7; font-weight: 700;">$${Math.round(capC).toLocaleString()}</span></h4>
+                <h4><span>⚡ C 倉 (Alpha 25%)</span> <span style="color: #10b981; font-weight: 700;">$${Math.round(capC).toLocaleString()}</span></h4>
                 ${resC.html}
             </div>
-            <div class="calc-subbox" style="border-left: 3px solid #ef4444;">
-                <h4><span>🎯 D 倉 (機動獨立倉試算)</span> <span style="color: #b91c1c; font-weight: 700;">$${Math.round(total).toLocaleString()} 基準</span></h4>
-                <div class="calc-item">
-                    <span><strong>PAXG (黃金保險箱)</strong> (95%)</span>
-                    <div>
-                        <span class="calc-item-amt">$${Math.round(total * 0.95).toLocaleString()}</span>
-                        <span class="calc-item-qty">≈ ${(total * 0.95 / (latestPrices.PAXG || 4370)).toFixed(2)} 顆</span>
-                    </div>
-                </div>
-                <div class="calc-item">
-                    <span><strong>🎯 5% 現貨伏擊槽</strong> (5%)</span>
-                    <div>
-                        <span class="calc-item-amt" style="color:#ea580c;">$${Math.round(total * 0.05).toLocaleString()}</span>
-                        <span class="calc-item-qty">USDT待命中 (鎖定 ENA)</span>
-                    </div>
-                </div>
-            </div>
             <div class="calc-subbox" style="background: #f0fdf4; border-color: #bbf7d0; grid-column: 1 / -1;">
-                <h4><span>🛡️ 主力組合 (ABC) PAXG 總避險部位</span> <span style="color: #166534; font-weight: 800;">${totalPaxgPct}%</span></h4>
+                <h4><span>🛡️ 全投資組合 (A+B+C) PAXG 總避險部位</span> <span style="color: #166534; font-weight: 800;">${totalPaxgPct}%</span></h4>
                 <div class="calc-item" style="border-bottom: none; margin-top: 4px;">
                     <span>PAXG 避險總額</span>
                     <div>
@@ -1085,7 +951,7 @@
     // --- 備用 1 秒輪詢 (Fallback Polling) ---
     async function fallbackPoll() {
         try {
-            const symbols = ["BTCUSDT", "SOLUSDT", "TAOUSDT", "AAVEUSDT", "LINKUSDT", "NEARUSDT", "ENAUSDT", "PAXGUSDT"];
+            const symbols = ["BTCUSDT", "SOLUSDT", "TAOUSDT", "AAVEUSDT", "SUIUSDT", "LINKUSDT", "NEARUSDT", "PAXGUSDT"];
             const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(symbols))}`);
             if (res.ok) {
                 const tickers = await res.json();
@@ -1108,30 +974,12 @@
         } catch (e) {}
     }
 
-    // --- 異步載入解耦的 D 倉審計資料 (Decoupled JSON) ---
-    async function syncAuditData() {
-        try {
-            const res = await fetch(`./audit_data.json?t=${Date.now()}`);
-            if (res.ok) {
-                const data = await res.json();
-                const container = document.getElementById('dTierAuditContainer');
-                if (container && data.audit_html) {
-                    container.innerHTML = data.audit_html;
-                }
-            }
-        } catch (e) {
-            console.log('Using static audit fallback:', e);
-        }
-    }
-
     // --- 初始化 ---
     document.addEventListener('DOMContentLoaded', () => {
-        syncAuditData();
         syncMa200();
         initWebSocketStream();
-        // 每 5 分鐘同步一次 MA200 與審計資料
+        // 每 5 分鐘同步一次 MA200
         setInterval(syncMa200, 300000);
-        setInterval(syncAuditData, 300000);
     });
 
     // --- PWA 支援與 Android 安裝邏輯 ---
