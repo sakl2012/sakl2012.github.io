@@ -433,6 +433,7 @@
         <div class="ticker-chip"><span class="ticker-sym">SOL:</span> <span class="ticker-price" id="t-SOL">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">TAO:</span> <span class="ticker-price" id="t-TAO">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">AAVE:</span> <span class="ticker-price" id="t-AAVE">--</span></div>
+        <div class="ticker-chip"><span class="ticker-sym">UNI:</span> <span class="ticker-price" id="t-UNI">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">SUI:</span> <span class="ticker-price" id="t-SUI">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">LINK:</span> <span class="ticker-price" id="t-LINK">--</span></div>
         <div class="ticker-chip"><span class="ticker-sym">NEAR:</span> <span class="ticker-price" id="t-NEAR">--</span></div>
@@ -520,13 +521,17 @@
             <div class="live-card card-C">
                 <div>
                     <div class="card-top-head">
-                        <span class="card-name">⚡ C 倉：四星輪動 (Alpha)</span>
+                        <span class="card-name">⚡ C 倉：五星輪動 (Alpha)</span>
                         <span class="card-weight-badge">佔總資金 25%</span>
                     </div>
                     <div class="ratio-bars-container" id="cardC_ratios">
                         <div class="ratio-bar-row">
-                            <span class="ratio-coin">🔵 AAVE (DeFi)</span>
-                            <span class="ratio-val">30%</span>
+                            <span class="ratio-coin">🔵 AAVE (借貸分紅)</span>
+                            <span class="ratio-val">15%</span>
+                        </div>
+                        <div class="ratio-bar-row">
+                            <span class="ratio-coin">🦄 UNI (DEX分紅)</span>
+                            <span class="ratio-val">15%</span>
                         </div>
                         <div class="ratio-bar-row">
                             <span class="ratio-coin">🟢 SUI (Move公鏈)</span>
@@ -597,35 +602,35 @@
                         <td>&lt; 0.80</td>
                         <td>BTC 80% / PAXG 20%</td>
                         <td>SOL 30% / TAO 35% / PAXG 35%</td>
-                        <td>AAVE 30% / SUI 25% / LINK 15% / NEAR 15% / PAXG 15%</td>
+                        <td>AAVE 15% / UNI 15% / SUI 25% / LINK 15% / NEAR 15% / PAXG 15%</td>
                     </tr>
                     <tr id="row-zone-1">
                         <td><strong>Zone 1 (初熊防禦)</strong></td>
                         <td>0.80 ~ 1.00</td>
                         <td>BTC 50% / PAXG 50%</td>
                         <td>SOL 18% / TAO 17% / PAXG 65%</td>
-                        <td>AAVE 20% / SUI 15% / LINK 15% / NEAR 10% / PAXG 40%</td>
+                        <td>AAVE 10% / UNI 10% / SUI 15% / LINK 15% / NEAR 10% / PAXG 40%</td>
                     </tr>
                     <tr id="row-zone-2" class="row-active-zone">
                         <td><strong>Zone 2 (牛市巡航)</strong> <span class="active-tag" id="zone2-tag">現正運行</span></td>
                         <td>1.00 ~ 1.25</td>
                         <td>BTC 58% / PAXG 42%</td>
                         <td>SOL 25% / TAO 15% / PAXG 60%</td>
-                        <td>AAVE 30% / SUI 15% / LINK 15% / NEAR 10% / PAXG 30%</td>
+                        <td>AAVE 15% / UNI 15% / SUI 15% / LINK 15% / NEAR 10% / PAXG 30%</td>
                     </tr>
                     <tr id="row-zone-3">
                         <td><strong>Zone 3 (過熱警戒)</strong></td>
                         <td>1.25 ~ 1.40</td>
                         <td>BTC 37% / PAXG 63%</td>
                         <td>SOL 18% / TAO 19% / PAXG 63%</td>
-                        <td>AAVE 20% / SUI 10% / LINK 15% / NEAR 10% / PAXG 45%</td>
+                        <td>AAVE 10% / UNI 10% / SUI 10% / LINK 15% / NEAR 10% / PAXG 45%</td>
                     </tr>
                     <tr id="row-zone-4">
                         <td><strong>Zone 4 (極度貪婪/逃頂)</strong></td>
                         <td>&ge; 1.40</td>
                         <td>BTC 5% / PAXG 95%</td>
                         <td>SOL 7% / TAO 13% / PAXG 80%</td>
-                        <td>PAXG 75% / AAVE 8% / LINK 7% / SUI 5% / NEAR 5%</td>
+                        <td>PAXG 75% / AAVE 5% / UNI 5% / LINK 5% / SUI 5% / NEAR 5%</td>
                     </tr>
                 </tbody>
             </table>
@@ -642,7 +647,7 @@
         2. <strong>建立 3 組自定義持倉</strong>（依上方計算機分配資金）：<br>
         &nbsp;&nbsp;&nbsp;• <strong>A 倉 (20% 資金)</strong>：按當前 Zone 比例設定 BTC / PAXG，再平衡偏差閾值設 <strong>5%</strong>。<br>
         &nbsp;&nbsp;&nbsp;• <strong>B 倉 (55% 資金)</strong>：按當前 Zone 比例設定 SOL / TAO / PAXG，再平衡偏差閾值設 <strong>5%</strong>。<br>
-        &nbsp;&nbsp;&nbsp;• <strong>C 倉 (25% 資金)</strong>：按當前 Zone 比例設定 AAVE / SUI / LINK / NEAR / PAXG，再平衡偏差閾值設 <strong>10%</strong>。<br>
+        &nbsp;&nbsp;&nbsp;• <strong>C 倉 (25% 資金)</strong>：按當前 Zone 比例設定 AAVE / UNI / SUI / LINK / NEAR / PAXG，再平衡偏差閾值設 <strong>10%</strong>。<br>
         3. <strong>自動巡航模式</strong>：機器人會在波動產生偏差時毫秒級自動高拋低吸，在牛市頂部（Zone 4）時自動將 80%~95% 利潤安全鎖定至 PAXG 黃金保險箱！
     </div>
 </div>
@@ -656,7 +661,7 @@
             ratios: {
                 A: { BTC: 0.80, PAXG: 0.20 },
                 B: { SOL: 0.30, TAO: 0.35, PAXG: 0.35 },
-                C: { AAVE: 0.30, SUI: 0.25, LINK: 0.15, NEAR: 0.15, PAXG: 0.15 }
+                C: { AAVE: 0.15, UNI: 0.15, SUI: 0.25, LINK: 0.15, NEAR: 0.15, PAXG: 0.15 }
             }
         },
         1: {
@@ -665,7 +670,7 @@
             ratios: {
                 A: { BTC: 0.50, PAXG: 0.50 },
                 B: { SOL: 0.18, TAO: 0.17, PAXG: 0.65 },
-                C: { AAVE: 0.20, SUI: 0.15, LINK: 0.15, NEAR: 0.10, PAXG: 0.40 }
+                C: { AAVE: 0.10, UNI: 0.10, SUI: 0.15, LINK: 0.15, NEAR: 0.10, PAXG: 0.40 }
             }
         },
         2: {
@@ -674,7 +679,7 @@
             ratios: {
                 A: { BTC: 0.58, PAXG: 0.42 },
                 B: { SOL: 0.25, TAO: 0.15, PAXG: 0.60 },
-                C: { AAVE: 0.30, SUI: 0.15, LINK: 0.15, NEAR: 0.10, PAXG: 0.30 }
+                C: { AAVE: 0.15, UNI: 0.15, SUI: 0.15, LINK: 0.15, NEAR: 0.10, PAXG: 0.30 }
             }
         },
         3: {
@@ -683,7 +688,7 @@
             ratios: {
                 A: { BTC: 0.37, PAXG: 0.63 },
                 B: { SOL: 0.18, TAO: 0.19, PAXG: 0.63 },
-                C: { AAVE: 0.20, SUI: 0.10, LINK: 0.15, NEAR: 0.10, PAXG: 0.45 }
+                C: { AAVE: 0.10, UNI: 0.10, SUI: 0.10, LINK: 0.15, NEAR: 0.10, PAXG: 0.45 }
             }
         },
         4: {
@@ -692,7 +697,7 @@
             ratios: {
                 A: { BTC: 0.05, PAXG: 0.95 },
                 B: { SOL: 0.07, TAO: 0.13, PAXG: 0.80 },
-                C: { PAXG: 0.75, AAVE: 0.08, LINK: 0.07, SUI: 0.05, NEAR: 0.05 }
+                C: { PAXG: 0.75, AAVE: 0.05, UNI: 0.05, LINK: 0.05, SUI: 0.05, NEAR: 0.05 }
             }
         }
     };
@@ -703,13 +708,14 @@
         SOL: '🟣 SOL',
         TAO: '🔵 TAO',
         AAVE: '🔵 AAVE',
+        UNI: '🦄 UNI',
         SUI: '🟢 SUI',
         LINK: '🔷 LINK',
         NEAR: '🟠 NEAR'
     };
 
     let currentZone = 2;
-    let latestPrices = { BTC: 79400, SOL: 105, TAO: 269, AAVE: 134, SUI: 0.80, LINK: 13.4, NEAR: 2.35, PAXG: 4370 };
+    let latestPrices = { BTC: 79400, SOL: 105, TAO: 269, AAVE: 134, UNI: 7.04, SUI: 0.80, LINK: 13.4, NEAR: 2.35, PAXG: 4370 };
     let currentMa200 = 69538;
     let wsInstance = null;
 
@@ -739,6 +745,7 @@
             'solusdt@ticker',
             'taousdt@ticker',
             'aaveusdt@ticker',
+            'uniusdt@ticker',
             'suiusdt@ticker',
             'linkusdt@ticker',
             'nearusdt@ticker',
