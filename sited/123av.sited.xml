@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<sited>
+<sited ver="2">
     <meta>
         <title>123AV</title>
         <intro>最佳日本AV成人網站，永久免費JAV</intro>
@@ -11,8 +11,36 @@
     </meta>
 
     <main>
-        <home url="https://123av.com/tw/new?page=1" parse="home_list_parse" />
-        <tags parse="tags_parse" tagParse="list_parse" url="https://123av.com/tw/actresses" />
+        <home url="https://123av.com/tw" parse="home_list_parse" />
+        <tags tagParse="list_parse">
+            <item group="排行榜" title="今日熱門" url="https://123av.com/tw/all?sort=today&amp;page=@page"/>
+            <item group="排行榜" title="本週熱門" url="https://123av.com/tw/all?sort=week&amp;page=@page"/>
+            <item group="排行榜" title="本月熱門" url="https://123av.com/tw/all?sort=month&amp;page=@page"/>
+
+            <item group="熱門分類" title="最新發布" url="https://123av.com/tw/new?page=@page"/>
+            <item group="熱門分類" title="最近添加" url="https://123av.com/tw/recent?page=@page"/>
+            <item group="熱門分類" title="有碼影片" url="https://123av.com/tw/censored?page=@page"/>
+            <item group="熱門分類" title="無碼影片" url="https://123av.com/tw/uncensored?page=@page"/>
+            <item group="熱門分類" title="無碼洩露" url="https://123av.com/tw/uncensored-leaked?page=@page"/>
+
+            <item group="知名片商" title="FC2" url="https://123av.com/tw/makers/fc2?page=@page"/>
+            <item group="知名片商" title="HEYZO" url="https://123av.com/tw/makers/heyzo?page=@page"/>
+            <item group="知名片商" title="1pondo" url="https://123av.com/tw/makers/1pondo?page=@page"/>
+            <item group="知名片商" title="Caribbeancom" url="https://123av.com/tw/makers/caribbeancom?page=@page"/>
+            <item group="知名片商" title="10musume" url="https://123av.com/tw/makers/10musume?page=@page"/>
+            <item group="知名片商" title="Pacopacomama" url="https://123av.com/tw/makers/pacopacomama?page=@page"/>
+            <item group="知名片商" title="Tokyo Hot" url="https://123av.com/tw/makers/tokyo-hot?page=@page"/>
+            <item group="知名片商" title="S-CUTE" url="https://123av.com/tw/makers/s-cute?page=@page"/>
+            <item group="知名片商" title="XXX-AV" url="https://123av.com/tw/makers/xxx-av?page=@page"/>
+
+            <item group="精選系列" title="SIRO" url="https://123av.com/tw/tags/siro?page=@page"/>
+            <item group="精選系列" title="259LUXU" url="https://123av.com/tw/tags/259luxu?page=@page"/>
+            <item group="精選系列" title="200GANA" url="https://123av.com/tw/tags/200gana?page=@page"/>
+            <item group="精選系列" title="PRESTIGE" url="https://123av.com/tw/tags/prestige-premium?page=@page"/>
+            <item group="精選系列" title="230ORECO" url="https://123av.com/tw/tags/230oreco?page=@page"/>
+            <item group="精選系列" title="261ARA" url="https://123av.com/tw/tags/261ara?page=@page"/>
+            <item group="精選系列" title="390JAC" url="https://123av.com/tw/tags/390jac?page=@page"/>
+        </tags>
         <search parse="list_parse" url="https://123av.com/tw/search?keyword=@key&amp;page=@page"/>
         <section parse="section_parse"/>
     </main>
@@ -25,44 +53,52 @@
         <![CDATA[
     const baseUrl = "https://123av.com";
 
-    // 動態解析「標籤頁」的函式（熱門女優）
-    function tags_parse(url, html) {
-        var $ = cheerio.load(html);
-        var list = [];
-        $('.actress').each(function() {
-            var $$ = cheerio.load($(this).html());
-            var name = $$('.actress__name').text().trim();
-            var href = $$('.actress__name').attr('href');
-            if (name && href) {
-                list.push({
-                    group: "熱門女優",
-                    title: gbk2big5.traditionalized(name),
-                    url: baseUrl + href + "?page=@page"
-                });
-            }
-        });
-        return JSON.stringify(list);
-    }
-
     function home_list_parse(url, html){
         var $ = cheerio.load(html);
         var list = [];
 
-        $('.card').each(function() {
+        // 1. 解析多區塊 (新發布、最近添加等)
+        $('section, .section, div').each(function() {
             var $$ = cheerio.load($(this).html());
-            var link = $$('.card__title a.card__link, a.card__cover');
-            var href = link.attr('href');
-            var title = $$('.card__title').text().trim();
-            var img = $$('.card__img').attr('src') || $$('.card__img').attr('data-src');
-            if (href && title) {
-                list.push({
-                    group: "最新影片",
-                    url: baseUrl + href,
-                    name: gbk2big5.traditionalized(title),
-                    logo: img
+            var group_name = $$('h2.section__title').first().text().trim();
+            if (group_name) {
+                var gName = gbk2big5.traditionalized(group_name);
+                $$('.card').each(function() {
+                    var card = cheerio(this);
+                    var link = card.find('a.card__cover, a.card__link');
+                    var href = link.attr('href');
+                    var title = card.find('.card__title').text().trim();
+                    var img = card.find('.card__img').attr('src') || card.find('.card__img').attr('data-src');
+                    if (href && title && list.none ? true : !list.some(function(item) { return item.url === baseUrl + href && item.group === gName; })) {
+                        list.push({
+                            group: gName,
+                            url: baseUrl + href,
+                            name: gbk2big5.traditionalized(title),
+                            logo: img
+                        });
+                    }
                 });
             }
         });
+
+        // 2. 若無分組，後備抓取所有卡片
+        if (list.length === 0) {
+            $('.card').each(function() {
+                var $$ = cheerio.load($(this).html());
+                var link = $$('.card__title a.card__link, a.card__cover');
+                var href = link.attr('href');
+                var title = $$('.card__title').text().trim();
+                var img = $$('.card__img').attr('src') || $$('.card__img').attr('data-src');
+                if (href && title) {
+                    list.push({
+                        group: "最新影片",
+                        url: baseUrl + href,
+                        name: gbk2big5.traditionalized(title),
+                        logo: img
+                    });
+                }
+            });
+        }
 
         return JSON.stringify(list);
     }

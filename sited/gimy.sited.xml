@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<sited>
+<sited ver="2">
     <meta>
         <title>gimy 劇迷</title>
         <intro>2016-2026 Gimy 劇迷 - 高清追劇首選</intro>
@@ -12,11 +12,45 @@
     <main>
         <home url="https://gimytw.cc/" parse="home_list_parse" />
         <tags tagParse="list_parse">
-            <item group="電視劇" title="全部" url="https://gimytw.cc/drama/"/>
-            <item group="電影" title="全部" url="https://gimytw.cc/movie/"/>
-            <item group="動漫" title="全部" url="https://gimytw.cc/anime/"/>
-            <item group="綜藝" title="全部" url="https://gimytw.cc/variety/"/>
-            <item group="最新" title="全部" url="https://gimytw.cc/latest/"/>
+            <item group="電視劇" title="全部" url="https://gimytw.cc/drama/?page=@page"/>
+            <item group="電視劇" title="臺灣" url="https://gimytw.cc/drama/?country=tw&amp;page=@page"/>
+            <item group="電視劇" title="韓國" url="https://gimytw.cc/drama/?country=kr&amp;page=@page"/>
+            <item group="電視劇" title="日本" url="https://gimytw.cc/drama/?country=jp&amp;page=@page"/>
+            <item group="電視劇" title="大陸" url="https://gimytw.cc/drama/?country=cn&amp;page=@page"/>
+            <item group="電視劇" title="歐美" url="https://gimytw.cc/drama/?country=west&amp;page=@page"/>
+            <item group="電視劇" title="美國" url="https://gimytw.cc/drama/?country=us&amp;page=@page"/>
+            <item group="電視劇" title="香港" url="https://gimytw.cc/drama/?country=hk&amp;page=@page"/>
+            <item group="電視劇" title="英國" url="https://gimytw.cc/drama/?country=gb&amp;page=@page"/>
+            <item group="電視劇" title="泰國" url="https://gimytw.cc/drama/?country=t&amp;page=@page"/>
+
+            <item group="電影" title="全部" url="https://gimytw.cc/movie/?page=@page"/>
+            <item group="電影" title="劇情片" url="https://gimytw.cc/movie/?cat=feature&amp;page=@page"/>
+            <item group="電影" title="動作片" url="https://gimytw.cc/movie/?cat=action&amp;page=@page"/>
+            <item group="電影" title="科幻片" url="https://gimytw.cc/movie/?cat=sci&amp;page=@page"/>
+            <item group="電影" title="喜劇片" url="https://gimytw.cc/movie/?cat=comedy&amp;page=@page"/>
+            <item group="電影" title="愛情片" url="https://gimytw.cc/movie/?cat=love&amp;page=@page"/>
+            <item group="電影" title="戰爭片" url="https://gimytw.cc/movie/?cat=war&amp;page=@page"/>
+            <item group="電影" title="恐怖片" url="https://gimytw.cc/movie/?cat=horror&amp;page=@page"/>
+            <item group="電影" title="動畫片" url="https://gimytw.cc/movie/?cat=anime&amp;page=@page"/>
+            <item group="電影" title="紀錄片" url="https://gimytw.cc/movie/?cat=doc&amp;page=@page"/>
+
+            <item group="動漫" title="全部" url="https://gimytw.cc/anime/?page=@page"/>
+            <item group="動漫" title="日本" url="https://gimytw.cc/anime/?country=jp&amp;page=@page"/>
+            <item group="動漫" title="大陸" url="https://gimytw.cc/anime/?country=cn&amp;page=@page"/>
+            <item group="動漫" title="美國" url="https://gimytw.cc/anime/?country=us&amp;page=@page"/>
+            <item group="動漫" title="歐美" url="https://gimytw.cc/anime/?country=west&amp;page=@page"/>
+            <item group="動漫" title="臺灣" url="https://gimytw.cc/anime/?country=tw&amp;page=@page"/>
+            <item group="動漫" title="韓國" url="https://gimytw.cc/anime/?country=kr&amp;page=@page"/>
+
+            <item group="綜藝" title="全部" url="https://gimytw.cc/variety/?page=@page"/>
+            <item group="綜藝" title="大陸" url="https://gimytw.cc/variety/?country=cn&amp;page=@page"/>
+            <item group="綜藝" title="韓國" url="https://gimytw.cc/variety/?country=kr&amp;page=@page"/>
+            <item group="綜藝" title="臺灣" url="https://gimytw.cc/variety/?country=tw&amp;page=@page"/>
+            <item group="綜藝" title="歐美" url="https://gimytw.cc/variety/?country=west&amp;page=@page"/>
+            <item group="綜藝" title="日本" url="https://gimytw.cc/variety/?country=jp&amp;page=@page"/>
+            <item group="綜藝" title="香港" url="https://gimytw.cc/variety/?country=hk&amp;page=@page"/>
+
+            <item group="最新" title="全部" url="https://gimytw.cc/latest/?page=@page"/>
         </tags>
         <search parse="search_parse" url="https://gimytw.cc/search?q=@key&amp;page=@page"/>
         <book parse="book_parse"/>
@@ -140,25 +174,32 @@
     <WebViewInjection>
         <![CDATA[
             javascript:(function() {
-                function cleanupAndMaximizePlayer() {
+                function maximizePlayer() {
                     try {
-                        const player = document.querySelector('iframe[name="p-frame"], .player_left, #zanpiancms_player');
+                        var player = document.querySelector('iframe[name="p-frame"], .player_left, #zanpiancms_player, .player');
                         if (player) {
-                            const playerParent = player.parentNode;
-                            playerParent.removeChild(player);
-
-                            document.body.innerHTML = '';
-                            document.body.appendChild(player);
-
                             document.body.style.margin = '0';
                             document.body.style.padding = '0';
                             document.body.style.overflow = 'hidden';
-                            player.style.position = 'absolute';
+
+                            var current = player;
+                            while (current && current.tagName !== 'BODY') {
+                                current.style.visibility = 'visible';
+                                var siblings = Array.from(current.parentNode.children);
+                                siblings.forEach(function(sibling) {
+                                    if (sibling !== current) {
+                                        sibling.style.display = 'none';
+                                    }
+                                });
+                                current = current.parentElement;
+                            }
+
+                            player.style.position = 'fixed';
                             player.style.top = '0';
                             player.style.left = '0';
                             player.style.width = '100vw';
                             player.style.height = '100vh';
-
+                            player.style.zIndex = '999999';
                             return true;
                         }
                         return false;
@@ -167,11 +208,10 @@
                     }
                 }
 
-                let attempts = 0;
-                const maxAttempts = 20;
-                const intervalId = setInterval(function() {
+                var attempts = 0;
+                var intervalId = setInterval(function() {
                     attempts++;
-                    if (cleanupAndMaximizePlayer() || attempts >= maxAttempts) {
+                    if (maximizePlayer() || attempts >= 20) {
                         clearInterval(intervalId);
                     }
                 }, 500);
