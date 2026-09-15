@@ -109,31 +109,31 @@ function getAllocationConfig(zone) {
     return `【Zone 0: 深熊大底】(極限抄底進攻模式 - 釋放黃金儲備)
 👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 80% | PAXG 20%
 👉 🅱️ 持倉 B (Sat 55% | 偏差5%): ETH 30% | TAO 35% | PAXG 35%
-👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 15% | UNI 15% | SUI 25% | LINK 15% | NEAR 15% | PAXG 15%`;
+👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 15% | UNI 15% | SUI 25% | LINK 15% | PENDLE 15% | PAXG 15%`;
   }
   else if (zone === 1) {
     return `【Zone 1: 初熊防禦】(防刀緩衝期 - 提高黃金避險不接飛刀)
 👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 50% | PAXG 50%
 👉 🅱️ 持倉 B (Sat 55% | 偏差5%): ETH 18% | TAO 17% | PAXG 65%
-👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 10% | UNI 10% | SUI 15% | LINK 15% | NEAR 10% | PAXG 40%`;
+👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 10% | UNI 10% | SUI 15% | LINK 15% | PENDLE 10% | PAXG 40%`;
   } 
   else if (zone === 2) {
     return `【Zone 2: 牛市巡航】(穩健起飛模式 - 現正運行 ⭐)
 👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 58% | PAXG 42%
 👉 🅱️ 持倉 B (Sat 55% | 偏差5%): ETH 25% | TAO 15% | PAXG 60%
-👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 15% | UNI 15% | SUI 15% | LINK 15% | NEAR 10% | PAXG 30%`;
+👉 🅲 持倉 C (Alpha 25% | 偏差10%): AAVE 15% | UNI 15% | SUI 15% | LINK 15% | PENDLE 10% | PAXG 30%`;
   } 
   else if (zone === 3) {
     return `【Zone 3: 過熱警戒】(分批鎖利換金模式)
 👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 37% | PAXG 63%
 👉 🅱️ 持倉 B (Sat 55% | 偏差5%): ETH 18% | TAO 19% | PAXG 63%
-👉 🅲 持倉 C (Alpha 25% | 偏差10%): PAXG 45% | AAVE 10% | UNI 10% | SUI 10% | LINK 15% | NEAR 10%`;
+👉 🅲 持倉 C (Alpha 25% | 偏差10%): PAXG 45% | AAVE 10% | UNI 10% | SUI 10% | LINK 15% | PENDLE 10%`;
   } 
   else if (zone === 4) {
     return `【Zone 4: 極度貪婪/逃頂】(全面避險保命模式)
 👉 🅰️ 持倉 A (Core 20% | 偏差5%): BTC 5% | PAXG 95%
 👉 🅱️ 持倉 B (Sat 55% | 偏差5%): ETH 7% | TAO 13% | PAXG 80%
-👉 🅲 持倉 C (Alpha 25% | 偏差10%): PAXG 75% | AAVE 5% | UNI 5% | LINK 5% | SUI 5% | NEAR 5%`;
+👉 🅲 持倉 C (Alpha 25% | 偏差10%): PAXG 75% | AAVE 5% | UNI 5% | LINK 5% | SUI 5% | PENDLE 5%`;
   } 
   else {
     return `尚未定義此 Zone 的持倉配置。`;
