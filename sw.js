@@ -1,4 +1,5 @@
-const CACHE_NAME = '4zone-pwa-v4';
+// Service Worker v5 - Updated with ETH & PENDLE 5-Zone allocations
+const CACHE_NAME = '5zone-pwa-v5';
 const ASSETS = [
   './',
   './index.html',
