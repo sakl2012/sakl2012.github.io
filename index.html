@@ -2,9 +2,17 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>5-Zone 策略</title>
     
+    <!-- 網路預連線加速 (減少 Binance WebSocket & REST API 握手延遲) -->
+    <link rel="preconnect" href="https://stream.binance.com:9443">
+    <link rel="preconnect" href="https://api.binance.com">
+    <link rel="preconnect" href="https://fstream.binance.com">
+    <link rel="dns-prefetch" href="https://stream.binance.com:9443">
+    <link rel="dns-prefetch" href="https://api.binance.com">
+    <link rel="dns-prefetch" href="https://fstream.binance.com">
+
     <!-- PWA 配置 (支援 Android / iOS 手機獨立 App 安裝) -->
     <meta name="theme-color" content="#0f172a">
     <meta name="mobile-web-app-capable" content="yes">
@@ -36,6 +44,10 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 16px;
+            padding-top: max(16px, env(safe-area-inset-top));
+            padding-bottom: max(24px, env(safe-area-inset-bottom));
+            padding-left: max(16px, env(safe-area-inset-left));
+            padding-right: max(16px, env(safe-area-inset-right));
             background-color: var(--bg);
             color: var(--text-main);
             line-height: 1.5;
@@ -48,9 +60,9 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
             border-bottom: 1px solid var(--border);
         }
         .brand-title { font-size: 20px; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px; }
@@ -61,7 +73,7 @@
             background: #ecfdf5;
             color: #065f46;
             border: 1px solid #a7f3d0;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
@@ -75,42 +87,34 @@
             box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
             animation: pulse 1.5s infinite;
         }
-            background-color: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse 1.5s infinite;
-        }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
             70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
             100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        /* 幣種行情列 */
-        .ticker-bar {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 4px 2px 14px 2px;
-            scrollbar-width: thin;
-        }
-        .ticker-chip {
-            display: flex;
+        /* 頂部 PAXG 實體黃金微金屬膠囊 */
+        .paxg-top-pill {
+            display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 1px solid #fde68a;
+            border-left: 3px solid #f59e0b;
+            border-radius: 20px;
+            padding: 5px 14px;
             font-size: 13px;
-            font-weight: 600;
-            white-space: nowrap;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-            transition: background 0.3s;
+            font-weight: 700;
+            color: #78350f;
+            box-shadow: 0 1px 4px rgba(245, 158, 11, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .ticker-sym { color: #64748b; }
-        .ticker-price { font-weight: 700; color: #0f172a; }
+        .paxg-top-pill:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(245, 158, 11, 0.18);
+        }
+
+        .ticker-chg { font-size: 11px; font-weight: 700; margin-left: 3px; }
         .ticker-chg.up { color: var(--success); }
         .ticker-chg.down { color: var(--danger); }
 
@@ -131,30 +135,58 @@
             align-items: flex-start;
             flex-wrap: wrap;
             gap: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         .zone-signal-wrap { display: flex; flex-direction: column; gap: 4px; }
         .zone-tag { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 600; }
         .zone-main-title { font-size: 32px; font-weight: 900; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
 
-        .market-metrics-row {
-            display: flex;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 10px 16px;
-            border-radius: 10px;
-            align-items: center;
-            flex-wrap: wrap;
+        /* 指令中心玻璃擬物微儀表盤 */
+        .market-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 10px;
+            width: 100%;
+            margin-top: 14px;
         }
-        .metric-inline { font-size: 13px; color: #cbd5e1; }
-        .metric-inline strong { color: white; font-size: 15px; font-weight: 700; }
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .metric-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+        .metric-label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .metric-val {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
 
         /* 換倉警戒線監控條 */
         .zone-threshold-alert {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.7);
             border: 1px solid #334155;
             padding: 12px 16px;
             border-radius: 10px;
+            margin-top: 14px;
             margin-bottom: 22px;
             display: flex;
             justify-content: space-between;
@@ -165,79 +197,7 @@
         }
         .alert-target { display: flex; align-items: center; gap: 6px; font-weight: 600; }
 
-        /* 四倉即時設定卡片區 */
-        .live-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-        }
-        .live-card {
-            background: #ffffff;
-            color: #0f172a;
-            border-radius: 14px;
-            padding: 18px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-top: 6px solid #0284c7;
-            position: relative;
-        }
-        .live-card.card-A { border-top-color: #f59e0b; }
-        .live-card.card-B { border-top-color: #8b5cf6; }
-        .live-card.card-C { border-top-color: #10b981; }
-
-        .card-top-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .card-name { font-size: 16px; font-weight: 800; color: #0f172a; }
-        .card-weight-badge {
-            background: #f1f5f9;
-            color: #334155;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 7px;
-            border-radius: 6px;
-        }
-
-        /* 幣種比例顯示條 */
-        .ratio-bars-container {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-            margin-bottom: 14px;
-        }
-        .ratio-bar-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13.5px;
-            font-weight: 600;
-            padding: 7px 10px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1px solid #edf2f7;
-        }
-        .ratio-coin { display: flex; align-items: center; gap: 6px; color: #1e293b; font-weight: 700; }
-        .ratio-val { font-size: 15px; font-weight: 800; color: #0284c7; }
-
-        .rebalance-threshold-tag {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f0fdf4;
-            border: 1px dashed #86efac;
-            color: #166534;
-            padding: 7px 10px;
-            border-radius: 8px;
-            font-size: 11.5px;
-            font-weight: 700;
-        }
-
-        /* ================= C 倉 Top 10 雙幣 Alpha 矩陣專用樣式 ================= */
+        /* ================= 衛星雙幣艦隊專用樣式 ================= */
         .c-matrix-container {
             margin-top: 22px;
             background: rgba(15, 23, 42, 0.5);
@@ -251,8 +211,8 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 16px;
-            padding-bottom: 14px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .c-matrix-title {
@@ -293,6 +253,37 @@
             color: #34d399;
             border: 1px solid rgba(16, 185, 129, 0.4);
         }
+
+        /* 衛星艦隊梯隊分類快速篩選列 */
+        .c-filter-tabs {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .c-filter-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .c-filter-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
+            color: white;
+        }
+        .c-filter-btn.active {
+            background: #0284c7;
+            color: white;
+            border-color: #38bdf8;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+        }
+
         .c-matrix-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -481,53 +472,6 @@
         .audit-item { background: #f8fafc; border: 1px solid #edf2f7; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; }
         .audit-item strong { color: #0369a1; display: block; margin-bottom: 4px; font-size: 13px; }
 
-        /* AI 提示詞卡片 */
-        .ai-prompt-card {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-left: 5px solid #6366f1;
-            border-radius: 12px;
-            padding: 18px 22px;
-            margin-bottom: 30px;
-            font-size: 13px;
-            color: #334155;
-            line-height: 1.7;
-        }
-        .ai-prompt-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .ai-prompt-title { font-size: 15px; font-weight: 800; color: #1e1b4b; display: flex; align-items: center; gap: 8px; }
-        .prompt-copy-box {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin: 6px 0 14px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            font-family: monospace;
-            font-size: 12.5px;
-            color: #1e293b;
-        }
-        .copy-btn {
-            background: #6366f1;
-            color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-            transition: background 0.2s;
-        }
-        .copy-btn:hover { background: #4f46e5; }
-
         @media (max-width: 768px) {
             body { padding: 10px; }
             .command-center { padding: 16px; }
@@ -563,14 +507,23 @@
                 <div class="zone-tag">⚡ 當前即時市場信號</div>
                 <div class="zone-main-title" id="liveZoneDisplay">Zone 2 (牛市巡航階段)</div>
             </div>
-            <div class="market-metrics-row">
-                <div class="metric-inline">BTC 即時價: <strong id="liveBtcPrice">$--</strong></div>
-                <div style="color: #475569;">|</div>
-                <div class="metric-inline">PAXG 黃金儲備: <strong id="livePaxgPrice" style="color: #f59e0b;">$--</strong></div>
-                <div style="color: #475569;">|</div>
-                <div class="metric-inline">200日均線 (MA200): <strong id="liveMa200">$--</strong></div>
-                <div style="color: #475569;">|</div>
-                <div class="metric-inline">當前比值: <strong id="liveRatio" style="color: #38bdf8;">--</strong></div>
+            <div class="market-metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">BTC 即時現價</div>
+                    <div class="metric-val" id="liveBtcPrice">$--</div>
+                </div>
+                <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.35);">
+                    <div class="metric-label" style="color: #fcd34d;">🟡 PAXG 儲備金價</div>
+                    <div class="metric-val" id="livePaxgPrice" style="color: #fbbf24;">$--</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">200日均線 (MA200)</div>
+                    <div class="metric-val" id="liveMa200">$--</div>
+                </div>
+                <div class="metric-card" style="border-color: rgba(56, 189, 248, 0.35);">
+                    <div class="metric-label" style="color: #7dd3fc;">當前比值 (BTC/MA200)</div>
+                    <div class="metric-val" id="liveRatio" style="color: #38bdf8;">--</div>
+                </div>
             </div>
         </div>
 
@@ -611,6 +564,14 @@
                     <span class="c-pill c-pill-gold">💡 滿額 20 組雙幣機器人</span>
                     <span class="c-pill c-pill-green">🎯 單倉建議 ≥ 300U | 偏差 5%</span>
                 </div>
+            </div>
+
+            <!-- 梯隊快速分類篩選標籤 -->
+            <div class="c-filter-tabs">
+                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">全部 17 檔</button>
+                <button class="c-filter-btn" data-filter="tier1" onclick="filterSatFleet('tier1')">⚡ Tier 1 真實收益 (5)</button>
+                <button class="c-filter-btn" data-filter="tier2" onclick="filterSatFleet('tier2')">🛡️ Tier 2 頂級基建 (5)</button>
+                <button class="c-filter-btn" data-filter="tier3" onclick="filterSatFleet('tier3')">🚀 Tier 3 爆發擴展 (7)</button>
             </div>
 
             <!-- 17 檔雙幣卡片網格 -->
@@ -1119,38 +1080,95 @@
         }
     }
 
-    // --- 輔助：更新行情 UI（更新頂部 PAXG 與卡片標價） ---
-    function updateTickerUI(sym, curPrice, chg) {
+    // --- 批次 DOM 更新調度器 (Batch DOM Updates via requestAnimationFrame) ---
+    const pendingPriceUpdates = {};
+    let rafScheduled = false;
+
+    function queuePriceUpdate(sym, curPrice, chg) {
         latestPrices[sym] = curPrice;
         if (typeof chg === 'number') latest24hChange[sym] = chg;
+        pendingPriceUpdates[sym] = { curPrice, chg };
 
-        const priceFormat = curPrice >= 1000 ? '$' + Math.round(curPrice).toLocaleString() : (curPrice >= 1 ? '$' + curPrice.toFixed(2) : '$' + curPrice.toFixed(4));
-        const chgClass = chg >= 0 ? 'up' : 'down';
-        const chgSign = chg >= 0 ? '+' : '';
-
-        // 更新頂部 PAXG 專屬晶片
-        const chipEl = document.getElementById(`t-${sym}`);
-        if (chipEl) {
-            chipEl.innerHTML = `${priceFormat} <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
-        }
-
-        // 若為 PAXG，同步更新指令中心的黃金儲備報價
-        if (sym === 'PAXG') {
-            const paxgMetricEl = document.getElementById('livePaxgPrice');
-            if (paxgMetricEl) {
-                paxgMetricEl.innerHTML = `${priceFormat} <span style="font-size: 11px; font-weight: 600;" class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
-            }
-        }
-
-        // 更新雙幣卡片內的即時報價 (Core 與衛星)
-        const cardPriceEl = document.getElementById(`cprice-${sym}`);
-        if (cardPriceEl) {
-            cardPriceEl.innerHTML = `${priceFormat} <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
+        if (!rafScheduled) {
+            rafScheduled = true;
+            requestAnimationFrame(flushPriceUpdates);
         }
     }
 
+    function flushPriceUpdates() {
+        rafScheduled = false;
+        let btcUpdated = false;
+
+        for (const sym in pendingPriceUpdates) {
+            const item = pendingPriceUpdates[sym];
+            const curPrice = item.curPrice;
+            const chg = item.chg;
+
+            const priceFormat = curPrice >= 1000 ? '$' + Math.round(curPrice).toLocaleString() : (curPrice >= 1 ? '$' + curPrice.toFixed(2) : '$' + curPrice.toFixed(4));
+            const chgClass = chg >= 0 ? 'up' : 'down';
+            const chgSign = chg >= 0 ? '+' : '';
+            const chgHtml = typeof chg === 'number' ? ` <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>` : '';
+
+            // 更新頂部 PAXG 專屬晶片
+            const chipEl = document.getElementById(`t-${sym}`);
+            if (chipEl) {
+                chipEl.innerHTML = `${priceFormat}${chgHtml}`;
+            }
+
+            // 若為 PAXG，同步更新指令中心的黃金儲備報價
+            if (sym === 'PAXG') {
+                const paxgMetricEl = document.getElementById('livePaxgPrice');
+                if (paxgMetricEl) {
+                    paxgMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
+                }
+            }
+
+            // 更新雙幣卡片內的即時報價 (Core 與衛星)
+            const cardPriceEl = document.getElementById(`cprice-${sym}`);
+            if (cardPriceEl) {
+                cardPriceEl.innerHTML = `${priceFormat}${chgHtml}`;
+            }
+
+            if (sym === 'BTC') {
+                btcUpdated = true;
+                const liveBtcEl = document.getElementById('liveBtcPrice');
+                if (liveBtcEl) {
+                    liveBtcEl.innerHTML = `$${Math.round(curPrice).toLocaleString('en-US')}${chgHtml}`;
+                }
+            }
+        }
+
+        // 清空當批暫存
+        for (const sym in pendingPriceUpdates) {
+            delete pendingPriceUpdates[sym];
+        }
+
+        // 若 BTC 現價更新，觸發狀態機判定與換倉警戒計算
+        if (btcUpdated) {
+            updateMetricsAndZone();
+        }
+    }
+
+    // --- 輔助：更新行情 UI（向批次佇列推入更新） ---
+    function updateTickerUI(sym, curPrice, chg) {
+        queuePriceUpdate(sym, curPrice, chg);
+    }
+
     // --- WebSocket 即時秒級串流 (Binance Spot & Futures) ---
+    let reconnectSpotTimer = null;
+    let reconnectFuturesTimer = null;
+
     function initWebSocketStream() {
+        if (reconnectSpotTimer) {
+            clearTimeout(reconnectSpotTimer);
+            reconnectSpotTimer = null;
+        }
+        if (wsSpotInstance) {
+            wsSpotInstance.onclose = null;
+            wsSpotInstance.onerror = null;
+            try { wsSpotInstance.close(); } catch(e) {}
+        }
+
         const spotSymbols = [
             'btcusdt', 'ethusdt', 'paxgusdt', 'taousdt',
             'uniusdt', 'nearusdt', 'ondousdt', 'pendleusdt',
@@ -1171,23 +1189,31 @@
                     const sym = data.s.replace('USDT', '');
                     const curPrice = parseFloat(data.c);
                     const chg = parseFloat(data.P);
-
                     updateTickerUI(sym, curPrice, chg);
-
-                    if (sym === 'BTC') {
-                        document.getElementById('liveBtcPrice').innerText = '$' + curPrice.toLocaleString('en-US', { maximumFractionDigits: 0 });
-                        updateMetricsAndZone();
-                    }
                 }
             };
 
             wsSpotInstance.onerror = () => { fallbackPoll(); };
-            wsSpotInstance.onclose = () => { setTimeout(initWebSocketStream, 5000); };
+            wsSpotInstance.onclose = () => {
+                if (!reconnectSpotTimer) {
+                    reconnectSpotTimer = setTimeout(initWebSocketStream, 5000);
+                }
+            };
         } catch (e) {
             fallbackPoll();
         }
 
         // HYPE 期貨 WebSocket
+        if (reconnectFuturesTimer) {
+            clearTimeout(reconnectFuturesTimer);
+            reconnectFuturesTimer = null;
+        }
+        if (wsFuturesInstance) {
+            wsFuturesInstance.onclose = null;
+            wsFuturesInstance.onerror = null;
+            try { wsFuturesInstance.close(); } catch(e) {}
+        }
+
         try {
             wsFuturesInstance = new WebSocket('wss://fstream.binance.com/ws/hypeusdt@ticker');
             wsFuturesInstance.onmessage = (event) => {
@@ -1199,7 +1225,11 @@
                 }
             };
             wsFuturesInstance.onerror = () => {};
-            wsFuturesInstance.onclose = () => { setTimeout(initWebSocketStream, 5000); };
+            wsFuturesInstance.onclose = () => {
+                if (!reconnectFuturesTimer) {
+                    reconnectFuturesTimer = setTimeout(initWebSocketStream, 5000);
+                }
+            };
         } catch (e) {}
     }
 
@@ -1303,6 +1333,21 @@
         grid.innerHTML = html;
     }
 
+    // --- 衛星艦隊梯隊分類過濾 ---
+    let currentFleetFilter = 'all';
+
+    function filterSatFleet(filterKey) {
+        currentFleetFilter = filterKey;
+        document.querySelectorAll('.c-filter-btn').forEach(btn => {
+            if (btn.getAttribute('data-filter') === filterKey) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        renderCPortfolioMatrix();
+    }
+
     // --- 渲染衛星雙幣 Alpha 矩陣卡片 (17 檔) ---
     function renderCPortfolioMatrix() {
         const grid = document.getElementById('cMatrixGrid');
@@ -1313,6 +1358,13 @@
 
         let html = '';
         C_SATELLITE_CANDIDATES.forEach((c, idx) => {
+            // 梯隊標籤篩選比對
+            let match = true;
+            if (currentFleetFilter === 'tier1') match = c.tier.includes('第一梯隊');
+            else if (currentFleetFilter === 'tier2') match = c.tier.includes('第二梯隊');
+            else if (currentFleetFilter === 'tier3') match = c.tier.includes('第三梯隊');
+            if (!match) return;
+
             const p = latestPrices[c.sym] || 0;
             const chg = latest24hChange[c.sym];
             const priceStr = p >= 1000 ? '$' + Math.round(p).toLocaleString() : (p >= 1 ? '$' + p.toFixed(2) : '$' + p.toFixed(4));

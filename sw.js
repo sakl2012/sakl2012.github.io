@@ -1,5 +1,5 @@
-// Service Worker v12 - Streamlined Top Live Ticker (PAXG Gold Only)
-const CACHE_NAME = '5zone-pwa-v12';
+// Service Worker v13 - High-Performance RAF Batching, Glassmorphism Dashboard & Fleet Filter Tabs
+const CACHE_NAME = '5zone-pwa-v13';
 const ASSETS = [
   './',
   './index.html',
