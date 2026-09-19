@@ -1,5 +1,5 @@
-// Service Worker v11 - Brand Identity Simplification (5-Zone 策略)
-const CACHE_NAME = '5zone-pwa-v11';
+// Service Worker v12 - Streamlined Top Live Ticker (PAXG Gold Only)
+const CACHE_NAME = '5zone-pwa-v12';
 const ASSETS = [
   './',
   './index.html',

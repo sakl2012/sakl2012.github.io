@@ -543,38 +543,17 @@
             <img src="icon-192.png" alt="5-Zone Logo" style="width: 30px; height: 30px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.18);">
             <span>5-Zone 策略</span>
         </h1>
-        <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <div class="paxg-top-pill" style="display: flex; align-items: center; gap: 6px; background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid #f59e0b; border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 700; color: #92400e; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <span>🟡 PAXG 實體黃金:</span>
+                <span id="t-PAXG" style="color: #0f172a; font-weight: 800;">載入中...</span>
+            </div>
             <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:5px 12px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
             <div class="live-status-pill">
                 <span class="pulse-dot"></span>
                 <span id="liveStatusText">⚡ 幣安 WebSocket 實時秒級串流中</span>
             </div>
         </div>
-    </div>
-
-    <!-- 關聯代幣即時行情跑馬條 (20 檔全雙幣資產 + PAXG) -->
-    <div class="ticker-bar" id="tickerBar">
-        <div class="ticker-chip"><span class="ticker-sym">BTC:</span> <span class="ticker-price" id="t-BTC">載入中...</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">ETH:</span> <span class="ticker-price" id="t-ETH">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">PAXG:</span> <span class="ticker-price" id="t-PAXG">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">TAO:</span> <span class="ticker-price" id="t-TAO">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">UNI:</span> <span class="ticker-price" id="t-UNI">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">NEAR:</span> <span class="ticker-price" id="t-NEAR">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">HYPE:</span> <span class="ticker-price" id="t-HYPE">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">ONDO:</span> <span class="ticker-price" id="t-ONDO">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">PENDLE:</span> <span class="ticker-price" id="t-PENDLE">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">SOL:</span> <span class="ticker-price" id="t-SOL">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">BNB:</span> <span class="ticker-price" id="t-BNB">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">ARB:</span> <span class="ticker-price" id="t-ARB">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">AAVE:</span> <span class="ticker-price" id="t-AAVE">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">LINK:</span> <span class="ticker-price" id="t-LINK">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">RENDER:</span> <span class="ticker-price" id="t-RENDER">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">FET:</span> <span class="ticker-price" id="t-FET">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">SUI:</span> <span class="ticker-price" id="t-SUI">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">ENA:</span> <span class="ticker-price" id="t-ENA">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">OP:</span> <span class="ticker-price" id="t-OP">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">TON:</span> <span class="ticker-price" id="t-TON">--</span></div>
-        <div class="ticker-chip"><span class="ticker-sym">LDO:</span> <span class="ticker-price" id="t-LDO">--</span></div>
     </div>
 
     <!-- ================= 0秒對照：智能持倉即時指令中心 ================= -->
@@ -586,6 +565,8 @@
             </div>
             <div class="market-metrics-row">
                 <div class="metric-inline">BTC 即時價: <strong id="liveBtcPrice">$--</strong></div>
+                <div style="color: #475569;">|</div>
+                <div class="metric-inline">PAXG 黃金儲備: <strong id="livePaxgPrice" style="color: #f59e0b;">$--</strong></div>
                 <div style="color: #475569;">|</div>
                 <div class="metric-inline">200日均線 (MA200): <strong id="liveMa200">$--</strong></div>
                 <div style="color: #475569;">|</div>
@@ -1138,7 +1119,7 @@
         }
     }
 
-    // --- 輔助：更新行情 UI（同時更新頂部條與卡片標價） ---
+    // --- 輔助：更新行情 UI（更新頂部 PAXG 與卡片標價） ---
     function updateTickerUI(sym, curPrice, chg) {
         latestPrices[sym] = curPrice;
         if (typeof chg === 'number') latest24hChange[sym] = chg;
@@ -1147,13 +1128,21 @@
         const chgClass = chg >= 0 ? 'up' : 'down';
         const chgSign = chg >= 0 ? '+' : '';
 
-        // 更新頂部行情晶片
+        // 更新頂部 PAXG 專屬晶片
         const chipEl = document.getElementById(`t-${sym}`);
         if (chipEl) {
             chipEl.innerHTML = `${priceFormat} <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
         }
 
-        // 更新 C 倉卡片內的即時報價
+        // 若為 PAXG，同步更新指令中心的黃金儲備報價
+        if (sym === 'PAXG') {
+            const paxgMetricEl = document.getElementById('livePaxgPrice');
+            if (paxgMetricEl) {
+                paxgMetricEl.innerHTML = `${priceFormat} <span style="font-size: 11px; font-weight: 600;" class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
+            }
+        }
+
+        // 更新雙幣卡片內的即時報價 (Core 與衛星)
         const cardPriceEl = document.getElementById(`cprice-${sym}`);
         if (cardPriceEl) {
             cardPriceEl.innerHTML = `${priceFormat} <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
