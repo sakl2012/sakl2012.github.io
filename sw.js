@@ -1,5 +1,5 @@
-// Service Worker v8 - Core Cards Layout Unification
-const CACHE_NAME = '5zone-pwa-v8';
+// Service Worker v9 - Streamlined UI (Removed Calculator)
+const CACHE_NAME = '5zone-pwa-v9';
 const ASSETS = [
   './',
   './index.html',
