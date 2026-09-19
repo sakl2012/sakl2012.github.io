@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+import os
+
+html_content = '''<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
@@ -997,7 +999,7 @@
 
     function highlightText(text) {
         if (!searchQuery || !text) return escapeHtml(text);
-        const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');
         const regex = new RegExp(`(${escapedQuery})`, 'gi');
         return escapeHtml(text).replace(regex, '<mark class="hl">$1</mark>');
     }
@@ -1130,7 +1132,7 @@
     function copyPost(id, btn) {
         const p = allPosts.find(item => item.id === id);
         if (!p) return;
-        const fullContent = (p.title ? p.title + '\n\n' : '') + p.body + (p.quote ? '\n\n[引用] ' + p.quote : '');
+        const fullContent = (p.title ? p.title + '\\n\\n' : '') + p.body + (p.quote ? '\\n\\n[引用] ' + p.quote : '');
         navigator.clipboard.writeText(fullContent).then(() => {
             const orig = btn.innerText;
             btn.innerText = '✅ 已複製！';
@@ -1149,3 +1151,9 @@
 
 </body>
 </html>
+'''
+
+with open('feige_posts.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("feige_posts.html updated successfully!")
