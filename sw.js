@@ -1,5 +1,5 @@
-// Service Worker v10 - Brand Logo & PWA App Icon Upgrade
-const CACHE_NAME = '5zone-pwa-v10';
+// Service Worker v11 - Brand Identity Simplification (5-Zone 策略)
+const CACHE_NAME = '5zone-pwa-v11';
 const ASSETS = [
   './',
   './index.html',
