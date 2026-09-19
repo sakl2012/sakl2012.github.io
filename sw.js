@@ -1,11 +1,12 @@
-// Service Worker v9 - Streamlined UI (Removed Calculator)
-const CACHE_NAME = '5zone-pwa-v9';
+// Service Worker v10 - Brand Logo & PWA App Icon Upgrade
+const CACHE_NAME = '5zone-pwa-v10';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './favicon.png'
 ];
 
 self.addEventListener('install', (e) => {

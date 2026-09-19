@@ -1,7 +1,7 @@
 {
-  "name": "4-Zone 動態防禦三倉策略系統",
-  "short_name": "4-Zone 策略",
-  "description": "4-Zone 動態防禦三倉量化策略與實盤智能持倉即時看板",
+  "name": "5-Zone 階梯防脆弱動態再平衡策略系統",
+  "short_name": "5-Zone 策略",
+  "description": "5-Zone 階梯防脆弱雙幣量化策略與實盤智能持倉即時看板",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
