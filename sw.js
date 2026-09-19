@@ -1,12 +1,33 @@
-// Service Worker v13 - High-Performance RAF Batching, Glassmorphism Dashboard & Fleet Filter Tabs
-const CACHE_NAME = '5zone-pwa-v13';
+// Service Worker v14 - Official Crypto Logos & Offline Asset Caching
+const CACHE_NAME = '5zone-pwa-v14';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  './favicon.png'
+  './favicon.png',
+  './icons/btc.png',
+  './icons/eth.png',
+  './icons/paxg.png',
+  './icons/tao.svg',
+  './icons/uni.png',
+  './icons/near.png',
+  './icons/hype.png',
+  './icons/ondo.png',
+  './icons/pendle.png',
+  './icons/sol.png',
+  './icons/bnb.png',
+  './icons/arb.png',
+  './icons/aave.png',
+  './icons/link.png',
+  './icons/render.png',
+  './icons/fet.png',
+  './icons/sui.png',
+  './icons/ena.png',
+  './icons/op.png',
+  './icons/ton.png',
+  './icons/ldo.png'
 ];
 
 self.addEventListener('install', (e) => {

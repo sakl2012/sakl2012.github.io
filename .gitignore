@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+scripts/__pycache__/
+scripts/data_cache/
+scripts/data_cache_1h/
+scripts/data_cache_funding/

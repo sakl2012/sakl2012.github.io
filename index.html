@@ -489,7 +489,8 @@
         </h1>
         <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             <div class="paxg-top-pill" style="display: flex; align-items: center; gap: 6px; background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid #f59e0b; border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 700; color: #92400e; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <span>🟡 PAXG 實體黃金:</span>
+                <img src="icons/paxg.png" alt="PAXG" style="width: 18px; height: 18px; border-radius: 50%; vertical-align: middle;">
+                <span>PAXG 實體黃金:</span>
                 <span id="t-PAXG" style="color: #0f172a; font-weight: 800;">載入中...</span>
             </div>
             <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:5px 12px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
@@ -509,11 +510,17 @@
             </div>
             <div class="market-metrics-grid">
                 <div class="metric-card">
-                    <div class="metric-label">BTC 即時現價</div>
+                    <div class="metric-label" style="display: flex; align-items: center; gap: 5px;">
+                        <img src="icons/btc.png" alt="BTC" style="width: 15px; height: 15px; border-radius: 50%;">
+                        <span>BTC 即時現價</span>
+                    </div>
                     <div class="metric-val" id="liveBtcPrice">$--</div>
                 </div>
                 <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.35);">
-                    <div class="metric-label" style="color: #fcd34d;">🟡 PAXG 儲備金價</div>
+                    <div class="metric-label" style="color: #fcd34d; display: flex; align-items: center; gap: 5px;">
+                        <img src="icons/paxg.png" alt="PAXG" style="width: 15px; height: 15px; border-radius: 50%;">
+                        <span>PAXG 儲備金價</span>
+                    </div>
                     <div class="metric-val" id="livePaxgPrice" style="color: #fbbf24;">$--</div>
                 </div>
                 <div class="metric-card">
@@ -787,7 +794,7 @@
         {
             sym: 'UNI',
             name: 'UNI / PAXG',
-            icon: '🦄',
+            icon: 'icons/uni.png',
             rank: 4,
             rankClass: 'rank-top1',
             tier: '⚡ 第一梯隊 (真實收益)',
@@ -800,7 +807,7 @@
         {
             sym: 'NEAR',
             name: 'NEAR / PAXG',
-            icon: '🤖',
+            icon: 'icons/near.png',
             rank: 5,
             rankClass: 'rank-top2',
             tier: '⚡ 第一梯隊 (真實收益)',
@@ -813,7 +820,7 @@
         {
             sym: 'HYPE',
             name: 'HYPE / PAXG',
-            icon: '⚡',
+            icon: 'icons/hype.png',
             rank: 6,
             rankClass: 'rank-top3',
             tier: '⚡ 第一梯隊 (真實收益)',
@@ -826,7 +833,7 @@
         {
             sym: 'ONDO',
             name: 'ONDO / PAXG',
-            icon: '🏛️',
+            icon: 'icons/ondo.png',
             rank: 7,
             rankClass: 'rank-tier2',
             tier: '⚡ 第一梯隊 (真實收益)',
@@ -839,7 +846,7 @@
         {
             sym: 'PENDLE',
             name: 'PENDLE / PAXG',
-            icon: '📈',
+            icon: 'icons/pendle.png',
             rank: 8,
             rankClass: 'rank-tier2',
             tier: '⚡ 第一梯隊 (真實收益)',
@@ -852,7 +859,7 @@
         {
             sym: 'SOL',
             name: 'SOL / PAXG',
-            icon: '☀️',
+            icon: 'icons/sol.png',
             rank: 9,
             rankClass: 'rank-tier3',
             tier: '🛡️ 第二梯隊 (頂級基建)',
@@ -865,7 +872,7 @@
         {
             sym: 'BNB',
             name: 'BNB / PAXG',
-            icon: '🟡',
+            icon: 'icons/bnb.png',
             rank: 10,
             rankClass: 'rank-tier2',
             tier: '🛡️ 第二梯隊 (頂級基建)',
@@ -878,7 +885,7 @@
         {
             sym: 'ARB',
             name: 'ARB / PAXG',
-            icon: '🔷',
+            icon: 'icons/arb.png',
             rank: 11,
             rankClass: 'rank-tier2',
             tier: '🛡️ 第二梯隊 (頂級基建)',
@@ -891,7 +898,7 @@
         {
             sym: 'AAVE',
             name: 'AAVE / PAXG',
-            icon: '🏦',
+            icon: 'icons/aave.png',
             rank: 12,
             rankClass: 'rank-tier3',
             tier: '🛡️ 第二梯隊 (頂級基建)',
@@ -904,7 +911,7 @@
         {
             sym: 'LINK',
             name: 'LINK / PAXG',
-            icon: '🔗',
+            icon: 'icons/link.png',
             rank: 13,
             rankClass: 'rank-tier4',
             tier: '🛡️ 第二梯隊 (頂級基建)',
@@ -917,7 +924,7 @@
         {
             sym: 'RENDER',
             name: 'RENDER / PAXG',
-            icon: '🎨',
+            icon: 'icons/render.png',
             rank: 14,
             rankClass: 'rank-tier2',
             tier: '🚀 第三梯隊 (AI與高彈性)',
@@ -930,7 +937,7 @@
         {
             sym: 'FET',
             name: 'FET / PAXG',
-            icon: '🧬',
+            icon: 'icons/fet.png',
             rank: 15,
             rankClass: 'rank-tier3',
             tier: '🚀 第三梯隊 (AI與高彈性)',
@@ -943,7 +950,7 @@
         {
             sym: 'SUI',
             name: 'SUI / PAXG',
-            icon: '🟢',
+            icon: 'icons/sui.png',
             rank: 16,
             rankClass: 'rank-tier4',
             tier: '🚀 第三梯隊 (AI與高彈性)',
@@ -956,7 +963,7 @@
         {
             sym: 'ENA',
             name: 'ENA / PAXG',
-            icon: '🪙',
+            icon: 'icons/ena.png',
             rank: 17,
             rankClass: 'rank-tier3',
             tier: '🚀 第三梯隊 (AI與高彈性)',
@@ -969,7 +976,7 @@
         {
             sym: 'OP',
             name: 'OP / PAXG',
-            icon: '🔴',
+            icon: 'icons/op.png',
             rank: 18,
             rankClass: 'rank-tier4',
             tier: '🚀 第三梯隊 (AI與高彈性)',
@@ -982,7 +989,7 @@
         {
             sym: 'TON',
             name: 'TON / PAXG',
-            icon: '💎',
+            icon: 'icons/ton.png',
             rank: 19,
             rankClass: 'rank-tier4',
             tier: '🚀 第三梯隊 (AI與高彈性)',
@@ -995,7 +1002,7 @@
         {
             sym: 'LDO',
             name: 'LDO / PAXG',
-            icon: '💧',
+            icon: 'icons/ldo.png',
             rank: 20,
             rankClass: 'rank-tier4',
             tier: '🚀 第三梯隊 (AI與高彈性)',
@@ -1238,7 +1245,7 @@
         {
             sym: 'BTC',
             ratioKey: 'CORE_BTC',
-            icon: '🟠',
+            icon: 'icons/btc.png',
             rank: '1',
             rankClass: 'rank-top1',
             tier: '👑 核心基石 (數位黃金儲備)',
@@ -1250,7 +1257,7 @@
         {
             sym: 'ETH',
             ratioKey: 'CORE_ETH',
-            icon: '🔷',
+            icon: 'icons/eth.png',
             rank: '2',
             rankClass: 'rank-top1',
             tier: '🏛️ 核心基石 (世界電腦與結算層)',
@@ -1262,7 +1269,7 @@
         {
             sym: 'TAO',
             ratioKey: 'CORE_TAO',
-            icon: '🤖',
+            icon: 'icons/tao.svg',
             rank: '3',
             rankClass: 'rank-top1',
             tier: '🧠 核心基石 (去中心化 AI 算力)',
@@ -1303,7 +1310,10 @@
                     </div>
                     <div class="c-card-coin-row">
                         <div class="c-pair-name">
-                            <span>${c.icon} ${c.sym} / PAXG</span>
+                            <span style="display: inline-flex; align-items: center; gap: 6px;">
+                                <img src="${c.icon}" alt="${c.sym}" style="width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+                                <span>${c.sym} / PAXG</span>
+                            </span>
                             <span style="font-size:10px; color:#1d4ed8; background:#eff6ff; border:1px solid #bfdbfe; padding:1px 6px; border-radius:4px; font-weight:700;">${c.capitalPct}</span>
                         </div>
                         <div class="c-pair-price" id="cprice-${c.sym}">
@@ -1312,8 +1322,8 @@
                     </div>
                     <div class="c-ratio-display">
                         <div class="c-ratio-labels">
-                            <span style="color: #059669;">${c.sym}: ${coinPct}%</span>
-                            <span style="color: #d97706;">PAXG: ${paxgPct}%</span>
+                            <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 13px; height: 13px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
+                            <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 13px; height: 13px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
                         </div>
                         <div class="c-prog-track">
                             <div class="c-prog-coin" style="width: ${coinPct}%;"></div>
@@ -1388,7 +1398,10 @@
                     </div>
                     <div class="c-card-coin-row">
                         <div class="c-pair-name">
-                            <span>${c.icon} ${c.sym} / PAXG</span>
+                            <span style="display: inline-flex; align-items: center; gap: 6px;">
+                                <img src="${c.icon}" alt="${c.sym}" style="width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">
+                                <span>${c.sym} / PAXG</span>
+                            </span>
                             ${spotBadge}
                         </div>
                         <div class="c-pair-price" id="cprice-${c.sym}">
@@ -1397,8 +1410,8 @@
                     </div>
                     <div class="c-ratio-display">
                         <div class="c-ratio-labels">
-                            <span style="color: #059669;">${c.sym}: ${coinPct}%</span>
-                            <span style="color: #d97706;">PAXG: ${paxgPct}%</span>
+                            <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 13px; height: 13px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
+                            <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 13px; height: 13px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
                         </div>
                         <div class="c-prog-track">
                             <div class="c-prog-coin" style="width: ${coinPct}%;"></div>
