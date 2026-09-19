@@ -1,5 +1,5 @@
-// Service Worker v6 - Feige Top 10 Dual-Holding Alpha Matrix Upgrade
-const CACHE_NAME = '5zone-pwa-v6';
+// Service Worker v7 - Full 20 Independent Dual-Holding Pairs Fleet
+const CACHE_NAME = '5zone-pwa-v7';
 const ASSETS = [
   './',
   './index.html',
