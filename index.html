@@ -669,79 +669,19 @@
             <div class="alert-target" id="upwardAlert">🔺 升至 Zone 3 警戒價：<span style="color: #fbbf24;">BTC ≥ $-- (--%)</span></div>
         </div>
 
-        <!-- 三大核心壓艙柱 (Core Big 3) 獨立雙幣專卡 -->
-        <div class="live-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-            <!-- 核心 1: BTC / PAXG -->
-            <div class="live-card card-A">
-                <div>
-                    <div class="card-top-head">
-                        <span class="card-name">👑 核心 1：BTC / PAXG</span>
-                        <span class="card-weight-badge">佔總資金 20%</span>
-                    </div>
-                    <div class="ratio-bars-container" id="cardA_ratios">
-                        <div class="ratio-bar-row">
-                            <span class="ratio-coin">🟠 BTC</span>
-                            <span class="ratio-val">58%</span>
-                        </div>
-                        <div class="ratio-bar-row">
-                            <span class="ratio-coin">🟡 PAXG (黃金)</span>
-                            <span class="ratio-val">42%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="rebalance-threshold-tag">
-                    <span>幣安智能持倉設定</span>
-                    <span>再平衡偏差閾值：5%</span>
-                </div>
+        <!-- 三大核心壓艙柱 (Core Big 3) 獨立雙幣專卡：與衛星艦隊統一採用高清晰雙幣版型 -->
+        <div style="margin-top: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+            <div style="font-size: 15px; font-weight: 800; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
+                <span>👑 核心壓艙三本柱 (佔總資金 50%)</span>
+                <span style="font-size: 11px; font-weight: 600; color: #94a3b8;">BTC (20%) + ETH (20%) + TAO (10%) | 獨立雙幣機器人</span>
             </div>
+            <div style="font-size: 12px; color: #38bdf8; font-weight: 600;">
+                🎯 全艦隊統一：偏差 5% 再平衡 (單倉建議 ≥ 300U)
+            </div>
+        </div>
 
-            <!-- 核心 2: ETH / PAXG -->
-            <div class="live-card card-B" style="border-top-color: #3b82f6;">
-                <div>
-                    <div class="card-top-head">
-                        <span class="card-name">🏛️ 核心 2：ETH / PAXG</span>
-                        <span class="card-weight-badge" style="background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe;">佔總資金 20%</span>
-                    </div>
-                    <div class="ratio-bars-container" id="cardETH_ratios">
-                        <div class="ratio-bar-row">
-                            <span class="ratio-coin">🔷 ETH</span>
-                            <span class="ratio-val">55%</span>
-                        </div>
-                        <div class="ratio-bar-row">
-                            <span class="ratio-coin">🟡 PAXG (黃金)</span>
-                            <span class="ratio-val">45%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="rebalance-threshold-tag">
-                    <span>幣安智能持倉設定</span>
-                    <span>再平衡偏差閾值：5%</span>
-                </div>
-            </div>
-
-            <!-- 核心 3: TAO / PAXG -->
-            <div class="live-card card-B" style="border-top-color: #8b5cf6;">
-                <div>
-                    <div class="card-top-head">
-                        <span class="card-name">🤖 核心 3：TAO / PAXG</span>
-                        <span class="card-weight-badge" style="background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe;">佔總資金 10%</span>
-                    </div>
-                    <div class="ratio-bars-container" id="cardTAO_ratios">
-                        <div class="ratio-bar-row">
-                            <span class="ratio-coin">🔵 TAO</span>
-                            <span class="ratio-val">40%</span>
-                        </div>
-                        <div class="ratio-bar-row">
-                            <span class="ratio-coin">🟡 PAXG (黃金)</span>
-                            <span class="ratio-val">60%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="rebalance-threshold-tag">
-                    <span>幣安智能持倉設定</span>
-                    <span>再平衡偏差閾值：5%</span>
-                </div>
-            </div>
+        <div class="c-matrix-grid" id="coreCardsGrid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 22px;">
+            <!-- 由 JavaScript renderCoreCards() 動態生成高清晰雙幣卡片 -->
         </div>
 
         <!-- 衛星雙幣 Alpha 矩陣艦隊 (17 檔獨立雙幣對，佔滿幣安 20 組上限) -->
@@ -1381,6 +1321,106 @@
         } catch (e) {}
     }
 
+    // --- 核心三本柱 (Core Big 3) 配置 ---
+    const CORE_BIG3_CONFIG = [
+        {
+            sym: 'BTC',
+            ratioKey: 'CORE_BTC',
+            icon: '🟠',
+            rank: '1',
+            rankClass: 'rank-top1',
+            tier: '👑 核心基石 (數位黃金儲備)',
+            capitalPct: '佔比 20%',
+            topBorder: '#f59e0b',
+            accentColor: '#f59e0b',
+            quote: '數位黃金與實物黃金強強輪動，深跌最大化吸籌，瘋牛向黃金強制套現'
+        },
+        {
+            sym: 'ETH',
+            ratioKey: 'CORE_ETH',
+            icon: '🔷',
+            rank: '2',
+            rankClass: 'rank-top1',
+            tier: '🏛️ 核心基石 (世界電腦與結算層)',
+            capitalPct: '佔比 20%',
+            topBorder: '#3b82f6',
+            accentColor: '#3b82f6',
+            quote: '智能合約底層與真實結算層核心，抗量子與機構資產鏈上沉澱首選'
+        },
+        {
+            sym: 'TAO',
+            ratioKey: 'CORE_TAO',
+            icon: '🤖',
+            rank: '3',
+            rankClass: 'rank-top1',
+            tier: '🧠 核心基石 (去中心化 AI 算力)',
+            capitalPct: '佔比 10%',
+            topBorder: '#8b5cf6',
+            accentColor: '#8b5cf6',
+            quote: '去中心化 AI 算力與次世代網絡龍頭，強大社群共識與週期爆發力'
+        }
+    ];
+
+    // --- 渲染三大核心雙幣卡片 (BTC/PAXG, ETH/PAXG, TAO/PAXG) ---
+    function renderCoreCards() {
+        const grid = document.getElementById('coreCardsGrid');
+        if (!grid) return;
+        const config = ZONE_CONFIGS[currentZone];
+
+        let html = '';
+        CORE_BIG3_CONFIG.forEach(c => {
+            const ratios = config.ratios[c.ratioKey];
+            const coinPct = Math.round(ratios[c.sym] * 100);
+            const paxgPct = Math.round(ratios.PAXG * 100);
+
+            const p = latestPrices[c.sym] || 0;
+            const chg = latest24hChange[c.sym];
+            const priceStr = p >= 1000 ? '$' + Math.round(p).toLocaleString() : (p >= 1 ? '$' + p.toFixed(2) : '$' + p.toFixed(4));
+            let chgStr = '';
+            if (typeof chg === 'number') {
+                const chgClass = chg >= 0 ? 'up' : 'down';
+                const chgSign = chg >= 0 ? '+' : '';
+                chgStr = `<span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
+            }
+
+            html += `
+                <div class="c-pair-card" id="cpair-${c.sym}" style="border-top: 4px solid ${c.topBorder};">
+                    <div class="c-card-header">
+                        <span class="c-rank-badge ${c.rankClass}">#${c.rank} 優先級</span>
+                        <span class="c-tier-text">${c.tier}</span>
+                    </div>
+                    <div class="c-card-coin-row">
+                        <div class="c-pair-name">
+                            <span>${c.icon} ${c.sym} / PAXG</span>
+                            <span style="font-size:10px; color:#1d4ed8; background:#eff6ff; border:1px solid #bfdbfe; padding:1px 6px; border-radius:4px; font-weight:700;">${c.capitalPct}</span>
+                        </div>
+                        <div class="c-pair-price" id="cprice-${c.sym}">
+                            ${priceStr} ${chgStr}
+                        </div>
+                    </div>
+                    <div class="c-ratio-display">
+                        <div class="c-ratio-labels">
+                            <span style="color: #059669;">${c.sym}: ${coinPct}%</span>
+                            <span style="color: #d97706;">PAXG: ${paxgPct}%</span>
+                        </div>
+                        <div class="c-prog-track">
+                            <div class="c-prog-coin" style="width: ${coinPct}%;"></div>
+                            <div class="c-prog-paxg" style="width: ${paxgPct}%;"></div>
+                        </div>
+                    </div>
+                    <div class="c-quote-box" style="border-left-color: ${c.accentColor};">
+                        <strong>💡 策略點評：</strong>${c.quote}
+                    </div>
+                    <div class="c-card-footer">
+                        <span>偏差 5% (建議 ≥ 300U)</span>
+                        <button class="c-toggle-btn active" style="cursor: default; pointer-events: none;">✅ 已啟用持倉</button>
+                    </div>
+                </div>
+            `;
+        });
+        grid.innerHTML = html;
+    }
+
     // --- 渲染衛星雙幣 Alpha 矩陣卡片 (17 檔) ---
     function renderCPortfolioMatrix() {
         const grid = document.getElementById('cMatrixGrid');
@@ -1492,9 +1532,7 @@
                 zoneDisplay.innerText = config.name;
                 zoneDisplay.style.color = config.color;
             }
-            renderLiveCardRatios('cardA_ratios', config.ratios.CORE_BTC);
-            renderLiveCardRatios('cardETH_ratios', config.ratios.CORE_ETH);
-            renderLiveCardRatios('cardTAO_ratios', config.ratios.CORE_TAO);
+            renderCoreCards();
             renderCPortfolioMatrix();
             updateTableActiveRow();
         }
@@ -1522,23 +1560,6 @@
                 }
             }
         });
-    }
-
-    function renderLiveCardRatios(containerId, ratiosObj) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        let html = '';
-        for (const [coin, ratio] of Object.entries(ratiosObj)) {
-            const icon = COIN_ICONS[coin] || coin;
-            const pct = Math.round(ratio * 100);
-            html += `
-                <div class="ratio-bar-row">
-                    <span class="ratio-coin">${icon}</span>
-                    <span class="ratio-val">${pct}%</span>
-                </div>
-            `;
-        }
-        container.innerHTML = html;
     }
 
     function updateZoneAlerts(btcPrice, ma200, zone) {
@@ -1747,10 +1768,7 @@
 
     // --- 初始化 ---
     document.addEventListener('DOMContentLoaded', () => {
-        const config = ZONE_CONFIGS[currentZone];
-        renderLiveCardRatios('cardA_ratios', config.ratios.CORE_BTC);
-        renderLiveCardRatios('cardETH_ratios', config.ratios.CORE_ETH);
-        renderLiveCardRatios('cardTAO_ratios', config.ratios.CORE_TAO);
+        renderCoreCards();
         renderCPortfolioMatrix();
         updateTablePriceRanges(currentMa200);
         syncMa200();

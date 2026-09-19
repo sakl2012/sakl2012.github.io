@@ -1,5 +1,5 @@
-// Service Worker v7 - Full 20 Independent Dual-Holding Pairs Fleet
-const CACHE_NAME = '5zone-pwa-v7';
+// Service Worker v8 - Core Cards Layout Unification
+const CACHE_NAME = '5zone-pwa-v8';
 const ASSETS = [
   './',
   './index.html',
