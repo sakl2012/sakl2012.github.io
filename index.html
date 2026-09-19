@@ -1528,6 +1528,7 @@
         renderCPortfolioMatrix();
         updateTablePriceRanges(currentMa200);
         syncMa200();
+        fallbackPoll(); // 立即拉取所有代幣與 PAXG 24hr 快照，達成毫秒級瞬間載入
         initWebSocketStream();
         // 每 5 分鐘同步一次 MA200
         setInterval(syncMa200, 300000);

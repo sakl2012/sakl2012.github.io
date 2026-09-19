@@ -1,5 +1,5 @@
-// Service Worker v15 - Clean Compact Header & High Performance Dashboard
-const CACHE_NAME = '5zone-pwa-v15';
+// Service Worker v16 - Instant Dual-Pipeline (REST Snapshot + WebSocket Stream)
+const CACHE_NAME = '5zone-pwa-v16';
 const ASSETS = [
   './',
   './index.html',
