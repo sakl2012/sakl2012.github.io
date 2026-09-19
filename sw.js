@@ -1,5 +1,5 @@
-// Service Worker v14 - Official Crypto Logos & Offline Asset Caching
-const CACHE_NAME = '5zone-pwa-v14';
+// Service Worker v15 - Clean Compact Header & High Performance Dashboard
+const CACHE_NAME = '5zone-pwa-v15';
 const ASSETS = [
   './',
   './index.html',

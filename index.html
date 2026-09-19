@@ -66,54 +66,6 @@
             border-bottom: 1px solid var(--border);
         }
         .brand-title { font-size: 20px; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px; }
-        .live-status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #ecfdf5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        /* 頂部 PAXG 實體黃金微金屬膠囊 */
-        .paxg-top-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border: 1px solid #fde68a;
-            border-left: 3px solid #f59e0b;
-            border-radius: 20px;
-            padding: 5px 14px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #78350f;
-            box-shadow: 0 1px 4px rgba(245, 158, 11, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .paxg-top-pill:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 3px 8px rgba(245, 158, 11, 0.18);
-        }
-
         .ticker-chg { font-size: 11px; font-weight: 700; margin-left: 3px; }
         .ticker-chg.up { color: var(--success); }
         .ticker-chg.down { color: var(--danger); }
@@ -487,18 +439,7 @@
             <img src="icon-192.png" alt="5-Zone Logo" style="width: 30px; height: 30px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.18);">
             <span>5-Zone 策略</span>
         </h1>
-        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <div class="paxg-top-pill" style="display: flex; align-items: center; gap: 6px; background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid #f59e0b; border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 700; color: #92400e; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                <img src="icons/paxg.png" alt="PAXG" style="width: 18px; height: 18px; border-radius: 50%; vertical-align: middle;">
-                <span>PAXG 實體黃金:</span>
-                <span id="t-PAXG" style="color: #0f172a; font-weight: 800;">載入中...</span>
-            </div>
-            <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:5px 12px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
-            <div class="live-status-pill">
-                <span class="pulse-dot"></span>
-                <span id="liveStatusText">⚡ 幣安 WebSocket 實時秒級串流中</span>
-            </div>
-        </div>
+        <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:6px 14px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
     </div>
 
     <!-- ================= 0秒對照：智能持倉即時指令中心 ================= -->
@@ -1115,12 +1056,6 @@
             const chgClass = chg >= 0 ? 'up' : 'down';
             const chgSign = chg >= 0 ? '+' : '';
             const chgHtml = typeof chg === 'number' ? ` <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>` : '';
-
-            // 更新頂部 PAXG 專屬晶片
-            const chipEl = document.getElementById(`t-${sym}`);
-            if (chipEl) {
-                chipEl.innerHTML = `${priceFormat}${chgHtml}`;
-            }
 
             // 若為 PAXG，同步更新指令中心的黃金儲備報價
             if (sym === 'PAXG') {
