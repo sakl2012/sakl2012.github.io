@@ -1,5 +1,5 @@
-// Service Worker v5 - Updated with ETH & PENDLE 5-Zone allocations
-const CACHE_NAME = '5zone-pwa-v5';
+// Service Worker v6 - Feige Top 10 Dual-Holding Alpha Matrix Upgrade
+const CACHE_NAME = '5zone-pwa-v6';
 const ASSETS = [
   './',
   './index.html',
