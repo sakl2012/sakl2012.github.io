@@ -3,88 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>幣安廣場「K線人生飞哥」專題貼文研報與實戰點位彙整</title>
+    <title>幣安廣場「K線人生飞哥」專題貼文研報庫 (官方動態完整整理)</title>
     <style>
         :root {
-            --primary: #0f172a;
-            --secondary: #1e293b;
-            --accent-gold: #f59e0b;
-            --accent-blue: #0284c7;
-            --accent-cyan: #06b6d4;
-            --success: #10b981;
-            --danger: #ef4444;
-            --purple: #8b5cf6;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
+            --primary: #181a20;
+            --secondary: #0b0e11;
+            --card-bg: #202630;
+            --card-hover: #262e3b;
+            --border: #333b47;
+            --text-primary: #eaecef;
+            --text-secondary: #929aa5;
+            --text-muted: #707a8a;
+            --accent-yellow: #fcd535;
+            --accent-gold: #f0b90b;
+            --accent-blue: #38bdf8;
+            --success: #2ebd85;
+            --danger: #f6465d;
+            --tag-bg: #2b3139;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "BinanceNova", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            padding: 20px 16px 60px 16px;
+            padding: 20px 16px 80px 16px;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1180px;
             margin: 0 auto;
         }
 
-        /* 頂部導航與標題 */
-        .header-bar {
+        /* 頂部導航 */
+        .top-navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
             border-bottom: 1px solid var(--border);
         }
 
-        .brand-title {
+        .brand-box {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--primary);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-yellow);
         }
 
-        .nav-back-link {
+        .nav-link-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: #ffffff;
+            background: var(--tag-bg);
             border: 1px solid var(--border);
-            color: var(--accent-blue);
+            color: var(--accent-yellow);
             padding: 6px 14px;
             border-radius: 8px;
             text-decoration: none;
             font-size: 13px;
             font-weight: 600;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
             transition: all 0.2s ease;
         }
-        .nav-back-link:hover {
-            background: #f0f9ff;
-            border-color: var(--accent-blue);
+        .nav-link-btn:hover {
+            background: rgba(252, 213, 53, 0.15);
+            border-color: var(--accent-yellow);
         }
 
-        /* 創作者個人主檔卡片 */
-        .profile-card {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
+        /* 創作者個人主頁橫幅卡片 (幣安官方風格) */
+        .kol-banner-card {
+            background: linear-gradient(135deg, #202630 0%, #181a20 100%);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 24px;
-            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
-            border: 1px solid #334155;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -92,107 +91,120 @@
             gap: 20px;
         }
 
-        .profile-info {
+        .kol-profile {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 18px;
         }
 
-        .profile-avatar {
-            width: 60px;
-            height: 60px;
+        .kol-avatar {
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+            border: 3px solid var(--accent-yellow);
+            background-image: url('https://public.bnbstatic.com/image/pgc/202512/b736e2f07305a1fea15b9f7319d016c8.png');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 14px rgba(240, 185, 11, 0.3);
+            flex-shrink: 0;
         }
 
-        .profile-meta h2 {
-            font-size: 20px;
-            font-weight: 800;
+        .kol-title-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .verified-badge {
-            background: #f59e0b;
-            color: #0f172a;
-            font-size: 11px;
-            font-weight: 800;
+        .kol-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .badge-verified {
+            background: rgba(240, 185, 11, 0.15);
+            color: var(--accent-yellow);
+            border: 1px solid rgba(240, 185, 11, 0.4);
+            font-size: 11.5px;
+            font-weight: 600;
             padding: 2px 8px;
-            border-radius: 12px;
-            text-transform: uppercase;
+            border-radius: 4px;
         }
 
-        .profile-desc {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-top: 4px;
+        .badge-rank {
+            background: rgba(46, 189, 133, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(46, 189, 133, 0.3);
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
-        .profile-stats {
+        .kol-bio {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .kol-stats {
             display: flex;
             gap: 20px;
-            background: rgba(255, 255, 255, 0.06);
-            padding: 12px 20px;
+            background: rgba(11, 14, 17, 0.6);
+            border: 1px solid var(--border);
+            padding: 12px 22px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .stat-item {
+        .stat-box {
             text-align: center;
         }
 
-        .stat-value {
-            font-size: 20px;
-            font-weight: 800;
-            color: #38bdf8;
+        .stat-val {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
         }
 
-        .stat-label {
+        .stat-lbl {
             font-size: 11.5px;
-            color: #cbd5e1;
+            color: var(--text-muted);
             margin-top: 2px;
         }
 
         /* 搜尋與篩選控制器 */
         .controls-card {
-            background: white;
+            background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 16px;
             margin-bottom: 24px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .search-input-wrap {
+        .search-wrap {
             position: relative;
             width: 100%;
         }
 
         .search-input {
             width: 100%;
-            padding: 10px 14px 10px 40px;
-            font-size: 14px;
+            background: #181a20;
             border: 1px solid var(--border);
+            color: #ffffff;
+            padding: 12px 14px 12px 42px;
             border-radius: 8px;
+            font-size: 14px;
             outline: none;
             transition: all 0.2s;
-            background: #f8fafc;
         }
         .search-input:focus {
-            background: #ffffff;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.2);
         }
 
         .search-icon {
@@ -200,21 +212,20 @@
             left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 16px;
+            color: var(--text-muted);
         }
 
-        .filter-tags {
+        .filter-tags-row {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            background: #f1f5f9;
+            background: var(--tag-bg);
             border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 5px 12px;
+            color: var(--text-secondary);
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 12.5px;
             font-weight: 600;
@@ -222,16 +233,17 @@
             transition: all 0.2s;
         }
         .filter-btn:hover {
-            background: #e2e8f0;
-            color: var(--text-main);
+            background: #333b47;
+            color: #ffffff;
         }
         .filter-btn.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
+            background: var(--accent-yellow);
+            border-color: var(--accent-yellow);
+            color: #181a20;
+            font-weight: 700;
         }
 
-        /* 貼文清單與卡片佈局 */
+        /* 貼文流佈局 */
         .posts-stream {
             display: flex;
             flex-direction: column;
@@ -242,482 +254,726 @@
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 14px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 22px;
+            transition: all 0.2s ease;
             position: relative;
         }
         .post-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+            background: var(--card-hover);
+            border-color: #474d57;
         }
 
-        .post-header {
+        .post-top-row {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 12px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .post-time-wrap {
+        .meta-badges {
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .post-date-badge {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-family: monospace;
-        }
-
-        .post-category-tag {
-            font-size: 11.5px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-        }
-        .cat-signal { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-        .cat-selection { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
-        .cat-mindset { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
-        .cat-stocks { background: #fae8ff; color: #86198f; border: 1px solid #f5d0fe; }
-
-        .token-chips-row {
-            display: flex;
-            gap: 6px;
             flex-wrap: wrap;
         }
 
-        .token-chip {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            color: #334155;
+        .badge-pinned {
+            background: rgba(246, 70, 93, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(246, 70, 93, 0.3);
             font-size: 11px;
             font-weight: 700;
             padding: 2px 7px;
             border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .badge-source {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        .badge-category {
+            background: var(--tag-bg);
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        .post-id-tag {
+            font-family: monospace;
+            font-size: 11.5px;
+            color: var(--text-muted);
         }
 
         .post-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 10px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .content-box {
+            background: #181a20;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent-yellow);
+            border-radius: 6px 10px 10px 6px;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            margin-bottom: 14px;
+        }
+
+        /* 引用歷史貼文區塊 */
+        .quoted-box {
+            background: rgba(11, 14, 17, 0.7);
+            border: 1px dashed #474d57;
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+        .quoted-label {
+            font-size: 11.5px;
+            color: var(--accent-blue);
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* 關聯交易對與行情漲跌標籤 */
+        .pairs-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .pair-chip {
+            background: #2b3139;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pair-up { color: var(--success); }
+        .pair-down { color: var(--danger); }
+
+        /* 策略啟示 */
+        .takeaway-card {
+            background: rgba(240, 185, 11, 0.08);
+            border: 1px solid rgba(240, 185, 11, 0.25);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 13px;
+            color: #fef08a;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+        .takeaway-head {
+            font-weight: 700;
+            color: var(--accent-yellow);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 底部數據與功能按鈕 */
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .stats-group {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .stat-entry {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-group {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .post-content-box {
-            background: #f8fafc;
-            border-left: 4px solid var(--accent-blue);
-            padding: 14px 16px;
-            border-radius: 4px 8px 8px 4px;
-            font-size: 13.5px;
-            line-height: 1.7;
-            color: #334155;
-            white-space: pre-wrap;
-            margin-bottom: 14px;
-        }
-
-        /* 實戰點位與核心啟示 */
-        .takeaway-box {
-            background: #fffbeb;
-            border: 1px solid #fef3c7;
-            border-radius: 8px;
-            padding: 12px 14px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #78350f;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .takeaway-title {
-            font-weight: 800;
-            color: #b45309;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 2px;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 12px;
-        }
-
-        .btn-copy {
-            background: #ffffff;
+        .btn-action {
+            background: var(--tag-bg);
             border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 4px 10px;
+            color: var(--text-secondary);
+            padding: 5px 12px;
             border-radius: 6px;
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 600;
+            text-decoration: none;
             cursor: pointer;
+            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            transition: all 0.2s;
         }
-        .btn-copy:hover {
-            background: #f8fafc;
-            color: var(--accent-blue);
-            border-color: var(--accent-blue);
+        .btn-action:hover {
+            background: #333b47;
+            color: #ffffff;
+        }
+        .btn-action.btn-link {
+            color: var(--accent-yellow);
+            border-color: rgba(240, 185, 11, 0.3);
+        }
+        .btn-action.btn-link:hover {
+            background: rgba(240, 185, 11, 0.15);
         }
 
-        .empty-state {
+        .empty-indicator {
             text-align: center;
-            padding: 50px 20px;
+            padding: 60px 20px;
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 15px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- 頂部列 -->
-    <div class="header-bar">
-        <div class="brand-title">
-            <span>📡 幣安廣場「K線人生飞哥」專題貼文研報庫</span>
+    <!-- 頂部導航 -->
+    <div class="top-navbar">
+        <div class="brand-box">
+            <span>⚡ 幣安廣場「K線人生飞哥」專題研報庫</span>
         </div>
-        <a href="index.html" class="nav-back-link">
-            <span>⬅ 返回 5-Zone 智能持倉主系統</span>
+        <a href="index.html" class="nav-link-btn">
+            <span>⬅ 返回 5-Zone 階梯智能持倉主系統</span>
         </a>
     </div>
 
-    <!-- KOL 檔案卡片 -->
-    <div class="profile-card">
-        <div class="profile-info">
-            <div class="profile-avatar">飛</div>
-            <div class="profile-meta">
-                <h2>K線人生飞哥 <span class="verified-badge">幣安廣場認證創作者</span></h2>
-                <div class="profile-desc">主打：宏觀趨勢判定、細分賽道真龍頭選幣、合約關鍵支撐阻力高拋低吸與現貨滾倉心法</div>
+    <!-- KOL 官方個人檔案卡片 -->
+    <div class="kol-banner-card">
+        <div class="kol-profile">
+            <div class="kol-avatar"></div>
+            <div>
+                <div class="kol-title-row">
+                    <h1 class="kol-name">K线人生飞哥</h1>
+                    <span class="badge-verified">✓ 幣安廣場認證創作者</span>
+                    <span class="badge-rank">30D收益榜 TOP</span>
+                    <span class="badge-category">8年高頻交易者</span>
+                </div>
+                <div class="kol-bio">
+                    公眾號：K線人生飛哥 ｜ 推特（X）：@TT520btc ｜ 幣安個人主頁：xg297174<br>
+                    核心風格：注重週期研究、宏觀資金邏輯、大趨勢判斷、細分賽道龍頭選幣與低倍槓桿滾倉現貨
+                </div>
             </div>
         </div>
-        <div class="profile-stats">
-            <div class="stat-item">
-                <div class="stat-value" id="totalPostsCount">7</div>
-                <div class="stat-label">收錄精華貼文</div>
+        <div class="kol-stats">
+            <div class="stat-box">
+                <div class="stat-val">60.4K+</div>
+                <div class="stat-lbl">廣場粉絲</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-value">10+</div>
-                <div class="stat-label">標的涵蓋</div>
+            <div class="stat-box">
+                <div class="stat-val">218K+</div>
+                <div class="stat-lbl">獲點讚數</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-value" style="color: #4ade80;">100%</div>
-                <div class="stat-label">實時本地存檔</div>
+            <div class="stat-box">
+                <div class="stat-val">15.2K</div>
+                <div class="stat-lbl">累計發文</div>
             </div>
         </div>
     </div>
 
     <!-- 搜尋與類別篩選 -->
     <div class="controls-card">
-        <div class="search-input-wrap">
+        <div class="search-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" class="search-input" placeholder="輸入關鍵字或幣種（如：ETH, 2380, 龍頭, 幣股, 2368, PENDLE）即時搜尋...">
+            <input type="text" id="searchInput" class="search-input" placeholder="搜尋關鍵字、幣種或點位（如：BTC, ETH, SOL, XRP, 加息, 抄底, 手續費, 5.7萬）...">
         </div>
-        <div class="filter-tags">
-            <button class="filter-btn active" data-category="all" onclick="setFilter('all', this)">全部收錄</button>
-            <button class="filter-btn" data-category="signal" onclick="setFilter('signal', this)">🎯 實盤合約點位</button>
-            <button class="filter-btn" data-category="selection" onclick="setFilter('selection', this)">🚀 賽道選幣法則</button>
-            <button class="filter-btn" data-category="mindset" onclick="setFilter('mindset', this)">🛡️ 牛市操作心法</button>
-            <button class="filter-btn" data-category="stocks" onclick="setFilter('stocks', this)">💎 長線幣股深度</button>
+        <div class="filter-tags-row">
+            <button class="filter-btn active" data-cat="all" onclick="filterPosts('all', this)">全部收錄 (10篇)</button>
+            <button class="filter-btn" data-cat="pinned" onclick="filterPosts('pinned', this)">📌 置頂與方法論</button>
+            <button class="filter-btn" data-cat="macro" onclick="filterPosts('macro', this)">🌍 宏觀加息與週期</button>
+            <button class="filter-btn" data-cat="signals" onclick="filterPosts('signals', this)">🎯 實盤合約與補漲</button>
+            <button class="filter-btn" data-cat="altcoins" onclick="filterPosts('altcoins', this)">🚀 賽道龍頭與選幣</button>
         </div>
     </div>
 
     <!-- 貼文清單 -->
     <div class="posts-stream" id="postsContainer">
-        <!-- 貼文 1 -->
-        <div class="post-card" data-category="signal" data-tokens="ETH 2380 2370 2440 2450 2410">
-            <div class="post-header">
-                <div class="post-time-wrap">
-                    <span class="post-date-badge">2026-09-17 12:49 (UTC+8)</span>
-                    <span class="post-category-tag cat-signal">🎯 實盤合約點位</span>
-                </div>
-                <div class="token-chips-row">
-                    <span class="token-chip">$ETH</span>
-                    <span class="token-chip">短線雙向</span>
-                </div>
-            </div>
-            <h3 class="post-title">以太坊 2,370 ～ 2,450 區間穩健多空雙向操作點位</h3>
-            <div class="post-content-box" id="post-1">以太坊目前的区间在2450-2370价格附近
 
-以太坊稳健多单2380附近做多，止损2370价格附近，目标2410-2430价格附近
-
-以太坊稳健空单2440附近做空，止损2450价格附近，目标2410-2380价格附近</div>
-            <div class="takeaway-box">
-                <div class="takeaway-title">💡 實戰啟示與量化對照：</div>
-                <div>• <strong>超短線日內雙向高拋低吸</strong>：震盪振幅僅 80 點（3.3%），止損各設極窄 10 點（0.4%），盈虧比高達 1:3 ~ 1:5。</div>
-                <div>• <strong>網格防禦演化</strong>：若機器人開網格不可鎖死於 2370~2450，應預留 20 點緩衝（調整為 2,350~2,470 中性網格），槓桿壓制在 3x~5x 防插針。</div>
+        <!-- 貼文 1：手續費返傭 -->
+        <div class="post-card" data-cat="pinned" data-keywords="手續費 返傭 高頻 合約 資金費用 本金 磨損 BTC">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-pinned">📌 置頂貼文</span>
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">資金風控</span>
+                </div>
+                <div class="post-id-tag">Post ID: 294339448265473</div>
             </div>
-            <div class="card-footer">
-                <button class="btn-copy" onclick="copyText('post-1', this)">📋 複製原文</button>
+            <h2 class="post-title">交易手續費返傭看過來👇👇👇</h2>
+            <div class="content-box" id="post-294339448265473">炒幣的朋友們現在還不知道每次交易手續費的恐怖，甚至看不上這點手續費，殊不知頻繁交易的手續費也是一大筆費用:甚至可能超過你的本金。
+打開幣安APP--資金--合約--今日盈虧--資金費用與交易手續費，就可以看到你近一年的手續費了。對於高頻合約交易、大倉位的兄弟，你的手續費支出超過本金可能只需要一個月。
+如何查看自己的帳戶是否有手續費返傭可以看這條操作👉👉👉[如何查看自己手續費是否有返傭]</div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BTC/USDT</span> <span class="pair-up">+6.04%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：手續費是高頻網格的隱形殺手</div>
+                <div>這與我們先前討論「網格千萬不要開 20x 槓桿」完全吻合！合約網格的高頻開平倉若遇上手續費磨損，會吃掉大部分每格 0.35% 的毛利。交易務必開啟 BNB 折扣，並控制槓桿在 3x~5x 之間。</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 3.9k 次閱讀</span>
+                    <span class="stat-entry">👍 68 點讚</span>
+                    <span class="stat-entry">💬 41 留言</span>
+                </div>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-294339448265473', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/294339448265473" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
             </div>
         </div>
 
-        <!-- 貼文 2 -->
-        <div class="post-card" data-category="signal" data-tokens="BTC ETH 2368 2218 75818 74588 77000 78200 79588 2438 2528">
-            <div class="post-header">
-                <div class="post-time-wrap">
-                    <span class="post-date-badge">2026-09-17 08:24 (UTC+8)</span>
-                    <span class="post-category-tag cat-signal">🎯 實盤合約點位</span>
+        <!-- 貼文 2：自我介紹與三大原則 -->
+        <div class="post-card" data-cat="pinned" data-keywords="自我介紹 2017 老韭菜 方法論 週期 宏觀 短線 長線 BTC 山寨幣 定投">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-pinned">📌 置頂貼文</span>
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">交易哲學</span>
                 </div>
-                <div class="token-chips-row">
-                    <span class="token-chip">$BTC</span>
-                    <span class="token-chip">$ETH</span>
-                    <span class="token-chip">三馬哥策略</span>
+                <div class="post-id-tag">Post ID: 29152494036025</div>
+            </div>
+            <h2 class="post-title">給關注我的粉絲做一個自我介紹（三大交易原則）</h2>
+            <div class="content-box" id="post-29152494036025">給關注我的粉絲做一個自我介紹
+
+大家好，我是飛哥，2017 年進圈，算是老韭菜一枚。一路走來，踩過無數坑，也總結了一些屬於自己的方法論，從最初盲目跟風，到現在更注重研究週期、宏觀大勢和資金邏輯，算是慢慢走出了自己的節奏
+
+一路走來，我發現幣圈其實不僅僅是漲跌，它更像是一場週期的博弈：有人在高潮中FOMO，也有人在低谷裏默默佈局
+
+我目前幣安廣場做博主，分享一些個人的思考和觀察。不算什麼大神，只是一個經歷過幾輪牛熊的老韭菜，希望能把自己踩過的坑、學到的經驗講出來，讓後來者少走彎路，同時也能在交流中獲得新的靈感
+
+如果你也相信週期、相信邏輯、相信長期積累，那我們或許能在這裏成爲同路人
+
+關於看我帖子的觀點需要注意以下幾點：
+1：幣圈行情隨時都在變化，那麼我的觀點也會跟隨行情而變化，這個行業變化太快，只有一直跟隨行業進步才能不斷成長，一直固守成規只會被時代淘汰，希望大家不要那麼死腦筋。
+2：我在廣場發佈的觀點分爲短線和長線，比如長線看漲中間也會有回調，長線看跌中間也會有反彈，不要因爲短線觀點而去影響長線觀點。行情向上並不是一路上漲不回頭，更多時候也是漲漲跌跌趨勢向上。行情向下也並不是一路暴跌不反彈，更多時候也是跌跌漲漲總體趨勢向下，希望大家理解短線和長線觀點的不同。
+3：這個市場除了BTC可以無腦信仰，其它幣都有市場週期，特別是山寨幣，在買入一個幣之前，至少你應該去考察下，有些東西還是要稍微瞭解一下，不能別人說什麼你就去買什麼。特別是資金不多的，得考慮實際情況，更要謹慎。</div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BTC/USDT</span> <span class="pair-up">+6.04%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：長線框架 vs 短線波動的嚴格解耦</div>
+                <div>「除了 BTC 可以無腦信仰，其他幣都有週期」正是我們 5-Zone 將 A 倉設為 BTC+PAXG 壓艙石，而將其他山寨幣放在 C 倉嚴格控制在 25% 以內的理論根源！</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 16.5k 次閱讀</span>
+                    <span class="stat-entry">👍 234 點讚</span>
+                    <span class="stat-entry">💬 92 留言</span>
                 </div>
-            </div>
-            <h3 class="post-title">BTC 抗住加息短線上攻 ＆ ETH 2368「無腦進場」多單神級防線</h3>
-            <div class="post-content-box" id="post-2">睡醒發現BTC沒有因爲加息而暴跌下去，那麼今天短線上就要漲一波了，準備短線找位置進行做多不要踏空。其實ETH三馬哥的2368做多策略和點位觸碰了3次都暴漲了。
-BTC 今天短線支撐75818、比較牛B的支撐是74588從未測試、極端點位72088到達的概率下降到50%。
-BTC上漲第一個壓力是77000、比較強的壓力是78200，其次是79588上次出空單策略的點位。只有這三個能突破才能去85000美元。#BTC
-ETH支撐大家都知道了2368策略做多玩吐了，每次到2368都暴漲，所以2368和2218都是無腦進場ETH的絕佳賺錢點位。👉🏻马前炮分析ETH的2368至少涨记录
-ETH反彈壓力是2438和2528，基本也是箱體震盪的中高點。#ETH
-走三馬哥鏈接，一邊跟着趨勢翻倉賺錢，一邊省手續費。
-跟着馬哥，永久返傭！ #返傭</div>
-            <div class="takeaway-box">
-                <div class="takeaway-title">💡 實戰啟示與量化對照：</div>
-                <div>• <strong>BTC 防守三道線</strong>：短線 75,818，強支撐 74,588，極限底 72,088；上方強阻力為 77,000 / 78,200 / 79,588。</div>
-                <div>• <strong>ETH 雙重黃金進場位</strong>：2,368（高勝率觸發暴漲）、2,218（極限撿籌底）；反彈強壓力落在 2,438 與 2,528。</div>
-            </div>
-            <div class="card-footer">
-                <button class="btn-copy" onclick="copyText('post-2', this)">📋 複製原文</button>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-29152494036025', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/29152494036025" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
             </div>
         </div>
 
-        <!-- 貼文 3 -->
-        <div class="post-card" data-category="selection" data-tokens="BNB HYPE LIT PUMP PONS UNI PENDLE AAVE MORPHO ENA DOGE LINK ZEC RAY ETHFI 龍頭 選幣">
-            <div class="post-header">
-                <div class="post-time-wrap">
-                    <span class="post-date-badge">2026-09-15 21:37 (UTC+8)</span>
-                    <span class="post-category-tag cat-selection">🚀 賽道選幣法則</span>
+        <!-- 貼文 3：熊市結束了嗎 -->
+        <div class="post-card" data-cat="macro" data-keywords="熊市結束 熊轉牛 2023 MA5 MA25 周線 定投 回調 機會 踏空 黃金 XAU 4000 70000 分批上車">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">週期趨勢</span>
                 </div>
-                <div class="token-chips-row">
-                    <span class="token-chip">選幣哲學</span>
-                    <span class="token-chip">細分賽道龍頭</span>
-                    <span class="token-chip">強者恆強</span>
+                <div class="post-id-tag">Post ID: 368078644157422</div>
+            </div>
+            <h2 class="post-title">正面迴應一下，熊市結束了嗎？？？（週線突破與定投邏輯）</h2>
+            <div class="content-box" id="post-368078644157422">正面迴應一下，熊市結束了嗎？？？
+
+我個人感覺，這一輪熊市可能已經差不多走完了，現在市場更像是在熊市轉牛市，參考2023年的行情。
+
+現在非常明顯的兩個指標技術面和時間節點：
+一個是趨勢，BTC 周線 MA5 已經重新站上 MA25，這對我來說是一個比較明顯的變化。
+另一個就是時間。算下來這一輪熊市也已經接近一年了，當然，我不會覺得週期走了一年就一定該反轉。幣圈的週期從來不是精確的鐘表，歷史只能拿來參考，不能直接套。
+
+而且這輪市場其實已經出現了不少和過去不太一樣的地方，比如去年 10月那次快速下殺，以及今年 8 月這輪上漲，都是以前週期裏比較少見的情況，所以不能完全地刻舟求劍，世界上永遠不變的就是一直在變，而我們就是要跟上這種不斷變化中的變化。
+
+所以如果一直等一個所有指標都確認、最低點也能精準確定的底部，很容易最後發現，等你確認完，市場已經走出去一大截了，這就是爲什麼之前我一直建議大家定投的主要原因，因爲任何人都不可能精準地買在最底部。
+
+所以對於絕大多數人而言，現在反而沒那麼重要的是猜最低點在哪。
+更重要的是，看市場是不是已經開始從熊市結構慢慢過渡到牛市結構，接下來我的操作就很簡單，每一次回調就是機會，不會像別人那樣每一次回調都在喊牛市結束了，具體操作我打算重新更新一條帖子，供踏空的朋友參考一下，如果感興趣的點贊評論，我看人多的話我就更新一下。</div>
+            <div class="quoted-box">
+                <div class="quoted-label">📌 引用飛哥先前言論 (踏空與黃金防守)：</div>
+                <div>「7月30號就跟大家說了建議大家定投，8月3號黃金在4000的也跟大家說了，爲了防止踏空，我買了黃金 $XAU ，8月5號再次發表長篇大論說了不可能買到最底部，建議大家還是定投爲主。8月20號大號解封行情漲到 70000 附近時，我也說了應該是牛市來了，建議大家分批上車...」</div>
+            </div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BTC/USDT</span> <span class="pair-up">+6.04%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：黃金（PAXG）防踏空與 MA5/MA25 確立</div>
+                <div>飛哥在此明確點出他自己在行情不明確時**買入黃金（$XAU）作為避險防踏空工具**，與我們的 5-Zone 系統在 Zone 1~Zone 2 配置 40%~65% PAXG 的哲學高度一致！</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 843 次閱讀</span>
+                    <span class="stat-entry">👍 11 點讚</span>
+                    <span class="stat-entry">💬 5 留言</span>
                 </div>
-            </div>
-            <h3 class="post-title">幣圈選擇大於努力：各細分賽道絕對頭部項目全景圖</h3>
-            <div class="post-content-box" id="post-3">現在幣圈選擇大於努力，我是建議大家買幣只買強勢幣，總結一下目前各個細分賽道的頭部項目。
-BNB——CEX龍頭
-HYPE —— Perp DEX 龍頭
-LIT —— 受 RH、美國監管預期推動的 Perp DEX 龍二
-PUMP —— 最大的 Meme Launchpad
-PONS —— Robinhood 生態最大的 Meme Launchpad
-UNI —— 最大的 AMM DEX
-PENDLE —— 鏈上利率交易的頭部平臺
-Morpho、AAVE——Defi借貸賽道的頭部項目
-ENA——去中心化算法穩定幣
-DOGE——MEME幣龍頭
-LINK——預言機賽道絕對的頭部項目
-ZEC——匿名隱私賽道頭部項目
-RAY——SOL鏈上的流動性defi 協議
-ETHFI——以太質押頭部協議
-我覺得現在選幣，核心還是看項目在細分賽道里的位置。真正能跑出來的，往往就是那些已經佔據頭部、並且還能持續喫到行業增長的項目，很多項目你看着已經漲了很多市值很大，你不敢買了，去買那些幾千萬市值的垃圾幣</div>
-            <div class="takeaway-box">
-                <div class="takeaway-title">💡 實戰啟示與量化對照：</div>
-                <div>• <strong>全面汰弱留強，嚴禁買便宜垃圾幣</strong>：敢於配置已跑出極強生態壁壘的龍頭資產。</div>
-                <div>• <strong>5-Zone C 倉重構基石</strong>：直接促成我們將 C 倉全面替換為 PENDLE（利率龍頭）、UNI（AMM龍頭）、AAVE（借貸龍頭）、LINK（預言機龍頭），徹底剔除二線雜音。</div>
-            </div>
-            <div class="card-footer">
-                <button class="btn-copy" onclick="copyText('post-3', this)">📋 複製原文</button>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-368078644157422', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/368078644157422" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
             </div>
         </div>
 
-        <!-- 貼文 4 -->
-        <div class="post-card" data-category="stocks" data-tokens="HOODB COINB CRCL MSTRB 幣股 美股">
-            <div class="post-header">
-                <div class="post-time-wrap">
-                    <span class="post-date-badge">2026-09-14 10:03 (UTC+8)</span>
-                    <span class="post-category-tag cat-stocks">💎 長線幣股深度</span>
+        <!-- 貼文 4：XRP 主流幣補漲輪動 -->
+        <div class="post-card" data-cat="signals" data-keywords="XRP 多單 盈利 BTC 80000 主流幣 補漲 性價比 現貨 合約 社區">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">實盤合約</span>
                 </div>
-                <div class="token-chips-row">
-                    <span class="token-chip">$HOOD</span>
-                    <span class="token-chip">$COIN</span>
-                    <span class="token-chip">$CRCL</span>
-                    <span class="token-chip">$MSTR</span>
+                <div class="post-id-tag">Post ID: 368177750149177</div>
+            </div>
+            <h2 class="post-title">$XRP 多單持續盈利 ＆ BTC 突破後的主流幣補漲戰術</h2>
+            <div class="content-box" id="post-368177750149177">$XRP 多單持續盈利，昨天$BTC 突破80000的時候，直接在VIP合約社區讓大家做多XRP，目前看單子也是沒問題的，我之前一直跟大家強調過一個觀點，一般行情啓動BTC和ETH會先行一步，這個時候如果確定趨勢已經到了，咱們再去做主流幣補漲性價比是非常高的，這就是爲什麼昨天讓大家直接做多XRP，包括我自己也是同步操作，咱們社區不光是現貨，合約也有同步操作，一邊提前埋伏山寨現貨，一邊主流幣合約，所以怎麼會踏空，加入社區跟上操作就完事。</div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BTC/USDT</span> <span class="pair-up">+6.04%</span></div>
+                <div class="pair-chip"><span>ETH/USDT</span> <span class="pair-up">+6.68%</span></div>
+                <div class="pair-chip"><span>XRP/USDT</span> <span class="pair-up">+8.78%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：主流先行 ➔ 二線補漲的時差套利</div>
+                <div>BTC/ETH 突破確立後，市場資金外溢到 XRP 等老牌主流幣。這正是 B 倉（ETH）與 C 倉（高彈性山寨）階梯輪動的標準節奏。</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 10.2k 次閱讀</span>
+                    <span class="stat-entry">👍 8 點讚</span>
+                    <span class="stat-entry">💬 5 留言</span>
                 </div>
-            </div>
-            <h3 class="post-title">值得長線持有的四大幣股（Crypto Stocks）深度邏輯</h3>
-            <div class="post-content-box" id="post-4">值得長線持有的四大幣股
-$HOODB ：基本面最強的幣股，券商+加密+鏈+預測市場全都有，美股漲它漲，加密牛市彈性更大。
-$COINB ：監管+山寨行情驅動，彈性最大，Base、x402、Circle收入分成都是加分項，近期看監管和Deribit合併。
-CRCL：這輪幣股主角，核心就是穩定幣+監管。清晰法案、天才法案確定性高，只要穩定幣繼續擴張，OUSD上線的影響就有限。
-$MSTRB ：槓桿版BTC，牛市跑贏BTC，熊市也跌得更狠。$75,412是關鍵斬殺線，站上加速漲，跌破加速跌。</div>
-            <div class="takeaway-box">
-                <div class="takeaway-title">💡 實戰啟示與量化對照：</div>
-                <div>• <strong>傳統金融與加密牛市雙引擎</strong>：HOODB 具備券商與鏈上預測市場最全面護城河；COINB 具備 Base 鏈與 Circle 分成。</div>
-                <div>• <strong>斬殺線警戒</strong>：MSTRB 關鍵強弱分水嶺在 $75,412，作為槓桿化比特幣風向標。</div>
-            </div>
-            <div class="card-footer">
-                <button class="btn-copy" onclick="copyText('post-4', this)">📋 複製原文</button>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-368177750149177', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/368177750149177" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
             </div>
         </div>
 
-        <!-- 貼文 5 -->
-        <div class="post-card" data-category="mindset" data-tokens="BTC 72000 82000 95000 98000 牛市不做空 槓桿 現貨 循環">
-            <div class="post-header">
-                <div class="post-time-wrap">
-                    <span class="post-date-badge">2026-09-14 09:57 (UTC+8)</span>
-                    <span class="post-category-tag cat-mindset">🛡️ 牛市操作心法</span>
+        <!-- 貼文 5：ETHFI 回購銷毀與週末山寨表演 -->
+        <div class="post-card" data-cat="altcoins" data-keywords="ETHFI 暴漲 20% 回購銷毀 細分賽道 龍頭幣 FIL 換倉 週末 BTC橫盤 山寨表演">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">賽道龍頭</span>
                 </div>
-                <div class="token-chips-row">
-                    <span class="token-chip">趨勢原則</span>
-                    <span class="token-chip">低倍槓桿</span>
-                    <span class="token-chip">利潤轉現貨</span>
+                <div class="post-id-tag">Post ID: 368170294927845</div>
+            </div>
+            <h2 class="post-title">$ETHFI 單日暴漲 20% ＆ 週末山寨群魔亂舞規律</h2>
+            <div class="content-box" id="post-368170294927845">$ETHFI 走勢還是相當不錯的，直接單日暴漲20%，現在市場炒作除了幾個熱點幣，絕大部分走勢強勢的幣都是回購銷燬型山寨，等這些山寨吵完了，行情又要輪到一些各大細分賽道的龍頭幣，9月17號在社區讓大家把FIL換ETHFI也是沒有問題的，週末這兩天繼續把握行情，按照正常的歷史規律，週末都是BTC橫盤，給山寨表演的空間，跟着飛哥一起把握行情吧。</div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BTC/USDT</span> <span class="pair-up">+6.04%</span></div>
+                <div class="pair-chip"><span>FIL/USDT</span> <span class="pair-up">+13.10%</span></div>
+                <div class="pair-chip"><span>ETHFI/USDT</span> <span class="pair-up">+12.30%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：及時汰弱換強（FIL ➔ ETHFI）</div>
+                <div>淘汰無現金流的老舊儲存幣（FIL），換入具備真實質押回購賦能的以太坊質押龍頭（ETHFI）。週末美股休市時 BTC 傾向震盪橫盤，是山寨機器人吃網格高頻波動的黃金窗口！</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 14.7k 次閱讀</span>
+                    <span class="stat-entry">👍 17 點讚</span>
+                    <span class="stat-entry">💬 7 留言</span>
                 </div>
-            </div>
-            <h3 class="post-title">教大家一個牛市如何放大收益的操作（滾倉現貨閉環心法）</h3>
-            <div class="post-content-box" id="post-5">教大家一個牛市如何放大收益的操作
-先判斷大趨勢，現在$BTC  我還是按牛市來處理，所以我的原則很簡單：牛市不做空。但是行情也不會一直漲，等行情回調到關鍵支撐位抄底➕低倍槓桿，回顧過去每一輪牛市，BTC都是走三步回撤一步，所以等到關鍵位置再抄底就可以。
-比如這輪從82000附近開始回調，真正的關鍵位置就是72000，如果這裏出現企穩，可以把手裏一部分現貨拿出來做2～3倍多單，行情走出來以後，到了新的震盪區間，比如我們這次在72000附近抄底成功，BTC開始下一波趨勢行情，大概率會在95000～98000區間遇到壓力，那麼行情到了這個時候就把槓桿部分撤掉，賺到的利潤重新換成現貨。
-這樣循環就可以了：跌到關鍵位置～低倍做多～上漲後收槓桿～利潤回到現貨～等下一次回調。
-而且這個操作方法風險很小。目前BTC的波動已經不像以前那麼誇張了。去年1011那種極端行情，跌幅也就30%左右。行情如果已經提前回撤了10%～20%，再去支撐位開2～3倍多單，後面繼續出現30%～50%的二次暴殺，概率已經非常低，所以爆倉的可能性很小很小。</div>
-            <div class="takeaway-box">
-                <div class="takeaway-title">💡 實戰啟示與量化對照：</div>
-                <div>• <strong>「牛市不做空」鐵律</strong>：順大勢交易，絕不主觀逆勢摸頂做空。</div>
-                <div>• <strong>閉環正向飛輪</strong>：回調關鍵位（如 72,000）$\rightarrow$ 開 2~3x 低倍多單 $\rightarrow$ 抵達目標壓力區（95,000~98,000）$\rightarrow$ 撤掉槓桿、將全部利潤落袋換回現貨 $\rightarrow$ 等待下一輪回調。</div>
-            </div>
-            <div class="card-footer">
-                <button class="btn-copy" onclick="copyText('post-5', this)">📋 複製原文</button>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-368170294927845', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/368170294927845" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
             </div>
         </div>
 
-        <!-- 貼文 6 -->
-        <div class="post-card" data-category="mindset" data-tokens="成交量 預兆 高潮 資金 接力">
-            <div class="post-header">
-                <div class="post-time-wrap">
-                    <span class="post-date-badge">2026-09-14 09:56 (UTC+8)</span>
-                    <span class="post-category-tag cat-mindset">🛡️ 牛市操作心法</span>
+        <!-- 貼文 6：CZ 指標 -->
+        <div class="post-card" data-cat="macro" data-keywords="CZ 趙長鵬 抄底 加息 喊單 反指 正指 牛市 BNB">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">情緒指標</span>
                 </div>
-                <div class="token-chips-row">
-                    <span class="token-chip">盤感預兆</span>
-                    <span class="token-chip">成交量量價</span>
+                <div class="post-id-tag">Post ID: 367700622847589</div>
+            </div>
+            <h2 class="post-title">CZ 在行情啟動前喊單：從歷史「反指」變成「正指」</h2>
+            <div class="content-box" id="post-367700622847589">CZ在這一波行情啓動之前又開始喊大家抄底了，之前7月行情啓動之前喊單一次，前天美聯儲加息之前又喊單一次，感覺這一輪牛市CZ要變成正面指標了，目前看都比較準的，上一輪牛市CZ就是典型的反指，只要他發表了看多或者疑似看多的言論，不出三天行情直接瀑布，不過這一輪牛市CZ指標開始正過來了，繼續保持觀察，跟蹤CZ指標😂😂😂</div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BNB/USDT</span> <span class="pair-up">+2.68%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：頂級巨鯨言論與市場情緒共振</div>
+                <div>市場結構改變時，以往的情緒指標會發生相變（反指轉正指），切忌死板盲從過去的刻舟記憶。</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 4.2k 次閱讀</span>
+                    <span class="stat-entry">👍 5 點讚</span>
+                    <span class="stat-entry">💬 1 留言</span>
                 </div>
-            </div>
-            <h3 class="post-title">大行情的預兆與成交量演變規律</h3>
-            <div class="post-content-box" id="post-6">大行情不是沒有預兆，只是大多數人等看到幾個億成交額的時候，已經不是發現機會，而是在接近高潮了。
-很多幣真正爆發之前，並不是突然憑空拉幾個億成交額，而是先從幾百萬、1000萬左右開始慢慢把資金和注意力吸引過來，等市場真正開始接力，成交額纔會從千萬級一路放大到幾個億。</div>
-            <div class="takeaway-box">
-                <div class="takeaway-title">💡 實戰啟示與量化對照：</div>
-                <div>• <strong>拒絕在幾億高潮時追高</strong>：當全市場都看見天量成交額時往往已是階段頂部。</div>
-                <div>• <strong>早期伏擊信號</strong>：成交額由幾百萬開始持續溫和放大至 1,000 萬美元區間，即為主流資金接力進場的前兆。</div>
-            </div>
-            <div class="card-footer">
-                <button class="btn-copy" onclick="copyText('post-6', this)">📋 複製原文</button>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-367700622847589', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/367700622847589" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
             </div>
         </div>
 
-        <!-- 貼文 7 -->
-        <div class="post-card" data-category="selection" data-tokens="PENDLE UNI ARB ENA TAO VIRTUAL 基本面 利率 DEX">
-            <div class="post-header">
-                <div class="post-time-wrap">
-                    <span class="post-date-badge">2026-09-08 13:45 (UTC+8)</span>
-                    <span class="post-category-tag cat-selection">🚀 賽道選幣法則</span>
+        <!-- 貼文 7：SOL 99 做多到 110 目標 -->
+        <div class="post-card" data-cat="signals" data-keywords="SOL 做多 99 105 110 激活 150ms 利好 基本面 合約 現貨">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">實盤合約</span>
                 </div>
-                <div class="token-chips-row">
-                    <span class="token-chip">$PENDLE</span>
-                    <span class="token-chip">$UNI</span>
-                    <span class="token-chip">$TAO</span>
-                    <span class="token-chip">$ENA</span>
+                <div class="post-id-tag">Post ID: 368073094216683</div>
+            </div>
+            <h2 class="post-title">$SOL 回踩 99 做多精準止盈 110 ＆ 150ms 升級催化劑</h2>
+            <div class="content-box" id="post-368073094216683">$SOL 多單持續盈利，在社區給的單子很簡單，SOL前天99附近做多，到達我們最終目標105之後，直接再次更新策略，看到110，現在已經成功到了我們的目標，我在合約社區給的單子很簡單，我自己也會跟着操作，因爲行情來了，我也是希望包括我自己和跟着我操作的粉絲一起把握住，我還是那個觀點，我們社區不光有現貨，同樣也有合約，並且都會實時跟着單子，在社區跟着飛哥操作就可以，行情來了，我們一起把握。</div>
+            <div class="quoted-box">
+                <div class="quoted-label">📌 引用飛哥原始進場理由 (硬核基本面催化)：</div>
+                <div>「SOL回踩99附近做多，至於這一次爲什麼選擇SOL做多，理由很簡單，SOL 9月28日激活，目標是把最終確認時間降到約 150ms，利好SOL，所以能看到這兩天SOL走勢明顯強於 $BTC 和 $ETH ...」</div>
+            </div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>SOL/USDT</span> <span class="pair-up">+10.96%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：公鏈基本面重大技術升級的波段紅利</div>
+                <div>做多不盲目，結合技術事件驅動（9/28 激活、確認時間降至 150ms）讓勝率與盈虧比大幅提高。</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 3.6k 次閱讀</span>
+                    <span class="stat-entry">👍 2 點讚</span>
+                    <span class="stat-entry">💬 3 留言</span>
                 </div>
-            </div>
-            <h3 class="post-title">歷史標的精選梳理：PENDLE 中線邏輯、UNI/ARB 基本面突變與 AI 主線</h3>
-            <div class="post-content-box" id="post-7">【精華歷史觀點彙整】
-1. PENDLE 中長線邏輯：作為鏈上利率市場與收益代幣化的絕對寡頭，在降息週期與機構 RWA 大規模進場的雙重加持下，現金流真實、造血能力強大，具備長週期抗跌與爆發潛力。
-2. UNI 與 ARB 基本面劇變：Uniswap 費用開關（Fee Switch）一旦啟動將直接對代幣持有者分紅，擺脫「無用治理代幣」枷鎖；Arbitrum 為以太坊吞吐量之王，生態資金黏著度高。
-3. AI Agent 主線認知：AI 主線核心鎖定 $TAO（去中心化機器學習網絡龍頭）與 $VIRTUAL，抱緊主升浪，不被洗盤甩下車。
-4. ENA 伏擊節奏：面對短期質押解鎖拋壓，不急於接刀，耐心等待回踩至 $0.13 ～ $0.15 支撐區再行分批伏擊。</div>
-            <div class="takeaway-box">
-                <div class="takeaway-title">💡 實戰啟示與量化對照：</div>
-                <div>• <strong>賽道定心丸</strong>：這份邏輯為我們 5-Zone 的 B 倉（TAO 15%）與 C 倉（PENDLE 10%、UNI 15%）提供了扎實的鏈上基本面支撐。</div>
-            </div>
-            <div class="card-footer">
-                <button class="btn-copy" onclick="copyText('post-7', this)">📋 複製原文</button>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-368073094216683', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/368073094216683" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
             </div>
         </div>
+
+        <!-- 貼文 8：美聯儲加息與拉高出貨 -->
+        <div class="post-card" data-cat="macro" data-keywords="美聯儲 加息 點陣圖 2026 4-4.25% 大資金 出貨 拉高出貨 洗盤 回調 散戶 接盤 2023">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">宏觀解讀</span>
+                </div>
+                <div class="post-id-tag">Post ID: 367693330776987</div>
+            </div>
+            <h2 class="post-title">美聯儲今年還有加息？利率點陣圖與大資金「拉高出貨」本質剖析</h2>
+            <div class="content-box" id="post-367693330776987">美聯儲今年應該還有一次加息
+
+從最新放出的利率點陣圖來看，18名委員裏有12人投票認爲2026年底的利率區間是4-4.25%區間，這意味着年底之前大概率還會有一次0.25%的加息，有可能是10月，也有可能是12月，具體要看通脹數據。
+
+至於2027年，有一半的委員認爲利率會到4.5%（再加0.25%），一半的委員認爲維持不變或者降息。
+至於更遠的2028、2029，大部分委員認爲利率會持續下降，並最終在3-3.5%區間找到平衡。
+
+但是大家要注意：
+美聯儲一旦開啓持續加息，市場是不會馬上轉向降息的。
+邏輯其實很簡單：加息政策本身自帶連貫性，還沒正式加息的時候，市場還會抱有僥倖心理，可一旦加息落地，大資金就會開始逐步撤離。
+因爲大資金本身的建倉和離場都是需要時間的，不能像散戶那樣隨意操作。如果頻繁隨便加息或者降息，只會把大資金拉爆，而這些大資金很多都是國際市場上的資金，對他們來說穩定性很重要，所以一般不會輕易更改週期。
+
+但是大資金離場不會一上來就砸盤大跌。
+原因很簡單：如果直接快速殺跌，資金根本沒有機會完成出貨，反而會造成踩踏效應，導致誰都出不貨。
+所以盤面反而會走出這種小幅反覆拉昇的行情，藉着上漲慢慢派發籌碼，也就是拉高出貨。
+注意，拉高出貨的本質不是讓大家賺到錢，而是通過拉高吸引散戶入場，最後完成接盤。等籌碼全部派發完畢，行情纔會真正承壓下行。
+
+所以大家現在賺到的，本質上就是這波拉高出貨行情裏的錢。
+所以我還是認爲目前的行情參考2023年，是熊市轉牛市，中途波動會很大，行情會來回洗盤，有沒有回調？一定會有的。</div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BTC/USDT</span> <span class="pair-up">+6.04%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：大資金出貨期防護（為什麼需要 5-Zone 階梯鎖金）</div>
+                <div>飛哥一針見血地指出「反覆拉高是為了大資金出貨」，這正是為什麼我們 5-Zone 系統在比值進入過熱警戒（Zone 3）和極度貪婪（Zone 4）時，**會自動將 63%~95% 的資金全面轉移進 PAXG 黃金保險箱**，絕不留戀最後一根魚尾！</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 23.5k 次閱讀</span>
+                    <span class="stat-entry">👍 21 點讚</span>
+                    <span class="stat-entry">💬 21 留言</span>
+                </div>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-367693330776987', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/367693330776987" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 貼文 9：5.7萬底/20萬頂與黃金防守 -->
+        <div class="post-card" data-cat="macro" data-keywords="踏空 5萬 5.7萬 20萬 15萬 出貨 黃金 XAU 定投 70000 黑粉 鐵粉">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">逃頂規劃</span>
+                </div>
+                <div class="post-id-tag">Post ID: 368044569810274</div>
+            </div>
+            <h2 class="post-title">回應踏空爭議：5.7 萬熊市大底 ＆ 15 萬跑得快提前逃頂原則</h2>
+            <div class="content-box" id="post-368044569810274">很多人說因爲我看最後一跌，然後踏空了，我想說的是在七月中旬之前，我確實看最後一跌，說了$BTC 5萬抄底，但是7月20號因爲不可言說的原因，我這個賬號被禁言了一個月，然後我一直在小號更新，7月30號就跟大家說了，建議大家定投，8月3號黃金在4000的也跟大家說了，爲了防止踏空，我買了黃金$XAU ，8月5號再次發表長篇大論說了不可能買到最底部，建議大家還是定投爲主。
+
+現在踏空了，又來怪我了，OK就算你沒有看到我小號，那麼在8月20號過後，我這個大號解封，行情漲到70000附近的時候，我也說了應該是牛市來了，建議大家分批上車，所以到底是我導致你踏空，還是因爲你自己導致你自己踏空？都是成年人了，總想買到最底部這是不可能的事情，哪怕是機構都是分批建倉，你自己總想買到最底部，現在踏空了又來怪別人，都是別人的錯。
+
+我在廣場做博主幾年了，不說百分之百準確，80%的準確性是有的，特別是對大方向基本上沒有錯過，去年很多人喊慢牛的時候，也是我第一個站出來說不可能慢牛，一定會有熊市，當時也是被罵慘了，結果熊市來了這些人就不吱聲了，還是那個觀點，我的粉絲很多都是黑粉轉化過來的，關注我時間久了真正瞭解我了，看懂了我的行情分析，最後都開始變成鐵粉，一切交給時間來看。</div>
+            <div class="quoted-box">
+                <div class="quoted-label">📌 引用飛哥牛市大目標 (核心逃頂點位)：</div>
+                <div>「這輪牛市基調已經確定了，5.7萬就是熊市的底部，20萬是這一輪牛市的頂點，但是根據跑得快原則，我打算15萬附近就要開始出貨給有緣人。$BTC」</div>
+            </div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BTC/USDT</span> <span class="pair-up">+6.04%</span></div>
+                <div class="pair-chip"><span>XAU/USDT (黃金)</span> <span class="pair-up">+0.60%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：分批建倉與「跑得快原則」提前逃頂</div>
+                <div>大行情不要妄想摸頂買底。飛哥看 20 萬頂點卻選擇在 15 萬就出貨，這種「放棄最後 25% 暴利換取 100% 本金安全」的思想，正是 5-Zone 在比值達到 1.40（Zone 4）時立刻鎖定 95% PAXG 的精髓。</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👁️ 20.3k 次閱讀</span>
+                    <span class="stat-entry">👍 27 點讚</span>
+                    <span class="stat-entry">💬 22 留言</span>
+                </div>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-368044569810274', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/368044569810274" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 貼文 10：牛市出貨跑得快金句 -->
+        <div class="post-card" data-cat="macro" data-keywords="5.7萬 20萬 15萬 跑得快 出貨 有緣人 BTC 牛市頂點">
+            <div class="post-top-row">
+                <div class="meta-badges">
+                    <span class="badge-source">🌐 幣安廣場官方原文</span>
+                    <span class="badge-category">逃頂金句</span>
+                </div>
+                <div class="post-id-tag">Post ID: 367702031819962</div>
+            </div>
+            <h2 class="post-title">這輪牛市基調確定：5.7 萬底、20 萬頂、15 萬出貨給有緣人</h2>
+            <div class="content-box" id="post-367702031819962">這輪牛市基調已經確定了，5.7萬就是熊市的底部，20萬是這一輪牛市的頂點，但是根據跑得快原則，我打算15萬附近就要開始出貨給有緣人。$BTC</div>
+            <div class="pairs-bar">
+                <div class="pair-chip"><span>BTC/USDT</span> <span class="pair-up">+6.04%</span></div>
+            </div>
+            <div class="takeaway-card">
+                <div class="takeaway-head">💡 量化啟示：不吃最後一條魚尾</div>
+                <div>在 15 萬開始分批止盈，絕不賭能否摸到 20 萬。落袋為安才是真正的利潤。</div>
+            </div>
+            <div class="post-footer">
+                <div class="stats-group">
+                    <span class="stat-entry">👍 50 點讚</span>
+                    <span class="stat-entry">💬 27 留言</span>
+                </div>
+                <div class="action-group">
+                    <button class="btn-action" onclick="copyContent('post-367702031819962', this)">📋 複製原文</button>
+                    <a href="https://www.binance.com/zh-TC/square/post/367702031819962" target="_blank" class="btn-action btn-link">🔗 幣安原文</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="empty-state" id="emptyState" style="display: none;">
-        <span>🔍 沒有找到符合條件的貼文，請嘗試更換關鍵字或篩選標籤。</span>
+    <div class="empty-indicator" id="emptyState" style="display: none;">
+        <span>🔍 沒有找到相符的貼文，請嘗試更換搜尋關鍵字或分類標籤。</span>
     </div>
 </div>
 
 <script>
-    // 篩選功能
-    let currentCategory = 'all';
+    let activeCat = 'all';
 
-    function setFilter(category, btn) {
-        currentCategory = category;
+    function filterPosts(cat, btn) {
+        activeCat = cat;
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        applyFilters();
+        runSearch();
     }
 
-    // 搜尋功能
-    document.getElementById('searchInput').addEventListener('input', applyFilters);
+    document.getElementById('searchInput').addEventListener('input', runSearch);
 
-    function applyFilters() {
+    function runSearch() {
         const query = document.getElementById('searchInput').value.toLowerCase().trim();
         const cards = document.querySelectorAll('.post-card');
-        let visibleCount = 0;
+        let count = 0;
 
         cards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            const tokens = (card.getAttribute('data-tokens') || '').toLowerCase();
-            const textContent = card.innerText.toLowerCase();
+            const cat = card.getAttribute('data-cat');
+            const keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+            const text = card.innerText.toLowerCase();
 
-            const matchCat = (currentCategory === 'all' || category === currentCategory);
-            const matchQuery = (!query || textContent.includes(query) || tokens.includes(query));
+            const matchCat = (activeCat === 'all' || cat === activeCat);
+            const matchQuery = (!query || text.includes(query) || keywords.includes(query));
 
             if (matchCat && matchQuery) {
                 card.style.display = 'block';
-                visibleCount++;
+                count++;
             } else {
                 card.style.display = 'none';
             }
         });
 
-        const emptyEl = document.getElementById('emptyState');
-        if (visibleCount === 0) {
-            emptyEl.style.display = 'block';
+        const empty = document.getElementById('emptyState');
+        if (count === 0) {
+            empty.style.display = 'block';
         } else {
-            emptyEl.style.display = 'none';
+            empty.style.display = 'none';
         }
-
-        document.getElementById('totalPostsCount').innerText = visibleCount;
     }
 
-    // 一鍵複製
-    function copyText(elementId, btn) {
-        const text = document.getElementById(elementId).innerText;
+    function copyContent(elId, btn) {
+        const text = document.getElementById(elId).innerText;
         navigator.clipboard.writeText(text).then(() => {
             const orig = btn.innerText;
             btn.innerText = '✅ 已複製！';
-            btn.style.borderColor = '#10b981';
-            btn.style.color = '#10b981';
+            btn.style.borderColor = '#2ebd85';
+            btn.style.color = '#2ebd85';
             setTimeout(() => {
                 btn.innerText = orig;
                 btn.style.borderColor = '';
                 btn.style.color = '';
             }, 1800);
         }).catch(err => {
-            alert('複製失敗，請手動選取複製');
+            alert('複製失敗，請手動選取文字');
         });
     }
 </script>
