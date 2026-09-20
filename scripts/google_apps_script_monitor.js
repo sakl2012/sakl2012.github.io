@@ -168,77 +168,142 @@ function safeFetchJson(url) {
 }
 
 // ==========================================
-// === 取得即時價格 (OKX 主力 -> Binance api1 -> Bybit) ===
+// === 取得即時價格 (6級頂級容災：OKX -> Bybit -> Gate.io -> KuCoin -> Binance -> Coinbase) ===
 // ==========================================
 
 function getCurrentPrice() {
-  // 1. 首選 OKX (對 Google Cloud 最友善，零 403 阻擋)
-  const okxUrl = "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT";
-  const oData = safeFetchJson(okxUrl);
-  if (oData && oData.data && oData.data.length > 0) return parseFloat(oData.data[0].last);
+  // 1. OKX
+  try {
+    const oData = safeFetchJson("https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT");
+    if (oData && oData.data && oData.data.length > 0) return parseFloat(oData.data[0].last);
+  } catch (e) {}
 
-  // 2. 備援源 Binance api1
-  const bUrl = "https://api1.binance.com/api/v3/ticker/price?symbol=BTCUSDT";
-  const bData = safeFetchJson(bUrl);
-  if (bData && bData.price) return parseFloat(bData.price);
+  // 2. Bybit
+  try {
+    const bybitData = safeFetchJson("https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTCUSDT");
+    if (bybitData && bybitData.result && bybitData.result.list && bybitData.result.list.length > 0) return parseFloat(bybitData.result.list[0].lastPrice);
+  } catch (e) {}
 
-  // 3. 備援源 Bybit
-  const bybitUrl = "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTCUSDT";
-  const bybitData = safeFetchJson(bybitUrl);
-  if (bybitData && bybitData.result && bybitData.result.list && bybitData.result.list.length > 0) return parseFloat(bybitData.result.list[0].lastPrice);
+  // 3. Gate.io
+  try {
+    const gateData = safeFetchJson("https://api.gateio.ws/api/v4/spot/tickers?currency_pair=BTC_USDT");
+    if (gateData && gateData.length > 0 && gateData[0].last) return parseFloat(gateData[0].last);
+  } catch (e) {}
+
+  // 4. KuCoin
+  try {
+    const kuData = safeFetchJson("https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=BTC-USDT");
+    if (kuData && kuData.data && kuData.data.price) return parseFloat(kuData.data.price);
+  } catch (e) {}
+
+  // 5. Binance api1 / api3
+  try {
+    const bData = safeFetchJson("https://api1.binance.com/api/v3/ticker/price?symbol=BTCUSDT") || safeFetchJson("https://api3.binance.com/api/v3/ticker/price?symbol=BTCUSDT");
+    if (bData && bData.price) return parseFloat(bData.price);
+  } catch (e) {}
+
+  // 6. Coinbase Exchange
+  try {
+    const cbData = safeFetchJson("https://api.exchange.coinbase.com/products/BTC-USD/ticker");
+    if (cbData && cbData.price) return parseFloat(cbData.price);
+  } catch (e) {}
 
   return null;
 }
 
 // ==========================================
-// === 取得 200 日線 MA (OKX 主力 -> Binance api1) ===
+// === 取得 200 日線 MA (4級容災：OKX -> Bybit -> Gate.io -> Binance) ===
 // ==========================================
 
 function getYesterdayMA200() {
-  // 1. 首選 OKX 日線
-  const okxUrl = "https://www.okx.com/api/v5/market/candles?instId=BTC-USDT&bar=1Dutc&limit=201";
-  const oData = safeFetchJson(okxUrl);
-  if (oData && oData.data && oData.data.length >= 200) {
-    let sum = 0;
-    const len = Math.min(200, oData.data.length);
-    for (let i = 0; i < len; i++) sum += parseFloat(oData.data[i][4]);
-    return sum / len;
-  }
+  // 1. OKX
+  try {
+    const oData = safeFetchJson("https://www.okx.com/api/v5/market/candles?instId=BTC-USDT&bar=1Dutc&limit=201");
+    if (oData && oData.data && oData.data.length >= 200) {
+      let sum = 0;
+      const len = Math.min(200, oData.data.length);
+      for (let i = 0; i < len; i++) sum += parseFloat(oData.data[i][4]);
+      return sum / len;
+    }
+  } catch (e) {}
 
-  // 2. 備援 Binance api1
-  const bUrl = "https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=200";
-  const bData = safeFetchJson(bUrl);
-  if (bData && Array.isArray(bData) && bData.length >= 200) {
-    let sum = 0;
-    for (let i = 0; i < 200; i++) sum += parseFloat(bData[i][4]);
-    return sum / 200;
-  }
+  // 2. Bybit
+  try {
+    const bybitData = safeFetchJson("https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=D&limit=200");
+    if (bybitData && bybitData.result && bybitData.result.list && bybitData.result.list.length >= 200) {
+      let sum = 0;
+      for (let i = 0; i < 200; i++) sum += parseFloat(bybitData.result.list[i][4]);
+      return sum / 200;
+    }
+  } catch (e) {}
+
+  // 3. Gate.io
+  try {
+    const gateData = safeFetchJson("https://api.gateio.ws/api/v4/spot/candlesticks?currency_pair=BTC_USDT&interval=1d&limit=200");
+    if (gateData && gateData.length >= 200) {
+      let sum = 0;
+      for (let i = 0; i < 200; i++) sum += parseFloat(gateData[i][2]);
+      return sum / 200;
+    }
+  } catch (e) {}
+
+  // 4. Binance api1
+  try {
+    const bData = safeFetchJson("https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=200");
+    if (bData && Array.isArray(bData) && bData.length >= 200) {
+      let sum = 0;
+      for (let i = 0; i < 200; i++) sum += parseFloat(bData[i][4]);
+      return sum / 200;
+    }
+  } catch (e) {}
 
   return null;
 }
 
 // ==========================================
-// === 取得 72 小時 SMA (OKX 主力 -> Binance api1) ===
+// === 取得 72 小時 SMA (4級容災：OKX -> Bybit -> Gate.io -> Binance) ===
 // ==========================================
 
 function get72hSMA() {
-  // 1. 首選 OKX 小時線
-  const okxUrl = "https://www.okx.com/api/v5/market/candles?instId=BTC-USDT&bar=1H&limit=72";
-  const oData = safeFetchJson(okxUrl);
-  if (oData && oData.data && oData.data.length >= 72) {
-    let sum = 0;
-    for (let i = 0; i < 72; i++) sum += parseFloat(oData.data[i][4]);
-    return sum / 72;
-  }
+  // 1. OKX
+  try {
+    const oData = safeFetchJson("https://www.okx.com/api/v5/market/candles?instId=BTC-USDT&bar=1H&limit=72");
+    if (oData && oData.data && oData.data.length >= 72) {
+      let sum = 0;
+      for (let i = 0; i < 72; i++) sum += parseFloat(oData.data[i][4]);
+      return sum / 72;
+    }
+  } catch (e) {}
 
-  // 2. 備援 Binance api1
-  const bUrl = "https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=72";
-  const bData = safeFetchJson(bUrl);
-  if (bData && Array.isArray(bData) && bData.length >= 72) {
-    let sum = 0;
-    for (let i = 0; i < 72; i++) sum += parseFloat(bData[i][4]);
-    return sum / 72;
-  }
+  // 2. Bybit
+  try {
+    const bybitData = safeFetchJson("https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=60&limit=72");
+    if (bybitData && bybitData.result && bybitData.result.list && bybitData.result.list.length >= 72) {
+      let sum = 0;
+      for (let i = 0; i < 72; i++) sum += parseFloat(bybitData.result.list[i][4]);
+      return sum / 72;
+    }
+  } catch (e) {}
+
+  // 3. Gate.io
+  try {
+    const gateData = safeFetchJson("https://api.gateio.ws/api/v4/spot/candlesticks?currency_pair=BTC_USDT&interval=1h&limit=72");
+    if (gateData && gateData.length >= 72) {
+      let sum = 0;
+      for (let i = 0; i < 72; i++) sum += parseFloat(gateData[i][2]);
+      return sum / 72;
+    }
+  } catch (e) {}
+
+  // 4. Binance api1
+  try {
+    const bData = safeFetchJson("https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=72");
+    if (bData && Array.isArray(bData) && bData.length >= 72) {
+      let sum = 0;
+      for (let i = 0; i < 72; i++) sum += parseFloat(bData[i][4]);
+      return sum / 72;
+    }
+  } catch (e) {}
 
   return null;
 }
@@ -246,6 +311,34 @@ function get72hSMA() {
 // ==========================================================
 // === 補漲智能持倉換幣 / 止盈輪動監控 (LINK, ICP, LTC 三大補漲標的) ===
 // ==========================================================
+
+function getSingleTokenPrice(sym, okxId) {
+  // 1. Bybit
+  try {
+    const bybitData = safeFetchJson(`https://api.bybit.com/v5/market/tickers?category=spot&symbol=${sym}USDT`);
+    if (bybitData && bybitData.result && bybitData.result.list && bybitData.result.list.length > 0) return parseFloat(bybitData.result.list[0].lastPrice);
+  } catch (e) {}
+
+  // 2. Gate.io
+  try {
+    const gateData = safeFetchJson(`https://api.gateio.ws/api/v4/spot/tickers?currency_pair=${sym}_USDT`);
+    if (gateData && gateData.length > 0 && gateData[0].last) return parseFloat(gateData[0].last);
+  } catch (e) {}
+
+  // 3. KuCoin
+  try {
+    const kuData = safeFetchJson(`https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=${sym}-USDT`);
+    if (kuData && kuData.data && kuData.data.price) return parseFloat(kuData.data.price);
+  } catch (e) {}
+
+  // 4. Binance api1
+  try {
+    const fbData = safeFetchJson(`https://api1.binance.com/api/v3/ticker/price?symbol=${sym}USDT`);
+    if (fbData && fbData.price) return parseFloat(fbData.price);
+  } catch (e) {}
+
+  return null;
+}
 
 function checkCoinRotationAlert() {
   try {
@@ -255,16 +348,16 @@ function checkCoinRotationAlert() {
       LTCUSDT:  { sym: "LTC",  name: "Litecoin", okxId: "LTC-USDT", tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" }
     };
 
-    // 1. 批次取得各幣最新現價 (OKX -> Binance api1 備援)
+    // 1. 批次取得 OKX 全現貨現價
     const priceMap = {};
-    const okxUrl = "https://www.okx.com/api/v5/market/tickers?instType=SPOT";
-    const okxData = safeFetchJson(okxUrl);
-    
-    if (okxData && okxData.data) {
-      for (let d of okxData.data) {
-        priceMap[d.instId] = parseFloat(d.last);
+    try {
+      const okxData = safeFetchJson("https://www.okx.com/api/v5/market/tickers?instType=SPOT");
+      if (okxData && okxData.data) {
+        for (let d of okxData.data) {
+          priceMap[d.instId] = parseFloat(d.last);
+        }
       }
-    }
+    } catch (e) {}
 
     const props = PropertiesService.getScriptProperties();
     const now = new Date().getTime();
@@ -274,11 +367,9 @@ function checkCoinRotationAlert() {
       const info = targets[bKey];
       let curPrice = priceMap[info.okxId];
 
-      // 若 OKX 未取到則走備援
+      // 若 OKX 未取到，自動走 Bybit -> Gate.io -> KuCoin -> Binance 4層備援
       if (!curPrice) {
-        const fallbackUrl = `https://api1.binance.com/api/v3/ticker/price?symbol=${bKey}`;
-        const fbData = safeFetchJson(fallbackUrl);
-        if (fbData && fbData.price) curPrice = parseFloat(fbData.price);
+        curPrice = getSingleTokenPrice(info.sym, info.okxId);
       }
 
       if (!curPrice) continue;
