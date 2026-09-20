@@ -240,3 +240,88 @@ function get72hSMA() {
 
   return null;
 }
+
+// ==========================================================
+// === 補漲智能持倉換幣 / 止盈輪動監控 (LINK, ICP, LTC, ENA) ===
+// ==========================================================
+
+function checkCoinRotationAlert() {
+  try {
+    const targets = {
+      LINKUSDT: { sym: "LINK", name: "Chainlink", tpTarget: 14.50, slFloor: 11.00, nextRotate: "AAVE 或 NEAR" },
+      ICPUSDT:  { sym: "ICP",  name: "Internet Computer", tpTarget: 3.30, slFloor: 2.45, nextRotate: "UNI 或 ONDO" },
+      LTCUSDT:  { sym: "LTC",  name: "Litecoin", tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" },
+      ENAUSDT:  { sym: "ENA",  name: "Ethena", tpTarget: 0.2080, slFloor: 0.1650, nextRotate: "本金撤出或投入現貨三幣持倉" }
+    };
+
+    const symbolsParam = encodeURIComponent(JSON.stringify(Object.keys(targets)));
+    const url = `https://data-api.binance.vision/api/v3/ticker/price?symbols=${symbolsParam}`;
+    const data = safeFetchJson(url);
+
+    if (!data || !Array.isArray(data)) {
+      Logger.log("⚠️ 換幣輪動監控：無法獲取即時幣價。");
+      return;
+    }
+
+    const props = PropertiesService.getScriptProperties();
+    const now = new Date().getTime();
+
+    for (let item of data) {
+      const info = targets[item.symbol];
+      if (!info) continue;
+      const curPrice = parseFloat(item.price);
+      
+      const lastAlertKey = `LAST_ALERT_${info.sym}`;
+      const lastAlertTime = parseInt(props.getProperty(lastAlertKey) || "0");
+      const COOLDOWN_MS = 12 * 60 * 60 * 1000; // 同一幣種 12 小時冷卻，避免洗信
+
+      if (now - lastAlertTime < COOLDOWN_MS) continue;
+
+      // 1. 觸發補漲達成 ➔ 獲利了結換幣信號
+      if (curPrice >= info.tpTarget) {
+        const subject = `🎯【智能持倉換幣提醒】${info.sym} 補漲目標已達成 ($${curPrice})！建議獲利了結換倉！`;
+        const body = `
+哈囉！您設定的補漲智能持倉出現了【獲利了結 / 換幣輪動】信號！
+
+🔥 標的：${info.name} (${info.sym})
+📈 當前現價：$${curPrice.toFixed(4)}
+🎯 原定補漲目標位：$${info.tpTarget.toFixed(4)} (已達成突破！)
+
+==================================================
+💡 建議操盤執行 SOP：
+==================================================
+1. 打開幣安 App ➔ 進入「智能持倉」機器人列表。
+2. 找到【${info.sym} + QQQB + PAXG】機器人，點擊「終止並以市價平倉現貨」。
+   - 此時該輪補漲波段利潤已全數鎖定（且一部分已自然沉澱在 QQQB/PAXG 中）。
+3. 資金換倉下一位低位補漲標的：
+   - 推薦接力換入：【${info.nextRotate}】！
+   - 重新創建新的 3 幣機器人（例如：新幣 35% / QQQB 35% / PAXG 30%，偏差 1%）。
+==================================================
+
+祝 獲利滿滿，複利長青！
+        `;
+        MailApp.sendEmail(YOUR_EMAIL, subject, body);
+        Logger.log(`Email 換幣提醒已發送: ${info.sym}`);
+        props.setProperty(lastAlertKey, now.toString());
+      }
+      // 2. 觸發破位跌破強支撐 ➔ 防守止損換幣信號
+      else if (curPrice <= info.slFloor) {
+        const subject = `⚠️【智能持倉破位警告】${info.sym} 跌破關鍵支撐 ($${curPrice})！`;
+        const body = `
+注意！您設定的補漲標的已跌破防守頸線！
+
+🚨 標的：${info.name} (${info.sym})
+📉 當前現價：$${curPrice.toFixed(4)}
+🛑 關鍵防守底線：$${info.slFloor.toFixed(4)} (已跌破)
+
+建議立即檢查盤面，評估是否手動關閉該機器人以防資金被深套，或換入更強勢的 Alpha 龍頭。
+        `;
+        MailApp.sendEmail(YOUR_EMAIL, subject, body);
+        Logger.log(`Email 破位提醒已發送: ${info.sym}`);
+        props.setProperty(lastAlertKey, now.toString());
+      }
+    }
+  } catch (err) {
+    Logger.log("換幣監控全域異常: " + err.toString());
+  }
+}
