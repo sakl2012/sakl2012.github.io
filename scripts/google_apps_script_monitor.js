@@ -337,10 +337,10 @@ function get72hSMA() {
 //      - 結構：4H 放量突破 $11.72 頸線發動補漲，目前於 $12.00 上方整理。
 //      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
 //      - slFloor:  $11.70 (-4.8%)  -> 9/18 放量起漲大陽線之頂底轉換頸線（盈虧比 3.75:1）。
-//    • UNI (成本 $8.785):
-//      - 結構：48小時極致橫盤縮量，4H 均線完全黏合收斂，準備爆發大陽線。
-//      - tpTarget: $10.50 (+19.5%) -> 2026 上半年密集阻力平台與整數關卡。
-//      - slFloor:  $8.45 (-3.8%)   -> 48小時震盪箱體下沿與防守頸線（盈虧比 5.12:1）。
+//    • AAVE (成本 $137.59):
+//      - 結構：飛哥最新 9/21 觀察名單第 1 名，醞釀「代幣經濟學 3.0」重大升級，回踩 $133 支撐確認。
+//      - tpTarget: $165.00 (+19.9%) -> 2026 日線密集阻力天花板。
+//      - slFloor:  $132.00 (-4.1%)  -> 4H 雙底支撐與起漲頸線（盈虧比 4.90:1）。
 //    • ICP (成本 $2.761):
 //      - 結構：9/18 於 $2.63 發動放量突破大陽線（最低 $2.623）衝擊 $2.97。
 //      - tpTarget: $3.25 (+17.7%) -> 2026 上半年四重大頂頸線密集壓制區。
@@ -378,9 +378,9 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      SUIUSDT:    { sym: "SUI",    name: "Sui",               okxId: "SUI-USDT",    entryPrice: 0.8552,tpTarget: 1.050,slFloor: 0.820, nextRotate: "AAVE 或 PENDLE" },
-      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 11.70,nextRotate: "AAVE 或 NEAR" },
-      UNIUSDT:    { sym: "UNI",    name: "Uniswap",           okxId: "UNI-USDT",    entryPrice: 8.785, tpTarget: 10.50,slFloor: 8.45,  nextRotate: "AAVE 或 SUI" },
+      SUIUSDT:    { sym: "SUI",    name: "Sui",               okxId: "SUI-USDT",    entryPrice: 0.8552,tpTarget: 1.050,slFloor: 0.820, nextRotate: "ONDO 或 PENDLE" },
+      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 11.70,nextRotate: "ONDO 或 NEAR" },
+      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.59,tpTarget: 165.00,slFloor: 132.00,nextRotate: "ONDO 或 TAO" },
       ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.63,  nextRotate: "ONDO 或 SUI" }
     };
 
