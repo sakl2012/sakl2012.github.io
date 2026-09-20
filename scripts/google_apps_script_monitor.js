@@ -325,3 +325,10 @@ function checkCoinRotationAlert() {
     Logger.log("換幣監控全域異常: " + err.toString());
   }
 }
+
+// 支援外部遠端載入器 (Remote Dynamic Loader)
+if (typeof globalThis !== 'undefined') {
+  globalThis.checkZoneAndAlert = checkZoneAndAlert;
+  globalThis.checkCoinRotationAlert = checkCoinRotationAlert;
+}
+
