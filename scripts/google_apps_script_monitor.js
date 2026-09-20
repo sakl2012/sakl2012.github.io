@@ -337,10 +337,10 @@ function get72hSMA() {
 //      - 結構：4H 放量突破 $11.72 頸線發動補漲，目前於 $12.00 上方整理。
 //      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
 //      - slFloor:  $11.70 (-4.8%)  -> 9/18 放量起漲大陽線之頂底轉換頸線（盈虧比 3.75:1）。
-//    • LTC (成本 $57.780):
-//      - 結構：均線金叉向上，9/18 於 $55.82 發動放量大陽線衝高。
-//      - tpTarget: $65.00 (+12.5%) -> 半年線下降趨勢線終極壓制位。
-//      - slFloor:  $55.80 (-3.4%)  -> 9/18 4H 放量起漲大陽線之防守底（盈虧比 3.68:1）。
+//    • UNI (成本 $8.785):
+//      - 結構：48小時極致橫盤縮量，4H 均線完全黏合收斂，準備爆發大陽線。
+//      - tpTarget: $10.50 (+19.5%) -> 2026 上半年密集阻力平台與整數關卡。
+//      - slFloor:  $8.45 (-3.8%)   -> 48小時震盪箱體下沿與防守頸線（盈虧比 5.12:1）。
 //    • ICP (成本 $2.761):
 //      - 結構：9/18 於 $2.63 發動放量突破大陽線（最低 $2.623）衝擊 $2.97。
 //      - tpTarget: $3.25 (+17.7%) -> 2026 上半年四重大頂頸線密集壓制區。
@@ -378,10 +378,10 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      PENDLEUSDT: { sym: "PENDLE", name: "Pendle",            okxId: "PENDLE-USDT", entryPrice: 2.57,  tpTarget: 3.15, slFloor: 2.48, nextRotate: "AAVE 或 UNI" },
+      PENDLEUSDT: { sym: "PENDLE", name: "Pendle",            okxId: "PENDLE-USDT", entryPrice: 2.57,  tpTarget: 3.15, slFloor: 2.48, nextRotate: "AAVE 或 SUI" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 11.70,nextRotate: "AAVE 或 NEAR" },
-      LTCUSDT:    { sym: "LTC",    name: "Litecoin",          okxId: "LTC-USDT",    entryPrice: 57.78, tpTarget: 65.00, slFloor: 55.80, nextRotate: "AAVE 或 LINK" },
-      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.63,  nextRotate: "UNI 或 ONDO" }
+      UNIUSDT:    { sym: "UNI",    name: "Uniswap",           okxId: "UNI-USDT",    entryPrice: 8.785, tpTarget: 10.50,slFloor: 8.45,  nextRotate: "AAVE 或 SUI" },
+      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.63,  nextRotate: "ONDO 或 SUI" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
