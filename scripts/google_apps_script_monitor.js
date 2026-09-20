@@ -343,9 +343,10 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      LINKUSDT: { sym: "LINK", name: "Chainlink", okxId: "LINK-USDT", tpTarget: 14.50, slFloor: 11.00, nextRotate: "AAVE 或 NEAR" },
-      ICPUSDT:  { sym: "ICP",  name: "Internet Computer", okxId: "ICP-USDT", tpTarget: 3.30, slFloor: 2.45, nextRotate: "UNI 或 ONDO" },
-      LTCUSDT:  { sym: "LTC",  name: "Litecoin", okxId: "LTC-USDT", tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" }
+      PENDLEUSDT: { sym: "PENDLE", name: "Pendle", okxId: "PENDLE-USDT", entryPrice: 2.57,  tpTarget: 3.15, slFloor: 2.20, nextRotate: "AAVE 或 UNI" },
+      LINKUSDT:   { sym: "LINK",   name: "Chainlink", okxId: "LINK-USDT", entryPrice: 12.90, tpTarget: 14.50, slFloor: 10.80, nextRotate: "AAVE 或 NEAR" },
+      LTCUSDT:    { sym: "LTC",    name: "Litecoin",  okxId: "LTC-USDT",  entryPrice: 57.78, tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" },
+      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT", entryPrice: 2.761, tpTarget: 3.30, slFloor: 2.45, nextRotate: "UNI 或 ONDO" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
@@ -373,7 +374,13 @@ function checkCoinRotationAlert() {
       }
 
       if (!curPrice) continue;
-      logArr.push(`${info.sym}: $${curPrice}`);
+      
+      const entry = info.entryPrice || curPrice;
+      const pnlPct = ((curPrice - entry) / entry) * 100;
+      const pnlSign = pnlPct >= 0 ? '+' : '';
+      const pnlStr = ` (${pnlSign}${pnlPct.toFixed(2)}%)`;
+      
+      logArr.push(`${info.sym}: $${curPrice}${pnlStr}`);
 
       const lastAlertKey = `LAST_ALERT_${info.sym}`;
       const lastAlertTime = parseInt(props.getProperty(lastAlertKey) || "0");
@@ -383,13 +390,15 @@ function checkCoinRotationAlert() {
 
       // 1. 觸發補漲達成 ➔ 獲利了結換幣信號
       if (curPrice >= info.tpTarget) {
-        const subject = `🎯【智能持倉換幣提醒】${info.sym} 補漲目標已達成 ($${curPrice})！建議獲利了結換倉！`;
+        const subject = `🎯【智能持倉換幣提醒】${info.sym} 補漲目標已達成 ($${curPrice}${pnlStr})！建議獲利了結換倉！`;
         const body = `
 哈囉！您設定的補漲智能持倉出現了【獲利了結 / 換幣輪動】信號！
 
 🔥 標的：${info.name} (${info.sym})
-📈 當前現價：$${curPrice.toFixed(4)}
+💰 建倉成本：$${entry.toFixed(4)}
+📈 當前現價：$${curPrice.toFixed(4)}${pnlStr}
 🎯 原定補漲目標位：$${info.tpTarget.toFixed(4)} (已達成突破！)
+🛑 關鍵防守底線：$${info.slFloor.toFixed(4)}
 
 ==================================================
 💡 建議操盤執行 SOP：
@@ -410,13 +419,15 @@ function checkCoinRotationAlert() {
       }
       // 2. 觸發破位跌破強支撐 ➔ 防守止損換幣信號
       else if (curPrice <= info.slFloor) {
-        const subject = `⚠️【智能持倉破位警告】${info.sym} 跌破關鍵支撐 ($${curPrice})！`;
+        const subject = `⚠️【智能持倉破位警告】${info.sym} 跌破關鍵支撐 ($${curPrice}${pnlStr})！`;
         const body = `
 注意！您設定的補漲標的已跌破防守頸線！
 
 🚨 標的：${info.name} (${info.sym})
-📉 當前現價：$${curPrice.toFixed(4)}
+💰 建倉成本：$${entry.toFixed(4)}
+📉 當前現價：$${curPrice.toFixed(4)}${pnlStr}
 🛑 關鍵防守底線：$${info.slFloor.toFixed(4)} (已跌破)
+🎯 原定補漲目標位：$${info.tpTarget.toFixed(4)}
 
 建議立即檢查盤面，評估是否手動關閉該機器人以防資金被深套，或換入更強勢的 Alpha 龍頭。
         `;
