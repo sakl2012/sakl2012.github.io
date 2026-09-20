@@ -107,38 +107,38 @@ ${allocationText}
 function getAllocationConfig(zone) {
   if (zone === 0) {
     return `【Zone 0: 深熊大底】(極限雙抄底進攻模式 - 5年全週期最佳化認證)
-👉 👑 核心 1 (20% 資金): BTC 65% | QQQB 25% | PAXG 10% (偏差1%)
-👉 🏛️ 核心 2 (20% 資金): ETH 65% | QQQB 25% | PAXG 10% (偏差1%)
-👉 🤖 核心 3 (10% 資金): TAO 65% | QQQB 25% | PAXG 10% (偏差1%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 65% | QQQB 25% | PAXG 10% (BNB, UNI, AAVE, LINK, NEAR, ONDO)`;
+👉 👑 核心 1 (20% 資金): BTC 65% | QQQB 25% | PAXG 10% (偏差2%)
+👉 🏛️ 核心 2 (20% 資金): ETH 65% | QQQB 25% | PAXG 10% (偏差2%)
+👉 🤖 核心 3 (10% 資金): TAO 65% | QQQB 25% | PAXG 10% (偏差2%)
+👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
   }
   else if (zone === 1) {
     return `【Zone 1: 初牛修復】(防震盪過渡模式 - 均勢動態累積)
-👉 👑 核心 1 (20% 資金): BTC 50% | QQQB 30% | PAXG 20% (偏差1%)
-👉 🏛️ 核心 2 (20% 資金): ETH 50% | QQQB 30% | PAXG 20% (偏差1%)
-👉 🤖 核心 3 (10% 資金): TAO 50% | QQQB 30% | PAXG 20% (偏差1%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 50% | QQQB 30% | PAXG 20% (BNB, UNI, AAVE, LINK, NEAR, ONDO)`;
+👉 👑 核心 1 (20% 資金): BTC 50% | QQQB 30% | PAXG 20% (偏差2%)
+👉 🏛️ 核心 2 (20% 資金): ETH 50% | QQQB 30% | PAXG 20% (偏差2%)
+👉 🤖 核心 3 (10% 資金): TAO 50% | QQQB 30% | PAXG 20% (偏差2%)
+👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
   } 
   else if (zone === 2) {
     return `【Zone 2: 牛市巡航】(穩健主升浪模式 - 現正運行 ⭐)
-👉 👑 核心 1 (20% 資金): BTC 45% | QQQB 35% | PAXG 20% (偏差1%)
-👉 🏛️ 核心 2 (20% 資金): ETH 40% | QQQB 35% | PAXG 25% (偏差1%)
-👉 🤖 核心 3 (10% 資金): TAO 35% | QQQB 35% | PAXG 30% (偏差1%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (BNB, UNI, AAVE, LINK, NEAR, ONDO)`;
+👉 👑 核心 1 (20% 資金): BTC 45% | QQQB 35% | PAXG 20% (偏差2%)
+👉 🏛️ 核心 2 (20% 資金): ETH 40% | QQQB 35% | PAXG 25% (偏差2%)
+👉 🤖 核心 3 (10% 資金): TAO 35% | QQQB 35% | PAXG 30% (偏差2%)
+👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
   } 
   else if (zone === 3) {
     return `【Zone 3: 過熱警戒】(高位鎖利模式 - 大幅沉澱美股與黃金)
-👉 👑 核心 1 (20% 資金): BTC 30% | QQQB 35% | PAXG 35% (偏差1%)
-👉 🏛️ 核心 2 (20% 資金): ETH 25% | QQQB 35% | PAXG 40% (偏差1%)
-👉 🤖 核心 3 (10% 資金): TAO 20% | QQQB 40% | PAXG 40% (偏差1%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 20% | QQQB 40% | PAXG 40% (BNB, UNI, AAVE, LINK, NEAR, ONDO)`;
+👉 👑 核心 1 (20% 資金): BTC 30% | QQQB 35% | PAXG 35% (偏差2%)
+👉 🏛️ 核心 2 (20% 資金): ETH 25% | QQQB 35% | PAXG 40% (偏差2%)
+👉 🤖 核心 3 (10% 資金): TAO 20% | QQQB 40% | PAXG 40% (偏差2%)
+👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
   } 
   else if (zone === 4) {
     return `【Zone 4: 極度貪婪/逃頂】(終極避險逃頂模式 - 物理金條封存)
-👉 👑 核心 1 (20% 資金): BTC 5% | SPYB 30% | PAXG 65% (偏差1%)
-👉 🏛️ 核心 2 (20% 資金): ETH 5% | SPYB 30% | PAXG 65% (偏差1%)
-👉 🤖 核心 3 (10% 資金): TAO 5% | SPYB 25% | PAXG 70% (偏差1%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 5% | SPYB 25% | PAXG 70% (BNB, UNI, AAVE, LINK, NEAR, ONDO)`;
+👉 👑 核心 1 (20% 資金): BTC 5% | SPYB 30% | PAXG 65% (偏差2%)
+👉 🏛️ 核心 2 (20% 資金): ETH 5% | SPYB 30% | PAXG 65% (偏差2%)
+👉 🤖 核心 3 (10% 資金): TAO 5% | SPYB 25% | PAXG 70% (偏差2%)
+👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | SPYB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
   } 
   else {
     return `尚未定義此 Zone 的持倉配置。`;
@@ -399,7 +399,7 @@ function checkCoinRotationAlert() {
    - 此時該輪補漲波段利潤已全數鎖定（且一部分已自然沉澱在 QQQB/PAXG 中）。
 3. 資金換倉下一位低位補漲標的：
    - 推薦接力換入：【${info.nextRotate}】！
-   - 重新創建新的 3 幣機器人（例如：新幣 35% / QQQB 35% / PAXG 30%，偏差 1%）。
+   - 重新創建新的 3 幣機器人（例如：新幣 35% / QQQB 35% / PAXG 30%，偏差 2%）。
 ==================================================
 
 祝 獲利滿滿，複利長青！
