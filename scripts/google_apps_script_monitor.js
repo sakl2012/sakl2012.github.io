@@ -244,7 +244,7 @@ function get72hSMA() {
 }
 
 // ==========================================================
-// === 補漲智能持倉換幣 / 止盈輪動監控 (LINK, ICP, LTC, ENA) ===
+// === 補漲智能持倉換幣 / 止盈輪動監控 (LINK, ICP, LTC 三大補漲標的) ===
 // ==========================================================
 
 function checkCoinRotationAlert() {
@@ -252,8 +252,7 @@ function checkCoinRotationAlert() {
     const targets = {
       LINKUSDT: { sym: "LINK", name: "Chainlink", okxId: "LINK-USDT", tpTarget: 14.50, slFloor: 11.00, nextRotate: "AAVE 或 NEAR" },
       ICPUSDT:  { sym: "ICP",  name: "Internet Computer", okxId: "ICP-USDT", tpTarget: 3.30, slFloor: 2.45, nextRotate: "UNI 或 ONDO" },
-      LTCUSDT:  { sym: "LTC",  name: "Litecoin", okxId: "LTC-USDT", tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" },
-      ENAUSDT:  { sym: "ENA",  name: "Ethena", okxId: "ENA-USDT", tpTarget: 0.2080, slFloor: 0.1650, nextRotate: "本金撤出或投入現貨三幣持倉" }
+      LTCUSDT:  { sym: "LTC",  name: "Litecoin", okxId: "LTC-USDT", tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" }
     };
 
     // 1. 批次取得各幣最新現價 (OKX -> Binance api1 備援)
