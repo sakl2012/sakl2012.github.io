@@ -63,16 +63,17 @@ def fetch_market_context():
 
 def build_audit_prompt(market_context, tw_time):
     return f"""
-你是「4-Zone 動態防禦三倉策略系統」的 D 倉（飛哥獵手現貨狙擊）專屬 AI 審計大腦。
+你是「5-Zone 動態防禦三倉策略系統」的 D 倉（飛哥獵手現貨狙擊）專屬 AI 審計大腦。
 
 【背景與持倉現況】
-- 宏觀策略：A 倉 (BTC/PAXG 20%)、B 倉 (SOL/TAO/PAXG 60%)、C 倉 (AAVE/NEAR/LINK/PAXG 20%) 已經由幣安智能持倉全自動運行。
+- 宏觀策略：A 倉 (BTC/PAXG/QQQB 20%)、B 倉 (SOL/TAO/PAXG/QQQB 60%)、C 倉 (AAVE/LINK/PAXG/QQQB 20%) 已經由幣安智能持倉全自動運行（支援雙軌蓄水池：純金防禦軌 vs 美股複利軌）。
 - D 倉（機動獵手 95% PAXG + 5% 現貨伏擊槽）：專門追隨幣安廣場「K線人生飞哥」推薦的現貨標的。
 - 飛哥近期關注與常態觀點板塊：
-  1. 主流輪動：BTC/ETH 回踩防守做多；DeFi 龍頭 (AAVE, LINK)
+  1. 主流輪動：BTC/ETH 回踩防守做多；DeFi 龍頭 (AAVE, LINK, UNI)
   2. AI Agent 賽道主線：TAO, VIRTUAL
-  3. 短線/定投關注名單：ENA (回踩0.13~0.15)、GIGGLE (震盪洗盤)、ZRO, LIT, PUMP, HYPE, TRUMP
-  4. 垃圾幣/微盤/已暴漲：USELESS (翻倍慶祝)、PONS (鏈上微盤)
+  3. 短線/定投關注名單：ENA (回踩0.13~0.15)、ICP (大盤回調黃金防守底倉)、GIGGLE (震盪洗盤)、ZRO, LIT, PUMP, HYPE, TRUMP
+  4. 美股代幣與 RWA 賽道：CRCLB (Circle 股權概念/USDC 儲備利息受惠)、QQQB/SPYB (指數雙軌蓄水池)
+  5. 垃圾幣/微盤/已暴漲：USELESS (翻倍慶祝)、PONS (鏈上微盤)、PENGU (飛哥社群已通知直接清倉)
 - 即時市場數據：{market_context}
 - 當前審計時間（台灣時間 UTC+8）：{tw_time}
 
@@ -82,16 +83,17 @@ def build_audit_prompt(market_context, tw_time):
 3. 只做首推真龍頭：二線補漲替代品一律判定【略過】。
 4. 幣安現貨深度過濾：非幣安現貨或鏈上土狗微盤一律【略過】。
 5. 若已在 A/B/C 倉（如 TAO, AAVE, LINK, SOL）：判定為【已在 ABC 倉自動配置，D 倉不重複追高】。
+6. 美股代幣風控：個股代幣非龍頭一律【略過】，指數 QQQB/SPYB 回歸蓄水池，僅 CRCLB (Circle) 列為 RWA 專項主題伏擊觀察。
 
 請直接輸出 HTML 代碼片段（包裹在 `<div ...>` 中），格式務必嚴格遵循以下 HTML 結構，直接輸出可嵌入 index.html 的 HTML，不要包含任何 markdown codeblock 標籤：
 
 <div style="font-size: 12px; color: #64748b; line-height: 1.6; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
     <strong>📡 最新爬文審計判定 ({tw_time})：</strong><br>
-    • <strong>$LINK / $AAVE / $ETH (主流輪動)</strong>：LINK/AAVE 已在 C 倉配置 (49%) ➔ <span style="color:#2563eb; font-weight:700;">D 倉不重複追高，智能持倉自動吃肉</span><br>
-    • <strong>$TAO / $VIRTUAL (AI Agent主線)</strong>：TAO 已在 B 倉配置 (15%) ➔ <span style="color:#2563eb; font-weight:700;">坐享主升浪</span><br>
-    • <strong>$ENA</strong>：現價 <span id="d-live-ena" style="font-weight:700; color:#0f172a;">$0.168</span> 震盪，待解鎖回踩 $0.13~$0.15 ➔ <span style="color:#d97706; font-weight:700;">5% 伏擊槽持續鎖定中</span><br>
-    • <strong>$ZRO / $LIT / $PUMP</strong>：近期點名追蹤標的 ➔ <span style="color:#d97706; font-weight:700;">未有起漲前首發信號前保持觀望</span><br>
-    • <strong>$USELESS / $PONS</strong>：暴漲慶祝文 / 微盤 ➔ <span style="color:#dc2626; font-weight:700;">嚴格略過</span>
+    • <strong>$LINK / $AAVE / $ETH (主流輪動)</strong>：LINK/AAVE 已在 C 倉配置 ➔ <span style="color:#2563eb; font-weight:700;">D 倉不重複追高，智能持倉自動吃肉</span><br>
+    • <strong>$TAO / $VIRTUAL (AI Agent主線)</strong>：TAO 已在 B 倉配置 ➔ <span style="color:#2563eb; font-weight:700;">坐享主升浪</span><br>
+    • <strong>$ENA / $ICP</strong>：ENA 待回踩 $0.13~$0.15；ICP ($2.8 支撐) ➔ <span style="color:#d97706; font-weight:700;">5% 伏擊槽持續鎖定中</span><br>
+    • <strong>$CRCLB (Circle 美股代幣/RWA)</strong>：合規穩定幣發行概念 ➔ <span style="color:#0284c7; font-weight:700;">列入 RWA 獵手觀察，大幅折價時伏擊</span><br>
+    • <strong>$PENGU / $USELESS</strong>：社群通知直接出清 / 暴漲微盤 ➔ <span style="color:#dc2626; font-weight:700;">嚴格清倉或略過</span>
 </div>
 """
 

@@ -472,6 +472,13 @@
                     <div class="metric-label" style="color: #7dd3fc;">當前比值 (BTC/MA200)</div>
                     <div class="metric-val" id="liveRatio" style="color: #38bdf8;">--</div>
                 </div>
+                <div class="metric-card" style="border-color: rgba(139, 92, 246, 0.35);">
+                    <div class="metric-label" style="color: #c4b5fd; display: flex; align-items: center; gap: 5px;">
+                        <span style="font-size: 13px;">🇺🇸</span>
+                        <span>QQQB 納指現價</span>
+                    </div>
+                    <div class="metric-val" id="liveQqqbPrice" style="color: #a78bfa;">$--</div>
+                </div>
             </div>
         </div>
 
@@ -531,25 +538,32 @@
 
     <!-- 五階段全景對照標準表 -->
     <div class="matrix-card">
-        <div class="matrix-title">
-            <span>📋 5-Zone 五階段完整配置對照表</span>
-            <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值全自動切換）</span>
+        <div class="matrix-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <span>📋 5-Zone 五階段完整配置對照表</span>
+                <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值全自動切換）</span>
+            </div>
+            <!-- 雙軌蓄水池切換按鈕 -->
+            <div style="display: inline-flex; background: #f1f5f9; padding: 3px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 12px; font-weight: 700;">
+                <button id="btnModeClassic" style="background: #0284c7; color: #ffffff; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: all 0.2s;" onclick="switchReservoirMode('classic')">🛡️ 經典純金防禦軌 (PAXG)</button>
+                <button id="btnModeAllWeather" style="background: transparent; color: #475569; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: all 0.2s;" onclick="switchReservoirMode('allweather')">🚀 全天候美股複利軌 (QQQB+PAXG)</button>
+            </div>
         </div>
         <div class="matrix-table-wrap">
             <table class="matrix-table">
                 <thead>
-                    <tr>
+                    <tr id="zoneTableHead">
                         <th>市場階段 (Zone)</th>
                         <th>比值門檻</th>
                         <th>實時換算 BTC 點位</th>
                         <th>宏觀週期點位對照 &amp; 操盤準則</th>
-                        <th>核心 1: BTC/PAXG (20%)</th>
-                        <th>核心 2: ETH/PAXG (20%)</th>
-                        <th>核心 3: TAO/PAXG (10%)</th>
-                        <th>衛星 Alpha 艦隊 (17組各雙幣對 | 偏差 5%)</th>
+                        <th id="th-core-1">核心 1: BTC/PAXG (20%)</th>
+                        <th id="th-core-2">核心 2: ETH/PAXG (20%)</th>
+                        <th id="th-core-3">核心 3: TAO/PAXG (10%)</th>
+                        <th id="th-sat">衛星 Alpha 艦隊 (17組各雙幣對 | 偏差 5%)</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="zoneTableBody">
                     <tr id="row-zone-0">
                         <td><strong>Zone 0 (深熊大底)</strong></td>
                         <td>&lt; 0.80</td>
@@ -558,10 +572,10 @@
                             <strong style="color: #065f46;">5.7 萬歷史深熊大底</strong>
                             <div style="font-size: 11.5px; color: #64748b;">操盤準則：「歷史級熊市底部區間，極致恐慌時敢拿現貨，以小博大迎反彈」</div>
                         </td>
-                        <td>BTC 80% / PAXG 20%</td>
-                        <td>ETH 80% / PAXG 20%</td>
-                        <td>TAO 75% / PAXG 25%</td>
-                        <td>各雙幣對：COIN 70% / PAXG 30% (激進低吸抄底)</td>
+                        <td class="col-c1">BTC 80% / PAXG 20%</td>
+                        <td class="col-c2">ETH 80% / PAXG 20%</td>
+                        <td class="col-c3">TAO 75% / PAXG 25%</td>
+                        <td class="col-sat">各雙幣對：COIN 70% / PAXG 30% (激進低吸抄底)</td>
                     </tr>
                     <tr id="row-zone-1">
                         <td><strong>Zone 1 (初熊防禦)</strong></td>
@@ -571,10 +585,10 @@
                             <strong style="color: #0369a1;">7.0 萬牛初分水嶺</strong>
                             <div style="font-size: 11.5px; color: #64748b;">操盤準則：「突破牛熊過渡分水嶺，站穩 7 萬確認牛市來臨，分批上車不空倉」</div>
                         </td>
-                        <td>BTC 50% / PAXG 50%</td>
-                        <td>ETH 50% / PAXG 50%</td>
-                        <td>TAO 50% / PAXG 50%</td>
-                        <td>各雙幣對：COIN 50% / PAXG 50% (均勢對稱防禦)</td>
+                        <td class="col-c1">BTC 50% / PAXG 50%</td>
+                        <td class="col-c2">ETH 50% / PAXG 50%</td>
+                        <td class="col-c3">TAO 50% / PAXG 50%</td>
+                        <td class="col-sat">各雙幣對：COIN 50% / PAXG 50% (均勢對稱防禦)</td>
                     </tr>
                     <tr id="row-zone-2" class="row-active-zone">
                         <td><strong>Zone 2 (牛市巡航)</strong> <span class="active-tag" id="zone2-tag">現正運行</span></td>
@@ -584,10 +598,10 @@
                             <strong style="color: #0284c7;">7.6 萬 ~ 8.5 萬健康巡航</strong>
                             <div style="font-size: 11.5px; color: #64748b;">操盤準則：「7~8 萬區間震盪蓄勢，主升浪進攻釋放彈性，黃金蓄水池安心護航」</div>
                         </td>
-                        <td>BTC 58% / PAXG 42%</td>
-                        <td>ETH 55% / PAXG 45%</td>
-                        <td>TAO 40% / PAXG 60%</td>
-                        <td>各雙幣對：COIN 35% / PAXG 65% (進攻+65%黃金蓄水池)</td>
+                        <td class="col-c1">BTC 58% / PAXG 42%</td>
+                        <td class="col-c2">ETH 55% / PAXG 45%</td>
+                        <td class="col-c3">TAO 40% / PAXG 60%</td>
+                        <td class="col-sat">各雙幣對：COIN 35% / PAXG 65% (進攻+65%黃金蓄水池)</td>
                     </tr>
                     <tr id="row-zone-3">
                         <td><strong>Zone 3 (過熱警戒)</strong></td>
@@ -597,10 +611,10 @@
                             <strong style="color: #b45309;">8.5 萬 ~ 10 萬過熱前哨</strong>
                             <div style="font-size: 11.5px; color: #64748b;">操盤準則：「衝擊 10 萬整數大關，市場狂熱山寨加速，嚴格分批鎖利落袋黃金」</div>
                         </td>
-                        <td>BTC 37% / PAXG 63%</td>
-                        <td>ETH 35% / PAXG 65%</td>
-                        <td>TAO 25% / PAXG 75%</td>
-                        <td>各雙幣對：COIN 20% / PAXG 80% (高位大幅鎖利落袋)</td>
+                        <td class="col-c1">BTC 37% / PAXG 63%</td>
+                        <td class="col-c2">ETH 35% / PAXG 65%</td>
+                        <td class="col-c3">TAO 25% / PAXG 75%</td>
+                        <td class="col-sat">各雙幣對：COIN 20% / PAXG 80% (高位大幅鎖利落袋)</td>
                     </tr>
                     <tr id="row-zone-4">
                         <td><strong>Zone 4 (極度貪婪/逃頂)</strong></td>
@@ -610,16 +624,41 @@
                             <strong style="color: #b91c1c;">15 萬極限目標出清</strong>
                             <div style="font-size: 11.5px; color: #64748b;">操盤準則：「極限高估值狂歡期，堅決執行高位逃頂出清，95% 實體黃金避險」</div>
                         </td>
-                        <td>BTC 5% / PAXG 95%</td>
-                        <td>ETH 5% / PAXG 95%</td>
-                        <td>TAO 5% / PAXG 95%</td>
-                        <td>各雙幣對：COIN 5% / PAXG 95% (極限逃頂實體金)</td>
+                        <td class="col-c1">BTC 5% / PAXG 95%</td>
+                        <td class="col-c2">ETH 5% / PAXG 95%</td>
+                        <td class="col-c3">TAO 5% / PAXG 95%</td>
+                        <td class="col-sat">各雙幣對：COIN 5% / PAXG 95% (極限逃頂實體金)</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
-            ※ 註：實時換算 BTC 點位依即時 MA200 動態連動計算；全套 20 組持倉全部由幣安智能持倉（Rebalance Bot）獨立雙幣機器人 100% 全自動再平衡運行。
+            ※ 註：實時換算 BTC 點位依即時 MA200 動態連動計算；全套持倉全部由幣安智能持倉（Rebalance Bot）獨立雙幣機器人 100% 全自動再平衡運行。
+        </div>
+    </div>
+
+    <!-- 雙軌蓄水池量化審計與週末風控卡片 -->
+    <div class="audit-card" style="border-left-color: #8b5cf6;">
+        <div class="audit-title" style="color: #6d28d9;">
+            <span>🏛️ 雙軌蓄水池（美股科技 QQQB ＋ 實體黃金 PAXG）量化審計與風控規範</span>
+            <span style="font-size: 11.5px; background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; padding: 2px 8px; border-radius: 12px; font-weight: 700;">跨界全天候模型</span>
+        </div>
+        <div style="font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.6;">
+            本系統經正反雙子代理人（量化對沖架構師 vs 投行首席風控官）三輪深度辯論審計，確立「雙軌分離、各司其職」的最佳落地方案：
+        </div>
+        <div class="audit-grid">
+            <div class="audit-item" style="border-left: 3px solid #10b981;">
+                <strong style="color: #065f46;">🚀 軌道 A：科技生產力複利（QQQB / SPYB）</strong>
+                <span>將牛市狂熱溢價沉澱為人類最強生產力股權（ROE > 25%），穿越加密熊市，享受美股科技長期向上漂移紅利，徹底消除純避險資產的零息機會成本。</span>
+            </div>
+            <div class="audit-item" style="border-left: 3px solid #f59e0b;">
+                <strong style="color: #b45309;">🛡️ 軌道 B：終極物理防禦底座（PAXG）</strong>
+                <span>堅守 NYDFS 紐約信託與 LBMA 倫敦實體金庫特定序號金條獨立託管（破產隔離），在流動性危機與幣股雙殺黑天鵝中提供絕對非主權保護。</span>
+            </div>
+            <div class="audit-item" style="border-left: 3px solid #ef4444;">
+                <strong style="color: #b91c1c;">⚠️ 週末休市做市商防滑點風控（必讀）</strong>
+                <span>美股週末休市時，bStocks 由做市商內部定價。<strong>若配置包含 QQQB 的雙幣對，週末建議將再平衡閾值提升至 2% 或定時調倉</strong>，防範點差拉大被動磨損。</span>
+            </div>
         </div>
     </div>
 
@@ -730,8 +769,47 @@
         }
     };
 
-    // --- 衛星雙幣 Alpha 矩陣標的 (17 檔，連同 3 大核心剛好滿額 20 組) ---
+    // --- 衛星雙幣 Alpha 矩陣標的 (含 RWA 美股科技與指數代幣) ---
     const C_SATELLITE_CANDIDATES = [
+        {
+            sym: 'QQQB',
+            name: 'QQQB / USDT',
+            icon: 'icons/paxg.png',
+            rank: '⭐',
+            rankClass: 'rank-top1',
+            tier: '🏛️ RWA 科技指數 (納指100)',
+            title: '全球科技生產力之王',
+            quote: '納斯達克100指數代幣，打包微軟蘋果輝達，跨界全天候複利蓄水池',
+            baseWeight: 0.05,
+            isSpot: true,
+            active: true
+        },
+        {
+            sym: 'SPYB',
+            name: 'SPYB / USDT',
+            icon: 'icons/paxg.png',
+            rank: '⭐',
+            rankClass: 'rank-top1',
+            tier: '🏛️ RWA 大盤指數 (標普500)',
+            title: '全美500強穩健底盤',
+            quote: '標普500大盤代幣，流動性破千萬美元，極致平穩無單一公司爆雷風險',
+            baseWeight: 0.05,
+            isSpot: true,
+            active: true
+        },
+        {
+            sym: 'CRCLB',
+            name: 'CRCLB / USDT',
+            icon: 'icons/paxg.png',
+            rank: '⭐',
+            rankClass: 'rank-top2',
+            tier: '⚡ RWA 合規旗艦 (Circle)',
+            title: '美國合規鏈上證券載體',
+            quote: '飛哥專題加倉標的，美債融資與穩定幣爆發核心來源，5~10倍潛力空間',
+            baseWeight: 0.04,
+            isSpot: true,
+            active: true
+        },
         {
             sym: 'UNI',
             name: 'UNI / PAXG',
@@ -985,6 +1063,9 @@
         ETH: 2620,
         PAXG: 4367,
         TAO: 256,
+        QQQB: 720.4,
+        SPYB: 762.2,
+        CRCLB: 90.2,
         UNI: 9.02,
         NEAR: 3.84,
         HYPE: 94.4,
@@ -1065,6 +1146,14 @@
                 }
             }
 
+            // 若為 QQQB，同步更新指令中心的美股指數現價
+            if (sym === 'QQQB') {
+                const qqqbMetricEl = document.getElementById('liveQqqbPrice');
+                if (qqqbMetricEl) {
+                    qqqbMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
+                }
+            }
+
             // 更新雙幣卡片內的即時報價 (Core 與衛星)
             const cardPriceEl = document.getElementById(`cprice-${sym}`);
             if (cardPriceEl) {
@@ -1116,7 +1205,8 @@
             'uniusdt', 'nearusdt', 'ondousdt', 'pendleusdt',
             'solusdt', 'bnbusdt', 'arbusdt', 'aaveusdt', 'linkusdt',
             'renderusdt', 'fetusdt', 'suiusdt', 'enausdt', 'opusdt',
-            'tonusdt', 'ldousdt'
+            'tonusdt', 'ldousdt',
+            'qqqbusdt', 'spybusdt', 'crclbusdt'
         ];
         const streams = spotSymbols.map(s => `${s}@ticker`).join('/');
         const wsUrl = `wss://stream.binance.com:9443/stream?streams=${streams}`;
@@ -1485,12 +1575,76 @@
         if (el4) el4.innerText = `≥ $${p3.toLocaleString()} (向 12~15 萬衝頂)`;
     }
 
+    // --- 雙軌蓄水池配置定義 ---
+    let currentReservoirMode = 'classic'; // 'classic' or 'allweather'
+
+    const TABLE_CONFIGS_CLASSIC = [
+        { zone: 0, c1: 'BTC 80% / PAXG 20%', c2: 'ETH 80% / PAXG 20%', c3: 'TAO 75% / PAXG 25%', sat: '各雙幣對：COIN 70% / PAXG 30% (激進低吸抄底)' },
+        { zone: 1, c1: 'BTC 50% / PAXG 50%', c2: 'ETH 50% / PAXG 50%', c3: 'TAO 50% / PAXG 50%', sat: '各雙幣對：COIN 50% / PAXG 50% (均勢對稱防禦)' },
+        { zone: 2, c1: 'BTC 58% / PAXG 42%', c2: 'ETH 55% / PAXG 45%', c3: 'TAO 40% / PAXG 60%', sat: '各雙幣對：COIN 35% / PAXG 65% (進攻+65%黃金蓄水池)' },
+        { zone: 3, c1: 'BTC 37% / PAXG 63%', c2: 'ETH 35% / PAXG 65%', c3: 'TAO 25% / PAXG 75%', sat: '各雙幣對：COIN 20% / PAXG 80% (高位大幅鎖利落袋)' },
+        { zone: 4, c1: 'BTC 5% / PAXG 95%', c2: 'ETH 5% / PAXG 95%', c3: 'TAO 5% / PAXG 95%', sat: '各雙幣對：COIN 5% / PAXG 95% (極限逃頂實體金)' }
+    ];
+
+    const TABLE_CONFIGS_ALLWEATHER = [
+        { zone: 0, c1: 'BTC 80% / QQQB 20%', c2: 'ETH 80% / QQQB 20%', c3: 'TAO 75% / QQQB 25%', sat: '各雙幣對：COIN 70% / QQQB 30% (加密+美股科技雙抄底)' },
+        { zone: 1, c1: 'BTC 50% / QQQB 30% + PAXG 20%', c2: 'ETH 50% / QQQB 30% + PAXG 20%', c3: 'TAO 50% / QQQB 25% + PAXG 25%', sat: '各雙幣對：COIN 50% / QQQB 30% + PAXG 20% (三元對稱防禦)' },
+        { zone: 2, c1: 'BTC 58% / QQQB 25% + PAXG 17%', c2: 'ETH 55% / QQQB 25% + PAXG 20%', c3: 'TAO 40% / QQQB 35% + PAXG 25%', sat: '各雙幣對：COIN 35% / QQQB 35% + PAXG 30% (美股科技+黃金雙蓄水池)' },
+        { zone: 3, c1: 'BTC 37% / QQQB 35% + PAXG 28%', c2: 'ETH 35% / QQQB 35% + PAXG 30%', c3: 'TAO 25% / QQQB 40% + PAXG 35%', sat: '各雙幣對：COIN 20% / QQQB 45% + PAXG 35% (高位大幅鎖利美股科技)' },
+        { zone: 4, c1: 'BTC 5% / SPYB 45% + PAXG 50%', c2: 'ETH 5% / SPYB 45% + PAXG 50%', c3: 'TAO 5% / SPYB 45% + PAXG 50%', sat: '各雙幣對：COIN 5% / SPYB 45% + PAXG 50% (美股大盤+實體金雙保險)' }
+    ];
+
+    function switchReservoirMode(mode) {
+        currentReservoirMode = mode;
+        const btnClassic = document.getElementById('btnModeClassic');
+        const btnAllWeather = document.getElementById('btnModeAllWeather');
+        const thCore1 = document.getElementById('th-core-1');
+        const thCore2 = document.getElementById('th-core-2');
+        const thCore3 = document.getElementById('th-core-3');
+        const thSat = document.getElementById('th-sat');
+
+        if (mode === 'classic') {
+            if (btnClassic) { btnClassic.style.background = '#0284c7'; btnClassic.style.color = '#ffffff'; }
+            if (btnAllWeather) { btnAllWeather.style.background = 'transparent'; btnAllWeather.style.color = '#475569'; }
+            if (thCore1) thCore1.innerText = '核心 1: BTC/PAXG (20%)';
+            if (thCore2) thCore2.innerText = '核心 2: ETH/PAXG (20%)';
+            if (thCore3) thCore3.innerText = '核心 3: TAO/PAXG (10%)';
+            if (thSat) thSat.innerText = '衛星 Alpha 艦隊 (17組各雙幣對 | 偏差 5%)';
+        } else {
+            if (btnClassic) { btnClassic.style.background = 'transparent'; btnClassic.style.color = '#475569'; }
+            if (btnAllWeather) { btnAllWeather.style.background = '#8b5cf6'; btnAllWeather.style.color = '#ffffff'; }
+            if (thCore1) thCore1.innerText = '核心 1: BTC/QQQB+PAXG';
+            if (thCore2) thCore2.innerText = '核心 2: ETH/QQQB+PAXG';
+            if (thCore3) thCore3.innerText = '核心 3: TAO/QQQB+PAXG';
+            if (thSat) thSat.innerText = '衛星 Alpha 艦隊 (美股指數+純金雙軌)';
+        }
+
+        renderTableColumns();
+    }
+
+    function renderTableColumns() {
+        const configList = currentReservoirMode === 'classic' ? TABLE_CONFIGS_CLASSIC : TABLE_CONFIGS_ALLWEATHER;
+        configList.forEach(item => {
+            const row = document.getElementById(`row-zone-${item.zone}`);
+            if (row) {
+                const c1 = row.querySelector('.col-c1');
+                const c2 = row.querySelector('.col-c2');
+                const c3 = row.querySelector('.col-c3');
+                const sat = row.querySelector('.col-sat');
+                if (c1) c1.innerText = item.c1;
+                if (c2) c2.innerText = item.c2;
+                if (c3) c3.innerText = item.c3;
+                if (sat) sat.innerText = item.sat;
+            }
+        });
+    }
+
     // --- 備用 1 秒輪詢 (Fallback Polling) ---
     async function fallbackPoll() {
         try {
             const spotSymbols = [
-                "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "UNIUSDT", "NEARUSDT",
-                "ONDOUSDT", "PENDLEUSDT", "SOLUSDT", "BNBUSDT", "ARBUSDT", "AAVEUSDT",
+                "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "QQQBUSDT", "SPYBUSDT", "CRCLBUSDT",
+                "UNIUSDT", "NEARUSDT", "ONDOUSDT", "PENDLEUSDT", "SOLUSDT", "BNBUSDT", "ARBUSDT", "AAVEUSDT",
                 "LINKUSDT", "RENDERUSDT", "FETUSDT", "SUIUSDT", "ENAUSDT", "OPUSDT",
                 "TONUSDT", "LDOUSDT"
             ];
@@ -1527,8 +1681,9 @@
         renderCoreCards();
         renderCPortfolioMatrix();
         updateTablePriceRanges(currentMa200);
+        renderTableColumns();
         syncMa200();
-        fallbackPoll(); // 立即拉取所有代幣與 PAXG 24hr 快照，達成毫秒級瞬間載入
+        fallbackPoll(); // 立即拉取所有代幣與 PAXG/QQQB 24hr 快照，達成毫秒級瞬間載入
         initWebSocketStream();
         // 每 5 分鐘同步一次 MA200
         setInterval(syncMa200, 300000);
