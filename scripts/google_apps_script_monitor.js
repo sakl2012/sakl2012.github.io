@@ -329,10 +329,10 @@ function get72hSMA() {
 //    • 嚴格止損核心精神：鎖定右側主升浪起漲頸線（S/R Flip），絕不承受深幅回撤！
 //      一旦跌破起漲點即判定為假突破（Bull Trap），果斷離場以維持極高盈虧比（R:R > 3.6:1）。
 //
-//    • PENDLE (成本 $2.570):
-//      - 結構：日線全多頭發散，4H 於 $2.50 處形成突破支撐平台。
-//      - tpTarget: $3.15 (+22.6%) -> 半年籌碼套牢平台（5~6月密集阻力區）。
-//      - slFloor:  $2.48 (-3.5%)  -> 4H 突破起漲點兼 $2.50 整數防禦頸線（盈虧比 6.45:1）。
+//    • SUI (成本 $0.8552):
+//      - 結構：放量突破 $0.85 頸線發動第二浪，成交量逼近 1 億美元，承接公鏈外溢熱錢。
+//      - tpTarget: $1.050 (+22.8%) -> 2026 前高密集套牢阻力區與整數大關。
+//      - slFloor:  $0.820 (-4.1%)   -> 4H 次級低點回測確認防守底（盈虧比 5.56:1）。
 //    • LINK (成本 $12.291):
 //      - 結構：4H 放量突破 $11.72 頸線發動補漲，目前於 $12.00 上方整理。
 //      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
@@ -378,7 +378,7 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      PENDLEUSDT: { sym: "PENDLE", name: "Pendle",            okxId: "PENDLE-USDT", entryPrice: 2.57,  tpTarget: 3.15, slFloor: 2.48, nextRotate: "AAVE 或 SUI" },
+      SUIUSDT:    { sym: "SUI",    name: "Sui",               okxId: "SUI-USDT",    entryPrice: 0.8552,tpTarget: 1.050,slFloor: 0.820, nextRotate: "AAVE 或 PENDLE" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 11.70,nextRotate: "AAVE 或 NEAR" },
       UNIUSDT:    { sym: "UNI",    name: "Uniswap",           okxId: "UNI-USDT",    entryPrice: 8.785, tpTarget: 10.50,slFloor: 8.45,  nextRotate: "AAVE 或 SUI" },
       ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.63,  nextRotate: "ONDO 或 SUI" }
