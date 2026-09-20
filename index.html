@@ -557,7 +557,7 @@
             <div class="c-filter-tabs">
                 <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">🔥 飛哥長拿 5 大 Alpha</button>
                 <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">🏦 DeFi / DEX (UNI, AAVE, LINK)</button>
-                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">⚡ 公鏈與 AI 基建 (SOL, NEAR)</button>
+                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">🛡️ 平台幣與 AI (BNB, NEAR)</button>
             </div>
 
             <!-- 三幣卡片網格 -->
@@ -743,7 +743,7 @@
             &nbsp;&nbsp;&nbsp;• <strong>🏛️ 核心 2 (20% 資金)</strong>：建立 <code>ETH + QQQB + PAXG</code> 機器人，當前 Zone 2 設為 40%/35%/25%，觸發設 <strong>按比例 1%</strong>。<br>
             &nbsp;&nbsp;&nbsp;• <strong>🤖 核心 3 (10% 資金)</strong>：建立 <code>TAO + QQQB + PAXG</code> 機器人，當前 Zone 2 設為 35%/35%/30%，觸發設 <strong>按比例 1%</strong>。<br>
             &nbsp;&nbsp;&nbsp;• <strong>⚡ 衛星 Alpha 菁英艦隊 (5 大長拿藍籌，各佔 10% 資金)</strong>：<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;① <code>SOL + QQQB + PAXG</code> (公鏈進攻龍頭，10% 資金)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;① <code>BNB + QQQB + PAXG</code> (CEX 平台幣王者，10% 資金)<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;② <code>UNI + QQQB + PAXG</code> (DEX 交易霸主，10% 資金)<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;③ <code>AAVE + QQQB + PAXG</code> (DeFi 現金流霸主，10% 資金)<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;④ <code>LINK + QQQB + PAXG</code> (SWIFT 跨鏈預言機，10% 資金)<br>
@@ -812,15 +812,15 @@
     // --- 衛星三幣 Alpha 矩陣標的 (飛哥認證 5 大長拿藍籌，各佔總資金 10%) ---
     const C_SATELLITE_CANDIDATES = [
         {
-            sym: 'SOL',
-            name: 'SOL',
-            icon: 'icons/sol.png',
+            sym: 'BNB',
+            name: 'BNB',
+            icon: 'icons/bnb.png',
             rank: '1',
             rankClass: 'rank-top1',
-            tier: '⚡ 公鏈之王 (高Beta進攻旗艦)',
+            tier: '🛡️ 平台幣王者 (剛性銷毀金鏟子)',
             capitalPct: '佔比 10%',
-            title: '華爾街機構首選公鏈',
-            quote: '飛哥狂推主流主升浪！機構流動性最深公鏈，牛市週期高 Beta 進攻彈性無可匹敵',
+            title: '全球最大交易所生態平台幣',
+            quote: '飛哥定性「經歷牛熊考驗不會歸零」！每季剛性銷毀＋Launchpool 賦能，全盤最抗跌壓艙石',
             baseWeight: 0.10,
             isSpot: true,
             active: true
@@ -1280,7 +1280,7 @@
             // 梯隊標籤篩選比對
             let match = true;
             if (currentFleetFilter === 'defi') match = ['UNI', 'AAVE', 'LINK'].includes(c.sym);
-            else if (currentFleetFilter === 'infra') match = ['SOL', 'NEAR'].includes(c.sym);
+            else if (currentFleetFilter === 'infra') match = ['BNB', 'NEAR'].includes(c.sym);
             if (!match) return;
 
             const p = latestPrices[c.sym] || 0;
