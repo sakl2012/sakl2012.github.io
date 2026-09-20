@@ -346,7 +346,7 @@ function checkCoinRotationAlert() {
       PENDLEUSDT: { sym: "PENDLE", name: "Pendle", okxId: "PENDLE-USDT", entryPrice: 2.57,  tpTarget: 3.15, slFloor: 2.20, nextRotate: "AAVE 或 UNI" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink", okxId: "LINK-USDT", entryPrice: 12.291, tpTarget: 14.50, slFloor: 10.80, nextRotate: "AAVE 或 NEAR" },
       LTCUSDT:    { sym: "LTC",    name: "Litecoin",  okxId: "LTC-USDT",  entryPrice: 57.78, tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" },
-      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT", entryPrice: 2.761, tpTarget: 3.30, slFloor: 2.45, nextRotate: "UNI 或 ONDO" }
+      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT", entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.45, nextRotate: "UNI 或 ONDO" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
