@@ -548,16 +548,16 @@
                     </div>
                 </div>
                 <div class="c-badges-wrap">
-                    <span class="c-pill c-pill-gold">🔥 飛哥最高勝率 5 大精選</span>
+                    <span class="c-pill c-pill-gold">💎 飛哥鑽石手 5 大長拿藍籌</span>
                     <span class="c-pill c-pill-green">🎯 單倉 10% (建議 ≥ 300U) | 偏差 1%</span>
                 </div>
             </div>
 
             <!-- 梯隊快速分類篩選標籤 -->
             <div class="c-filter-tabs">
-                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">🔥 飛哥精選 5 大 Alpha</button>
-                <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">🏦 DeFi / RWA (AAVE, LINK, CRCLB)</button>
-                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">⚡ 公鏈與基建 (SOL, ICP)</button>
+                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">🔥 飛哥長拿 5 大 Alpha</button>
+                <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">🏦 DeFi / DEX (UNI, AAVE, LINK)</button>
+                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">⚡ 公鏈與 AI 基建 (SOL, NEAR)</button>
             </div>
 
             <!-- 三幣卡片網格 -->
@@ -742,12 +742,12 @@
             &nbsp;&nbsp;&nbsp;• <strong>👑 核心 1 (20% 資金)</strong>：建立 <code>BTC + QQQB + PAXG</code> 機器人，當前 Zone 2 設為 45%/35%/20%，觸發設 <strong>按比例 1%</strong>。<br>
             &nbsp;&nbsp;&nbsp;• <strong>🏛️ 核心 2 (20% 資金)</strong>：建立 <code>ETH + QQQB + PAXG</code> 機器人，當前 Zone 2 設為 40%/35%/25%，觸發設 <strong>按比例 1%</strong>。<br>
             &nbsp;&nbsp;&nbsp;• <strong>🤖 核心 3 (10% 資金)</strong>：建立 <code>TAO + QQQB + PAXG</code> 機器人，當前 Zone 2 設為 35%/35%/30%，觸發設 <strong>按比例 1%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;• <strong>⚡ 衛星 Alpha 菁英艦隊 (5 大精選標的，各佔 10% 資金)</strong>：<br>
+            &nbsp;&nbsp;&nbsp;• <strong>⚡ 衛星 Alpha 菁英艦隊 (5 大長拿藍籌，各佔 10% 資金)</strong>：<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;① <code>SOL + QQQB + PAXG</code> (公鏈進攻龍頭，10% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;② <code>AAVE + QQQB + PAXG</code> (DeFi 現金流霸主，10% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;③ <code>LINK + QQQB + PAXG</code> (SWIFT 跨鏈預言機，10% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;④ <code>ICP + QQQB + PAXG</code> (飛哥大盤回調底倉，10% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⑤ <code>CRCLB + QQQB + PAXG</code> (Circle 美股代幣 RWA，10% 資金)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;② <code>UNI + QQQB + PAXG</code> (DEX 交易霸主，10% 資金)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;③ <code>AAVE + QQQB + PAXG</code> (DeFi 現金流霸主，10% 資金)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;④ <code>LINK + QQQB + PAXG</code> (SWIFT 跨鏈預言機，10% 資金)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⑤ <code>NEAR + QQQB + PAXG</code> (AI全鏈與量子安全，10% 資金)<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>※ 當前 Zone 2 比例均統一設為：各幣 35% / QQQB 35% / PAXG 30%，觸發條件一律設 <strong>按比例 1%</strong>（建議單倉 ≥ 300U）。</em><br>
             3. <strong>8 倉全天候極致清爽</strong>：全盤僅 8 組機器人，資金高度聚焦飛哥最高勝率標的，杜絕垃圾幣干擾；牛市頂部（Zone 4）時全盤自動鎖定 70% 實體黃金 PAXG 與 25% 標普大盤 SPYB 終極逃頂！
         </div>
@@ -809,7 +809,7 @@
         }
     };
 
-    // --- 衛星三幣 Alpha 矩陣標的 (飛哥最高勝率 5 大精選標的，各佔總資金 10%) ---
+    // --- 衛星三幣 Alpha 矩陣標的 (飛哥認證 5 大長拿藍籌，各佔總資金 10%) ---
     const C_SATELLITE_CANDIDATES = [
         {
             sym: 'SOL',
@@ -826,15 +826,29 @@
             active: true
         },
         {
+            sym: 'UNI',
+            name: 'UNI',
+            icon: 'icons/uni.png',
+            rank: '2',
+            rankClass: 'rank-top1',
+            tier: '🦄 DEX 霸主 (鑽石手長拿首選)',
+            capitalPct: '佔比 10%',
+            title: '全球最大去中心化交易所',
+            quote: '飛哥狂讚「這輪牛市獎勵鑽石手」！Robinhood 鏈上合作 + 協議費用剛性銷毀，長線格局首選',
+            baseWeight: 0.10,
+            isSpot: true,
+            active: true
+        },
+        {
             sym: 'AAVE',
             name: 'AAVE',
             icon: 'icons/aave.png',
-            rank: '2',
-            rankClass: 'rank-top1',
-            tier: '🏦 DeFi 霸主 (真實現金流之王)',
+            rank: '3',
+            rankClass: 'rank-top2',
+            tier: '🏦 借貸王者 (真實現金流護城河)',
             capitalPct: '佔比 10%',
             title: '鏈上借貸第一品牌',
-            quote: '飛哥常態重點持倉！Anchorage 機構託管 + V4 護城河極深，真實現金流每日回購銷毀',
+            quote: '飛哥認證「長線依然看好」！Anchorage 機構託管 + V4 護城河極深，真實現金流每日回購銷毀',
             baseWeight: 0.10,
             isSpot: true,
             active: true
@@ -843,7 +857,7 @@
             sym: 'LINK',
             name: 'LINK',
             icon: 'icons/link.png',
-            rank: '3',
+            rank: '4',
             rankClass: 'rank-top2',
             tier: '🔗 預言機獨角獸 (RWA機構基建)',
             capitalPct: '佔比 10%',
@@ -854,29 +868,15 @@
             active: true
         },
         {
-            sym: 'ICP',
-            name: 'ICP',
-            icon: 'icons/icp.png',
-            rank: '4',
-            rankClass: 'rank-top2',
-            tier: '🌐 歷史深底 (大盤回調黃金底倉)',
-            capitalPct: '佔比 10%',
-            title: '無人化全鏈雲端計算機',
-            quote: '飛哥最新大盤回調底倉首選！2.8U 鋼鐵強支撐，非對稱盈虧比極佳，大底蓄勢爆發',
-            baseWeight: 0.10,
-            isSpot: true,
-            active: true
-        },
-        {
-            sym: 'CRCLB',
-            name: 'CRCLB',
-            icon: 'icons/crclb.png',
+            sym: 'NEAR',
+            name: 'NEAR',
+            icon: 'icons/near.png',
             rank: '5',
             rankClass: 'rank-top3',
-            tier: '🏛️ RWA 合規旗艦 (Circle 美股代幣)',
+            tier: '🤖 AI與量子安全 (芒格格柵長線嚴選)',
             capitalPct: '佔比 10%',
-            title: '合規穩定幣發行龍頭股權',
-            quote: '飛哥清晨美股上鏈 RWA 專題加倉！Circle 股權概念，美債融資與穩定幣爆發核心受益者',
+            title: 'AI 全鏈抽象與抗量子安全公鏈',
+            quote: '飛哥 2026 抄底長線首推！少數同時踩中 AI、Crypto、抗量子安全三條線資產，鑽石手格局',
             baseWeight: 0.10,
             isSpot: true,
             active: true
@@ -1279,8 +1279,8 @@
         C_SATELLITE_CANDIDATES.forEach((c, idx) => {
             // 梯隊標籤篩選比對
             let match = true;
-            if (currentFleetFilter === 'defi') match = ['AAVE', 'LINK', 'CRCLB'].includes(c.sym);
-            else if (currentFleetFilter === 'infra') match = ['SOL', 'ICP'].includes(c.sym);
+            if (currentFleetFilter === 'defi') match = ['UNI', 'AAVE', 'LINK'].includes(c.sym);
+            else if (currentFleetFilter === 'infra') match = ['SOL', 'NEAR'].includes(c.sym);
             if (!match) return;
 
             const p = latestPrices[c.sym] || 0;
