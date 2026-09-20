@@ -149,7 +149,7 @@
         }
         .alert-target { display: flex; align-items: center; gap: 6px; font-weight: 600; }
 
-        /* ================= 衛星雙幣艦隊專用樣式 ================= */
+        /* ================= 衛星三幣艦隊專用樣式 ================= */
         .c-matrix-container {
             margin-top: 22px;
             background: rgba(15, 23, 42, 0.5);
@@ -316,7 +316,7 @@
         .c-ratio-labels {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             margin-bottom: 4px;
         }
@@ -331,9 +331,41 @@
             background: #10b981;
             transition: width 0.3s ease;
         }
+        .c-prog-equity {
+            background: #8b5cf6;
+            transition: width 0.3s ease;
+        }
         .c-prog-paxg {
             background: #f59e0b;
             transition: width 0.3s ease;
+        }
+        .c-tri-prices {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            font-size: 11px;
+            color: #475569;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 5px 6px;
+            text-align: center;
+        }
+        .c-tri-price-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1px;
+        }
+        .c-tri-price-item span {
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .c-tri-price-item strong {
+            font-size: 11.5px;
+            color: #0f172a;
+            white-space: nowrap;
         }
         .c-quote-box {
             font-size: 11.5px;
@@ -489,49 +521,49 @@
             <div class="alert-target" id="upwardAlert">🔺 升至 Zone 3 警戒價：<span style="color: #fbbf24;">BTC ≥ $-- (--%)</span></div>
         </div>
 
-        <!-- 三大核心壓艙柱 (Core Big 3) 獨立雙幣專卡：與衛星艦隊統一採用高清晰雙幣版型 -->
+        <!-- 三大核心壓艙柱 (Core Big 3) 獨立三幣專卡 -->
         <div style="margin-top: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
             <div style="font-size: 15px; font-weight: 800; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
                 <span>👑 核心壓艙三本柱 (佔總資金 50%)</span>
-                <span style="font-size: 11px; font-weight: 600; color: #94a3b8;">BTC (20%) + ETH (20%) + TAO (10%) | 獨立雙幣機器人</span>
+                <span style="font-size: 11px; font-weight: 600; color: #94a3b8;">BTC (20%) + ETH (20%) + TAO (10%) | 獨立三幣智能持倉單元</span>
             </div>
             <div style="font-size: 12px; color: #38bdf8; font-weight: 600;">
-                🎯 全艦隊統一：偏差 5% 再平衡 (單倉建議 ≥ 300U)
+                🎯 全艦隊統一：1% 偏差自動再平衡 (單倉建議 ≥ 300U)
             </div>
         </div>
 
         <div class="c-matrix-grid" id="coreCardsGrid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 22px;">
-            <!-- 由 JavaScript renderCoreCards() 動態生成高清晰雙幣卡片 -->
+            <!-- 由 JavaScript renderCoreCards() 動態生成高清晰三幣卡片 -->
         </div>
 
-        <!-- 衛星雙幣 Alpha 矩陣艦隊 (17 檔獨立雙幣對，佔滿幣安 20 組上限) -->
+        <!-- 衛星三幣 Alpha 矩陣艦隊 -->
         <div class="c-matrix-container">
             <div class="c-matrix-top-bar">
                 <div>
                     <div class="c-matrix-title">
-                        <span>⚡ 衛星雙幣 Alpha 矩陣艦隊 (17 檔獨立雙幣對)</span>
+                        <span>⚡ 衛星三幣 Alpha 矩陣艦隊 (各獨立三幣持倉單元)</span>
                     </div>
                     <div class="c-matrix-subtitle">
-                        佔總資金 50% | 17 組獨立雙幣對 (COIN / PAXG) + 3 組核心 = 滿額 20 組 | 徹底杜絕弱幣互拖，暴擊利潤即刻兌現黃金
+                        佔總資金 50% | 獨立三幣機器人 (COIN + 美股指數 + 實體黃金) | 三元香農套利閉環：暴擊利潤即刻分流落袋美股科技高 ROE 股權與實體金條
                     </div>
                 </div>
                 <div class="c-badges-wrap">
-                    <span class="c-pill c-pill-gold">💡 滿額 20 組雙幣機器人</span>
-                    <span class="c-pill c-pill-green">🎯 單倉建議 ≥ 300U | 偏差 5%</span>
+                    <span class="c-pill c-pill-gold">💡 獨立三幣機器人單元</span>
+                    <span class="c-pill c-pill-green">🎯 1% 比例閾值 | 單倉 ≥ 300U</span>
                 </div>
             </div>
 
             <!-- 梯隊快速分類篩選標籤 -->
             <div class="c-filter-tabs">
-                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">全部 17 檔</button>
-                <button class="c-filter-btn" data-filter="tier1" onclick="filterSatFleet('tier1')">⚡ Tier 1 真實收益 (5)</button>
-                <button class="c-filter-btn" data-filter="tier2" onclick="filterSatFleet('tier2')">🛡️ Tier 2 頂級基建 (5)</button>
-                <button class="c-filter-btn" data-filter="tier3" onclick="filterSatFleet('tier3')">🚀 Tier 3 爆發擴展 (7)</button>
+                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">全部標的</button>
+                <button class="c-filter-btn" data-filter="tier1" onclick="filterSatFleet('tier1')">⚡ Tier 1 真實收益</button>
+                <button class="c-filter-btn" data-filter="tier2" onclick="filterSatFleet('tier2')">🛡️ Tier 2 頂級基建</button>
+                <button class="c-filter-btn" data-filter="tier3" onclick="filterSatFleet('tier3')">🚀 Tier 3 爆發擴展</button>
             </div>
 
-            <!-- 17 檔雙幣卡片網格 -->
+            <!-- 三幣卡片網格 -->
             <div class="c-matrix-grid" id="cMatrixGrid">
-                <!-- 由 JavaScript 動態依最新即時行情與當前 Zone 比例渲染 17 檔雙幣卡片 -->
+                <!-- 由 JavaScript 動態依最新即時行情與當前 Zone 比例渲染三幣卡片 -->
             </div>
         </div>
     </div>
@@ -540,13 +572,16 @@
     <div class="matrix-card">
         <div class="matrix-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             <div>
-                <span>📋 5-Zone 五階段完整配置對照表</span>
+                <span>📋 5-Zone 三幣全天候智能持倉對照表</span>
                 <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值全自動切換）</span>
             </div>
-            <!-- 雙軌蓄水池切換按鈕 -->
-            <div style="display: inline-flex; background: #f1f5f9; padding: 3px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 12px; font-weight: 700;">
-                <button id="btnModeClassic" style="background: #0284c7; color: #ffffff; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: all 0.2s;" onclick="switchReservoirMode('classic')">🛡️ 經典純金防禦軌 (PAXG)</button>
-                <button id="btnModeAllWeather" style="background: transparent; color: #475569; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: all 0.2s;" onclick="switchReservoirMode('allweather')">🚀 全天候美股複利軌 (QQQB+PAXG)</button>
+            <!-- 美股指數支柱切換按鈕 -->
+            <div style="display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span style="font-size: 12px; color: #64748b; font-weight: 600;">美股指數支柱：</span>
+                <div style="display: inline-flex; background: #f1f5f9; padding: 3px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 12px; font-weight: 700;">
+                    <button id="btnEquityQqqb" style="background: #8b5cf6; color: #ffffff; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: all 0.2s;" onclick="switchEquityAsset('QQQB')">🚀 那斯達克100 (QQQB - 科技成長)</button>
+                    <button id="btnEquitySpyb" style="background: transparent; color: #475569; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: all 0.2s;" onclick="switchEquityAsset('SPYB')">🏛️ 標普500 (SPYB - 穩健大盤)</button>
+                </div>
             </div>
         </div>
         <div class="matrix-table-wrap">
@@ -557,10 +592,10 @@
                         <th>比值門檻</th>
                         <th>實時換算 BTC 點位</th>
                         <th>宏觀週期點位對照 &amp; 操盤準則</th>
-                        <th id="th-core-1">核心 1: BTC/PAXG (20%)</th>
-                        <th id="th-core-2">核心 2: ETH/PAXG (20%)</th>
-                        <th id="th-core-3">核心 3: TAO/PAXG (10%)</th>
-                        <th id="th-sat">衛星 Alpha 艦隊 (17組各雙幣對 | 偏差 5%)</th>
+                        <th id="th-core-1">核心 1: BTC + QQQB + PAXG (20%)</th>
+                        <th id="th-core-2">核心 2: ETH + QQQB + PAXG (20%)</th>
+                        <th id="th-core-3">核心 3: TAO + QQQB + PAXG (10%)</th>
+                        <th id="th-sat">衛星 Alpha 艦隊: 各三幣組合 (偏差 1%)</th>
                     </tr>
                 </thead>
                 <tbody id="zoneTableBody">
@@ -570,12 +605,12 @@
                         <td><span id="tbl-range-0" style="color: #10b981; font-weight: 700;">&lt; $55,630</span></td>
                         <td>
                             <strong style="color: #065f46;">5.7 萬歷史深熊大底</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「歷史級熊市底部區間，極致恐慌時敢拿現貨，以小博大迎反彈」</div>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「歷史級熊市底部區間，極致恐慌時敢拿現貨，科技與加密雙抄底」</div>
                         </td>
-                        <td class="col-c1">BTC 80% / PAXG 20%</td>
-                        <td class="col-c2">ETH 80% / PAXG 20%</td>
-                        <td class="col-c3">TAO 75% / PAXG 25%</td>
-                        <td class="col-sat">各雙幣對：COIN 70% / PAXG 30% (激進低吸抄底)</td>
+                        <td class="col-c1">BTC 80% / QQQB 15% / PAXG 5%</td>
+                        <td class="col-c2">ETH 80% / QQQB 15% / PAXG 5%</td>
+                        <td class="col-c3">TAO 75% / QQQB 15% / PAXG 10%</td>
+                        <td class="col-sat">各三幣組合：COIN 70% / QQQB 20% / PAXG 10% (激進低吸抄底)</td>
                     </tr>
                     <tr id="row-zone-1">
                         <td><strong>Zone 1 (初熊防禦)</strong></td>
@@ -583,12 +618,12 @@
                         <td><span id="tbl-range-1" style="color: #0284c7; font-weight: 700;">$55,630 ~ $69,538</span></td>
                         <td>
                             <strong style="color: #0369a1;">7.0 萬牛初分水嶺</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「突破牛熊過渡分水嶺，站穩 7 萬確認牛市來臨，分批上車不空倉」</div>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「突破牛熊過渡分水嶺，站穩 7 萬確認牛市來臨，三元平衡穩健布局」</div>
                         </td>
-                        <td class="col-c1">BTC 50% / PAXG 50%</td>
-                        <td class="col-c2">ETH 50% / PAXG 50%</td>
-                        <td class="col-c3">TAO 50% / PAXG 50%</td>
-                        <td class="col-sat">各雙幣對：COIN 50% / PAXG 50% (均勢對稱防禦)</td>
+                        <td class="col-c1">BTC 50% / QQQB 30% / PAXG 20%</td>
+                        <td class="col-c2">ETH 50% / QQQB 30% / PAXG 20%</td>
+                        <td class="col-c3">TAO 50% / QQQB 25% / PAXG 25%</td>
+                        <td class="col-sat">各三幣組合：COIN 50% / QQQB 30% / PAXG 20% (均勢對稱防禦)</td>
                     </tr>
                     <tr id="row-zone-2" class="row-active-zone">
                         <td><strong>Zone 2 (牛市巡航)</strong> <span class="active-tag" id="zone2-tag">現正運行</span></td>
@@ -596,12 +631,12 @@
                         <td><span id="tbl-range-2" style="color: #0284c7; font-weight: 700;">$69,538 ~ $86,922</span></td>
                         <td>
                             <strong style="color: #0284c7;">7.6 萬 ~ 8.5 萬健康巡航</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「7~8 萬區間震盪蓄勢，主升浪進攻釋放彈性，黃金蓄水池安心護航」</div>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「7~8 萬區間震盪蓄勢，主升浪進攻釋放彈性，美股科技與黃金雙蓄水池」</div>
                         </td>
-                        <td class="col-c1">BTC 58% / PAXG 42%</td>
-                        <td class="col-c2">ETH 55% / PAXG 45%</td>
-                        <td class="col-c3">TAO 40% / PAXG 60%</td>
-                        <td class="col-sat">各雙幣對：COIN 35% / PAXG 65% (進攻+65%黃金蓄水池)</td>
+                        <td class="col-c1">BTC 58% / QQQB 25% / PAXG 17%</td>
+                        <td class="col-c2">ETH 55% / QQQB 25% / PAXG 20%</td>
+                        <td class="col-c3">TAO 40% / QQQB 35% / PAXG 25%</td>
+                        <td class="col-sat">各三幣組合：COIN 35% / QQQB 35% / PAXG 30% (進攻+美股黃金雙蓄水池)</td>
                     </tr>
                     <tr id="row-zone-3">
                         <td><strong>Zone 3 (過熱警戒)</strong></td>
@@ -609,12 +644,12 @@
                         <td><span id="tbl-range-3" style="color: #d97706; font-weight: 700;">$86,922 ~ $97,353</span></td>
                         <td>
                             <strong style="color: #b45309;">8.5 萬 ~ 10 萬過熱前哨</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「衝擊 10 萬整數大關，市場狂熱山寨加速，嚴格分批鎖利落袋黃金」</div>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「衝擊 10 萬整數大關，市場狂熱山寨加速，嚴格大幅鎖利至美股與實體金」</div>
                         </td>
-                        <td class="col-c1">BTC 37% / PAXG 63%</td>
-                        <td class="col-c2">ETH 35% / PAXG 65%</td>
-                        <td class="col-c3">TAO 25% / PAXG 75%</td>
-                        <td class="col-sat">各雙幣對：COIN 20% / PAXG 80% (高位大幅鎖利落袋)</td>
+                        <td class="col-c1">BTC 37% / QQQB 35% / PAXG 28%</td>
+                        <td class="col-c2">ETH 35% / QQQB 35% / PAXG 30%</td>
+                        <td class="col-c3">TAO 25% / QQQB 40% / PAXG 35%</td>
+                        <td class="col-sat">各三幣組合：COIN 20% / QQQB 40% / PAXG 40% (高位大幅鎖利美股與實體金)</td>
                     </tr>
                     <tr id="row-zone-4">
                         <td><strong>Zone 4 (極度貪婪/逃頂)</strong></td>
@@ -622,42 +657,42 @@
                         <td><span id="tbl-range-4" style="color: #dc2626; font-weight: 700;">&ge; $97,353 (向 12~15 萬衝頂)</span></td>
                         <td>
                             <strong style="color: #b91c1c;">15 萬極限目標出清</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「極限高估值狂歡期，堅決執行高位逃頂出清，95% 實體黃金避險」</div>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「極限高估值狂歡期，堅決執行高位逃頂出清，全美大盤 SPYB 45% + 實體金 50%」</div>
                         </td>
-                        <td class="col-c1">BTC 5% / PAXG 95%</td>
-                        <td class="col-c2">ETH 5% / PAXG 95%</td>
-                        <td class="col-c3">TAO 5% / PAXG 95%</td>
-                        <td class="col-sat">各雙幣對：COIN 5% / PAXG 95% (極限逃頂實體金)</td>
+                        <td class="col-c1">BTC 5% / SPYB 45% / PAXG 50%</td>
+                        <td class="col-c2">ETH 5% / SPYB 45% / PAXG 50%</td>
+                        <td class="col-c3">TAO 5% / SPYB 45% / PAXG 50%</td>
+                        <td class="col-sat">各三幣組合：COIN 5% / SPYB 45% / PAXG 50% (極致大盤美股+實體金雙保險)</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px;">
-            ※ 註：實時換算 BTC 點位依即時 MA200 動態連動計算；全套持倉全部由幣安智能持倉（Rebalance Bot）獨立雙幣機器人 100% 全自動再平衡運行。
+            ※ 註：實時換算 BTC 點位依即時 MA200 動態連動計算；全套持倉全部由幣安智能持倉（Rebalance Bot）三幣獨立機器人單元 100% 全自動再平衡運行。
         </div>
     </div>
 
-    <!-- 雙軌蓄水池量化審計與週末風控卡片 -->
+    <!-- 三元香農全天候模型量化審計與風控卡片 -->
     <div class="audit-card" style="border-left-color: #8b5cf6;">
         <div class="audit-title" style="color: #6d28d9;">
-            <span>🏛️ 雙軌蓄水池（美股科技 QQQB ＋ 實體黃金 PAXG）量化審計與風控規範</span>
-            <span style="font-size: 11.5px; background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; padding: 2px 8px; border-radius: 12px; font-weight: 700;">跨界全天候模型</span>
+            <span>🏛️ 三元香農全天候模型（現貨 COIN ＋ 美股科技 QQQB ＋ 實體黃金 PAXG）運行機制</span>
+            <span style="font-size: 11.5px; background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; padding: 2px 8px; border-radius: 12px; font-weight: 700;">跨界香農惡魔套利</span>
         </div>
         <div style="font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.6;">
-            本系統經正反雙子代理人（量化對沖架構師 vs 投行首席風控官）三輪深度辯論審計，確立「雙軌分離、各司其職」的最佳落地方案：
+            本系統將每個機器人構建為自給自足的「微型三元全天候基金」，透過幣安 1% 比例閾值進行全自動機械化動態平衡：
         </div>
         <div class="audit-grid">
             <div class="audit-item" style="border-left: 3px solid #10b981;">
-                <strong style="color: #065f46;">🚀 軌道 A：科技生產力複利（QQQB / SPYB）</strong>
-                <span>將牛市狂熱溢價沉澱為人類最強生產力股權（ROE > 25%），穿越加密熊市，享受美股科技長期向上漂移紅利，徹底消除純避險資產的零息機會成本。</span>
+                <strong style="color: #065f46;">🚀 暴衝獲利 ➔ 雙軌截流</strong>
+                <span>當加密主升浪爆發觸發 1% 偏差，機器人自動賣出漲多的現貨，<strong>同步分流沉澱至全球頂級科技股權 QQQB（享受高 ROE 複利）與實體黃金 PAXG</strong>，利潤絕不回吐。</span>
+            </div>
+            <div class="audit-item" style="border-left: 3px solid #3b82f6;">
+                <strong style="color: #1d4ed8;">📉 深跌回調 ➔ 雙庫抄底</strong>
+                <span>當幣圈遭遇黑天鵝回撤時，QQQB 與 PAXG 雙蓄水池自動提供彈藥，<strong>以 7x24 無情緒干擾的機械化操作逢低買入便宜現貨</strong>，達成全自動香農定投。</span>
             </div>
             <div class="audit-item" style="border-left: 3px solid #f59e0b;">
-                <strong style="color: #b45309;">🛡️ 軌道 B：終極物理防禦底座（PAXG）</strong>
-                <span>堅守 NYDFS 紐約信託與 LBMA 倫敦實體金庫特定序號金條獨立託管（破產隔離），在流動性危機與幣股雙殺黑天鵝中提供絕對非主權保護。</span>
-            </div>
-            <div class="audit-item" style="border-left: 3px solid #ef4444;">
-                <strong style="color: #b91c1c;">⚠️ 週末休市做市商防滑點風控（必讀）</strong>
-                <span>美股週末休市時，bStocks 由做市商內部定價。<strong>若配置包含 QQQB 的雙幣對，週末建議將再平衡閾值提升至 2% 或定時調倉</strong>，防範點差拉大被動磨損。</span>
+                <strong style="color: #b45309;">🛡️ 股幣雙殺 ➔ 實體金防禦</strong>
+                <span>若遭遇宏觀緊縮引發美股與幣圈雙殺，<strong>NYDFS 獨立信託的實體金條 PAXG</strong> 作為絕對非信用實物，充當最後的安全護城河。</span>
             </div>
         </div>
     </div>
@@ -686,126 +721,113 @@
             </div>
             <div class="audit-item">
                 <strong>🔥 Zone 3 過熱警戒區（$8.69萬 ~ $9.74萬）</strong>
-                <span>對應 BTC <strong>衝擊 10 萬大關</strong>，山寨季全面狂熱，系統開始分批獲利了結至黃金。</span>
+                <span>對應 BTC <strong>衝擊 10 萬大關</strong>，山寨季全面狂熱，系統開始分批獲利了結至美股與黃金。</span>
             </div>
             <div class="audit-item">
                 <strong>🚨 Zone 4 極限逃頂區（≥ $9.74萬，向 12~15萬衝頂）</strong>
-                <span>完全契合 <strong>15 萬極限目標逃頂原則</strong>，95% 全自動換成 PAXG 實體黃金避險。</span>
+                <span>完全契合 <strong>15 萬極限目標逃頂原則</strong>，95% 全自動換成 SPYB 大盤與 PAXG 實體黃金避險。</span>
             </div>
             <div class="audit-item" style="border-left: 3px solid #8b5cf6;">
                 <strong style="color: #7c3aed;">💡 核心 3 (TAO) 爆發力配置說明</strong>
-                <span>量化模擬審查指出：Zone 2 巡航期 TAO 配置 40%（PAXG 保有 60% 充足蓄水池），能充沛釋放去中心化 AI 賽道主升浪爆發力，同時鎖定穩健黃金底盤。</span>
+                <span>量化模擬審查指出：Zone 2 巡航期 TAO 配置 40%（QQQB 35% + PAXG 25% 充足雙蓄水池），能充沛釋放去中心化 AI 賽道主升浪爆發力，同時鎖定穩健資產底盤。</span>
             </div>
         </div>
     </div>
 
     <!-- 系統操作指南卡片 -->
     <div class="card" style="margin-bottom: 25px;">
-        <h3 style="margin-bottom: 12px; color: var(--text-main); font-size: 16px;">💡 幣安 App 智能持倉（滿額 20 組雙幣無人值守）設置步驟</h3>
+        <h3 style="margin-bottom: 12px; color: var(--text-main); font-size: 16px;">💡 幣安 App 智能持倉（三幣無人值守單元）設置步驟</h3>
         <div style="font-size: 13.5px; line-height: 1.8; color: var(--text-muted);">
             1. 打開 <strong>幣安 App ➔ 交易 ➔ 策略交易 ➔ 選擇「智能持倉 (Rebalance Bot)」</strong>。<br>
-            2. <strong>建立獨立雙幣持倉組合</strong>（依下方試算分配資金，最多可開滿幣安官方上限 20 組）：<br>
-            &nbsp;&nbsp;&nbsp;• <strong>👑 核心 1 (20% 資金)</strong>：建立 <code>BTC / PAXG</code> 機器人，依當前 Zone 比例設定（如 Zone 2 為 58%/42%），偏差設 <strong>5%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;• <strong>🏛️ 核心 2 (20% 資金)</strong>：建立 <code>ETH / PAXG</code> 機器人，依當前 Zone 比例設定（如 Zone 2 為 55%/45%），偏差設 <strong>5%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;• <strong>🤖 核心 3 (10% 資金)</strong>：建立 <code>TAO / PAXG</code> 機器人，依當前 Zone 比例設定（如 Zone 2 為 40%/60%），偏差設 <strong>5%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;• <strong>⚡ 衛星艦隊 (50% 資金，17 檔獨立雙幣對)</strong>：在幣安分別建立獨立的 <strong>COIN / PAXG</strong> 雙幣機器人（如 <code>UNI/PAXG</code>、<code>NEAR/PAXG</code>、<code>HYPE/PAXG</code>、<code>ONDO/PAXG</code>、<code>PENDLE/PAXG</code> 等），比例按當前 Zone 設定（如 Zone 2 為各幣 35% / PAXG 65%），偏差閾值設 <strong>5%</strong>。建議每組單倉本金 $\ge$ <strong>300U</strong>（確保超過幣安 $5~$10 最小委託限制，5% 波動順暢觸發自動高拋低吸）。資金有限時可先依排位由高到低開立。<br>
-            3. <strong>自動巡航與實體黃金逃頂</strong>：各雙幣機器人 100% 獨立運作，強勢幣暴衝時自動毫秒級止盈賣出並買入 PAXG 黃金保險箱，絕不被其他弱勢幣拖累；牛市頂部（Zone 4）時全盤自動鎖定 95% 實體黃金避險！
+            2. <strong>建立獨立三幣持倉組合</strong>：點擊「手動創建」，加入<strong>3 個幣種（現貨標的 ＋ QQQB/SPYB ＋ PAXG）</strong>：<br>
+            &nbsp;&nbsp;&nbsp;• <strong>👑 核心 1 (20% 資金)</strong>：建立 <code>BTC + QQQB + PAXG</code> 機器人，依當前 Zone 比例設定（如 Zone 2 為 58%/25%/17%），觸發設 <strong>按比例 1%</strong>。<br>
+            &nbsp;&nbsp;&nbsp;• <strong>🏛️ 核心 2 (20% 資金)</strong>：建立 <code>ETH + QQQB + PAXG</code> 機器人，依當前 Zone 比例設定（如 Zone 2 為 55%/25%/20%），觸發設 <strong>按比例 1%</strong>。<br>
+            &nbsp;&nbsp;&nbsp;• <strong>🤖 核心 3 (10% 資金)</strong>：建立 <code>TAO + QQQB + PAXG</code> 機器人，依當前 Zone 比例設定（如 Zone 2 為 40%/35%/25%），觸發設 <strong>按比例 1%</strong>。<br>
+            &nbsp;&nbsp;&nbsp;• <strong>⚡ 衛星艦隊 (50% 資金，各獨立三幣組合)</strong>：在幣安分別建立獨立的 <strong>COIN + QQQB + PAXG</strong> 機器人（如 <code>UNI+QQQB+PAXG</code>、<code>NEAR+QQQB+PAXG</code>、<code>AAVE+QQQB+PAXG</code>、<code>CRCLB+QQQB+PAXG</code> 等），比例按當前 Zone 設定（如 Zone 2 為各幣 35% / QQQB 35% / PAXG 30%），觸發設 <strong>按比例 1%</strong>。建議每組單倉本金 $\ge$ <strong>300U</strong>（確保超過幣安最小委託限制，波動順暢觸發自動高拋低吸）。<br>
+            3. <strong>全自動巡航與逃頂</strong>：各三幣機器人 100% 獨立運行，強勢幣暴衝時自動獲利賣出並分流至美股科技與實體黃金，弱勢時美股與黃金自動抄底；牛市頂部（Zone 4）時全盤自動鎖定 95% 美股大盤 SPYB 與實體黃金避險！
         </div>
     </div>
 </div>
 
 <script>
-    // --- 5-Zone 階梯配置定義 (三大核心 50% + 17 檔衛星 50%，共 20 組滿額獨立雙幣艦隊) ---
+    // --- 5-Zone 階梯配置定義 (三大核心 50% + 衛星艦隊 50%，獨立三幣智能持倉單元) ---
     const ZONE_CONFIGS = {
         0: {
             name: 'Zone 0 (深熊大底階段)',
             color: '#10b981',
             ratios: {
-                CORE_BTC: { BTC: 0.80, PAXG: 0.20 },
-                CORE_ETH: { ETH: 0.80, PAXG: 0.20 },
-                CORE_TAO: { TAO: 0.75, PAXG: 0.25 },
-                SAT_PAIR: { COIN: 0.70, PAXG: 0.30 }
+                CORE_BTC: { coin: 0.80, equity: 0.15, paxg: 0.05 },
+                CORE_ETH: { coin: 0.80, equity: 0.15, paxg: 0.05 },
+                CORE_TAO: { coin: 0.75, equity: 0.15, paxg: 0.10 },
+                SAT_CELL: { coin: 0.70, equity: 0.20, paxg: 0.10 }
             }
         },
         1: {
             name: 'Zone 1 (初熊防禦階段)',
             color: '#06b6d4',
             ratios: {
-                CORE_BTC: { BTC: 0.50, PAXG: 0.50 },
-                CORE_ETH: { ETH: 0.50, PAXG: 0.50 },
-                CORE_TAO: { TAO: 0.50, PAXG: 0.50 },
-                SAT_PAIR: { COIN: 0.50, PAXG: 0.50 }
+                CORE_BTC: { coin: 0.50, equity: 0.30, paxg: 0.20 },
+                CORE_ETH: { coin: 0.50, equity: 0.30, paxg: 0.20 },
+                CORE_TAO: { coin: 0.50, equity: 0.25, paxg: 0.25 },
+                SAT_CELL: { coin: 0.50, equity: 0.30, paxg: 0.20 }
             }
         },
         2: {
             name: 'Zone 2 (牛市巡航階段)',
             color: '#38bdf8',
             ratios: {
-                CORE_BTC: { BTC: 0.58, PAXG: 0.42 },
-                CORE_ETH: { ETH: 0.55, PAXG: 0.45 },
-                CORE_TAO: { TAO: 0.40, PAXG: 0.60 },
-                SAT_PAIR: { COIN: 0.35, PAXG: 0.65 }
+                CORE_BTC: { coin: 0.58, equity: 0.25, paxg: 0.17 },
+                CORE_ETH: { coin: 0.55, equity: 0.25, paxg: 0.20 },
+                CORE_TAO: { coin: 0.40, equity: 0.35, paxg: 0.25 },
+                SAT_CELL: { coin: 0.35, equity: 0.35, paxg: 0.30 }
             }
         },
         3: {
             name: 'Zone 3 (過熱警戒階段)',
             color: '#fbbf24',
             ratios: {
-                CORE_BTC: { BTC: 0.37, PAXG: 0.63 },
-                CORE_ETH: { ETH: 0.35, PAXG: 0.65 },
-                CORE_TAO: { TAO: 0.25, PAXG: 0.75 },
-                SAT_PAIR: { COIN: 0.20, PAXG: 0.80 }
+                CORE_BTC: { coin: 0.37, equity: 0.35, paxg: 0.28 },
+                CORE_ETH: { coin: 0.35, equity: 0.35, paxg: 0.30 },
+                CORE_TAO: { coin: 0.25, equity: 0.40, paxg: 0.35 },
+                SAT_CELL: { coin: 0.20, equity: 0.40, paxg: 0.40 }
             }
         },
         4: {
             name: 'Zone 4 (極度貪婪/逃頂階段)',
             color: '#ef4444',
             ratios: {
-                CORE_BTC: { BTC: 0.05, PAXG: 0.95 },
-                CORE_ETH: { ETH: 0.05, PAXG: 0.95 },
-                CORE_TAO: { TAO: 0.05, PAXG: 0.95 },
-                SAT_PAIR: { COIN: 0.05, PAXG: 0.95 }
+                CORE_BTC: { coin: 0.05, equity: 0.45, paxg: 0.50 },
+                CORE_ETH: { coin: 0.05, equity: 0.45, paxg: 0.50 },
+                CORE_TAO: { coin: 0.05, equity: 0.45, paxg: 0.50 },
+                SAT_CELL: { coin: 0.05, equity: 0.45, paxg: 0.50 }
             }
         }
     };
 
-    // --- 衛星雙幣 Alpha 矩陣標的 (含 RWA 美股科技與指數代幣) ---
+    // --- 衛星三幣 Alpha 矩陣標的 (每個標的與美股指數 + 實體黃金組成三幣智能持倉) ---
     const C_SATELLITE_CANDIDATES = [
         {
-            sym: 'QQQB',
-            name: 'QQQB / USDT',
-            icon: 'icons/paxg.png',
-            rank: '⭐',
-            rankClass: 'rank-top1',
-            tier: '🏛️ RWA 科技指數 (納指100)',
-            title: '全球科技生產力之王',
-            quote: '納斯達克100指數代幣，打包微軟蘋果輝達，跨界全天候複利蓄水池',
-            baseWeight: 0.05,
-            isSpot: true,
-            active: true
-        },
-        {
-            sym: 'SPYB',
-            name: 'SPYB / USDT',
-            icon: 'icons/paxg.png',
-            rank: '⭐',
-            rankClass: 'rank-top1',
-            tier: '🏛️ RWA 大盤指數 (標普500)',
-            title: '全美500強穩健底盤',
-            quote: '標普500大盤代幣，流動性破千萬美元，極致平穩無單一公司爆雷風險',
-            baseWeight: 0.05,
-            isSpot: true,
-            active: true
-        },
-        {
             sym: 'CRCLB',
-            name: 'CRCLB / USDT',
+            name: 'CRCLB',
             icon: 'icons/paxg.png',
             rank: '⭐',
             rankClass: 'rank-top2',
             tier: '⚡ RWA 合規旗艦 (Circle)',
             title: '美國合規鏈上證券載體',
             quote: '飛哥專題加倉標的，美債融資與穩定幣爆發核心來源，5~10倍潛力空間',
+            baseWeight: 0.04,
+            isSpot: true,
+            active: true
+        },
+        {
+            sym: 'ICP',
+            name: 'ICP',
+            icon: 'icons/paxg.png',
+            rank: '⭐',
+            rankClass: 'rank-top1',
+            tier: '🛡️ 歷史深底 (世界計算機)',
+            title: '全鏈雲架構底座',
+            quote: '飛哥社群大盤回調底倉推薦，2.8U 強支撐，具備極強非對稱反彈彈性',
             baseWeight: 0.04,
             isSpot: true,
             active: true
@@ -1054,10 +1076,13 @@
         ENA: '🪙 ENA',
         OP: '🔴 OP',
         TON: '💎 TON',
-        LDO: '💧 LDO'
+        LDO: '💧 LDO',
+        CRCLB: '⚡ CRCLB (Circle)',
+        ICP: '🌐 ICP (互聯網計算機)'
     };
 
     let currentZone = 2;
+    let activeEquitySym = 'QQQB'; // 'QQQB' or 'SPYB'
     let latestPrices = {
         BTC: 81300,
         ETH: 2620,
@@ -1066,6 +1091,7 @@
         QQQB: 720.4,
         SPYB: 762.2,
         CRCLB: 90.2,
+        ICP: 2.80,
         UNI: 9.02,
         NEAR: 3.84,
         HYPE: 94.4,
@@ -1138,23 +1164,23 @@
             const chgSign = chg >= 0 ? '+' : '';
             const chgHtml = typeof chg === 'number' ? ` <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>` : '';
 
-            // 若為 PAXG，同步更新指令中心的黃金儲備報價
+            // 若為 PAXG，同步更新指令中心與所有三幣卡片內的黃金報價
             if (sym === 'PAXG') {
                 const paxgMetricEl = document.getElementById('livePaxgPrice');
-                if (paxgMetricEl) {
-                    paxgMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
-                }
+                if (paxgMetricEl) paxgMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
+                document.querySelectorAll('.cprice-paxg-display').forEach(el => el.innerText = priceFormat);
             }
 
-            // 若為 QQQB，同步更新指令中心的美股指數現價
+            // 若為美股代幣 (QQQB / SPYB)，同步更新美股指標與三幣卡片美股現價
             if (sym === 'QQQB') {
                 const qqqbMetricEl = document.getElementById('liveQqqbPrice');
-                if (qqqbMetricEl) {
-                    qqqbMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
-                }
+                if (qqqbMetricEl) qqqbMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
+            }
+            if (sym === activeEquitySym) {
+                document.querySelectorAll('.cprice-eq-display').forEach(el => el.innerText = priceFormat);
             }
 
-            // 更新雙幣卡片內的即時報價 (Core 與衛星)
+            // 更新各現貨卡片內的主幣報價
             const cardPriceEl = document.getElementById(`cprice-${sym}`);
             if (cardPriceEl) {
                 cardPriceEl.innerHTML = `${priceFormat}${chgHtml}`;
@@ -1206,7 +1232,7 @@
             'solusdt', 'bnbusdt', 'arbusdt', 'aaveusdt', 'linkusdt',
             'renderusdt', 'fetusdt', 'suiusdt', 'enausdt', 'opusdt',
             'tonusdt', 'ldousdt',
-            'qqqbusdt', 'spybusdt', 'crclbusdt'
+            'qqqbusdt', 'spybusdt', 'crclbusdt', 'icpusdt'
         ];
         const streams = spotSymbols.map(s => `${s}@ticker`).join('/');
         const wsUrl = `wss://stream.binance.com:9443/stream?streams=${streams}`;
@@ -1305,17 +1331,24 @@
         }
     ];
 
-    // --- 渲染三大核心雙幣卡片 (BTC/PAXG, ETH/PAXG, TAO/PAXG) ---
+    // --- 渲染三大核心三幣卡片 (BTC, ETH, TAO 搭配 QQQB/SPYB 與 PAXG) ---
     function renderCoreCards() {
         const grid = document.getElementById('coreCardsGrid');
         if (!grid) return;
         const config = ZONE_CONFIGS[currentZone];
+        const eqSym = (currentZone === 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+
+        const pEq = latestPrices[eqSym] || 0;
+        const pPaxg = latestPrices.PAXG || 0;
+        const eqPriceStr = pEq >= 100 ? '$' + pEq.toFixed(1) : '$' + pEq.toFixed(2);
+        const paxgPriceStr = '$' + Math.round(pPaxg).toLocaleString();
 
         let html = '';
         CORE_BIG3_CONFIG.forEach(c => {
             const ratios = config.ratios[c.ratioKey];
-            const coinPct = Math.round(ratios[c.sym] * 100);
-            const paxgPct = Math.round(ratios.PAXG * 100);
+            const coinPct = Math.round(ratios.coin * 100);
+            const equityPct = Math.round(ratios.equity * 100);
+            const paxgPct = Math.round(ratios.paxg * 100);
 
             const p = latestPrices[c.sym] || 0;
             const chg = latest24hChange[c.sym];
@@ -1324,34 +1357,49 @@
             if (typeof chg === 'number') {
                 const chgClass = chg >= 0 ? 'up' : 'down';
                 const chgSign = chg >= 0 ? '+' : '';
-                chgStr = `<span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
+                chgStr = ` <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
             }
 
             html += `
                 <div class="c-pair-card" id="cpair-${c.sym}" style="border-top: 4px solid ${c.topBorder};">
                     <div class="c-card-header">
-                        <span class="c-rank-badge ${c.rankClass}">#${c.rank} 優先級</span>
+                        <span class="c-rank-badge ${c.rankClass}">#${c.rank} 核心優先級</span>
                         <span class="c-tier-text">${c.tier}</span>
                     </div>
                     <div class="c-card-coin-row">
-                        <div class="c-pair-name">
+                        <div class="c-pair-name" style="font-size: 15px;">
                             <span style="display: inline-flex; align-items: center; gap: 6px;">
                                 <img src="${c.icon}" alt="${c.sym}" style="width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
-                                <span>${c.sym} / PAXG</span>
+                                <span>${c.sym} + ${eqSym} + PAXG</span>
                             </span>
                             <span style="font-size:10px; color:#1d4ed8; background:#eff6ff; border:1px solid #bfdbfe; padding:1px 6px; border-radius:4px; font-weight:700;">${c.capitalPct}</span>
                         </div>
-                        <div class="c-pair-price" id="cprice-${c.sym}">
-                            ${priceStr} ${chgStr}
+                    </div>
+                    <!-- 即時三幣現價小橫列 -->
+                    <div class="c-tri-prices">
+                        <div class="c-tri-price-item">
+                            <span style="color:#059669;">${c.sym} 現價</span>
+                            <strong id="cprice-${c.sym}">${priceStr}${chgStr}</strong>
+                        </div>
+                        <div class="c-tri-price-item">
+                            <span style="color:#7c3aed;">${eqSym} 指數</span>
+                            <strong class="cprice-eq-display">${eqPriceStr}</strong>
+                        </div>
+                        <div class="c-tri-price-item">
+                            <span style="color:#d97706;">PAXG 黃金</span>
+                            <strong class="cprice-paxg-display">${paxgPriceStr}</strong>
                         </div>
                     </div>
+                    <!-- 當前 Zone 三幣目標佔比進度條 -->
                     <div class="c-ratio-display">
                         <div class="c-ratio-labels">
-                            <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 13px; height: 13px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
-                            <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 13px; height: 13px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
+                            <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 12px; height: 12px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
+                            <span style="color: #7c3aed;">🇺🇸 ${eqSym}: ${equityPct}%</span>
+                            <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 12px; height: 12px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
                         </div>
                         <div class="c-prog-track">
                             <div class="c-prog-coin" style="width: ${coinPct}%;"></div>
+                            <div class="c-prog-equity" style="width: ${equityPct}%;"></div>
                             <div class="c-prog-paxg" style="width: ${paxgPct}%;"></div>
                         </div>
                     </div>
@@ -1359,8 +1407,8 @@
                         <strong>💡 策略點評：</strong>${c.quote}
                     </div>
                     <div class="c-card-footer">
-                        <span>偏差 5% (建議 ≥ 300U)</span>
-                        <button class="c-toggle-btn active" style="cursor: default; pointer-events: none;">✅ 已啟用持倉</button>
+                        <span>偏差 1% (建議 ≥ 300U)</span>
+                        <button class="c-toggle-btn active" style="cursor: default; pointer-events: none;">✅ 三幣持倉中</button>
                     </div>
                 </div>
             `;
@@ -1383,20 +1431,28 @@
         renderCPortfolioMatrix();
     }
 
-    // --- 渲染衛星雙幣 Alpha 矩陣卡片 (17 檔) ---
+    // --- 渲染衛星三幣 Alpha 矩陣卡片 ---
     function renderCPortfolioMatrix() {
         const grid = document.getElementById('cMatrixGrid');
         if (!grid) return;
         const config = ZONE_CONFIGS[currentZone];
-        const coinPct = Math.round(config.ratios.SAT_PAIR.COIN * 100);
-        const paxgPct = Math.round(config.ratios.SAT_PAIR.PAXG * 100);
+        const ratios = config.ratios.SAT_CELL;
+        const coinPct = Math.round(ratios.coin * 100);
+        const equityPct = Math.round(ratios.equity * 100);
+        const paxgPct = Math.round(ratios.paxg * 100);
+        const eqSym = (currentZone === 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+
+        const pEq = latestPrices[eqSym] || 0;
+        const pPaxg = latestPrices.PAXG || 0;
+        const eqPriceStr = pEq >= 100 ? '$' + pEq.toFixed(1) : '$' + pEq.toFixed(2);
+        const paxgPriceStr = '$' + Math.round(pPaxg).toLocaleString();
 
         let html = '';
         C_SATELLITE_CANDIDATES.forEach((c, idx) => {
             // 梯隊標籤篩選比對
             let match = true;
-            if (currentFleetFilter === 'tier1') match = c.tier.includes('第一梯隊');
-            else if (currentFleetFilter === 'tier2') match = c.tier.includes('第二梯隊');
+            if (currentFleetFilter === 'tier1') match = c.tier.includes('第一梯隊') || c.tier.includes('合規旗艦');
+            else if (currentFleetFilter === 'tier2') match = c.tier.includes('第二梯隊') || c.tier.includes('歷史深底');
             else if (currentFleetFilter === 'tier3') match = c.tier.includes('第三梯隊');
             if (!match) return;
 
@@ -1407,12 +1463,12 @@
             if (typeof chg === 'number') {
                 const chgClass = chg >= 0 ? 'up' : 'down';
                 const chgSign = chg >= 0 ? '+' : '';
-                chgStr = `<span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
+                chgStr = ` <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>`;
             }
 
             const activeClass = c.active ? '' : 'inactive';
             const toggleBtnClass = c.active ? 'active' : 'inactive';
-            const toggleBtnText = c.active ? '✅ 已啟用持倉' : '⏳ 待投資儲備';
+            const toggleBtnText = c.active ? '✅ 三幣持倉中' : '⏳ 待投資儲備';
             const spotBadge = !c.isSpot ? `<span style="font-size:10px; color:#d97706; background:rgba(245,158,11,0.12); padding:1px 6px; border-radius:4px; font-weight:700;">幣安合約/DEX</span>` : '';
 
             html += `
@@ -1422,24 +1478,39 @@
                         <span class="c-tier-text">${c.tier}</span>
                     </div>
                     <div class="c-card-coin-row">
-                        <div class="c-pair-name">
+                        <div class="c-pair-name" style="font-size: 15px;">
                             <span style="display: inline-flex; align-items: center; gap: 6px;">
                                 <img src="${c.icon}" alt="${c.sym}" style="width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">
-                                <span>${c.sym} / PAXG</span>
+                                <span>${c.sym} + ${eqSym} + PAXG</span>
                             </span>
                             ${spotBadge}
                         </div>
-                        <div class="c-pair-price" id="cprice-${c.sym}">
-                            ${priceStr} ${chgStr}
+                    </div>
+                    <!-- 即時三幣現價小橫列 -->
+                    <div class="c-tri-prices">
+                        <div class="c-tri-price-item">
+                            <span style="color:#059669;">${c.sym} 現價</span>
+                            <strong id="cprice-${c.sym}">${priceStr}${chgStr}</strong>
+                        </div>
+                        <div class="c-tri-price-item">
+                            <span style="color:#7c3aed;">${eqSym} 指數</span>
+                            <strong class="cprice-eq-display">${eqPriceStr}</strong>
+                        </div>
+                        <div class="c-tri-price-item">
+                            <span style="color:#d97706;">PAXG 黃金</span>
+                            <strong class="cprice-paxg-display">${paxgPriceStr}</strong>
                         </div>
                     </div>
+                    <!-- 當前 Zone 三幣目標佔比進度條 -->
                     <div class="c-ratio-display">
                         <div class="c-ratio-labels">
-                            <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 13px; height: 13px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
-                            <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 13px; height: 13px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
+                            <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 12px; height: 12px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
+                            <span style="color: #7c3aed;">🇺🇸 ${eqSym}: ${equityPct}%</span>
+                            <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 12px; height: 12px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
                         </div>
                         <div class="c-prog-track">
                             <div class="c-prog-coin" style="width: ${coinPct}%;"></div>
+                            <div class="c-prog-equity" style="width: ${equityPct}%;"></div>
                             <div class="c-prog-paxg" style="width: ${paxgPct}%;"></div>
                         </div>
                     </div>
@@ -1447,7 +1518,7 @@
                         <strong>💡 策略點評：</strong>${c.quote}
                     </div>
                     <div class="c-card-footer">
-                        <span>偏差 5% (建議 ≥ 300U)</span>
+                        <span>偏差 1% (建議 ≥ 300U)</span>
                         <button class="c-toggle-btn ${toggleBtnClass}" onclick="toggleCPair(${idx})">${toggleBtnText}</button>
                     </div>
                 </div>
@@ -1456,7 +1527,7 @@
         grid.innerHTML = html;
     }
 
-    // --- 切換單個雙幣對激活狀態 ---
+    // --- 切換單個三幣組合激活狀態 ---
     function toggleCPair(index) {
         if (C_SATELLITE_CANDIDATES[index]) {
             C_SATELLITE_CANDIDATES[index].active = !C_SATELLITE_CANDIDATES[index].active;
@@ -1575,75 +1646,68 @@
         if (el4) el4.innerText = `≥ $${p3.toLocaleString()} (向 12~15 萬衝頂)`;
     }
 
-    // --- 雙軌蓄水池配置定義 ---
-    let currentReservoirMode = 'classic'; // 'classic' or 'allweather'
-
-    const TABLE_CONFIGS_CLASSIC = [
-        { zone: 0, c1: 'BTC 80% / PAXG 20%', c2: 'ETH 80% / PAXG 20%', c3: 'TAO 75% / PAXG 25%', sat: '各雙幣對：COIN 70% / PAXG 30% (激進低吸抄底)' },
-        { zone: 1, c1: 'BTC 50% / PAXG 50%', c2: 'ETH 50% / PAXG 50%', c3: 'TAO 50% / PAXG 50%', sat: '各雙幣對：COIN 50% / PAXG 50% (均勢對稱防禦)' },
-        { zone: 2, c1: 'BTC 58% / PAXG 42%', c2: 'ETH 55% / PAXG 45%', c3: 'TAO 40% / PAXG 60%', sat: '各雙幣對：COIN 35% / PAXG 65% (進攻+65%黃金蓄水池)' },
-        { zone: 3, c1: 'BTC 37% / PAXG 63%', c2: 'ETH 35% / PAXG 65%', c3: 'TAO 25% / PAXG 75%', sat: '各雙幣對：COIN 20% / PAXG 80% (高位大幅鎖利落袋)' },
-        { zone: 4, c1: 'BTC 5% / PAXG 95%', c2: 'ETH 5% / PAXG 95%', c3: 'TAO 5% / PAXG 95%', sat: '各雙幣對：COIN 5% / PAXG 95% (極限逃頂實體金)' }
-    ];
-
-    const TABLE_CONFIGS_ALLWEATHER = [
-        { zone: 0, c1: 'BTC 80% / QQQB 20%', c2: 'ETH 80% / QQQB 20%', c3: 'TAO 75% / QQQB 25%', sat: '各雙幣對：COIN 70% / QQQB 30% (加密+美股科技雙抄底)' },
-        { zone: 1, c1: 'BTC 50% / QQQB 30% + PAXG 20%', c2: 'ETH 50% / QQQB 30% + PAXG 20%', c3: 'TAO 50% / QQQB 25% + PAXG 25%', sat: '各雙幣對：COIN 50% / QQQB 30% + PAXG 20% (三元對稱防禦)' },
-        { zone: 2, c1: 'BTC 58% / QQQB 25% + PAXG 17%', c2: 'ETH 55% / QQQB 25% + PAXG 20%', c3: 'TAO 40% / QQQB 35% + PAXG 25%', sat: '各雙幣對：COIN 35% / QQQB 35% + PAXG 30% (美股科技+黃金雙蓄水池)' },
-        { zone: 3, c1: 'BTC 37% / QQQB 35% + PAXG 28%', c2: 'ETH 35% / QQQB 35% + PAXG 30%', c3: 'TAO 25% / QQQB 40% + PAXG 35%', sat: '各雙幣對：COIN 20% / QQQB 45% + PAXG 35% (高位大幅鎖利美股科技)' },
-        { zone: 4, c1: 'BTC 5% / SPYB 45% + PAXG 50%', c2: 'ETH 5% / SPYB 45% + PAXG 50%', c3: 'TAO 5% / SPYB 45% + PAXG 50%', sat: '各雙幣對：COIN 5% / SPYB 45% + PAXG 50% (美股大盤+實體金雙保險)' }
-    ];
-
-    function switchReservoirMode(mode) {
-        currentReservoirMode = mode;
-        const btnClassic = document.getElementById('btnModeClassic');
-        const btnAllWeather = document.getElementById('btnModeAllWeather');
+    // --- 美股代幣支柱切換 (QQQB vs SPYB) ---
+    function switchEquityAsset(sym) {
+        activeEquitySym = sym;
+        const btnQqqb = document.getElementById('btnEquityQqqb');
+        const btnSpyb = document.getElementById('btnEquitySpyb');
         const thCore1 = document.getElementById('th-core-1');
         const thCore2 = document.getElementById('th-core-2');
         const thCore3 = document.getElementById('th-core-3');
         const thSat = document.getElementById('th-sat');
 
-        if (mode === 'classic') {
-            if (btnClassic) { btnClassic.style.background = '#0284c7'; btnClassic.style.color = '#ffffff'; }
-            if (btnAllWeather) { btnAllWeather.style.background = 'transparent'; btnAllWeather.style.color = '#475569'; }
-            if (thCore1) thCore1.innerText = '核心 1: BTC/PAXG (20%)';
-            if (thCore2) thCore2.innerText = '核心 2: ETH/PAXG (20%)';
-            if (thCore3) thCore3.innerText = '核心 3: TAO/PAXG (10%)';
-            if (thSat) thSat.innerText = '衛星 Alpha 艦隊 (17組各雙幣對 | 偏差 5%)';
-        } else {
-            if (btnClassic) { btnClassic.style.background = 'transparent'; btnClassic.style.color = '#475569'; }
-            if (btnAllWeather) { btnAllWeather.style.background = '#8b5cf6'; btnAllWeather.style.color = '#ffffff'; }
-            if (thCore1) thCore1.innerText = '核心 1: BTC/QQQB+PAXG';
-            if (thCore2) thCore2.innerText = '核心 2: ETH/QQQB+PAXG';
-            if (thCore3) thCore3.innerText = '核心 3: TAO/QQQB+PAXG';
-            if (thSat) thSat.innerText = '衛星 Alpha 艦隊 (美股指數+純金雙軌)';
+        if (btnQqqb) {
+            btnQqqb.style.background = sym === 'QQQB' ? '#8b5cf6' : 'transparent';
+            btnQqqb.style.color = sym === 'QQQB' ? '#ffffff' : '#475569';
+        }
+        if (btnSpyb) {
+            btnSpyb.style.background = sym === 'SPYB' ? '#8b5cf6' : 'transparent';
+            btnSpyb.style.color = sym === 'SPYB' ? '#ffffff' : '#475569';
         }
 
+        if (thCore1) thCore1.innerText = `核心 1: BTC + ${sym} + PAXG (20%)`;
+        if (thCore2) thCore2.innerText = `核心 2: ETH + ${sym} + PAXG (20%)`;
+        if (thCore3) thCore3.innerText = `核心 3: TAO + ${sym} + PAXG (10%)`;
+        if (thSat) thSat.innerText = `衛星 Alpha 艦隊: 各三幣組合 (偏差 1%)`;
+
         renderTableColumns();
+        renderCoreCards();
+        renderCPortfolioMatrix();
     }
 
+    // --- 動態渲染 5-Zone 對照表格內容 ---
     function renderTableColumns() {
-        const configList = currentReservoirMode === 'classic' ? TABLE_CONFIGS_CLASSIC : TABLE_CONFIGS_ALLWEATHER;
-        configList.forEach(item => {
-            const row = document.getElementById(`row-zone-${item.zone}`);
-            if (row) {
-                const c1 = row.querySelector('.col-c1');
-                const c2 = row.querySelector('.col-c2');
-                const c3 = row.querySelector('.col-c3');
-                const sat = row.querySelector('.col-sat');
-                if (c1) c1.innerText = item.c1;
-                if (c2) c2.innerText = item.c2;
-                if (c3) c3.innerText = item.c3;
-                if (sat) sat.innerText = item.sat;
+        for (let zone = 0; zone <= 4; zone++) {
+            const config = ZONE_CONFIGS[zone];
+            const row = document.getElementById(`row-zone-${zone}`);
+            if (!row) continue;
+
+            const eqSym = (zone === 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+            const btcR = config.ratios.CORE_BTC;
+            const ethR = config.ratios.CORE_ETH;
+            const taoR = config.ratios.CORE_TAO;
+            const satR = config.ratios.SAT_CELL;
+
+            const c1 = row.querySelector('.col-c1');
+            const c2 = row.querySelector('.col-c2');
+            const c3 = row.querySelector('.col-c3');
+            const sat = row.querySelector('.col-sat');
+
+            if (c1) c1.innerText = `BTC ${Math.round(btcR.coin*100)}% / ${eqSym} ${Math.round(btcR.equity*100)}% / PAXG ${Math.round(btcR.paxg*100)}%`;
+            if (c2) c2.innerText = `ETH ${Math.round(ethR.coin*100)}% / ${eqSym} ${Math.round(ethR.equity*100)}% / PAXG ${Math.round(ethR.paxg*100)}%`;
+            if (c3) c3.innerText = `TAO ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
+            if (sat) {
+                const note = zone === 0 ? '(激進低吸抄底)' : (zone === 1 ? '(均勢對稱防禦)' : (zone === 2 ? '(進攻+雙蓄水池)' : (zone === 3 ? '(高位大幅鎖利)' : '(極限逃頂雙保險)')));
+                sat.innerText = `各三幣組合：COIN ${Math.round(satR.coin*100)}% / ${eqSym} ${Math.round(satR.equity*100)}% / PAXG ${Math.round(satR.paxg*100)}% ${note}`;
             }
-        });
+        }
     }
 
     // --- 備用 1 秒輪詢 (Fallback Polling) ---
     async function fallbackPoll() {
         try {
             const spotSymbols = [
-                "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "QQQBUSDT", "SPYBUSDT", "CRCLBUSDT",
+                "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "QQQBUSDT", "SPYBUSDT", "CRCLBUSDT", "ICPUSDT",
                 "UNIUSDT", "NEARUSDT", "ONDOUSDT", "PENDLEUSDT", "SOLUSDT", "BNBUSDT", "ARBUSDT", "AAVEUSDT",
                 "LINKUSDT", "RENDERUSDT", "FETUSDT", "SUIUSDT", "ENAUSDT", "OPUSDT",
                 "TONUSDT", "LDOUSDT"
