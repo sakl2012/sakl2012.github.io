@@ -153,37 +153,36 @@ function safeFetchJson(url) {
   try {
     const res = UrlFetchApp.fetch(url, {
       muteHttpExceptions: true,
-      headers: { "User-Agent": "Mozilla/5.0" }
+      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
     });
     
     const statusCode = res.getResponseCode();
     if (statusCode === 200) {
       return JSON.parse(res.getContentText());
     } else {
-      Logger.log(`API [${url.split('?')[0]}] 回傳異常 HTTP ${statusCode}`);
       return null;
     }
   } catch (e) {
-    Logger.log(`網路連線失敗 [${url.split('?')[0]}]: ${e.toString()}`);
     return null;
   }
 }
 
 // ==========================================
-// === 取得即時價格 (Binance Vision -> OKX -> Bybit) ===
+// === 取得即時價格 (OKX 主力 -> Binance api1 -> Bybit) ===
 // ==========================================
 
 function getCurrentPrice() {
-  const binanceUrl = "https://data-api.binance.vision/api/v3/ticker/price?symbol=BTCUSDT";
-  const bData = safeFetchJson(binanceUrl);
-  if (bData && bData.price) return parseFloat(bData.price);
-
-  Logger.log("⚠️ 幣安即時價格獲取失敗，切換至備援源 (OKX)...");
+  // 1. 首選 OKX (對 Google Cloud 最友善，零 403 阻擋)
   const okxUrl = "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT";
   const oData = safeFetchJson(okxUrl);
   if (oData && oData.data && oData.data.length > 0) return parseFloat(oData.data[0].last);
 
-  Logger.log("⚠️ OKX 獲取失敗，切換至備援源 (Bybit)...");
+  // 2. 備援源 Binance api1
+  const bUrl = "https://api1.binance.com/api/v3/ticker/price?symbol=BTCUSDT";
+  const bData = safeFetchJson(bUrl);
+  if (bData && bData.price) return parseFloat(bData.price);
+
+  // 3. 備援源 Bybit
   const bybitUrl = "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTCUSDT";
   const bybitData = safeFetchJson(bybitUrl);
   if (bybitData && bybitData.result && bybitData.result.list && bybitData.result.list.length > 0) return parseFloat(bybitData.result.list[0].lastPrice);
@@ -192,24 +191,26 @@ function getCurrentPrice() {
 }
 
 // ==========================================
-// === 取得 200 日線 MA (Binance Vision -> OKX) ===
+// === 取得 200 日線 MA (OKX 主力 -> Binance api1) ===
 // ==========================================
 
 function getYesterdayMA200() {
-  const binanceUrl = "https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=201";
-  const bData = safeFetchJson(binanceUrl);
-  if (bData && Array.isArray(bData) && bData.length >= 201) {
-    let sum = 0;
-    for (let i = 0; i < 200; i++) sum += parseFloat(bData[i][4]);
-    return sum / 200;
-  }
-
-  Logger.log("⚠️ 幣安 MA200 獲取失敗，切換至備援源 (OKX)...");
+  // 1. 首選 OKX 日線
   const okxUrl = "https://www.okx.com/api/v5/market/candles?instId=BTC-USDT&bar=1Dutc&limit=201";
   const oData = safeFetchJson(okxUrl);
-  if (oData && oData.data && oData.data.length >= 201) {
+  if (oData && oData.data && oData.data.length >= 200) {
     let sum = 0;
-    for (let i = 1; i <= 200; i++) sum += parseFloat(oData.data[i][4]);
+    const len = Math.min(200, oData.data.length);
+    for (let i = 0; i < len; i++) sum += parseFloat(oData.data[i][4]);
+    return sum / len;
+  }
+
+  // 2. 備援 Binance api1
+  const bUrl = "https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=200";
+  const bData = safeFetchJson(bUrl);
+  if (bData && Array.isArray(bData) && bData.length >= 200) {
+    let sum = 0;
+    for (let i = 0; i < 200; i++) sum += parseFloat(bData[i][4]);
     return sum / 200;
   }
 
@@ -217,24 +218,25 @@ function getYesterdayMA200() {
 }
 
 // ==========================================
-// === 取得 72 小時 SMA (Binance Vision -> OKX) ===
+// === 取得 72 小時 SMA (OKX 主力 -> Binance api1) ===
 // ==========================================
 
 function get72hSMA() {
-  const binanceUrl = "https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=72";
-  const bData = safeFetchJson(binanceUrl);
-  if (bData && Array.isArray(bData) && bData.length >= 72) {
-    let sum = 0;
-    for (let i = 0; i < 72; i++) sum += parseFloat(bData[i][4]);
-    return sum / 72;
-  }
-
-  Logger.log("⚠️ 幣安 72h SMA 獲取失敗，切換至備援源 (OKX)...");
+  // 1. 首選 OKX 小時線
   const okxUrl = "https://www.okx.com/api/v5/market/candles?instId=BTC-USDT&bar=1H&limit=72";
   const oData = safeFetchJson(okxUrl);
   if (oData && oData.data && oData.data.length >= 72) {
     let sum = 0;
     for (let i = 0; i < 72; i++) sum += parseFloat(oData.data[i][4]);
+    return sum / 72;
+  }
+
+  // 2. 備援 Binance api1
+  const bUrl = "https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=72";
+  const bData = safeFetchJson(bUrl);
+  if (bData && Array.isArray(bData) && bData.length >= 72) {
+    let sum = 0;
+    for (let i = 0; i < 72; i++) sum += parseFloat(bData[i][4]);
     return sum / 72;
   }
 
@@ -248,32 +250,44 @@ function get72hSMA() {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      LINKUSDT: { sym: "LINK", name: "Chainlink", tpTarget: 14.50, slFloor: 11.00, nextRotate: "AAVE 或 NEAR" },
-      ICPUSDT:  { sym: "ICP",  name: "Internet Computer", tpTarget: 3.30, slFloor: 2.45, nextRotate: "UNI 或 ONDO" },
-      LTCUSDT:  { sym: "LTC",  name: "Litecoin", tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" },
-      ENAUSDT:  { sym: "ENA",  name: "Ethena", tpTarget: 0.2080, slFloor: 0.1650, nextRotate: "本金撤出或投入現貨三幣持倉" }
+      LINKUSDT: { sym: "LINK", name: "Chainlink", okxId: "LINK-USDT", tpTarget: 14.50, slFloor: 11.00, nextRotate: "AAVE 或 NEAR" },
+      ICPUSDT:  { sym: "ICP",  name: "Internet Computer", okxId: "ICP-USDT", tpTarget: 3.30, slFloor: 2.45, nextRotate: "UNI 或 ONDO" },
+      LTCUSDT:  { sym: "LTC",  name: "Litecoin", okxId: "LTC-USDT", tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" },
+      ENAUSDT:  { sym: "ENA",  name: "Ethena", okxId: "ENA-USDT", tpTarget: 0.2080, slFloor: 0.1650, nextRotate: "本金撤出或投入現貨三幣持倉" }
     };
 
-    const symbolsParam = encodeURIComponent(JSON.stringify(Object.keys(targets)));
-    const url = `https://data-api.binance.vision/api/v3/ticker/price?symbols=${symbolsParam}`;
-    const data = safeFetchJson(url);
-
-    if (!data || !Array.isArray(data)) {
-      Logger.log("⚠️ 換幣輪動監控：無法獲取即時幣價。");
-      return;
+    // 1. 批次取得各幣最新現價 (OKX -> Binance api1 備援)
+    const priceMap = {};
+    const okxUrl = "https://www.okx.com/api/v5/market/tickers?instType=SPOT";
+    const okxData = safeFetchJson(okxUrl);
+    
+    if (okxData && okxData.data) {
+      for (let d of okxData.data) {
+        priceMap[d.instId] = parseFloat(d.last);
+      }
     }
 
     const props = PropertiesService.getScriptProperties();
     const now = new Date().getTime();
+    const logArr = [];
 
-    for (let item of data) {
-      const info = targets[item.symbol];
-      if (!info) continue;
-      const curPrice = parseFloat(item.price);
-      
+    for (let bKey in targets) {
+      const info = targets[bKey];
+      let curPrice = priceMap[info.okxId];
+
+      // 若 OKX 未取到則走備援
+      if (!curPrice) {
+        const fallbackUrl = `https://api1.binance.com/api/v3/ticker/price?symbol=${bKey}`;
+        const fbData = safeFetchJson(fallbackUrl);
+        if (fbData && fbData.price) curPrice = parseFloat(fbData.price);
+      }
+
+      if (!curPrice) continue;
+      logArr.push(`${info.sym}: $${curPrice}`);
+
       const lastAlertKey = `LAST_ALERT_${info.sym}`;
       const lastAlertTime = parseInt(props.getProperty(lastAlertKey) || "0");
-      const COOLDOWN_MS = 12 * 60 * 60 * 1000; // 同一幣種 12 小時冷卻，避免洗信
+      const COOLDOWN_MS = 12 * 60 * 60 * 1000; // 同一幣種 12 小時冷卻
 
       if (now - lastAlertTime < COOLDOWN_MS) continue;
 
@@ -321,6 +335,12 @@ function checkCoinRotationAlert() {
         props.setProperty(lastAlertKey, now.toString());
       }
     }
+
+    if (logArr.length > 0) {
+      Logger.log(`[換幣監控巡檢正常] 監控報價：${logArr.join(" | ")}`);
+    } else {
+      Logger.log("⚠️ 換幣輪動監控：無法獲取即時幣價。");
+    }
   } catch (err) {
     Logger.log("換幣監控全域異常: " + err.toString());
   }
@@ -331,4 +351,5 @@ if (typeof globalThis !== 'undefined') {
   globalThis.checkZoneAndAlert = checkZoneAndAlert;
   globalThis.checkCoinRotationAlert = checkCoinRotationAlert;
 }
+
 
