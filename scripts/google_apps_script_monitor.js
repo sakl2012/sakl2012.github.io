@@ -309,8 +309,40 @@ function get72hSMA() {
 }
 
 // ==========================================================
-// === 補漲智能持倉換幣 / 止盈輪動監控 (LINK, ICP, LTC 三大補漲標的) ===
+// === 補漲智能持倉換幣 / 止盈輪動監控 (PENDLE, LINK, LTC, ICP 四大波段標的) ===
 // ==========================================================
+//
+// 📌【日線級別 (Daily) 波段持倉操盤核心原則 (Swing Trading SOP)】
+// ------------------------------------------------------------------------------------------
+// 1. 級別定義與心態管理：
+//    • 本模組完全錨定「日線級別 (Daily)」，持倉週期預期為 1～3 週，追求 12%～25% 的波段主升浪。
+//    • 嚴禁受盤中「15 分鐘 / 5 分鐘」的短線小雜訊干擾（例如盤中微跌 2% 只是日線的微小下影線）。
+//    • 只要日線收盤沒有跌破 slFloor（防守底線），一律抱牢等待補漲，絕不輕易被洗下車！
+//
+// 2. 觸發警報執行紀律 (接獲 Email 提醒後的 SOP)：
+//    • 【觸發 tpTarget 止盈】：代表已抵達日線強阻力平台，該幣波段性價比已吃滿。
+//      立即打開幣安 App 終止該機器人並市價平倉現貨，將利潤全數鎖定，並換入 nextRotate 推薦的低位 Alpha！
+//    • 【觸發 slFloor 止損】：代表日線關鍵均線或大底破位，趨勢走弱。
+//      立即檢查盤面，評估手動關閉停損，避免資金陷入漫長套牢。
+//
+// 3. 四大標的最新日線結構與點位計算依據 (2026-09 最新 K 線驗證)：
+//    • PENDLE (成本 $2.570):
+//      - 結構：MA20($2.17) > MA50($1.77) > MA200($1.51) 全多頭發散，突破看漲旗形。
+//      - tpTarget: $3.15 (+22.6%) -> 半年籌碼套牢平台（5~6月密集阻力區）。
+//      - slFloor:  $2.20 (-14.4%) -> 貼合 MA20 動態均線防守位。
+//    • LINK (成本 $12.291):
+//      - 結構：站穩 MA20($11.77) 上方完成回踩確認，大箱體極致縮量蓄勢。
+//      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
+//      - slFloor:  $10.80 (-12.1%) -> 近 30 日低點 ($10.61) 上方防守頸線。
+//    • LTC (成本 $57.780):
+//      - 結構：MA50 向上金叉 MA200 完成牛熊轉換，下方 $50~$52 為歷史多重鐵底。
+//      - tpTarget: $65.00 (+12.5%) -> 半年線下降趨勢線終極壓制位。
+//      - slFloor:  $52.00 (-10.0%) -> 歷史多重底極限防線。
+//    • ICP (成本 $2.761):
+//      - 結構：剛站上 MA200($2.44) 與 MA20($2.70)，日線二次探底回踩完成。
+//      - tpTarget: $3.25 (+17.7%) -> 2026 上半年四重大頂頸線密集壓制區。
+//      - slFloor:  $2.45 (-11.3%) -> 貼合 200 日均線 ($2.44) 硬底。
+// ------------------------------------------------------------------------------------------
 
 function getSingleTokenPrice(sym, okxId) {
   // 1. Bybit
@@ -343,10 +375,10 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      PENDLEUSDT: { sym: "PENDLE", name: "Pendle", okxId: "PENDLE-USDT", entryPrice: 2.57,  tpTarget: 3.15, slFloor: 2.20, nextRotate: "AAVE 或 UNI" },
-      LINKUSDT:   { sym: "LINK",   name: "Chainlink", okxId: "LINK-USDT", entryPrice: 12.291, tpTarget: 14.50, slFloor: 10.80, nextRotate: "AAVE 或 NEAR" },
-      LTCUSDT:    { sym: "LTC",    name: "Litecoin",  okxId: "LTC-USDT",  entryPrice: 57.78, tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" },
-      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT", entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.45, nextRotate: "UNI 或 ONDO" }
+      PENDLEUSDT: { sym: "PENDLE", name: "Pendle",            okxId: "PENDLE-USDT", entryPrice: 2.57,  tpTarget: 3.15, slFloor: 2.20, nextRotate: "AAVE 或 UNI" },
+      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 10.80,nextRotate: "AAVE 或 NEAR" },
+      LTCUSDT:    { sym: "LTC",    name: "Litecoin",          okxId: "LTC-USDT",    entryPrice: 57.78, tpTarget: 65.00, slFloor: 52.00, nextRotate: "AAVE 或 LINK" },
+      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.45, nextRotate: "UNI 或 ONDO" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
