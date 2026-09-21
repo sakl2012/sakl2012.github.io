@@ -1003,10 +1003,11 @@
         hasReachedZone4 = localStorage.getItem('5z_hasReachedZone4') === 'true';
     } catch(e) {}
 
-    // --- 抓取 300 日 K 線計算 MA200 與動態週期歷史記憶 ---
+    // --- 抓取 1000 日 K 線（近 2.7 年，遠超一年半）計算 MA200 與動態週期歷史記憶 ---
     async function syncMa200() {
         try {
-            const res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=300');
+            // 幣安 API 單次請求上限為 1000 根，涵蓋近 2.74 年歷史日線
+            const res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000');
             if (res.ok) {
                 const klines = await res.json();
                 let sum = 0;
@@ -1018,17 +1019,37 @@
                 currentMa200 = sum / recent200.length;
                 document.getElementById('liveMa200').innerText = '$' + Math.round(currentMa200).toLocaleString('en-US');
 
-                // 掃描歷史日線陣列，0.05 秒內即時重構本輪週期的最高點與頂部記錄
-                let maxH = 0;
-                let touchedZ4 = false;
-                for (let i = 0; i < klines.length; i++) {
-                    const h = parseFloat(klines[i][2]);
-                    const c = parseFloat(klines[i][4]);
-                    if (h > maxH) maxH = h;
-                    if (c / currentMa200 >= 1.40) touchedZ4 = true;
+                // 掃描近 1000 根日線歷史陣列，以動態滾動 MA200 準確重構本輪週期的頂部與狀態
+                const closes = klines.map(k => parseFloat(k[4]));
+                const highs = klines.map(k => parseFloat(k[2]));
+                
+                // 建立前綴和陣列以 O(1) 極速計算任意日期的 200 日滾動均線
+                const prefixSums = [0];
+                for (let i = 0; i < closes.length; i++) {
+                    prefixSums.push(prefixSums[i] + closes[i]);
                 }
-                if (maxH > cyclePeakPrice) cyclePeakPrice = maxH;
-                if (touchedZ4) hasReachedZone4 = true;
+
+                let activeZ4 = false;
+                let activePeak = 0;
+
+                for (let i = 199; i < klines.length; i++) {
+                    const rollingMa = (prefixSums[i + 1] - prefixSums[i - 199]) / 200;
+                    const r = closes[i] / rollingMa;
+
+                    if (r >= 1.40) {
+                        activeZ4 = true;
+                        if (highs[i] > activePeak) activePeak = highs[i];
+                    } else if (activeZ4 && r < 0.80) {
+                        // 週期已於歷史上跌透到底（Zone 0），完成上一輪大週期閉環並重置
+                        activeZ4 = false;
+                        activePeak = 0;
+                    } else if (activeZ4) {
+                        if (highs[i] > activePeak) activePeak = highs[i];
+                    }
+                }
+
+                hasReachedZone4 = activeZ4;
+                cyclePeakPrice = activePeak;
 
                 // 持久化備份至 localStorage
                 try {
