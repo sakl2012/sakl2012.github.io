@@ -667,9 +667,9 @@
                             <strong style="color: #b91c1c;">15 萬狂頂逃頂 + 套利</strong>
                             <div style="font-size: 11.5px; color: #64748b;">操盤準則：「現貨出清至實體金 50% + 美股 25% + 象徵底倉 5%；20% 現金啟動幣安期現套利機器人 (Delta 中性吃暴息)」</div>
                         </td>
-                        <td class="col-c1">BTC 5% / SPYB 25% / PAXG 50% (套利 20%)</td>
-                        <td class="col-c2">ETH 5% / SPYB 25% / PAXG 50% (套利 20%)</td>
-                        <td class="col-c3">TAO 5% / SPYB 25% / PAXG 50% (套利 20%)</td>
+                        <td class="col-c1">BTC 5% / QQQB 25% / PAXG 50% (套利 20%)</td>
+                        <td class="col-c2">ETH 5% / QQQB 25% / PAXG 50% (套利 20%)</td>
+                        <td class="col-c3">TAO 5% / QQQB 25% / PAXG 50% (套利 20%)</td>
                         <td class="col-sat">現貨逃頂出清至黃金美股，關閉合約做多 DCA，啟用套利機器人</td>
                     </tr>
                     <tr id="row-zone-5">
@@ -680,10 +680,10 @@
                             <strong style="color: #7c3aed;">大頂破位，主跌防禦</strong>
                             <div style="font-size: 11.5px; color: #64748b;">操盤準則：「大頂確認破位，嚴禁抄底接飛刀！全線停止買入，實體金 50% + 美股 25% + 現金 25% (或天花板空單)，靜待 Zone 0」</div>
                         </td>
-                        <td class="col-c1">BTC 0% / SPYB 25% / PAXG 50% (現金 25%)</td>
-                        <td class="col-c2">ETH 0% / SPYB 25% / PAXG 50% (現金 25%)</td>
-                        <td class="col-c3">TAO 0% / SPYB 25% / PAXG 50% (現金 25%)</td>
-                        <td class="col-sat">各組合停買加密現貨，轉入 PAXG 50% / SPYB 25% / 現金 25% 防禦</td>
+                        <td class="col-c1">BTC 0% / QQQB 25% / PAXG 50% (現金 25%)</td>
+                        <td class="col-c2">ETH 0% / QQQB 25% / PAXG 50% (現金 25%)</td>
+                        <td class="col-c3">TAO 0% / QQQB 25% / PAXG 50% (現金 25%)</td>
+                        <td class="col-sat">各組合停買加密現貨，轉入 PAXG 50% / QQQB 25% / 現金 25% 防禦</td>
                     </tr>
                 </tbody>
             </table>
@@ -1245,7 +1245,7 @@
         const grid = document.getElementById('coreCardsGrid');
         if (!grid) return;
         const config = ZONE_CONFIGS[currentZone];
-        const eqSym = (currentZone >= 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+        const eqSym = activeEquitySym;
 
         const pEq = latestPrices[eqSym] || 0;
         const pPaxg = latestPrices.PAXG || 0;
@@ -1375,7 +1375,7 @@
             extraHtml = `<span style="color: #ec4899; font-weight:700;">🤖 套利: 20%</span>`;
             extraBar = `<div class="c-prog-arb" style="width: 20%;"></div>`;
         }
-        const eqSym = (currentZone >= 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+        const eqSym = activeEquitySym;
 
         const pEq = latestPrices[eqSym] || 0;
         const pPaxg = latestPrices.PAXG || 0;
@@ -1664,7 +1664,7 @@
             const row = document.getElementById(`row-zone-${zone}`);
             if (!row) continue;
 
-            const eqSym = (zone >= 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+            const eqSym = activeEquitySym;
             const btcR = config.ratios.CORE_BTC;
             const ethR = config.ratios.CORE_ETH;
             const taoR = config.ratios.CORE_TAO;
