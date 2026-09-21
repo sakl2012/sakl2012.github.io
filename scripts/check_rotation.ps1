@@ -1,6 +1,6 @@
 $targets = @(
     @{ sym = "BTCUSDT"; name = "Bitcoin" },
-    @{ sym = "SUIUSDT"; name = "Sui"; cost = 0.8552; tp = 1.050; sl = 0.940 },
+    @{ sym = "ONDOUSDT"; name = "Ondo Finance"; cost = 0.4530; tp = 0.550; sl = 0.435 },
     @{ sym = "LINKUSDT"; name = "Chainlink"; cost = 12.291; tp = 14.50; sl = 12.35 },
     @{ sym = "AAVEUSDT"; name = "Aave"; cost = 137.16; tp = 165.00; sl = 138.00 },
     @{ sym = "ICPUSDT"; name = "Internet Computer"; cost = 2.761; tp = 3.25; sl = 2.800 }

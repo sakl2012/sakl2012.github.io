@@ -363,10 +363,10 @@ function get72hSMA() {
 //    • 嚴格止損核心精神：鎖定右側主升浪起漲頸線（S/R Flip），絕不承受深幅回撤！
 //      一旦跌破起漲點即判定為假突破（Bull Trap），果斷離場以維持極高盈虧比（R:R > 3.6:1）。
 //
-//    • SUI (成本 $0.8552):
-//      - 結構：放量突破 $0.85 頸線發動第二浪，攻破 $1.00 整數大關最高摸至 $1.0215。
-//      - tpTarget: $1.050 (+22.8%) -> 2026 前高密集套牢阻力區與整數大關。
-//      - slFloor:  $0.940 (+9.9%)   -> 移動保護性止損（Trailing Stop），鎖定最低 +10% 實質淨獲利！
+//    • ONDO (成本 $0.4530):
+//      - 結構：放量突破 $0.45 頸線，受惠 DTCC 接入全美 85% 共同基金清算之頂級 RWA 敘事。
+//      - tpTarget: $0.550 (+21.4%) -> 2026 前高密集阻力平台。
+//      - slFloor:  $0.435 (-3.97%) -> 4H 突破起漲頸線（盈虧比 5.39:1，假突破證偽底線）。
 //    • LINK (成本 $12.291):
 //      - 結構：4H 底部階梯式墊高，站穩 $12.50 平台衝擊 $13.00 整數大關。
 //      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
@@ -412,10 +412,10 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      SUIUSDT:    { sym: "SUI",    name: "Sui",               okxId: "SUI-USDT",    entryPrice: 0.8552,tpTarget: 1.050,slFloor: 0.940, nextRotate: "ONDO 或 PENDLE" },
-      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 12.35, nextRotate: "ONDO 或 NEAR" },
-      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16,tpTarget: 165.00,slFloor: 138.00,nextRotate: "ONDO 或 TAO" },
-      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.800, nextRotate: "ONDO 或 SUI" }
+      ONDOUSDT:   { sym: "ONDO",   name: "Ondo Finance",      okxId: "ONDO-USDT",   entryPrice: 0.4530,tpTarget: 0.550,slFloor: 0.435, nextRotate: "APT 或 PENDLE" },
+      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 12.35, nextRotate: "APT 或 NEAR" },
+      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16,tpTarget: 165.00,slFloor: 138.00,nextRotate: "APT 或 TAO" },
+      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.800, nextRotate: "APT 或 SUI" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
