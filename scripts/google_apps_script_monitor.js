@@ -375,10 +375,17 @@ function get72hSMA() {
 //      - 結構：飛哥 9/21 觀察名單第 1 名「代幣經濟學 3.0」爆拉，起漲腳在 $138.59。
 //      - tpTarget: $165.00 (+20.3%) -> 2026 日線密集阻力天花板。
 //      - slFloor:  $138.00 (+0.6%)  -> 移動保本保護止損（Break-Even），錨定起漲腳徹底保本！
-//    • ICP (成本 $2.761):
-//      - 結構：9/18 於 $2.63 發動大陽線，4H 穩定站穩 $2.85-$2.90 上方挑戰 $3.00。
-//      - tpTarget: $3.25 (+17.7%) -> 2026 上半年四重大頂頸線密集壓制區。
-//      - slFloor:  $2.800 (+1.4%)   -> 移動保本保護止損（Break-Even），鎖定 4H 支撐小利保本！
+//    • APT (換倉成本 $0.7830，替換原 ICP):
+//      - 結構：Aptos 主網 9/18 推出 Confidential APT (ZK 隱私交易)，9/12 代幣解鎖拋壓消化完畢，4H 沿均線上攻。
+//      - tpTarget: $0.950 (+21.3%) -> 日線大箱體天花板與週線強阻力平台。
+//      - slFloor:  $0.745 (-4.85%) -> 4H 突破平台起漲頸線（防守底線，假突破證偽）。
+//    • DOGE (回踩企穩與放量突破重點監控標的):
+//      - 結構：9/21 巨量 2.46 億顆大陽線拉升 16.5%，突破 $0.0950 頸線衝擊 $0.1019 小前高阻力。
+//      - 回踩支撐區：$0.0950 ~ $0.0975 (頂底轉換支撐帶，企穩確認買點)。
+//      - 企穩確認線：$0.0980 (回踩測試後反彈站上，確認主力護盤成功)。
+//      - 突破確認線：$0.1025 (若不深踩直接放量突破小前高，確認主升浪加速)。
+//      - 證偽底線 (slFloor)：$0.0925 (9/21 放量大陽線實體起漲腳，跌破即假突破離場)。
+//      - tpTarget: $0.1200 (+25.0%，盈虧比 R:R = 6.86:1 >= 3:1)。
 // ------------------------------------------------------------------------------------------
 
 function getSingleTokenPrice(sym, okxId) {
@@ -415,7 +422,7 @@ function checkCoinRotationAlert() {
       ONDOUSDT:   { sym: "ONDO",   name: "Ondo Finance",      okxId: "ONDO-USDT",   entryPrice: 0.4530,tpTarget: 0.550,slFloor: 0.435, nextRotate: "APT 或 PENDLE" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 12.35, nextRotate: "APT 或 NEAR" },
       AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16,tpTarget: 165.00,slFloor: 138.00,nextRotate: "APT 或 TAO" },
-      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.800, nextRotate: "APT 或 SUI" }
+      APTUSDT:    { sym: "APT",    name: "Aptos",             okxId: "APT-USDT",    entryPrice: 0.7830,tpTarget: 0.950,slFloor: 0.745, nextRotate: "DOGE 或 PENDLE" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
@@ -524,8 +531,167 @@ ${isProfitLock
     } else {
       Logger.log("⚠️ 換幣輪動監控：無法獲取即時幣價。");
     }
+
+    // 連帶自動執行 DOGE 回踩成功與突破即時審計 (若 OKX 取到現價則直接傳入，否則內部自動走多層備援)
+    checkDogeRetestAlert(priceMap["DOGE-USDT"]);
+
   } catch (err) {
     Logger.log("換幣監控全域異常: " + err.toString());
+  }
+}
+
+// ==========================================================
+// === DOGE 回踩成功與放量突破監控模組 (DOGE Retest & Breakout Monitor) ===
+// ==========================================================
+// 📌【DOGE 關鍵量化位階推導 (2026-09 4H/1D 實盤審計)】
+// 1. 小前高阻力上沿：$0.1019 ~ $0.1025 (近期測試高點，突破即確認主升浪加速)
+// 2. 頂底轉換回踩支撐帶：$0.0950 ~ $0.0975 (9/5 前高 $0.09515 轉化支撐，回踩企穩右側買點)
+// 3. 回踩反彈確認線：$0.0980 (回踩支撐帶後重新站上，確認主力護盤成功)
+// 4. 假突破證偽止損底線：$0.0925 (9/21 放量突破大陽線起漲腳，跌破即判定為假突破誘多 Bull Trap)
+// 5. 波段目標止盈位：$0.1200 (+25.0%，盈虧比 R:R = (0.1200-0.0960)/(0.0960-0.0925) = 6.86:1 >= 3:1)
+// ----------------------------------------------------------
+
+function checkDogeRetestAlert(dogePrice) {
+  try {
+    const props = PropertiesService.getScriptProperties();
+    const now = new Date().getTime();
+
+    // 若未從外部批次傳入價格，走 4 級容災獨立獲取 (Bybit -> Gate.io -> KuCoin -> Binance)
+    if (!dogePrice) {
+      dogePrice = getSingleTokenPrice("DOGE", "DOGE-USDT");
+    }
+    if (!dogePrice) {
+      Logger.log("⚠️ DOGE 監控：無法獲取即時幣價。");
+      return;
+    }
+
+    const RESISTANCE_CEILING = 0.1025; // 放量突破確認線 (超越前高 $0.1019)
+    const RETEST_HIGH = 0.0975;        // 回踩支撐區上沿
+    const RETEST_LOW = 0.0950;         // 回踩支撐區下沿 (頂底轉換線)
+    const REBOUND_CONFIRM = 0.0980;    // 回踩企穩反彈確認線
+    const INVALIDATION_FLOOR = 0.0925; // 假突破證偽底線 (-3.6% ~ -4.5%)
+    const TP_TARGET = 0.1200;          // 日線阻力止盈目標 (+25%)
+
+    // 讀取狀態機
+    let state = props.getProperty("DOGE_RETEST_STATE") || "MONITORING";
+    let minRetestPrice = parseFloat(props.getProperty("DOGE_MIN_RETEST_PRICE") || "999");
+    const lastAlertKey = "LAST_ALERT_DOGE_RETEST";
+    const lastAlertTime = parseInt(props.getProperty(lastAlertKey) || "0");
+    const COOLDOWN_MS = 6 * 60 * 60 * 1000; // 6 小時提醒冷卻
+
+    let shouldAlert = false;
+    let subject = "";
+    let body = "";
+
+    // 1. 假突破證偽 / 破位止損 (跌破起漲腳 $0.0925)
+    if (dogePrice <= INVALIDATION_FLOOR) {
+      if (state !== "FAILED_BREAKDOWN") {
+        state = "FAILED_BREAKDOWN";
+        shouldAlert = true;
+        subject = `⚠️【DOGE 回踩失敗警報】跌破防守頸線 $${dogePrice.toFixed(4)}！假突破證偽！`;
+        body = `
+注意！DOGE 跌破了關鍵防守底線 $${INVALIDATION_FLOOR.toFixed(4)}！
+
+📉 當前現價：$${dogePrice.toFixed(4)}
+🛑 證偽底線：$${INVALIDATION_FLOOR.toFixed(4)} (已跌破)
+📌 技術判定：9/21 放量大陽線起漲腳失守，判定為日線「假突破（Bull Trap）」。
+
+==================================================
+💡 嚴格風控 SOP：
+==================================================
+1. 嚴禁在此時左側抄底接飛刀！
+2. 保持現有 4 幣輪動倉位（ONDO, LINK, AAVE, APT），絕不換入 DOGE。
+3. 等待市場重新在下方尋求大底支撐。
+==================================================
+        `;
+      }
+    }
+    // 2. 價格進入回踩支撐觀察區 ($0.0950 ~ $0.0975)
+    else if (dogePrice >= RETEST_LOW && dogePrice <= RETEST_HIGH) {
+      if (dogePrice < minRetestPrice) {
+        minRetestPrice = dogePrice;
+        props.setProperty("DOGE_MIN_RETEST_PRICE", minRetestPrice.toString());
+      }
+      if (state !== "IN_RETEST_ZONE" && (now - lastAlertTime > COOLDOWN_MS || state === "MONITORING")) {
+        state = "IN_RETEST_ZONE";
+        shouldAlert = true;
+        subject = `🎯【DOGE 回踩關鍵支撐區】現價 $${dogePrice.toFixed(4)} 抵達買點觀察帶 ($0.0950~$0.0975)！`;
+        body = `
+DOGE 價格已回踩至頂底轉換關鍵支撐帶！
+
+📍 當前現價：$${dogePrice.toFixed(4)}
+🛡️ 回踩支撐區間：$${RETEST_LOW.toFixed(4)} ~ $${RETEST_HIGH.toFixed(4)}
+🛑 嚴格止損底線：$${INVALIDATION_FLOOR.toFixed(4)} (單筆試錯風險僅 -3.6% ~ -4.5%)
+🎯 波段止盈目標：$${TP_TARGET.toFixed(4)} (+25.0%，盈虧比 R:R = 6.86:1)
+
+==================================================
+💡 操盤 SOP：
+==================================================
+1. 密切觀察此區間是否出現縮量拒跌、或 1H/4H 長下影線。
+2. 一旦反彈重新站上 $${REBOUND_CONFIRM.toFixed(4)}，系統將立即發送「回踩成功」換倉確認信！
+==================================================
+        `;
+      }
+    }
+    // 3. 回踩成功確認！(曾進入回踩區測試後，強勢反彈站上 $0.0980)
+    else if (state === "IN_RETEST_ZONE" && dogePrice >= REBOUND_CONFIRM) {
+      state = "RETEST_SUCCESS";
+      shouldAlert = true;
+      subject = `🚀【DOGE 回踩成功確認】支撐驗證有效，反彈站上 $${dogePrice.toFixed(4)}！右側買點確立！`;
+      body = `
+賀報！DOGE 頂底轉換回踩測試圓滿成功，右側買點確立！
+
+📈 當前現價：$${dogePrice.toFixed(4)}
+🛡️ 驗證回踩低點：$${minRetestPrice < 900 ? minRetestPrice.toFixed(4) : '$0.0952'} (完美守住 $0.0950 頸線)
+🛑 嚴格止損底線：$${INVALIDATION_FLOOR.toFixed(4)} (鎖定起漲腳)
+🎯 波段止盈目標：$${TP_TARGET.toFixed(4)} (預期主升浪空間 +20%~25%)
+⚖️ 盈虧比審計：R:R > 6.5:1 (符合頂級不對稱風控要求)
+
+==================================================
+💡 操盤執行 SOP：
+==================================================
+1. DOGE 右側企穩信號正式確立！
+2. 若您計劃將輪動組合（如已達標止盈的標的）換入 DOGE：
+   - 可在幣安 App 創建【DOGE 35% + QQQB 35% + PAXG 30%】智能持倉機器人；
+   - 止損點堅決設於 $${INVALIDATION_FLOOR.toFixed(4)}，嚴禁凹單。
+==================================================
+      `;
+    }
+    // 4. 強勢放量直破小前高 ($0.1025)
+    else if (dogePrice >= RESISTANCE_CEILING) {
+      if (state !== "BREAKOUT_DIRECT" && (now - lastAlertTime > COOLDOWN_MS || state !== "RETEST_SUCCESS")) {
+        state = "BREAKOUT_DIRECT";
+        shouldAlert = true;
+        subject = `🔥【DOGE 放量突破小前高】現價 $${dogePrice.toFixed(4)} 衝破阻力！主升浪加速！`;
+        body = `
+DOGE 未做深度回踩，直接放量強勢貫穿小前高阻力位！
+
+🚀 當前現價：$${dogePrice.toFixed(4)}
+⚡ 突破關鍵阻力：$${RESISTANCE_CEILING.toFixed(4)}
+🎯 波段目標位：$${TP_TARGET.toFixed(4)}
+🛑 追高移動防守：$0.0975 (突破阻力位轉化為即時防守底線)
+
+==================================================
+💡 操盤 SOP：
+==================================================
+1. 多頭動能極強，直接開啟日線級別主升浪。
+2. 若追單建倉，移動止損不可低於 $0.0975，嚴防高位假突破。
+==================================================
+        `;
+      }
+    }
+
+    props.setProperty("DOGE_RETEST_STATE", state);
+
+    if (shouldAlert) {
+      MailApp.sendEmail(YOUR_EMAIL, subject, body);
+      props.setProperty(lastAlertKey, now.toString());
+      Logger.log(`[DOGE 警報] 已發送 Email: ${subject}`);
+    } else {
+      Logger.log(`[DOGE 巡檢正常] 現價: $${dogePrice.toFixed(4)} | 狀態機: ${state} (支撐 $0.0950~$0.0975, 突破 $0.1025, 證偽底 $0.0925)`);
+    }
+  } catch (err) {
+    Logger.log("DOGE 監控異常: " + err.toString());
   }
 }
 
@@ -533,6 +699,7 @@ ${isProfitLock
 if (typeof globalThis !== 'undefined') {
   globalThis.checkZoneAndAlert = checkZoneAndAlert;
   globalThis.checkCoinRotationAlert = checkCoinRotationAlert;
+  globalThis.checkDogeRetestAlert = checkDogeRetestAlert;
 }
 
 
