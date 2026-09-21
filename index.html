@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>5-Zone 策略</title>
+    <title>6-Zone 閉環策略 - 智能持倉指令中心</title>
     
     <!-- 網路預連線加速 (減少 Binance WebSocket & REST API 握手延遲) -->
     <link rel="preconnect" href="https://stream.binance.com:9443">
@@ -339,6 +339,14 @@
             background: #f59e0b;
             transition: width 0.3s ease;
         }
+        .c-prog-cash {
+            background: #64748b;
+            transition: width 0.3s ease;
+        }
+        .c-prog-arb {
+            background: #ec4899;
+            transition: width 0.3s ease;
+        }
         .c-tri-prices {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -652,17 +660,30 @@
                         <td class="col-sat">各三幣組合：COIN 35% / QQQB 35% / PAXG 30% (全天候靜態 35/35/30)</td>
                     </tr>
                     <tr id="row-zone-4">
-                        <td><strong>Zone 4 (極度貪婪/逃頂)</strong></td>
+                        <td><strong>Zone 4 (極度貪婪/套利逃頂)</strong></td>
                         <td>&ge; 1.40</td>
                         <td><span id="tbl-range-4" style="color: #dc2626; font-weight: 700;">&ge; $97,353 (向 12~15 萬衝頂)</span></td>
                         <td>
-                            <strong style="color: #b91c1c;">15 萬極限目標出清</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「極限高估值狂歡期，堅決執行高位逃頂出清，全美大盤 SPYB 25% + 實體金 70%」</div>
+                            <strong style="color: #b91c1c;">15 萬狂頂逃頂 + 套利</strong>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「現貨出清至實體金 50% + 美股 25% + 象徵底倉 5%；20% 現金啟動幣安期現套利機器人 (Delta 中性吃暴息)」</div>
                         </td>
-                        <td class="col-c1">BTC 5% / SPYB 30% / PAXG 65%</td>
-                        <td class="col-c2">ETH 5% / SPYB 30% / PAXG 65%</td>
-                        <td class="col-c3">TAO 5% / SPYB 25% / PAXG 70%</td>
-                        <td class="col-sat">各三幣組合：COIN 35% / SPYB 35% / PAXG 30% (全天候靜態 35/35/30)</td>
+                        <td class="col-c1">BTC 5% / SPYB 25% / PAXG 50% (套利 20%)</td>
+                        <td class="col-c2">ETH 5% / SPYB 25% / PAXG 50% (套利 20%)</td>
+                        <td class="col-c3">TAO 5% / SPYB 25% / PAXG 50% (套利 20%)</td>
+                        <td class="col-sat">現貨逃頂出清至黃金美股，關閉合約做多 DCA，啟用套利機器人</td>
+                    </tr>
+                    <tr id="row-zone-5">
+                        <td><strong>Zone 5 (熊市確認/主跌防禦)</strong></td>
+                        <td>大頂破位回撤</td>
+                        <td><span id="tbl-range-5" style="color: #8b5cf6; font-weight: 700;">自頂部回撤 &ge; 20%</span></td>
+                        <td>
+                            <strong style="color: #7c3aed;">大頂破位，主跌防禦</strong>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「大頂確認破位，嚴禁抄底接飛刀！全線停止買入，實體金 50% + 美股 25% + 現金 25% (或天花板空單)，靜待 Zone 0」</div>
+                        </td>
+                        <td class="col-c1">BTC 0% / SPYB 25% / PAXG 50% (現金 25%)</td>
+                        <td class="col-c2">ETH 0% / SPYB 25% / PAXG 50% (現金 25%)</td>
+                        <td class="col-c3">TAO 0% / SPYB 25% / PAXG 50% (現金 25%)</td>
+                        <td class="col-sat">各組合停買加密現貨，轉入 PAXG 50% / SPYB 25% / 現金 25% 防禦</td>
                     </tr>
                 </tbody>
             </table>
@@ -802,13 +823,23 @@
             }
         },
         4: {
-            name: 'Zone 4 (極度貪婪/逃頂階段)',
+            name: 'Zone 4 (極度貪婪/套利逃頂)',
             color: '#ef4444',
             ratios: {
-                CORE_BTC: { coin: 0.05, equity: 0.30, paxg: 0.65 },
-                CORE_ETH: { coin: 0.05, equity: 0.30, paxg: 0.65 },
-                CORE_TAO: { coin: 0.05, equity: 0.25, paxg: 0.70 },
-                SAT_CELL: { coin: 0.05, equity: 0.25, paxg: 0.70 }
+                CORE_BTC: { coin: 0.05, equity: 0.25, paxg: 0.50, arb: 0.20 },
+                CORE_ETH: { coin: 0.05, equity: 0.25, paxg: 0.50, arb: 0.20 },
+                CORE_TAO: { coin: 0.05, equity: 0.25, paxg: 0.50, arb: 0.20 },
+                SAT_CELL: { coin: 0.05, equity: 0.25, paxg: 0.50, arb: 0.20 }
+            }
+        },
+        5: {
+            name: 'Zone 5 (熊市確認/主跌防禦)',
+            color: '#8b5cf6',
+            ratios: {
+                CORE_BTC: { coin: 0.00, equity: 0.25, paxg: 0.50, cash: 0.25 },
+                CORE_ETH: { coin: 0.00, equity: 0.25, paxg: 0.50, cash: 0.25 },
+                CORE_TAO: { coin: 0.00, equity: 0.25, paxg: 0.50, cash: 0.25 },
+                SAT_CELL: { coin: 0.00, equity: 0.25, paxg: 0.50, cash: 0.25 }
             }
         }
     };
@@ -961,18 +992,50 @@
     let wsSpotInstance = null;
     let wsFuturesInstance = null;
 
-    // --- 抓取 200 日 K 線計算 MA200 ---
+    // --- 週期歷史記憶狀態 (純前端 0 後端，由幣安歷史 K 線即時動態重構) ---
+    let cyclePeakPrice = 0;
+    let hasReachedZone4 = false;
+
+    // 從 localStorage 預載備用快取
+    try {
+        const cachedPeak = parseFloat(localStorage.getItem('5z_cyclePeakPrice'));
+        if (!isNaN(cachedPeak) && cachedPeak > 0) cyclePeakPrice = cachedPeak;
+        hasReachedZone4 = localStorage.getItem('5z_hasReachedZone4') === 'true';
+    } catch(e) {}
+
+    // --- 抓取 300 日 K 線計算 MA200 與動態週期歷史記憶 ---
     async function syncMa200() {
         try {
-            const res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=200');
+            const res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=300');
             if (res.ok) {
                 const klines = await res.json();
                 let sum = 0;
-                for (let i = 0; i < klines.length; i++) {
-                    sum += parseFloat(klines[i][4]);
+                // 用最近 200 根日線計算當前最新 MA200
+                const recent200 = klines.slice(-200);
+                for (let i = 0; i < recent200.length; i++) {
+                    sum += parseFloat(recent200[i][4]);
                 }
-                currentMa200 = sum / klines.length;
+                currentMa200 = sum / recent200.length;
                 document.getElementById('liveMa200').innerText = '$' + Math.round(currentMa200).toLocaleString('en-US');
+
+                // 掃描歷史日線陣列，0.05 秒內即時重構本輪週期的最高點與頂部記錄
+                let maxH = 0;
+                let touchedZ4 = false;
+                for (let i = 0; i < klines.length; i++) {
+                    const h = parseFloat(klines[i][2]);
+                    const c = parseFloat(klines[i][4]);
+                    if (h > maxH) maxH = h;
+                    if (c / currentMa200 >= 1.40) touchedZ4 = true;
+                }
+                if (maxH > cyclePeakPrice) cyclePeakPrice = maxH;
+                if (touchedZ4) hasReachedZone4 = true;
+
+                // 持久化備份至 localStorage
+                try {
+                    localStorage.setItem('5z_cyclePeakPrice', cyclePeakPrice.toString());
+                    localStorage.setItem('5z_hasReachedZone4', hasReachedZone4 ? 'true' : 'false');
+                } catch(e) {}
+
                 updateTablePriceRanges(currentMa200);
                 updateMetricsAndZone();
             }
@@ -1182,7 +1245,7 @@
         const grid = document.getElementById('coreCardsGrid');
         if (!grid) return;
         const config = ZONE_CONFIGS[currentZone];
-        const eqSym = (currentZone === 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+        const eqSym = (currentZone >= 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
 
         const pEq = latestPrices[eqSym] || 0;
         const pPaxg = latestPrices.PAXG || 0;
@@ -1195,6 +1258,13 @@
             const coinPct = Math.round(ratios.coin * 100);
             const equityPct = Math.round(ratios.equity * 100);
             const paxgPct = Math.round(ratios.paxg * 100);
+            const extraPct = ratios.arb ? Math.round(ratios.arb * 100) : (ratios.cash ? Math.round(ratios.cash * 100) : 0);
+            const extraHtml = ratios.arb 
+                ? `<span style="color: #ec4899; font-weight:700;">🤖 套利: ${extraPct}%</span>` 
+                : (ratios.cash ? `<span style="color: #64748b; font-weight:700;">💵 現金: ${extraPct}%</span>` : '');
+            const extraBar = extraPct > 0 
+                ? `<div class="${ratios.arb ? 'c-prog-arb' : 'c-prog-cash'}" style="width: ${extraPct}%;"></div>` 
+                : '';
 
             const p = latestPrices[c.sym] || 0;
             const chg = latest24hChange[c.sym];
@@ -1242,18 +1312,20 @@
                             <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 12px; height: 12px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
                             <span style="color: #7c3aed;">🇺🇸 ${eqSym}: ${equityPct}%</span>
                             <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 12px; height: 12px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
+                            ${extraHtml}
                         </div>
                         <div class="c-prog-track">
                             <div class="c-prog-coin" style="width: ${coinPct}%;"></div>
                             <div class="c-prog-equity" style="width: ${equityPct}%;"></div>
                             <div class="c-prog-paxg" style="width: ${paxgPct}%;"></div>
+                            ${extraBar}
                         </div>
                     </div>
                     <div class="c-quote-box" style="border-left-color: ${c.accentColor};">
                         <strong>💡 策略點評：</strong>${c.quote}
                     </div>
                     <div class="c-card-footer">
-                        <span>👑 5-Zone 動態階梯 (偏差 2% | 建議每倉 ≥ 700U)</span>
+                        <span>👑 6-Zone 閉環循環 (偏差 2% | 建議每倉 ≥ 700U)</span>
                         <button class="c-toggle-btn active" style="cursor: default; pointer-events: none;">✅ 三幣持倉中</button>
                     </div>
                 </div>
@@ -1281,11 +1353,29 @@
     function renderCPortfolioMatrix() {
         const grid = document.getElementById('cMatrixGrid');
         if (!grid) return;
-        // 衛星 Alpha 艦隊一律採用全天候經典靜態 35/35/30 配置 (35% 標的 / 35% QQQB / 30% PAXG)
-        const coinPct = 35;
-        const equityPct = 35;
-        const paxgPct = 30;
-        const eqSym = (currentZone === 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+        // 衛星 Alpha 艦隊在 Zone 0~3 採全天候靜態 35/35/30；在 Zone 4 隨核心逃頂轉入 5/25/50 + 20% 套利；在 Zone 5 轉入防禦 0/25/50 + 25% 現金
+        let coinPct = 35;
+        let equityPct = 35;
+        let paxgPct = 30;
+        let extraPct = 0;
+        let extraHtml = '';
+        let extraBar = '';
+        if (currentZone === 5) {
+            coinPct = 0;
+            equityPct = 25;
+            paxgPct = 50;
+            extraPct = 25;
+            extraHtml = `<span style="color: #64748b; font-weight:700;">💵 現金: 25%</span>`;
+            extraBar = `<div class="c-prog-cash" style="width: 25%;"></div>`;
+        } else if (currentZone === 4) {
+            coinPct = 5;
+            equityPct = 25;
+            paxgPct = 50;
+            extraPct = 20;
+            extraHtml = `<span style="color: #ec4899; font-weight:700;">🤖 套利: 20%</span>`;
+            extraBar = `<div class="c-prog-arb" style="width: 20%;"></div>`;
+        }
+        const eqSym = (currentZone >= 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
 
         const pEq = latestPrices[eqSym] || 0;
         const pPaxg = latestPrices.PAXG || 0;
@@ -1345,17 +1435,19 @@
                             <strong class="cprice-paxg-display">${paxgPriceStr}</strong>
                         </div>
                     </div>
-                    <!-- 當前三幣目標佔比進度條 (永久鎖定經典全天候 35/35/30) -->
+                    <!-- 當前三幣目標佔比進度條 -->
                     <div class="c-ratio-display">
                         <div class="c-ratio-labels">
                             <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 12px; height: 12px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
                             <span style="color: #7c3aed;">🇺🇸 ${eqSym}: ${equityPct}%</span>
                             <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 12px; height: 12px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
+                            ${extraHtml}
                         </div>
                         <div class="c-prog-track">
                             <div class="c-prog-coin" style="width: ${coinPct}%;"></div>
                             <div class="c-prog-equity" style="width: ${equityPct}%;"></div>
                             <div class="c-prog-paxg" style="width: ${paxgPct}%;"></div>
+                            ${extraBar}
                         </div>
                     </div>
                     <div class="c-quote-box">
@@ -1379,7 +1471,7 @@
         }
     }
 
-    // --- 即時計算比值與更新 UI ---
+    // --- 即時計算比值與更新 UI (6-Zone 閉環循環防脆弱狀態機) ---
     function updateMetricsAndZone() {
         const curBtcPrice = latestPrices.BTC;
         if (!curBtcPrice || !currentMa200) return;
@@ -1387,13 +1479,52 @@
         const ratio = curBtcPrice / currentMa200;
         document.getElementById('liveRatio').innerText = ratio.toFixed(3);
 
-        // 判定 Zone (5-Zone 階梯防脆弱狀態機)
-        let newZone = 2;
-        if (ratio < 0.80) newZone = 0;
-        else if (ratio < 1.00) newZone = 1;
-        else if (ratio < 1.25) newZone = 2;
-        else if (ratio < 1.40) newZone = 3;
-        else newZone = 4;
+        // 判定 Zone (6-Zone 閉環單向狀態機)
+        let newZone = currentZone || 2;
+
+        // 1. 優先檢查：若已衝頂過 Zone 4，且價格自大頂回撤 ≥ 20% (金融學技術性轉熊標準)
+        if (hasReachedZone4 && cyclePeakPrice > 0 && curBtcPrice <= cyclePeakPrice * 0.80) {
+            if (ratio < 0.80) {
+                // 熊市跌透到底，正式交棒給 Zone 0 深熊大底，並重置週期標記
+                hasReachedZone4 = false;
+                cyclePeakPrice = 0;
+                newZone = 0;
+                try {
+                    localStorage.setItem('5z_hasReachedZone4', 'false');
+                    localStorage.setItem('5z_cyclePeakPrice', '0');
+                } catch(e) {}
+            } else {
+                newZone = 5; // 觸發或保持 Zone 5 熊市主跌防禦！
+            }
+        } 
+        // 2. 牛市衝入 Zone 4 狂熱期 (或創週期新高)
+        else if (ratio >= 1.40) {
+            hasReachedZone4 = true;
+            cyclePeakPrice = Math.max(cyclePeakPrice, curBtcPrice);
+            newZone = 4;
+        } 
+        // 3. 處於 Zone 5 熊市防禦態時，只要比值尚未跌透至深熊 (< 0.80)，死鎖在 Zone 5，嚴禁跳回 Zone 2/3
+        else if (hasReachedZone4 && newZone === 5) {
+            if (ratio < 0.80) {
+                hasReachedZone4 = false;
+                cyclePeakPrice = 0;
+                newZone = 0;
+                try {
+                    localStorage.setItem('5z_hasReachedZone4', 'false');
+                    localStorage.setItem('5z_cyclePeakPrice', '0');
+                } catch(e) {}
+            } else {
+                newZone = 5;
+            }
+        } 
+        // 4. 尚未衝頂時的正常牛市爬坡階梯
+        else {
+            if (ratio < 0.80) newZone = 0;
+            else if (ratio < 1.00) newZone = 1;
+            else if (ratio < 1.25) newZone = 2;
+            else if (ratio < 1.40) newZone = 3;
+            else newZone = 4;
+        }
 
         if (newZone !== currentZone) {
             currentZone = newZone;
@@ -1413,7 +1544,7 @@
     }
 
     function updateTableActiveRow() {
-        [0, 1, 2, 3, 4].forEach(z => {
+        [0, 1, 2, 3, 4, 5].forEach(z => {
             const row = document.getElementById(`row-zone-${z}`);
             if (row) {
                 if (z === currentZone) {
@@ -1453,8 +1584,8 @@
         } else if (zone === 0) {
             const riseTarget = ma200 * 0.80;
             const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
-            downEl.innerHTML = `🛡️ 當前處於極限深熊大底階段 (Zone 0 - 5.7 萬歷史大底，頂級抄底模式)`;
-            upEl.innerHTML = `🔺 脫離大底進入 <strong>Zone 1</strong> 觸發價：<span style="color: #06b6d4;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【突破 5.7 萬大底】</span>`;
+            downEl.innerHTML = `🛡️ 當前處於極限深熊大底階段 (Zone 0 - 歷史大底，頂級抄底模式)`;
+            upEl.innerHTML = `🔺 脫離大底進入 <strong>Zone 1</strong> 觸發價：<span style="color: #06b6d4;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
         } else if (zone === 3) {
             const dropTarget = ma200 * 1.25;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
@@ -1465,8 +1596,13 @@
         } else if (zone === 4) {
             const dropTarget = ma200 * 1.40;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
-            downEl.innerHTML = `🔻 降回 <strong>Zone 3 (過熱警戒)</strong> 觸發價：<span style="color: #fbbf24;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
-            upEl.innerHTML = `🚨 當前處於極度貪婪/逃頂階段 (Zone 4 - 15 萬逃頂目標，95% 黃金避險中)`;
+            downEl.innerHTML = `🔻 跌破 <strong>Zone 4 逃頂線</strong>：<span style="color: #fbbf24;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【現貨已逃頂，套利機器人吃息中】</span>`;
+            upEl.innerHTML = `🚨 當前處於極度貪婪/狂頂逃頂 (Zone 4 - 啟動期現套利機器人 Delta 中性鎖定高額年化利息)`;
+        } else if (zone === 5) {
+            const dropTarget = ma200 * 0.80;
+            const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
+            downEl.innerHTML = `🔻 靜待跌入 <strong>Zone 0 (深熊大底抄底)</strong> 觸發價：<span style="color: #10b981;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【歷史深熊大底】</span>`;
+            upEl.innerHTML = `🚨 <strong>Zone 5 熊市主跌防禦中</strong>：大頂破位確認，全線禁止買入加密現貨！黃金 50% + 美股 25% + 現金 25% 穩健避險`;
         }
     }
 
@@ -1488,6 +1624,8 @@
         if (el3) el3.innerText = `$${p2.toLocaleString()} ~ $${p3.toLocaleString()}`;
         const el4 = document.getElementById('tbl-range-4');
         if (el4) el4.innerText = `≥ $${p3.toLocaleString()} (向 12~15 萬衝頂)`;
+        const el5 = document.getElementById('tbl-range-5');
+        if (el5) el5.innerText = `自頂部跌破 ≥ 20% (轉入防禦)`;
     }
 
     // --- 美股代幣支柱切換 (QQQB vs SPYB) ---
@@ -1519,14 +1657,14 @@
         renderCPortfolioMatrix();
     }
 
-    // --- 動態渲染 5-Zone 對照表格內容 ---
+    // --- 動態渲染 6-Zone 對照表格內容 ---
     function renderTableColumns() {
-        for (let zone = 0; zone <= 4; zone++) {
+        for (let zone = 0; zone <= 5; zone++) {
             const config = ZONE_CONFIGS[zone];
             const row = document.getElementById(`row-zone-${zone}`);
             if (!row) continue;
 
-            const eqSym = (zone === 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
+            const eqSym = (zone >= 4 && activeEquitySym === 'QQQB') ? 'SPYB' : activeEquitySym;
             const btcR = config.ratios.CORE_BTC;
             const ethR = config.ratios.CORE_ETH;
             const taoR = config.ratios.CORE_TAO;
@@ -1536,11 +1674,21 @@
             const c3 = row.querySelector('.col-c3');
             const sat = row.querySelector('.col-sat');
 
-            if (c1) c1.innerText = `BTC ${Math.round(btcR.coin*100)}% / ${eqSym} ${Math.round(btcR.equity*100)}% / PAXG ${Math.round(btcR.paxg*100)}%`;
-            if (c2) c2.innerText = `ETH ${Math.round(ethR.coin*100)}% / ${eqSym} ${Math.round(ethR.equity*100)}% / PAXG ${Math.round(ethR.paxg*100)}%`;
-            if (c3) c3.innerText = `TAO ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
-            if (sat) {
-                sat.innerText = `各三幣組合：COIN 35% / ${eqSym} 35% / PAXG 30% (全天候靜態 35/35/30，偏差 2%)`;
+            if (zone === 5) {
+                if (c1) c1.innerText = `BTC 0% / ${eqSym} 25% / PAXG 50% (現金 25%)`;
+                if (c2) c2.innerText = `ETH 0% / ${eqSym} 25% / PAXG 50% (現金 25%)`;
+                if (c3) c3.innerText = `TAO 0% / ${eqSym} 25% / PAXG 50% (現金 25%)`;
+                if (sat) sat.innerText = `各組合停買加密現貨，轉入 PAXG 50% / ${eqSym} 25% / 現金 25% 防禦`;
+            } else if (zone === 4) {
+                if (c1) c1.innerText = `BTC 5% / ${eqSym} 25% / PAXG 50% (套利 20%)`;
+                if (c2) c2.innerText = `ETH 5% / ${eqSym} 25% / PAXG 50% (套利 20%)`;
+                if (c3) c3.innerText = `TAO 5% / ${eqSym} 25% / PAXG 50% (套利 20%)`;
+                if (sat) sat.innerText = `現貨逃頂出清至黃金美股，關閉合約做多 DCA，啟用套利機器人`;
+            } else {
+                if (c1) c1.innerText = `BTC ${Math.round(btcR.coin*100)}% / ${eqSym} ${Math.round(btcR.equity*100)}% / PAXG ${Math.round(btcR.paxg*100)}%`;
+                if (c2) c2.innerText = `ETH ${Math.round(ethR.coin*100)}% / ${eqSym} ${Math.round(ethR.equity*100)}% / PAXG ${Math.round(ethR.paxg*100)}%`;
+                if (c3) c3.innerText = `TAO ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
+                if (sat) sat.innerText = `各三幣組合：COIN 35% / ${eqSym} 35% / PAXG 30% (全天候靜態 35/35/30，偏差 2%)`;
             }
         }
     }
