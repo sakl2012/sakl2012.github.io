@@ -337,10 +337,10 @@ function get72hSMA() {
 //      - 結構：4H 放量突破 $11.72 頸線發動補漲，目前於 $12.00 上方整理。
 //      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
 //      - slFloor:  $11.70 (-4.8%)  -> 9/18 放量起漲大陽線之頂底轉換頸線（盈虧比 3.75:1）。
-//    • DOGE (成本 $0.08855):
-//      - 結構：4H 底部抬高（$0.0843->$0.0861->$0.0872），正衝擊 $0.0900 整數關卡，飛哥提示主流補漲先鋒。
-//      - tpTarget: $0.1050 (+18.6%) -> 2026 8月前高阻力與整數密集區。
-//      - slFloor:  $0.0850 (-4.0%)  -> 4H 次級低點與雙底防守頸線（盈虧比 4.63:1）。
+//    • AAVE (成本 $137.16):
+//      - 結構：飛哥 9/21 觀察名單第 1 名「代幣經濟學 3.0」即將發布，回踩 $133-$136 支撐強烈。
+//      - tpTarget: $165.00 (+20.3%) -> 2026 日線密集阻力天花板。
+//      - slFloor:  $132.00 (-3.8%)  -> 4H 雙底支撐與起漲頸線（盈虧比 5.34:1）。
 //    • ICP (成本 $2.761):
 //      - 結構：9/18 於 $2.63 發動放量突破大陽線（最低 $2.623）衝擊 $2.97。
 //      - tpTarget: $3.25 (+17.7%) -> 2026 上半年四重大頂頸線密集壓制區。
@@ -380,7 +380,7 @@ function checkCoinRotationAlert() {
     const targets = {
       SUIUSDT:    { sym: "SUI",    name: "Sui",               okxId: "SUI-USDT",    entryPrice: 0.8552,tpTarget: 1.050,slFloor: 0.820, nextRotate: "ONDO 或 PENDLE" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 11.70,nextRotate: "ONDO 或 NEAR" },
-      DOGEUSDT:   { sym: "DOGE",   name: "Dogecoin",          okxId: "DOGE-USDT",   entryPrice: 0.08855,tpTarget: 0.1050,slFloor: 0.0850,nextRotate: "ONDO 或 AAVE" },
+      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16,tpTarget: 165.00,slFloor: 132.00,nextRotate: "ONDO 或 TAO" },
       ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.63,  nextRotate: "ONDO 或 SUI" }
     };
 
