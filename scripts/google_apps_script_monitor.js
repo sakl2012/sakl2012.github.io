@@ -1,8 +1,9 @@
 /**
- * 5-Zone 階梯防脆弱策略 (ABC 三倉全自動最佳化版) - Google Apps Script 自動監控與 Email 警報
- * 主力：Binance Vision (免 451 封鎖) | 備援：OKX / Bybit | 具備防崩潰與自動切換機制
- * 最新架構：升級為 5-Zone 階梯狀態機 (Zone 0 深熊底 ~ Zone 4 牛頂逃頂)
- * 資金配比：A 20% / B 55% / C 25%，C 倉四星輪動 (AAVE/SUI/LINK/NEAR/PAXG)
+ * 6-Zone 階梯防脆弱策略 (純現貨三幣 ＋ 雙壁避險全自動化版) - Google Apps Script 自動監控與 Email 警報
+ * 主力：Binance Vision (免 451 封鎖) | 備援：OKX / Bybit / Gate.io / KuCoin / Coinbase | 具備防崩潰與自動切換機制
+ * 最新架構：升級為 6-Zone 閉環單向狀態機 (Zone 0 深熊底 ~ Zone 4 逃頂鎖利 ~ Zone 5 熊市主跌防禦)
+ * 資產配置：三大核心 50% (BTC 20% / ETH 20% / TAO 10%) ＋ 6 大菁英 Alpha 50% (各 8.33%)
+ * 防禦機制：純現貨雙壁架構 (QQQB 35% + PAXG 60%~65%)，Zone 4 Alpha 率先清零、Zone 5 核心清零
  */
 
 const YOUR_EMAIL = "sakl19930909@gmail.com"; // 您的信箱
@@ -23,53 +24,76 @@ function checkZoneAndAlert() {
     const ratio = currentPrice / ma200;
     const ratioSma72 = sma72Price / ma200; 
     
-    // 3. 讀取之前的 Zone 狀態 (預設為 2)
+    // 3. 讀取之前的 Zone 與週期狀態 (預設為 2)
     const props = PropertiesService.getScriptProperties();
     let currentZone = parseInt(props.getProperty("CURRENT_ZONE"));
     if (isNaN(currentZone)) currentZone = 2;
     let newZone = currentZone;
+
+    let hasReachedZone4 = props.getProperty("HAS_REACHED_ZONE4") === "true";
+    let cyclePeakPrice = parseFloat(props.getProperty("CYCLE_PEAK_PRICE") || "0");
+    if (isNaN(cyclePeakPrice)) cyclePeakPrice = 0;
     
-    // 4. 狀態機邏輯 (5-Zone 階梯防脆弱狀態機，含 72h SMA 平滑防插針)
-    if (currentZone === 0) {
-      // 在極限深熊底，若 72h SMA 回升突破 0.82 則脫離深熊進入初熊防守
-      if (ratioSma72 > 0.82) newZone = 1;
-    }
-    else if (currentZone === 1) {
-      // 初熊防禦期：若持續下破 0.78 則進入 Zone 0 深熊抄底；若反彈突破 1.02 則回歸 Zone 2
-      if (ratioSma72 < 0.78) newZone = 0;
-      else if (ratioSma72 > 1.02) newZone = 2;
+    // 4. 狀態機邏輯 (6-Zone 閉環單向狀態機：嚴禁 Zone 4 倒退回 Zone 3/2/1)
+    if (hasReachedZone4) {
+      // 若價格創本輪週期新高，動態刷新週期大頂
+      if (currentPrice > cyclePeakPrice) {
+        cyclePeakPrice = currentPrice;
+        props.setProperty("CYCLE_PEAK_PRICE", cyclePeakPrice.toString());
+      }
+
+      // 判斷是否跌穿深熊大底 (< 0.80)
+      if (ratio < 0.80) {
+        // 熊市跌透到底，正式交棒給 Zone 0 深熊大底，並重置本輪週期標記！
+        hasReachedZone4 = false;
+        cyclePeakPrice = 0;
+        newZone = 0;
+        props.setProperty("HAS_REACHED_ZONE4", "false");
+        props.setProperty("CYCLE_PEAK_PRICE", "0");
+      } 
+      // 判斷是否自大頂回撤 ≥ 20%（技術性轉熊）或已處於 Zone 5
+      else if ((cyclePeakPrice > 0 && currentPrice <= cyclePeakPrice * 0.80) || currentZone === 5) {
+        newZone = 5; // 進入或死鎖在 Zone 5 熊市主跌防禦！
+      } 
+      // 否則（回撤未達 20%）：死鎖在 Zone 4！絕對禁止退回 Zone 3、Zone 2 或 Zone 1！
+      else {
+        newZone = 4;
+      }
     } 
-    else if (currentZone === 2) {
-      // 牛市巡航期：若 72h SMA 跌破 0.98 進入 Zone 1 防守；若比值突破 1.25 進入 Zone 3
-      if (ratioSma72 < 0.98) newZone = 1;
-      else if (ratio > 1.25) newZone = 3;
-    } 
-    else if (currentZone === 3) {
-      // 過熱警戒期：若回跌低於 1.15 回降 Zone 2；若破 1.40 進入 Zone 4 逃頂
-      if (ratio < 1.15) newZone = 2;
-      else if (ratio > 1.40) newZone = 4;
-    } 
-    else if (currentZone === 4) {
-      // 極限逃頂期：回跌低於 1.30 回降 Zone 3
-      if (ratio < 1.30) newZone = 3;
+    // 尚未觸發過 Zone 4 時的正常牛市爬坡階梯 (Zone 0 -> 1 -> 2 -> 3 -> 4)
+    else {
+      if (ratio < 0.80) newZone = 0;
+      else if (ratio < 1.00) newZone = 1;
+      else if (ratio < 1.25) newZone = 2;
+      else if (ratio < 1.40) newZone = 3;
+      else {
+        // 首次突破 1.40，正式進入 Zone 4 逃頂期！鎖定狀態機！
+        hasReachedZone4 = true;
+        cyclePeakPrice = currentPrice;
+        newZone = 4;
+        props.setProperty("HAS_REACHED_ZONE4", "true");
+        props.setProperty("CYCLE_PEAK_PRICE", cyclePeakPrice.toString());
+      }
     }
     
     Logger.log(`目前價格: ${currentPrice.toFixed(2)}, MA200: ${ma200.toFixed(2)}`);
     Logger.log(`當前比值: ${ratio.toFixed(3)}, 72h SMA比值: ${ratioSma72.toFixed(3)}`);
+    Logger.log(`週期標記: hasReachedZone4=${hasReachedZone4}, cyclePeakPrice=${cyclePeakPrice}`);
     Logger.log(`原 Zone: ${currentZone} -> 新 Zone: ${newZone}`);
     
     // 5. 判斷是否切換並發送 Email
     if (newZone !== currentZone) {
       const allocationText = getAllocationConfig(newZone);
       const zoneNames = {
-        0: "深熊大底 (頂級抄底模式)",
-        1: "初熊防禦 (防刀緩衝模式)",
-        2: "牛市巡航 (健康起飛模式)",
-        3: "過熱警戒 (階梯獲利模式)",
-        4: "極度貪婪/逃頂 (避險保命模式)"
+        0: "深熊大底 (頂級抄底模式 - 65%現貨/25%QQQB/10%PAXG)",
+        1: "初牛修復 (均勢動態積累 - 50%現貨/30%QQQB/20%PAXG)",
+        2: "牛市巡航 (穩健主升浪 - 45%現貨/35%QQQB/20%PAXG)",
+        3: "過熱警戒 (階梯獲利鎖利 - 30%現貨/35%QQQB/35%PAXG)",
+        4: "極度貪婪/逃頂鎖利 (Alpha率先清零，核心留5%底倉，QQQB 35%＋PAXG 60%~65%)",
+        5: "熊市確認/主跌防禦 (全盤現貨100%清零，純現貨雙壁終極防禦)"
       };
       
-      const subject = `🚨 5-Zone 策略狀態切換：Zone ${newZone} (${zoneNames[newZone]})`;
+      const subject = `🚨 6-Zone 策略狀態切換：Zone ${newZone} (${zoneNames[newZone]})`;
       const body = `
 自動監控機器人發現市場狀態改變！
 
@@ -81,9 +105,10 @@ function checkZoneAndAlert() {
 - 1D MA200：$${ma200.toFixed(2)}
 - 即時乖離比值：${ratio.toFixed(3)}
 - 72小時 SMA 乖離：${ratioSma72.toFixed(3)}
+- 週期大頂標記：${cyclePeakPrice > 0 ? '$' + cyclePeakPrice.toFixed(2) : '尚未觸發'}
 
 ==================================================
-🎯 建議三倉最新配置目標 (宏觀分配: A 20% / B 55% / C 25%)：
+🎯 建議全盤 9 大機器人最新配置目標 (三大核心 50% + 6大Alpha 50%)：
 ==================================================
 ${allocationText}
 ==================================================
@@ -134,12 +159,21 @@ function getAllocationConfig(zone) {
 👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
   } 
   else if (zone === 4) {
-    return `【Zone 4: 極度貪婪/逃頂】(終極避險逃頂模式 - 物理金條封存)
-👉 👑 核心 1 (20% 資金): BTC 5% | SPYB 30% | PAXG 65% (偏差2%)
-👉 🏛️ 核心 2 (20% 資金): ETH 5% | SPYB 30% | PAXG 65% (偏差2%)
-👉 🤖 核心 3 (10% 資金): TAO 5% | SPYB 25% | PAXG 70% (偏差2%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | SPYB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
+    return `【Zone 4: 極度貪婪/逃頂鎖利】(逃頂鎖利模式 - Alpha 率先清零，核心留 5% 底倉防踏空)
+👉 👑 核心 1 (20% 資金): BTC 5% | QQQB 35% | PAXG 60% (偏差2%，核心留 5% 底倉防踏空)
+👉 🏛️ 核心 2 (20% 資金): ETH 5% | QQQB 35% | PAXG 60% (偏差2%)
+👉 🤖 核心 3 (10% 資金): TAO 5% | QQQB 35% | PAXG 60% (偏差2%)
+👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 0% | QQQB 35% | PAXG 65% (山寨率先 100% 清零出清！轉入純現貨雙壁鎖利)
+📌【特別紀律】：此階段已觸發單向逃頂死鎖，絕不因短期回踩退回 Zone 3！若自大頂回撤 ≥20% 則直接進入 Zone 5 熊市防禦。`;
   } 
+  else if (zone === 5) {
+    return `【Zone 5: 熊市確認/主跌防禦】(全盤清零雙壁避險模式 - 大頂回撤 ≥20% 轉熊)
+👉 👑 核心 1 (20% 資金): BTC 0% | QQQB 35% | PAXG 65% (核心最後 5% 正式清零)
+👉 🏛️ 核心 2 (20% 資金): ETH 0% | QQQB 35% | PAXG 65% (全額純現貨雙壁)
+👉 🤖 核心 3 (10% 資金): TAO 0% | QQQB 35% | PAXG 65% (全額純現貨雙壁)
+👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 0% | QQQB 35% | PAXG 65% (全盤 9 大組合全面現貨清零，純現貨雙壁終極防禦)
+📌【特別紀律】：全盤 100% 現貨清零，由 QQQB 35% ＋ PAXG 65% 純現貨雙壁避險，死鎖直至跌透至 Zone 0 深熊抄底線 (BTC/MA200 < 0.80)！`;
+  }
   else {
     return `尚未定義此 Zone 的持倉配置。`;
   }
