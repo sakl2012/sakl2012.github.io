@@ -368,17 +368,17 @@ function get72hSMA() {
 //      - tpTarget: $1.050 (+22.8%) -> 2026 前高密集套牢阻力區與整數大關。
 //      - slFloor:  $0.940 (+9.9%)   -> 移動保護性止損（Trailing Stop），鎖定最低 +10% 實質淨獲利！
 //    • LINK (成本 $12.291):
-//      - 結構：4H 放量突破 $11.72 頸線發動補漲，目前於 $12.00 上方整理。
+//      - 結構：4H 底部階梯式墊高，站穩 $12.50 平台衝擊 $13.00 整數大關。
 //      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
-//      - slFloor:  $11.70 (-4.8%)  -> 9/18 放量起漲大陽線之頂底轉換頸線（盈虧比 3.75:1）。
+//      - slFloor:  $12.35 (+0.5%)   -> 移動保本保護止損（Break-Even），覆蓋手續費鎖死零本金風險！
 //    • AAVE (成本 $137.16):
-//      - 結構：飛哥 9/21 觀察名單第 1 名「代幣經濟學 3.0」即將發布，回踩 $133-$136 支撐強烈。
+//      - 結構：飛哥 9/21 觀察名單第 1 名「代幣經濟學 3.0」爆拉，起漲腳在 $138.59。
 //      - tpTarget: $165.00 (+20.3%) -> 2026 日線密集阻力天花板。
-//      - slFloor:  $132.00 (-3.8%)  -> 4H 雙底支撐與起漲頸線（盈虧比 5.34:1）。
+//      - slFloor:  $138.00 (+0.6%)  -> 移動保本保護止損（Break-Even），錨定起漲腳徹底保本！
 //    • ICP (成本 $2.761):
-//      - 結構：9/18 於 $2.63 發動放量突破大陽線（最低 $2.623）衝擊 $2.97。
+//      - 結構：9/18 於 $2.63 發動大陽線，4H 穩定站穩 $2.85-$2.90 上方挑戰 $3.00。
 //      - tpTarget: $3.25 (+17.7%) -> 2026 上半年四重大頂頸線密集壓制區。
-//      - slFloor:  $2.63 (-4.7%)  -> 4H 突破起漲頸線兼頂底轉換分水嶺（盈虧比 3.76:1）。
+//      - slFloor:  $2.800 (+1.4%)   -> 移動保本保護止損（Break-Even），鎖定 4H 支撐小利保本！
 // ------------------------------------------------------------------------------------------
 
 function getSingleTokenPrice(sym, okxId) {
@@ -413,9 +413,9 @@ function checkCoinRotationAlert() {
   try {
     const targets = {
       SUIUSDT:    { sym: "SUI",    name: "Sui",               okxId: "SUI-USDT",    entryPrice: 0.8552,tpTarget: 1.050,slFloor: 0.940, nextRotate: "ONDO 或 PENDLE" },
-      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 11.70,nextRotate: "ONDO 或 NEAR" },
-      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16,tpTarget: 165.00,slFloor: 132.00,nextRotate: "ONDO 或 TAO" },
-      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.63,  nextRotate: "ONDO 或 SUI" }
+      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 12.35, nextRotate: "ONDO 或 NEAR" },
+      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16,tpTarget: 165.00,slFloor: 138.00,nextRotate: "ONDO 或 TAO" },
+      ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.800, nextRotate: "ONDO 或 SUI" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
