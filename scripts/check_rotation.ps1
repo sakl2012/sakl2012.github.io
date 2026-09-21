@@ -3,7 +3,7 @@ $targets = @(
     @{ sym = "ONDOUSDT"; name = "Ondo Finance"; cost = 0.4530; tp = 0.550; sl = 0.435 },
     @{ sym = "LINKUSDT"; name = "Chainlink"; cost = 12.291; tp = 14.50; sl = 12.35 },
     @{ sym = "AAVEUSDT"; name = "Aave"; cost = 137.16; tp = 165.00; sl = 138.00 },
-    @{ sym = "ICPUSDT"; name = "Internet Computer"; cost = 2.761; tp = 3.25; sl = 2.800 }
+    @{ sym = "APTUSDT"; name = "Aptos"; cost = 0.735; tp = 0.880; sl = 0.698 }
 )
 
 Write-Host "=========================================================="
