@@ -1,7 +1,7 @@
 {
-  "name": "5-Zone 策略",
-  "short_name": "5-Zone 策略",
-  "description": "5-Zone 雙幣動態再平衡量化策略系統",
+  "name": "Triad 三元策略",
+  "short_name": "Triad",
+  "description": "Triad 三元資產全天候動態再平衡量化系統",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",

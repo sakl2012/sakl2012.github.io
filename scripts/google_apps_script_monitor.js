@@ -1,7 +1,7 @@
 /**
- * 6-Zone 階梯防脆弱策略 (純現貨三幣 ＋ 雙壁避險全自動化版) - Google Apps Script 自動監控與 Email 警報
+ * Triad 三元策略 (純現貨三幣 ＋ 雙壁避險全自動化版) - Google Apps Script 自動監控與 Email 警報
  * 主力：Binance Vision (免 451 封鎖) | 備援：OKX / Bybit / Gate.io / KuCoin / Coinbase | 具備防崩潰與自動切換機制
- * 最新架構：升級為 6-Zone 閉環單向狀態機 (Zone 0 深熊底 ~ Zone 4 逃頂鎖利 ~ Zone 5 熊市主跌防禦)
+ * 最新架構：Triad 三元全天候狀態機 (Zone 0 深熊底 ~ Zone 4 逃頂鎖利 ~ Zone 5 熊市主跌防禦)
  * 資產配置：三大核心 50% (BTC 20% / ETH 20% / TAO 10%) ＋ 6 大菁英 Alpha 50% (各 8.33%)
  * 防禦機制：純現貨雙壁架構 (QQQB 35% + PAXG 60%~65%)，Zone 4 Alpha 率先清零、Zone 5 核心清零
  */
@@ -93,7 +93,7 @@ function checkZoneAndAlert() {
         5: "熊市確認/主跌防禦 (全盤現貨100%清零，純現貨雙壁終極防禦)"
       };
       
-      const subject = `🚨 6-Zone 策略狀態切換：Zone ${newZone} (${zoneNames[newZone]})`;
+      const subject = `🚨 Triad 三元策略狀態切換：Zone ${newZone} (${zoneNames[newZone]})`;
       const body = `
 自動監控機器人發現市場狀態改變！
 
