@@ -660,17 +660,17 @@
                         <td class="col-sat">各三幣組合：COIN 35% / QQQB 35% / PAXG 30% (全天候靜態 35/35/30)</td>
                     </tr>
                     <tr id="row-zone-4">
-                        <td><strong>Zone 4 (極度貪婪/套利逃頂)</strong></td>
+                        <td><strong>Zone 4 (極度貪婪/逃頂鎖利)</strong></td>
                         <td>&ge; 1.40</td>
                         <td><span id="tbl-range-4" style="color: #dc2626; font-weight: 700;">&ge; $97,353 (向 12~15 萬衝頂)</span></td>
                         <td>
-                            <strong style="color: #b91c1c;">15 萬狂頂逃頂 + 套利</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「現貨出清至實體金 50% + 美股 25% + 象徵底倉 5%；20% 現金啟動幣安期現套利機器人 (Delta 中性吃暴息)。<strong>【解套利平倉信號】</strong>：年化資金費率跌破 8% 或轉負時，立即平倉轉回純現金」</div>
+                            <strong style="color: #b91c1c;">15 萬狂頂逃頂 ➔ 雙壁鎖利</strong>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「現貨大舉出清至實體金 60% + 美股 35% + 象徵底倉 5%；純現貨雙壁鎖利，免開合約零磨損零負費率風險」</div>
                         </td>
-                        <td class="col-c1">BTC 5% / QQQB 25% / PAXG 50% (套利 20%)</td>
-                        <td class="col-c2">ETH 5% / QQQB 25% / PAXG 50% (套利 20%)</td>
-                        <td class="col-c3">TAO 5% / QQQB 25% / PAXG 50% (套利 20%)</td>
-                        <td class="col-sat">現貨逃頂出清至黃金美股，關閉合約做多 DCA，啟用套利機器人</td>
+                        <td class="col-c1">BTC 5% / QQQB 35% / PAXG 60%</td>
+                        <td class="col-c2">ETH 5% / QQQB 35% / PAXG 60%</td>
+                        <td class="col-c3">TAO 5% / QQQB 35% / PAXG 60%</td>
+                        <td class="col-sat">現貨逃頂出清至黃金美股，轉入各幣 5% / QQQB 35% / PAXG 60% 雙壁鎖利</td>
                     </tr>
                     <tr id="row-zone-5">
                         <td><strong>Zone 5 (熊市確認/主跌防禦)</strong></td>
@@ -678,12 +678,12 @@
                         <td><span id="tbl-range-5" style="color: #8b5cf6; font-weight: 700;">自頂部回撤 &ge; 20%</span></td>
                         <td>
                             <strong style="color: #7c3aed;">大頂破位，主跌防禦</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「大頂確認破位，嚴禁抄底接飛刀！全線停止買入；<strong>【強制解倉】</strong>：自大頂回撤 ≥ 20% 強制一鍵平倉套利機器人換回純 USDT，實體金 50% + 美股 25% + 現金 25% 死鎖防禦，靜待 Zone 0」</div>
+                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「大頂確認破位，嚴禁抄底接飛刀！現貨清零，全倉純靠 QQQB 35% + PAXG 65% 純現貨雙壁自動平衡避險，靜待 Zone 0」</div>
                         </td>
-                        <td class="col-c1">BTC 0% / QQQB 25% / PAXG 50% (現金 25%)</td>
-                        <td class="col-c2">ETH 0% / QQQB 25% / PAXG 50% (現金 25%)</td>
-                        <td class="col-c3">TAO 0% / QQQB 25% / PAXG 50% (現金 25%)</td>
-                        <td class="col-sat">各組合停買加密現貨，轉入 PAXG 50% / QQQB 25% / 現金 25% 防禦</td>
+                        <td class="col-c1">BTC 0% / QQQB 35% / PAXG 65%</td>
+                        <td class="col-c2">ETH 0% / QQQB 35% / PAXG 65%</td>
+                        <td class="col-c3">TAO 0% / QQQB 35% / PAXG 65%</td>
+                        <td class="col-sat">全線停止買入加密現貨，轉入 PAXG 65% / QQQB 35% 純現貨終極防禦</td>
                     </tr>
                 </tbody>
             </table>
@@ -719,32 +719,27 @@
         </div>
     </div>
 
-    <!-- Zone 4 期現套利機器人啟用與強制解倉 (平倉) 雙重 SOP 卡片 -->
-    <div class="audit-card" style="border-left-color: #ec4899;">
-        <div class="audit-title" style="color: #be185d;">
-            <span>🤖 Zone 4 期現套利機器人：啟動契機與強制解倉（平倉換現金）雙重 SOP</span>
-            <span style="font-size: 11.5px; background: #fdf2f8; color: #db2777; border: 1px solid #fbcfe8; padding: 2px 8px; border-radius: 12px; font-weight: 700;">Delta 中性無損吃暴息 ➔ 轉熊精準解倉</span>
+    <!-- Zone 4 / Zone 5 純現貨雙壁智能持倉逃頂與避險機制卡片 -->
+    <div class="audit-card" style="border-left-color: #059669;">
+        <div class="audit-title" style="color: #047857;">
+            <span>🛡️ Zone 4 / Zone 5 純現貨雙壁逃頂與避險機制（QQQB 35% ＋ PAXG 60%~65%）</span>
+            <span style="font-size: 11.5px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 2px 8px; border-radius: 12px; font-weight: 700;">零合約摩擦 ➔ 零負費率風險 ➔ 純現貨極致省心</span>
         </div>
         <div style="font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.6;">
-            套利機器人（現貨多 ＋ 永續空 1x）是極致牛頂的「高息現金收割機」，但<strong>轉入熊市時資金費率會雪崩甚至轉負（空頭倒貼利息）</strong>，因此必須嚴格執行以下啟動與解倉平倉規則：
+            為徹底擺脫合約市場資金費率倒扣、平倉滑點與繁複操作的心智負擔，本系統在逃頂與熊市<strong>100% 採用純現貨「QQQB 科技巨頭 ＋ PAXG 實體黃金」雙壁架構</strong>，終生運行於同一個幣安智能持倉中：
         </div>
         <div class="audit-grid">
             <div class="audit-item" style="border-left: 3px solid #10b981;">
-                <strong style="color: #065f46;">🚀 何時啟動（Zone 4 逃頂）</strong>
-                <span>當 <code>BTC / MA200 ≥ 1.40</code>（向 12~15 萬衝頂），現貨出清釋放的 20% 現金於幣安啟動「期現套利機器人」，無幣價漲跌風險，鎖定多頭瘋狂支付的年化 50%～150% 天價資金費率。</span>
+                <strong style="color: #065f46;">🚀 Zone 4 極度逃頂鎖利（現貨 5% / QQQB 35% / PAXG 60%）</strong>
+                <span>當 <code>BTC / MA200 ≥ 1.40</code> 衝頂時，點擊「編輯比例」將現貨降至 5% 底倉，利潤全數鎖定至 <strong>PAXG 實體黃金（60%）</strong> 與 <strong>QQQB 美股科技（35%）</strong>，落袋為安。</span>
             </div>
-            <div class="audit-item" style="border-left: 3px solid #ef4444;">
-                <strong style="color: #b91c1c;">🛑 何時強制解倉（二擇一立即平倉）</strong>
-                <span>
-                    <strong>① 週期信號</strong>：自大頂回撤 ≥ 20% 正式切入 <strong>Zone 5 熊市</strong>，多頭爆倉、費率崩潰，<strong>強制一鍵平倉</strong>。<br>
-                    <strong>② 經濟信號</strong>：若年化資金費率跌破 <strong>8%</strong> 或轉為<strong>負費率（貼水）</strong>，不等 20% 回撤，<strong>立即手動平倉</strong>防倒扣本金。
-                </span>
+            <div class="audit-item" style="border-left: 3px solid #8b5cf6;">
+                <strong style="color: #6d28d9;">🛑 Zone 5 熊市主跌防禦（現貨 0% / QQQB 35% / PAXG 65%）</strong>
+                <span>大頂確認回撤 ≥ 20% 轉熊時，現貨直接清零（0%），全倉由 <strong>PAXG 65% ＋ QQQB 35%</strong> 雙壁守護。熊市避險推升黃金，機器人自動「賣高位黃金、逢低補便宜 QQQB」，被動產生香農複利！</span>
             </div>
             <div class="audit-item" style="border-left: 3px solid #3b82f6;">
-                <strong style="color: #1d4ed8;">📱 幣安 App 10秒解倉 SOP</strong>
-                <span>
-                    打開幣安 ➔ <strong>交易 ➔ 交易機器人 ➔ 期現套利 ➔ 點擊「停止」</strong> ➔ 勾選「市價平倉現貨與合約」。本金與利息 100% 變回純 USDT，轉入 <strong>Simple Earn 活期理財</strong>（形成 25% 純現金防禦池），靜待 Zone 0 抄底！
-                </span>
+                <strong style="color: #1d4ed8;">🎯 Zone 0 歷史大底抄底（現貨 65% / QQQB 25% / PAXG 10%）</strong>
+                <span>當市場跌透至 <code>BTC / MA200 &lt; 0.80</code>，直接一鍵改回 65/25/10！機器人<strong>自動賣出 55% 高位黃金與 10% 美股</strong>，以天量購買力全自動掃貨歷史大底便宜現貨！</span>
             </div>
         </div>
     </div>
@@ -777,7 +772,7 @@
             </div>
             <div class="audit-item">
                 <strong>🚨 Zone 4 極限逃頂區（≥ $9.74萬，向 12~15萬衝頂）</strong>
-                <span>完全契合 <strong>15 萬極限目標逃頂原則</strong>，95% 全自動換成 QQQB 美股科技、PAXG 實體黃金與期現套利現金。</span>
+                <span>完全契合 <strong>15 萬極限目標逃頂原則</strong>，95% 全自動換成 QQQB 美股科技與 PAXG 實體黃金純現貨雙壁避險。</span>
             </div>
             <div class="audit-item" style="border-left: 3px solid #8b5cf6;">
                 <strong style="color: #7c3aed;">💡 核心 3 (TAO) 爆發力配置說明</strong>
@@ -853,23 +848,23 @@
             }
         },
         4: {
-            name: 'Zone 4 (極度貪婪/套利逃頂)',
+            name: 'Zone 4 (極度貪婪/逃頂鎖利)',
             color: '#ef4444',
             ratios: {
-                CORE_BTC: { coin: 0.05, equity: 0.25, paxg: 0.50, arb: 0.20 },
-                CORE_ETH: { coin: 0.05, equity: 0.25, paxg: 0.50, arb: 0.20 },
-                CORE_TAO: { coin: 0.05, equity: 0.25, paxg: 0.50, arb: 0.20 },
-                SAT_CELL: { coin: 0.05, equity: 0.25, paxg: 0.50, arb: 0.20 }
+                CORE_BTC: { coin: 0.05, equity: 0.35, paxg: 0.60 },
+                CORE_ETH: { coin: 0.05, equity: 0.35, paxg: 0.60 },
+                CORE_TAO: { coin: 0.05, equity: 0.35, paxg: 0.60 },
+                SAT_CELL: { coin: 0.05, equity: 0.35, paxg: 0.60 }
             }
         },
         5: {
             name: 'Zone 5 (熊市確認/主跌防禦)',
             color: '#8b5cf6',
             ratios: {
-                CORE_BTC: { coin: 0.00, equity: 0.25, paxg: 0.50, cash: 0.25 },
-                CORE_ETH: { coin: 0.00, equity: 0.25, paxg: 0.50, cash: 0.25 },
-                CORE_TAO: { coin: 0.00, equity: 0.25, paxg: 0.50, cash: 0.25 },
-                SAT_CELL: { coin: 0.00, equity: 0.25, paxg: 0.50, cash: 0.25 }
+                CORE_BTC: { coin: 0.00, equity: 0.35, paxg: 0.65 },
+                CORE_ETH: { coin: 0.00, equity: 0.35, paxg: 0.65 },
+                CORE_TAO: { coin: 0.00, equity: 0.35, paxg: 0.65 },
+                SAT_CELL: { coin: 0.00, equity: 0.35, paxg: 0.65 }
             }
         }
     };
@@ -1309,13 +1304,9 @@
             const coinPct = Math.round(ratios.coin * 100);
             const equityPct = Math.round(ratios.equity * 100);
             const paxgPct = Math.round(ratios.paxg * 100);
-            const extraPct = ratios.arb ? Math.round(ratios.arb * 100) : (ratios.cash ? Math.round(ratios.cash * 100) : 0);
-            const extraHtml = ratios.arb 
-                ? `<span style="color: #ec4899; font-weight:700;">🤖 套利: ${extraPct}%</span>` 
-                : (ratios.cash ? `<span style="color: #64748b; font-weight:700;">💵 現金: ${extraPct}%</span>` : '');
-            const extraBar = extraPct > 0 
-                ? `<div class="${ratios.arb ? 'c-prog-arb' : 'c-prog-cash'}" style="width: ${extraPct}%;"></div>` 
-                : '';
+            const extraPct = 0;
+            const extraHtml = '';
+            const extraBar = '';
 
             const p = latestPrices[c.sym] || 0;
             const chg = latest24hChange[c.sym];
@@ -1404,7 +1395,7 @@
     function renderCPortfolioMatrix() {
         const grid = document.getElementById('cMatrixGrid');
         if (!grid) return;
-        // 衛星 Alpha 艦隊在 Zone 0~3 採全天候靜態 35/35/30；在 Zone 4 隨核心逃頂轉入 5/25/50 + 20% 套利；在 Zone 5 轉入防禦 0/25/50 + 25% 現金
+        // 衛星 Alpha 艦隊在 Zone 0~3 採全天候靜態 35/35/30；在 Zone 4 轉入純現貨逃頂鎖利 5/35/60；在 Zone 5 轉入終極防禦 0/35/65
         let coinPct = 35;
         let equityPct = 35;
         let paxgPct = 30;
@@ -1413,18 +1404,12 @@
         let extraBar = '';
         if (currentZone === 5) {
             coinPct = 0;
-            equityPct = 25;
-            paxgPct = 50;
-            extraPct = 25;
-            extraHtml = `<span style="color: #64748b; font-weight:700;">💵 現金: 25%</span>`;
-            extraBar = `<div class="c-prog-cash" style="width: 25%;"></div>`;
+            equityPct = 35;
+            paxgPct = 65;
         } else if (currentZone === 4) {
             coinPct = 5;
-            equityPct = 25;
-            paxgPct = 50;
-            extraPct = 20;
-            extraHtml = `<span style="color: #ec4899; font-weight:700;">🤖 套利: 20%</span>`;
-            extraBar = `<div class="c-prog-arb" style="width: 20%;"></div>`;
+            equityPct = 35;
+            paxgPct = 60;
         }
         const eqSym = activeEquitySym;
 
@@ -1647,13 +1632,13 @@
         } else if (zone === 4) {
             const dropTarget = ma200 * 1.40;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
-            downEl.innerHTML = `🔻 跌破 <strong>Zone 4 逃頂線</strong>：<span style="color: #fbbf24;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【現貨已逃頂，套利機器人吃息中】</span>`;
-            upEl.innerHTML = `🚨 當前處於極度貪婪/狂頂逃頂 (Zone 4 - 啟動期現套利機器人 Delta 中性鎖定高額年化利息)`;
+            downEl.innerHTML = `🔻 跌破 <strong>Zone 4 逃頂線</strong>：<span style="color: #fbbf24;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【現貨大舉逃頂，轉入 QQQB 35% ＋ PAXG 60% 雙壁鎖利】</span>`;
+            upEl.innerHTML = `🚨 當前處於極度貪婪/狂頂逃頂 (Zone 4 - 現貨出清至底倉 5%，轉入 QQQB 35% ＋ PAXG 60% 純現貨鎖利)`;
         } else if (zone === 5) {
             const dropTarget = ma200 * 0.80;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
             downEl.innerHTML = `🔻 靜待跌入 <strong>Zone 0 (深熊大底抄底)</strong> 觸發價：<span style="color: #10b981;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【歷史深熊大底】</span>`;
-            upEl.innerHTML = `🚨 <strong>Zone 5 熊市主跌防禦中</strong>：大頂破位確認，全線禁止買入加密現貨！黃金 50% + 美股 25% + 現金 25% 穩健避險`;
+            upEl.innerHTML = `🚨 <strong>Zone 5 熊市主跌防禦中</strong>：大頂破位確認，現貨清零！全倉由 QQQB 35% ＋ PAXG 65% 純現貨雙壁死鎖避險，靜待 Zone 0`;
         }
     }
 
@@ -1725,20 +1710,15 @@
             const c3 = row.querySelector('.col-c3');
             const sat = row.querySelector('.col-sat');
 
+            if (c1) c1.innerText = `BTC ${Math.round(btcR.coin*100)}% / ${eqSym} ${Math.round(btcR.equity*100)}% / PAXG ${Math.round(btcR.paxg*100)}%`;
+            if (c2) c2.innerText = `ETH ${Math.round(ethR.coin*100)}% / ${eqSym} ${Math.round(ethR.equity*100)}% / PAXG ${Math.round(ethR.paxg*100)}%`;
+            if (c3) c3.innerText = `TAO ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
+
             if (zone === 5) {
-                if (c1) c1.innerText = `BTC 0% / ${eqSym} 25% / PAXG 50% (現金 25%)`;
-                if (c2) c2.innerText = `ETH 0% / ${eqSym} 25% / PAXG 50% (現金 25%)`;
-                if (c3) c3.innerText = `TAO 0% / ${eqSym} 25% / PAXG 50% (現金 25%)`;
-                if (sat) sat.innerText = `各組合停買加密現貨，轉入 PAXG 50% / ${eqSym} 25% / 現金 25% 防禦`;
+                if (sat) sat.innerText = `全線停止買入加密現貨，轉入 PAXG 65% / ${eqSym} 35% 純現貨終極防禦`;
             } else if (zone === 4) {
-                if (c1) c1.innerText = `BTC 5% / ${eqSym} 25% / PAXG 50% (套利 20%)`;
-                if (c2) c2.innerText = `ETH 5% / ${eqSym} 25% / PAXG 50% (套利 20%)`;
-                if (c3) c3.innerText = `TAO 5% / ${eqSym} 25% / PAXG 50% (套利 20%)`;
-                if (sat) sat.innerText = `現貨逃頂出清至黃金美股，關閉合約做多 DCA，啟用套利機器人`;
+                if (sat) sat.innerText = `現貨逃頂出清至黃金美股，轉入各幣 5% / ${eqSym} 35% / PAXG 60% 雙壁鎖利`;
             } else {
-                if (c1) c1.innerText = `BTC ${Math.round(btcR.coin*100)}% / ${eqSym} ${Math.round(btcR.equity*100)}% / PAXG ${Math.round(btcR.paxg*100)}%`;
-                if (c2) c2.innerText = `ETH ${Math.round(ethR.coin*100)}% / ${eqSym} ${Math.round(ethR.equity*100)}% / PAXG ${Math.round(ethR.paxg*100)}%`;
-                if (c3) c3.innerText = `TAO ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
                 if (sat) sat.innerText = `各三幣組合：COIN 35% / ${eqSym} 35% / PAXG 30% (全天候靜態 35/35/30，偏差 2%)`;
             }
         }
