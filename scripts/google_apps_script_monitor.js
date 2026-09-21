@@ -364,9 +364,9 @@ function get72hSMA() {
 //      一旦跌破起漲點即判定為假突破（Bull Trap），果斷離場以維持極高盈虧比（R:R > 3.6:1）。
 //
 //    • SUI (成本 $0.8552):
-//      - 結構：放量突破 $0.85 頸線發動第二浪，成交量逼近 1 億美元，承接公鏈外溢熱錢。
+//      - 結構：放量突破 $0.85 頸線發動第二浪，攻破 $1.00 整數大關最高摸至 $1.0215。
 //      - tpTarget: $1.050 (+22.8%) -> 2026 前高密集套牢阻力區與整數大關。
-//      - slFloor:  $0.820 (-4.1%)   -> 4H 次級低點回測確認防守底（盈虧比 5.56:1）。
+//      - slFloor:  $0.940 (+9.9%)   -> 移動保護性止損（Trailing Stop），鎖定最低 +10% 實質淨獲利！
 //    • LINK (成本 $12.291):
 //      - 結構：4H 放量突破 $11.72 頸線發動補漲，目前於 $12.00 上方整理。
 //      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
@@ -412,7 +412,7 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      SUIUSDT:    { sym: "SUI",    name: "Sui",               okxId: "SUI-USDT",    entryPrice: 0.8552,tpTarget: 1.050,slFloor: 0.820, nextRotate: "ONDO 或 PENDLE" },
+      SUIUSDT:    { sym: "SUI",    name: "Sui",               okxId: "SUI-USDT",    entryPrice: 0.8552,tpTarget: 1.050,slFloor: 0.940, nextRotate: "ONDO 或 PENDLE" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291,tpTarget: 14.50,slFloor: 11.70,nextRotate: "ONDO 或 NEAR" },
       AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16,tpTarget: 165.00,slFloor: 132.00,nextRotate: "ONDO 或 TAO" },
       ICPUSDT:    { sym: "ICP",    name: "Internet Computer", okxId: "ICP-USDT",    entryPrice: 2.761, tpTarget: 3.25, slFloor: 2.63,  nextRotate: "ONDO 或 SUI" }
@@ -486,22 +486,35 @@ function checkCoinRotationAlert() {
         Logger.log(`Email 換幣提醒已發送: ${info.sym}`);
         props.setProperty(lastAlertKey, now.toString());
       }
-      // 2. 觸發破位跌破強支撐 ➔ 防守止損換幣信號
+      // 2. 觸發跌破防守底線 ➔ 移動利潤保護 / 止損換幣信號
       else if (curPrice <= info.slFloor) {
-        const subject = `⚠️【智能持倉破位警告】${info.sym} 跌破關鍵支撐 ($${curPrice}${pnlStr})！`;
+        const isProfitLock = info.slFloor > entry;
+        const subject = isProfitLock
+          ? `🛡️【智能持倉移動止損觸發】${info.sym} 回踩觸及利潤保護底 ($${curPrice}${pnlStr})！`
+          : `⚠️【智能持倉破位警告】${info.sym} 跌破關鍵支撐 ($${curPrice}${pnlStr})！`;
         const body = `
-注意！您設定的補漲標的已跌破防守頸線！
+${isProfitLock ? '提醒您！您設定的標的觸及了【移動利潤保護底線（Trailing Stop）】！此時依然保持獲利！' : '注意！您設定的補漲標的已跌破防守頸線！'}
 
 🚨 標的：${info.name} (${info.sym})
 💰 建倉成本：$${entry.toFixed(4)}
 📉 當前現價：$${curPrice.toFixed(4)}${pnlStr}
-🛑 關鍵防守底線：$${info.slFloor.toFixed(4)} (已跌破)
+🛑 移動防守底線：$${info.slFloor.toFixed(4)} (已觸及)
 🎯 原定補漲目標位：$${info.tpTarget.toFixed(4)}
 
-建議立即檢查盤面，評估是否手動關閉該機器人以防資金被深套，或換入更強勢的 Alpha 龍頭。
+==================================================
+💡 建議操盤執行 SOP：
+==================================================
+${isProfitLock 
+  ? `1. 打開幣安 App ➔ 進入「智能持倉」機器人列表。
+2. 找到【${info.sym} + QQQB + PAXG】機器人，點擊「終止並以市價平倉現貨」。
+   - 此時波段獲利已成功落袋保護（+10% 左右）。
+3. 資金換入低位蓄勢標的：
+   - 推薦接力換入：【${info.nextRotate}】！` 
+  : `建議立即檢查盤面，評估是否手動關閉該機器人以防資金被深套，或換入更強勢的 Alpha 龍頭。`}
+==================================================
         `;
         MailApp.sendEmail(YOUR_EMAIL, subject, body);
-        Logger.log(`Email 破位提醒已發送: ${info.sym}`);
+        Logger.log(`Email 防守提醒已發送: ${info.sym}`);
         props.setProperty(lastAlertKey, now.toString());
       }
     }
