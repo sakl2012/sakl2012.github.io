@@ -391,10 +391,10 @@ function get72hSMA() {
 //    • 嚴格止損核心精神：鎖定右側主升浪起漲頸線（S/R Flip），絕不承受深幅回撤！
 //      一旦跌破起漲點即判定為假突破（Bull Trap），果斷離場以維持極高盈虧比（R:R > 3.6:1）。
 //
-//    • ONDO (成本 $0.4530):
-//      - 結構：放量突破 $0.45 頸線，受惠 DTCC 接入全美 85% 共同基金清算之頂級 RWA 敘事。
-//      - tpTarget: $0.550 (+21.4%) -> 2026 前高密集阻力平台。
-//      - slFloor:  $0.435 (-3.97%) -> 4H 突破起漲頸線（盈虧比 5.39:1，假突破證偽底線）。
+//    • AXS (換倉成本 $1.1280，替換原 RENDER):
+//      - 結構：自 $0.910 築底完成，放量突破 $1.00 頸線，受惠鏈遊/元宇宙板塊補漲預期。
+//      - tpTarget: $1.400 (+24.1%) -> 前期日線大箱體強阻力平台。
+//      - slFloor:  $1.070 (-5.14%) -> 9/22 日線放量起漲腳（防守底線，假突破證偽）。
 //    • LINK (成本 $12.291):
 //      - 結構：4H 底部階梯式墊高，站穩 $12.50 平台衝擊 $13.00 整數大關。
 //      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
@@ -447,7 +447,7 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      RENDERUSDT: { sym: "RENDER", name: "Render",           okxId: "RENDER-USDT", entryPrice: 1.816,  tpTarget: 2.350, slFloor: 1.720, nextRotate: "NEAR 或 FET" },
+      AXSUSDT:    { sym: "AXS",    name: "Axie Infinity",     okxId: "AXS-USDT",    entryPrice: 1.128,  tpTarget: 1.400, slFloor: 1.070, nextRotate: "NEAR 或 DOGE" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291, tpTarget: 14.50, slFloor: 12.35, nextRotate: "NEAR 或 DOGE" },
       AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16, tpTarget: 165.00, slFloor: 138.00, nextRotate: "FET 或 TAO" },
       BCHUSDT:    { sym: "BCH",    name: "Bitcoin Cash",      okxId: "BCH-USDT",    entryPrice: 309.50, tpTarget: 385.00, slFloor: 294.00, nextRotate: "SUI 或 FET" }
