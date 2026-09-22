@@ -3,7 +3,7 @@ $targets = @(
     @{ sym = "ONDOUSDT"; name = "Ondo Finance"; cost = 0.4530; tp = 0.550; sl = 0.435 },
     @{ sym = "LINKUSDT"; name = "Chainlink"; cost = 12.291; tp = 14.50; sl = 12.35 },
     @{ sym = "AAVEUSDT"; name = "Aave"; cost = 137.16; tp = 165.00; sl = 138.00 },
-    @{ sym = "APTUSDT"; name = "Aptos"; cost = 0.735; tp = 0.880; sl = 0.698 }
+    @{ sym = "APTUSDT"; name = "Aptos"; cost = 0.735; tp = 0.880; sl = 0.740 }
 )
 
 Write-Host "=========================================================="
@@ -85,5 +85,44 @@ foreach ($t in $targets) {
         Write-Host "[$($t.name) - $sym - 大盤定海神針]" -ForegroundColor Yellow
         Write-Host "  BTC 現價: `$$curPrice ($chg% 24h) | 24H 振幅: [`$$low - `$$high] | 24H 成交量: ${volM}M USDT"
         Write-Host "----------------------------------------------------------"
+    }
+}
+
+$candidates = @(
+    @{ sym = "DOGEUSDT"; name = "Dogecoin"; breakout = 0.1025; tp = 0.1180; retestLow = 0.0950; retestHigh = 0.0975; sl = 0.0925 },
+    @{ sym = "UNIUSDT"; name = "Uniswap"; breakout = 9.50; tp = 11.50; retestLow = 8.60; retestHigh = 8.90; sl = 8.55 },
+    @{ sym = "NEARUSDT"; name = "NEAR Protocol"; breakout = 4.60; tp = 5.80; retestLow = 4.15; retestHigh = 4.25; sl = 3.95 }
+)
+
+Write-Host "`n=========================================================="
+Write-Host "      CANDIDATE RADAR (BREAKOUT & RETEST TARGETS)         "
+Write-Host "=========================================================="
+
+foreach ($c in $candidates) {
+    $sym = $c.sym
+    $url = "https://api1.binance.com/api/v3/ticker/24hr?symbol=$sym"
+    try {
+        $ticker = Invoke-RestMethod -Uri $url -Headers @{ "User-Agent" = "Mozilla/5.0" } -TimeoutSec 5
+        $curPrice = [double]$ticker.lastPrice
+        $chg = [double]$ticker.priceChangePercent
+        $volM = [math]::Round(([double]$ticker.quoteVolume / 1e6), 1)
+
+        $radarStatus = "👀 監控中"
+        if ($curPrice -ge $c.breakout) {
+            $radarStatus = "🔥 放量突破關鍵阻力 ($curPrice >= $($c.breakout))！主升浪加速"
+        } elseif ($curPrice -ge $c.retestLow -and $curPrice -le $c.retestHigh) {
+            $radarStatus = "🎯 回踩支撐買點觀察帶 ($($c.retestLow) ~ $($c.retestHigh))"
+        } elseif ($curPrice -le $c.sl) {
+            $radarStatus = "⚠️ 跌破起漲腳證偽線 ($curPrice <= $($c.sl))"
+        }
+
+        Write-Host "[$($c.name) - $sym]" -ForegroundColor Magenta
+        Write-Host "  現價: `$$curPrice ($chg% 24h) | 成交量: ${volM}M USDT"
+        Write-Host "  突破確認線: `$$($c.breakout) | 波段止盈目標: `$$($c.tp)"
+        Write-Host "  回踩買點帶: [`$$($c.retestLow) - `$$($c.retestHigh)] | 假突破證偽底: `$$($c.sl)"
+        Write-Host "  雷達狀態: $radarStatus"
+        Write-Host "----------------------------------------------------------"
+    } catch {
+        Write-Host "無法獲取 $sym 數據"
     }
 }
