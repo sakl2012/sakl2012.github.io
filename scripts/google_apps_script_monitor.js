@@ -447,10 +447,10 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      RENDERUSDT: { sym: "RENDER", name: "Render",           okxId: "RENDER-USDT", entryPrice: 1.816,  tpTarget: 2.350, slFloor: 1.720, nextRotate: "SUI 或 NEAR" },
-      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291, tpTarget: 14.50, slFloor: 12.35, nextRotate: "APT 或 NEAR" },
-      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16, tpTarget: 165.00, slFloor: 138.00, nextRotate: "APT 或 TAO" },
-      APTUSDT:    { sym: "APT",    name: "Aptos",             okxId: "APT-USDT",    entryPrice: 0.7350, tpTarget: 0.880, slFloor: 0.740, nextRotate: "NEAR 或 DOGE" }
+      RENDERUSDT: { sym: "RENDER", name: "Render",           okxId: "RENDER-USDT", entryPrice: 1.816,  tpTarget: 2.350, slFloor: 1.720, nextRotate: "NEAR 或 FET" },
+      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291, tpTarget: 14.50, slFloor: 12.35, nextRotate: "NEAR 或 DOGE" },
+      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16, tpTarget: 165.00, slFloor: 138.00, nextRotate: "FET 或 TAO" },
+      SUIUSDT:    { sym: "SUI",    name: "Sui Network",       okxId: "SUI-USDT",    entryPrice: 1.0195, tpTarget: 1.450, slFloor: 0.965, nextRotate: "NEAR 或 DOGE" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
@@ -597,19 +597,19 @@ function checkCandidateRadarAlert(priceMap) {
         slDesc: "9/21 放量大陽線起漲腳",
         rrRatio: "6.8:1"
       },
-      SUI: {
-        sym: "SUI",
-        name: "Sui Network",
-        okxId: "SUI-USDT",
-        resistanceCeiling: 1.10,
-        tpTarget: 1.45,
-        retestHigh: 0.95,
-        retestLow: 0.92,
-        reboundConfirm: 0.96,
-        invalidationFloor: 0.88,
-        setupDesc: "Move 生態公鏈雙子星龍頭，手續費與質押籌碼出清補漲",
-        slDesc: "日線突破回踩平台支撐底 (-4.3%)",
-        rrRatio: "5.5:1"
+      FET: {
+        sym: "FET",
+        name: "Artificial Superintelligence",
+        okxId: "FET-USDT",
+        resistanceCeiling: 0.220,
+        tpTarget: 0.280,
+        retestHigh: 0.200,
+        retestLow: 0.190,
+        reboundConfirm: 0.205,
+        invalidationFloor: 0.180,
+        setupDesc: "AI 聯盟日線大底放量突破回踩確認",
+        slDesc: "日線突破平台支撐底 (-5.3%)",
+        rrRatio: "5.2:1"
       },
       NEAR: {
         sym: "NEAR",
