@@ -447,10 +447,10 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      ONDOUSDT:   { sym: "ONDO",   name: "Ondo Finance",      okxId: "ONDO-USDT",   entryPrice: 0.4530, tpTarget: 0.550, slFloor: 0.435, nextRotate: "UNI (首選) 或 NEAR" },
-      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291, tpTarget: 14.50, slFloor: 12.35, nextRotate: "UNI 或 APT" },
-      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16, tpTarget: 165.00, slFloor: 138.00, nextRotate: "UNI 或 TAO" },
-      APTUSDT:    { sym: "APT",    name: "Aptos",             okxId: "APT-USDT",    entryPrice: 0.7350, tpTarget: 0.880, slFloor: 0.740, nextRotate: "UNI 或 DOGE" }
+      UNIUSDT:    { sym: "UNI",    name: "Uniswap",           okxId: "UNI-USDT",    entryPrice: 8.870,  tpTarget: 11.50, slFloor: 8.550, nextRotate: "NEAR 或 DOGE" },
+      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291, tpTarget: 14.50, slFloor: 12.35, nextRotate: "APT 或 NEAR" },
+      AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16, tpTarget: 165.00, slFloor: 138.00, nextRotate: "APT 或 TAO" },
+      APTUSDT:    { sym: "APT",    name: "Aptos",             okxId: "APT-USDT",    entryPrice: 0.7350, tpTarget: 0.880, slFloor: 0.740, nextRotate: "NEAR 或 DOGE" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
@@ -597,19 +597,19 @@ function checkCandidateRadarAlert(priceMap) {
         slDesc: "9/21 放量大陽線起漲腳",
         rrRatio: "6.8:1"
       },
-      UNI: {
-        sym: "UNI",
-        name: "Uniswap",
-        okxId: "UNI-USDT",
-        resistanceCeiling: 9.50,
-        tpTarget: 11.50,
-        retestHigh: 8.90,
-        retestLow: 8.60,
-        reboundConfirm: 9.00,
-        invalidationFloor: 8.55,
-        setupDesc: "美股代幣化 DEX 核心結算底層 + Fee Switch 銷毀回購",
-        slDesc: "4H 放量突破起漲頸線防守底 (-4.6%)",
-        rrRatio: "6.1:1"
+      SUI: {
+        sym: "SUI",
+        name: "Sui Network",
+        okxId: "SUI-USDT",
+        resistanceCeiling: 1.10,
+        tpTarget: 1.45,
+        retestHigh: 0.95,
+        retestLow: 0.92,
+        reboundConfirm: 0.96,
+        invalidationFloor: 0.88,
+        setupDesc: "Move 生態公鏈雙子星龍頭，手續費與質押籌碼出清補漲",
+        slDesc: "日線突破回踩平台支撐底 (-4.3%)",
+        rrRatio: "5.5:1"
       },
       NEAR: {
         sym: "NEAR",

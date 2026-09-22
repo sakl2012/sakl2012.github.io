@@ -1,6 +1,6 @@
 $targets = @(
     @{ sym = "BTCUSDT"; name = "Bitcoin" },
-    @{ sym = "ONDOUSDT"; name = "Ondo Finance"; cost = 0.4530; tp = 0.550; sl = 0.435 },
+    @{ sym = "UNIUSDT"; name = "Uniswap"; cost = 8.87; tp = 11.50; sl = 8.55 },
     @{ sym = "LINKUSDT"; name = "Chainlink"; cost = 12.291; tp = 14.50; sl = 12.35 },
     @{ sym = "AAVEUSDT"; name = "Aave"; cost = 137.16; tp = 165.00; sl = 138.00 },
     @{ sym = "APTUSDT"; name = "Aptos"; cost = 0.735; tp = 0.880; sl = 0.740 }
@@ -90,8 +90,8 @@ foreach ($t in $targets) {
 
 $candidates = @(
     @{ sym = "DOGEUSDT"; name = "Dogecoin"; breakout = 0.1025; tp = 0.1180; retestLow = 0.0950; retestHigh = 0.0975; sl = 0.0925 },
-    @{ sym = "UNIUSDT"; name = "Uniswap"; breakout = 9.50; tp = 11.50; retestLow = 8.60; retestHigh = 8.90; sl = 8.55 },
-    @{ sym = "NEARUSDT"; name = "NEAR Protocol"; breakout = 4.60; tp = 5.80; retestLow = 4.15; retestHigh = 4.25; sl = 3.95 }
+    @{ sym = "NEARUSDT"; name = "NEAR Protocol"; breakout = 4.60; tp = 5.80; retestLow = 4.15; retestHigh = 4.25; sl = 3.95 },
+    @{ sym = "SUIUSDT"; name = "Sui Network"; breakout = 1.10; tp = 1.45; retestLow = 0.92; retestHigh = 0.95; sl = 0.88 }
 )
 
 Write-Host "`n=========================================================="
