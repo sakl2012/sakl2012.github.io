@@ -3,7 +3,7 @@ $targets = @(
     @{ sym = "RENDERUSDT"; name = "Render"; cost = 1.816; tp = 2.350; sl = 1.720 },
     @{ sym = "LINKUSDT"; name = "Chainlink"; cost = 12.291; tp = 14.50; sl = 12.35 },
     @{ sym = "AAVEUSDT"; name = "Aave"; cost = 137.16; tp = 165.00; sl = 138.00 },
-    @{ sym = "SUIUSDT"; name = "Sui Network"; cost = 1.0195; tp = 1.450; sl = 0.965 }
+    @{ sym = "BCHUSDT"; name = "Bitcoin Cash"; cost = 309.50; tp = 385.00; sl = 294.00 }
 )
 
 Write-Host "=========================================================="
@@ -91,7 +91,7 @@ foreach ($t in $targets) {
 $candidates = @(
     @{ sym = "DOGEUSDT"; name = "Dogecoin"; breakout = 0.1025; tp = 0.1180; retestLow = 0.0950; retestHigh = 0.0975; sl = 0.0925 },
     @{ sym = "NEARUSDT"; name = "NEAR Protocol"; breakout = 4.60; tp = 5.80; retestLow = 4.15; retestHigh = 4.25; sl = 3.95 },
-    @{ sym = "FETUSDT"; name = "Artificial Superintelligence"; breakout = 0.220; tp = 0.280; retestLow = 0.190; retestHigh = 0.200; sl = 0.180 }
+    @{ sym = "SUIUSDT"; name = "Sui Network"; breakout = 1.10; tp = 1.45; retestLow = 0.98; retestHigh = 1.02; sl = 0.965 }
 )
 
 Write-Host "`n=========================================================="

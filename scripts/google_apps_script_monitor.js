@@ -450,7 +450,7 @@ function checkCoinRotationAlert() {
       RENDERUSDT: { sym: "RENDER", name: "Render",           okxId: "RENDER-USDT", entryPrice: 1.816,  tpTarget: 2.350, slFloor: 1.720, nextRotate: "NEAR 或 FET" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291, tpTarget: 14.50, slFloor: 12.35, nextRotate: "NEAR 或 DOGE" },
       AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16, tpTarget: 165.00, slFloor: 138.00, nextRotate: "FET 或 TAO" },
-      SUIUSDT:    { sym: "SUI",    name: "Sui Network",       okxId: "SUI-USDT",    entryPrice: 1.0195, tpTarget: 1.450, slFloor: 0.965, nextRotate: "NEAR 或 DOGE" }
+      BCHUSDT:    { sym: "BCH",    name: "Bitcoin Cash",      okxId: "BCH-USDT",    entryPrice: 309.50, tpTarget: 385.00, slFloor: 294.00, nextRotate: "SUI 或 FET" }
     };
 
     // 1. 批次取得 OKX 全現貨現價
@@ -597,19 +597,19 @@ function checkCandidateRadarAlert(priceMap) {
         slDesc: "9/21 放量大陽線起漲腳",
         rrRatio: "6.8:1"
       },
-      FET: {
-        sym: "FET",
-        name: "Artificial Superintelligence",
-        okxId: "FET-USDT",
-        resistanceCeiling: 0.220,
-        tpTarget: 0.280,
-        retestHigh: 0.200,
-        retestLow: 0.190,
-        reboundConfirm: 0.205,
-        invalidationFloor: 0.180,
-        setupDesc: "AI 聯盟日線大底放量突破回踩確認",
-        slDesc: "日線突破平台支撐底 (-5.3%)",
-        rrRatio: "5.2:1"
+      SUI: {
+        sym: "SUI",
+        name: "Sui Network",
+        okxId: "SUI-USDT",
+        resistanceCeiling: 1.10,
+        tpTarget: 1.45,
+        retestHigh: 1.02,
+        retestLow: 0.98,
+        reboundConfirm: 1.03,
+        invalidationFloor: 0.965,
+        setupDesc: "Move 生態公鏈絕對龍頭，1 美元大關頂底轉換回踩",
+        slDesc: "日線突破回踩平台支撐底 (-5.3%)",
+        rrRatio: "7.9:1"
       },
       NEAR: {
         sym: "NEAR",
