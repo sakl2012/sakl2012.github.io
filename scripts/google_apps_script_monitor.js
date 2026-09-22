@@ -447,7 +447,7 @@ function getSingleTokenPrice(sym, okxId) {
 function checkCoinRotationAlert() {
   try {
     const targets = {
-      UNIUSDT:    { sym: "UNI",    name: "Uniswap",           okxId: "UNI-USDT",    entryPrice: 8.870,  tpTarget: 11.50, slFloor: 8.550, nextRotate: "NEAR 或 DOGE" },
+      RENDERUSDT: { sym: "RENDER", name: "Render",           okxId: "RENDER-USDT", entryPrice: 1.816,  tpTarget: 2.350, slFloor: 1.720, nextRotate: "SUI 或 NEAR" },
       LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291, tpTarget: 14.50, slFloor: 12.35, nextRotate: "APT 或 NEAR" },
       AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16, tpTarget: 165.00, slFloor: 138.00, nextRotate: "APT 或 TAO" },
       APTUSDT:    { sym: "APT",    name: "Aptos",             okxId: "APT-USDT",    entryPrice: 0.7350, tpTarget: 0.880, slFloor: 0.740, nextRotate: "NEAR 或 DOGE" }
