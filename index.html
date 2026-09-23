@@ -998,13 +998,13 @@
                 <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
                     <span class="c-pill" style="background:#f3e8ff; color:#7c3aed; border:1px solid #d8b4fe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">⚡ 3.0x 永續合約</span>
                     <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🎁 幣安 USDC 合約掛單 0.00% 免手續費 (0% Maker)</span>
-                    <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 156.25U 網格 ＋ 93.75U 追加保證金 (總 250U 專款專用)</span>
+                    <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 155U 網格 ＋ 95U 開倉後手動追加 (總 250U 專款專用)</span>
                     <span class="c-pill c-pill-gold">🎯 99% 分位數聚焦 (-16.57% 覆蓋 · 5級精銳)</span>
                     <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -18.00% 剛性止損 (穩固保全 8 成本金)</span>
                 </div>
 
                 <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 ENAUSDC 真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>197,125 組 0.01 精度全量窮舉</strong>，專為 <strong>250U 總本金（與現貨 250U 基準完全對齊）</strong> 嚴格鎖定「<strong>99% 歷史回調主戰場 ＋ 止損強制保全 8 成本金</strong>」所求解出之<strong>全局雙冠王配置（5 級精銳款）</strong>。全額 250U 納入機器人管理（<strong>155~156.25U 網格開倉 ＋ 93.75~95U 自動追加保證金鎖定保護</strong>）。在 4 個月內斬獲 <strong>+$339.33 USDC (+135.73% ROI / +407.2% APR)</strong>，累積 <strong>871 輪止盈、僅觸發 4 次止損（勝率 99.54%）</strong>！若遭遇極端插針跌破 -18.00% 止損線，<strong>單筆最大損失嚴格限制在 $45.15~$49.8U（< 50U 止損紅線），實質穩留 $200.18~$204.85U（80.07%~81.94% 本金）</strong>，等市場穩定後再行重啟！
+                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 ENAUSDC 真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>197,125 組 0.01 精度全量窮舉</strong>，專為 <strong>250U 總本金（與現貨 250U 基準完全對齊）</strong> 嚴格鎖定「<strong>99% 歷史回調主戰場 ＋ 止損強制保全 8 成本金</strong>」所求解出之<strong>全局雙冠王配置（5 級精銳款）</strong>。全額 250U 納入機器人管理（<strong>155U 網格開倉 ＋ 啟動後手動追加 95U 保證金鎖定保護</strong>）。在 4 個月內斬獲 <strong>+$339.33 USDC (+135.73% ROI / +407.2% APR)</strong>，累積 <strong>871 輪止盈、僅觸發 4 次止損（勝率 99.54%）</strong>！若遭遇極端插針跌破 -18.00% 止損線，<strong>單筆最大損失嚴格限制在 $45.15~$49.8U（< 50U 止損紅線），實質穩留 $200.18~$204.85U（80.07%~81.94% 本金）</strong>，等市場穩定後再行重啟！
                 </div>
 
                 <!-- ENA 四大核心量化指標卡 -->
@@ -1106,10 +1106,16 @@
                                     <td>基礎 + (加倉 × 5) 動態開倉池</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>[✓] 自動追加保證金 (核取方塊)</strong></td>
-                                    <td><strong style="color: #059669;">勾選 ➔ 填 95.00 USDC</strong></td>
-                                    <td><strong style="color: #059669;">勾選 ➔ 填 93.75 USDC</strong></td>
-                                    <td><strong>核心關鍵！直接以追加保證金鎖入機器人，全額 250U 專款專用</strong></td>
+                                    <td><strong>自動追加保證金 (建立時)</strong></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
+                                    <td>建立時<strong>不勾選</strong>，避免系統不可控地自動從錢包抽調資金</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>手動追加保證金 (開倉後)</strong></td>
+                                    <td><strong style="color: #059669;">手動追加 95.00 USDC</strong></td>
+                                    <td><strong style="color: #059669;">手動追加 93.75 USDC</strong></td>
+                                    <td><strong>【核心操作】開倉後於機器人詳情手動追加 95U，安全墊一次鎖入！</strong></td>
                                 </tr>
                                 <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】</td></tr>
                                 <tr>
@@ -1148,13 +1154,13 @@
                 <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
                     <span class="c-pill" style="background:#eff6ff; color:#0284c7; border:1px solid #bae6fd; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">⚡ 3.0x 永續合約</span>
                     <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🎁 幣安 USDC 合約掛單 0.00% 免手續費 (0% Maker)</span>
-                    <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 168U 網格 ＋ 82U 追加保證金 (總 250U 專款專用)</span>
+                    <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 168U 網格 ＋ 82U 開倉後手動追加 (總 250U 專款專用)</span>
                     <span class="c-pill c-pill-gold">🎯 99% 分位數聚焦 (-7.21% 覆蓋 · 4級精銳)</span>
                     <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -9.00% 剛性止損 (實質穩留 89.1% 本金)</span>
                 </div>
 
                 <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 SOLUSDC 真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>242,281 組 0.01 精度全量窮舉</strong>，專為 <strong>250U 總本金（與現貨 250U 基準完全對齊）</strong> 嚴格鎖定「<strong>99% 歷史回調主戰場 ＋ 止損強制保全 8 成本金</strong>」所求解出之<strong>公鏈基石雙料冠軍配置（4 級精銳款）</strong>。全額 250U 納入機器人管理（<strong>168U 網格開倉 ＋ 82U 自動追加保證金鎖定保護</strong>）。在 4 個月內斬獲 <strong>+$219.33 USDC (+87.73% ROI / +263.2% APR)</strong>，累積 <strong>540 輪止盈、僅觸發 3 次止損（勝率 99.45%）</strong>！若遭遇極端插針跌破 -9.00% 止損線，<strong>單筆最大損失嚴格限制在 $27.05~$27.18U（遠遠低於 50U 上限），實質穩留 $222.82~$222.95U（89.13%~89.18% 本金）</strong>，安全邊際極高！
+                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 SOLUSDC 真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>242,281 組 0.01 精度全量窮舉</strong>，專為 <strong>250U 總本金（與現貨 250U 基準完全對齊）</strong> 嚴格鎖定「<strong>99% 歷史回調主戰場 ＋ 止損強制保全 8 成本金</strong>」所求解出之<strong>公鏈基石雙料冠軍配置（4 級精銳款）</strong>。全額 250U 納入機器人管理（<strong>168U 網格開倉 ＋ 啟動後手動追加 82U 保證金鎖定保護</strong>）。在 4 個月內斬獲 <strong>+$219.33 USDC (+87.73% ROI / +263.2% APR)</strong>，累積 <strong>540 輪止盈、僅觸發 3 次止損（勝率 99.45%）</strong>！若遭遇極端插針跌破 -9.00% 止損線，<strong>單筆最大損失嚴格限制在 $27.05~$27.18U（遠遠低於 50U 上限），實質穩留 $222.82~$222.95U（89.13%~89.18% 本金）</strong>，安全邊際極高！
                 </div>
 
                 <!-- SOL 四大核心量化指標卡 -->
@@ -1256,10 +1262,16 @@
                                     <td>基礎 + (加倉 × 4) 動態開倉池</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>[✓] 自動追加保證金 (核取方塊)</strong></td>
-                                    <td><strong style="color: #059669;">勾選 ➔ 填 82.00 USDC</strong></td>
-                                    <td><strong style="color: #059669;">勾選 ➔ 填 81.25 USDC</strong></td>
-                                    <td><strong>核心關鍵！直接以追加保證金鎖入機器人，全額 250U 專款專用</strong></td>
+                                    <td><strong>自動追加保證金 (建立時)</strong></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
+                                    <td>建立時<strong>不勾選</strong>，避免系統不可控地自動從錢包抽調資金</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>手動追加保證金 (開倉後)</strong></td>
+                                    <td><strong style="color: #059669;">手動追加 82.00 USDC</strong></td>
+                                    <td><strong style="color: #059669;">手動追加 81.25 USDC</strong></td>
+                                    <td><strong>【核心操作】開倉後於機器人詳情手動追加 82U，安全墊一次鎖入！</strong></td>
                                 </tr>
                                 <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】</td></tr>
                                 <tr>
@@ -1298,13 +1310,13 @@
                 <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
                     <span class="c-pill" style="background:#fff7ed; color:#ea580c; border:1px solid #ffedd5; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">⚡ 3.0x 永續合約</span>
                     <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🎁 幣安 USDC 合約掛單 0.00% 免手續費 (0% Maker)</span>
-                    <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 168U 網格 ＋ 82U 追加保證金 (總 250U 專款專用)</span>
+                    <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 168U 網格 ＋ 82U 開倉後手動追加 (總 250U 專款專用)</span>
                     <span class="c-pill c-pill-gold">🎯 99% 分位數聚焦 (-9.28% 覆蓋 · 4級精銳)</span>
                     <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -13.00% 剛性止損 (實質穩留 82.6% 本金)</span>
                 </div>
 
                 <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 SUIUSDC 真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>179,850 組 0.01 精度全量窮舉</strong>，專為 <strong>250U 總本金（與現貨 250U 基準完全對齊）</strong> 嚴格鎖定「<strong>99% 歷史回調主戰場 ＋ 止損強制保全 8 成本金</strong>」所求解出之<strong>新興公鏈彈性雙冠配置（4 級精銳款）</strong>。全額 250U 納入機器人管理（<strong>168U 網格開倉 ＋ 82U 自動追加保證金鎖定保護</strong>）。在 4 個月內斬獲 <strong>+$146.66 USDC (+58.67% ROI / +176.0% APR)</strong>，累積 <strong>448 輪止盈、觸發 6 次止損（勝率 98.68%）</strong>！若遭遇極端插針跌破 -13.00% 止損線，<strong>單筆最大損失嚴格限制在 $43.20~$43.40U（< 50U 止損紅線），實質穩留 $206.60~$206.80U（82.64%~82.72% 本金）</strong>，等市場穩定後再行重啟！
+                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 SUIUSDC 真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>179,850 組 0.01 精度全量窮舉</strong>，專為 <strong>250U 總本金（與現貨 250U 基準完全對齊）</strong> 嚴格鎖定「<strong>99% 歷史回調主戰場 ＋ 止損強制保全 8 成本金</strong>」所求解出之<strong>新興公鏈彈性雙冠配置（4 級精銳款）</strong>。全額 250U 納入機器人管理（<strong>168U 網格開倉 ＋ 啟動後手動追加 82U 保證金鎖定保護</strong>）。在 4 個月內斬獲 <strong>+$146.66 USDC (+58.67% ROI / +176.0% APR)</strong>，累積 <strong>448 輪止盈、觸發 6 次止損（勝率 98.68%）</strong>！若遭遇極端插針跌破 -13.00% 止損線，<strong>單筆最大損失嚴格限制在 $43.20~$43.40U（< 50U 止損紅線），實質穩留 $206.60~$206.80U（82.64%~82.72% 本金）</strong>，等市場穩定後再行重啟！
                 </div>
 
                 <!-- SUI 四大核心量化指標卡 -->
@@ -1406,10 +1418,16 @@
                                     <td>基礎 + (加倉 × 4) 動態開倉池</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>[✓] 自動追加保證金 (核取方塊)</strong></td>
-                                    <td><strong style="color: #059669;">勾選 ➔ 填 82.00 USDC</strong></td>
-                                    <td><strong style="color: #059669;">勾選 ➔ 填 81.25 USDC</strong></td>
-                                    <td><strong>核心關鍵！直接以追加保證金鎖入機器人，全額 250U 專款專用</strong></td>
+                                    <td><strong>自動追加保證金 (建立時)</strong></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
+                                    <td>建立時<strong>不勾選</strong>，避免系統不可控地自動從錢包抽調資金</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>手動追加保證金 (開倉後)</strong></td>
+                                    <td><strong style="color: #059669;">手動追加 82.00 USDC</strong></td>
+                                    <td><strong style="color: #059669;">手動追加 81.25 USDC</strong></td>
+                                    <td><strong>【核心操作】開倉後於機器人詳情手動追加 82U，安全墊一次鎖入！</strong></td>
                                 </tr>
                                 <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #ea580c; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】</td></tr>
                                 <tr>
@@ -1446,7 +1464,7 @@
             <!-- 全局艦隊審計註釋 -->
             <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 12px; line-height: 1.6; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
                 ※ <strong>合約艦隊 250U 統一基準與 8 成本金保全審計</strong>：<br>
-                1. <strong>全額 250U 專款專用放入機器人（與現貨 250U 統一標準）</strong>：將 81.25U~95U 作為「自動追加保證金」直接鎖入 DCA 機器人中，使每台機器人具備完全獨立的保證金安全緩衝，隔離帳戶其他合約風險。<br>
+                1. <strong>全額 250U 專款專用（建立時不勾選自動 ➔ 開倉後手動追加保證金）</strong>：建立機器人時投入 155U（SOL/SUI 填 168U），「自動追加保證金」保持<strong>不勾選</strong>；啟動開倉後，立即至機器人詳情頁點擊「追加保證金」，手動填入 95U（SOL/SUI 填 82U），將防禦安全墊一次性鎖入機器人內部，徹底隔離全域合約風險！<br>
                 2. <strong>三幣屬性與艦隊互補優勢</strong>：
                    • <strong>ENA (進攻衝鋒)</strong>：DeFi 收益龍頭，波動高達 127%，5 級網格 (-16.57%) ＋ 18% 止損，4 個月淨賺 +$339.33 USDC (APR +407%)！<br>
                    • <strong>SOL (基石重盾)</strong>：公鏈王者，流動性與抗跌性極佳，4 級網格 (-7.21%) ＋ 9% 止損，勝率 99.45%，最大回撤僅 16.87%，穩留 89.1% 本金 ($222.8U+)！<br>
