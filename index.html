@@ -860,95 +860,116 @@
             <!-- 現貨參數表 -->
             <div style="margin-top: 14px;">
                 <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                    <span>📋 幣安 App【現貨馬丁格爾 (Spot Martingale)】一鍵填寫對照表</span>
-                    <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(路徑：幣安 App ➔ 交易 ➔ 交易機器人 ➔ 現貨馬丁格爾)</span>
+                    <span>📋 幣安 App【現貨 DCA】一鍵填寫對照表</span>
+                    <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(路徑：幣安 App ➔ 交易 ➔ 機器人 ➔ 現貨 DCA)</span>
                 </div>
                 <div class="matrix-table-wrap">
                     <table class="matrix-table" style="font-size: 12.5px;">
                         <thead>
                             <tr style="background: #1e293b;">
-                                <th>設定欄位 (App 介面名稱)</th>
+                                <th>分區與設定欄位 (完全對準幣安 App)</th>
                                 <th>推薦填寫數值</th>
                                 <th>參數屬性 / 運作機制</th>
                                 <th>量化設計考量</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【幣種與交易方向】</td>
+                            </tr>
                             <tr>
                                 <td><strong>交易對 (Pair)</strong></td>
-                                <td><strong style="color: #0284c7;">SOL/FDUSD (現貨)</strong></td>
-                                <td>做多 (逢低分批吸籌)</td>
+                                <td><strong style="color: #0284c7;">SOL/FDUSD</strong></td>
+                                <td>現貨交易對</td>
                                 <td>享幣安 FDUSD 現貨掛單 <strong>0.00% 免手續費</strong> 優惠</td>
                             </tr>
                             <tr>
-                                <td><strong>觸發條件 (Trigger)</strong></td>
-                                <td><strong>立即觸發 (Immediate)</strong></td>
-                                <td>建立機器人後立即打出首單</td>
-                                <td>第一時間啟動資金週轉</td>
+                                <td><strong>方向 (按鈕切換)</strong></td>
+                                <td><strong style="color: #059669;">買入 (綠色按鈕)</strong></td>
+                                <td>逢低分批吸籌做多</td>
+                                <td>現貨買入持有，無爆倉清算風險</td>
+                            </tr>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【設定價格】</td>
                             </tr>
                             <tr>
-                                <td><strong>價格跌幅 / 步長 (Price Drop)</strong></td>
+                                <td><strong>價格下跌步驟</strong></td>
                                 <td><strong style="color: #059669;">0.55%</strong></td>
                                 <td>第 1 格加倉觸發跌幅</td>
                                 <td>細密網格捕捉微幅震盪，防止過早踏空</td>
                             </tr>
                             <tr>
-                                <td><strong>價格偏差倍數 (Step Scale)</strong></td>
-                                <td><strong style="color: #059669;">1.25</strong></td>
-                                <td>每格跌幅幾何遞增倍率</td>
-                                <td>深度向下拉開防禦間距，抗跌覆蓋達 <strong>-29.80%</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>目標止盈率 (Take Profit)</strong></td>
-                                <td><strong style="color: #0284c7;">0.50%</strong></td>
-                                <td>持倉均價反彈 0.5% 止盈</td>
+                                <td><strong>止盈</strong></td>
+                                <td><strong style="color: #0284c7;">0.50%</strong> <span style="font-size: 11px; color: #64748b;">(類型選「固定」)</span></td>
+                                <td>持倉均價反彈 0.5% 限價止盈</td>
                                 <td>精準高頻收割，0 手續費全額落袋</td>
                             </tr>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【投資額】</td>
+                            </tr>
                             <tr>
-                                <td><strong>首單金額 (Base Order)</strong></td>
+                                <td><strong>首單金額</strong></td>
                                 <td><strong style="color: #d97706;">10.00 FDUSD</strong></td>
-                                <td>初始首筆建倉保證金 (佔 4.0%)</td>
+                                <td>初始首筆建倉金額 (佔 4.0%)</td>
                                 <td>雙位數整數配比，遠離幣安 5U 最小下單限制</td>
                             </tr>
                             <tr>
-                                <td><strong>加倉單金額 (Safety Order)</strong></td>
+                                <td><strong>DCA訂單金額</strong></td>
                                 <td><strong style="color: #d97706;">20.00 FDUSD</strong></td>
                                 <td>每格加倉金額 (共 12 格)</td>
                                 <td>20U 為最小限制的 4 倍，深度撮合流動性極佳</td>
                             </tr>
                             <tr>
-                                <td><strong>最大加倉次數 (Max Orders)</strong></td>
-                                <td><strong>12 次</strong></td>
-                                <td>總單數 = 1 首單 + 12 加倉單</td>
+                                <td><strong>DCA 訂單數量上限</strong></td>
+                                <td><strong>12</strong></td>
+                                <td>總單數 = 1 首單 + 12 筆加倉單</td>
                                 <td>180,000 根 1m K 線實測從未斷格卡單</td>
                             </tr>
                             <tr>
-                                <td><strong>加倉金額倍數 (Size Multiplier)</strong></td>
+                                <td><strong>總投資額 (系統自動計算)</strong></td>
+                                <td><strong style="color: #0f172a;">250.00 FDUSD</strong></td>
+                                <td>$10 + (20 \times 12) = 250$ (100% 部署)</td>
+                                <td>滿倉零閒置現金，資本利用率 100%</td>
+                            </tr>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階 (選用)】(點擊展開)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>觸發價格</strong></td>
+                                <td><span style="color: #64748b;">留空 (不填)</span></td>
+                                <td>建立後立即以市價打出首單</td>
+                                <td>第一時間啟動資金週轉</td>
+                            </tr>
+                            <tr>
+                                <td><strong>價格偏差乘數</strong></td>
+                                <td><strong style="color: #059669;">1.25</strong></td>
+                                <td>每格跌幅幾何遞增倍率</td>
+                                <td>深度向下拉開防禦間距，抗跌覆蓋達 <strong>-29.80%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>DCA訂單金額乘數</strong></td>
                                 <td><strong>1.00 (等額平滑加倉)</strong></td>
                                 <td>每格固定加倉 20.00 FDUSD</td>
                                 <td>避免深跌時幾何膨脹，大幅平抑浮動回撤</td>
                             </tr>
                             <tr>
-                                <td><strong>總投資金額 (Total Investment)</strong></td>
-                                <td><strong style="color: #0f172a;">250.00 FDUSD</strong></td>
-                                <td>$10 + (20 \times 12) = 250$ (100% 部署)</td>
-                                <td>滿倉零閒置現金，資本利用率 100%</td>
-                            </tr>
-                            <tr>
-                                <td><strong>追蹤止盈 (Trailing TP)</strong></td>
-                                <td><span style="color: #dc2626; font-weight: 700;">關閉 (不勾選)</span></td>
-                                <td>固定限價 Maker 止盈</td>
-                                <td>防止限價單變市價單產生 Taker 費與回踩滑點</td>
-                            </tr>
-                            <tr>
-                                <td><strong>回合冷卻時間 (Cooldown)</strong></td>
+                                <td><strong>回合冷卻時間</strong></td>
                                 <td><strong>60 秒</strong></td>
-                                <td>幣安系統允許之最速重啟極限</td>
+                                <td>幣安現貨系統允許之最速重啟極限</td>
                                 <td>止盈後冷卻 1 分鐘，隨後自動打出下一輪首單</td>
                             </tr>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【價格範圍 / 止損】</td>
+                            </tr>
                             <tr>
-                                <td><strong>止損設置 (Stop Loss)</strong></td>
-                                <td><span style="color: #10b981; font-weight: 700;">不啟用 (無)</span></td>
+                                <td><strong>價格範圍 (最低 - 最高)</strong></td>
+                                <td><span style="color: #64748b;">留空 (不設限)</span></td>
+                                <td>不設特定價格區間上限</td>
+                                <td>全天候自動捕捉行情</td>
+                            </tr>
+                            <tr>
+                                <td><strong>止損 / 觸發止損時一併終止機器人</strong></td>
+                                <td><span style="color: #10b981; font-weight: 700;">不填 / 不勾選</span></td>
                                 <td>0 槓桿現貨無爆倉強平風險</td>
                                 <td>SOL 為全球前三大藍籌公鏈，打滿也是低估值現貨</td>
                             </tr>
@@ -956,7 +977,7 @@
                     </table>
                 </div>
                 <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">
-                    ※ <strong>現貨版優勢</strong>：現貨槓桿為 1.0x，強平線為 0，因此可將 250U 資金 100% 滿額部署至 12 格遞增網格中，將抗跌護城河直接拉滿至 -29.80%，實現「0 閒置、0 爆倉、0 割肉、0 手續費」的四零被動現金流！
+                    ※ <strong>現貨版優勢</strong>：現貨槓桿為 1.0x，強平線為 0，因此可將 250U 資金 100% 滿額部署至 12 格遞增網格中，將抗跌護城河直接拉滿至 -29.80%，實現「0 閒置、0 爆倉、0 割肉、0 手續費」的四零被動現金流！填寫完成後點擊最下方【創建】按鈕即可啟動。
                 </div>
             </div>
         </div>
@@ -1001,117 +1022,138 @@
             <!-- 合約參數表 -->
             <div style="margin-top: 14px;">
                 <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                    <span>📋 幣安 App【合約馬丁格爾 (Futures Martingale)】一鍵填寫對照表</span>
-                    <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(路徑：幣安 App ➔ 交易 ➔ 交易機器人 ➔ 合約馬丁格爾)</span>
+                    <span>📋 幣安 App【合約 DCA】一鍵填寫對照表</span>
+                    <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(路徑：幣安 App ➔ 交易 ➔ 機器人 ➔ 合約 DCA ➔ 切換至「手動創建」)</span>
                 </div>
                 <div class="matrix-table-wrap">
                     <table class="matrix-table" style="font-size: 12.5px;">
                         <thead>
                             <tr style="background: #1e293b;">
-                                <th>設定欄位 (App 介面名稱)</th>
+                                <th>分區與設定欄位 (完全對準幣安 App)</th>
                                 <th>推薦填寫數值 (旗艦 9 級款)</th>
                                 <th>備選數值 (細密 12 級款)</th>
                                 <th>量化設計考量與運作機制</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【幣種與交易方向】</td>
+                            </tr>
                             <tr>
                                 <td><strong>交易對 (Pair)</strong></td>
-                                <td><strong style="color: #7c3aed;">ENAUSDC (永續合約)</strong></td>
-                                <td>ENAUSDC / ENAUSDT</td>
+                                <td><strong style="color: #7c3aed;">ENAUSDC (永續)</strong></td>
+                                <td>ENAUSDC (永續)</td>
                                 <td>主流流動性極佳，波動豐沛之合成美元生態核心</td>
                             </tr>
                             <tr>
-                                <td><strong>方向 (Direction)</strong></td>
-                                <td><strong style="color: #059669;">做多 (Long)</strong></td>
-                                <td>做多 (Long)</td>
-                                <td>逢低分批加倉攤低成本，均價反彈止盈</td>
+                                <td><strong>方向 (按鈕切換)</strong></td>
+                                <td><strong style="color: #059669;">做多 (綠色按鈕)</strong></td>
+                                <td>做多 (綠色按鈕)</td>
+                                <td>逢低分批加倉攤低成本，均價反彈限價止盈</td>
+                            </tr>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【價格設定】</td>
                             </tr>
                             <tr>
-                                <td><strong>槓桿倍數 (Leverage)</strong></td>
-                                <td><strong style="color: #d97706;">3.0x (標準款)</strong></td>
-                                <td><strong>2.0x (超穩健款)</strong></td>
-                                <td>配合 60U 預備金，即使跌 50% 帳戶淨值依然健康</td>
-                            </tr>
-                            <tr>
-                                <td><strong>價格跌幅 / 步長 (Price Drop)</strong></td>
+                                <td><strong>價格下跌步驟</strong></td>
                                 <td><strong style="color: #059669;">1.30%</strong></td>
                                 <td><strong>0.85%</strong></td>
                                 <td>首筆加倉間距，平滑捕捉正常回調</td>
                             </tr>
                             <tr>
-                                <td><strong>價格偏差倍數 (Step Scale)</strong></td>
-                                <td><strong style="color: #059669;">1.35</strong></td>
-                                <td><strong>1.27</strong></td>
-                                <td>幾何拉大深海間隔，實現 <strong>-51.2% ~ -52.1% 腰斬級覆蓋</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>目標止盈率 (Take Profit)</strong></td>
+                                <td><strong>每輪止盈</strong></td>
                                 <td><strong style="color: #0284c7;">0.55%</strong></td>
                                 <td><strong>0.45%</strong></td>
-                                <td>持倉均價反彈 0.55% 秒止盈，高速釋放資金</td>
+                                <td>持倉均價反彈秒止盈（合約介面精確欄位名為「每輪止盈」）</td>
+                            </tr>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【投資 (含槓桿)】</td>
                             </tr>
                             <tr>
-                                <td><strong>首單保證金 (Base Order)</strong></td>
+                                <td><strong>槓桿倍數</strong></td>
+                                <td><strong style="color: #d97706;">3x</strong></td>
+                                <td><strong>2x</strong></td>
+                                <td>點擊「投資」標題右側切換；配合 60U 預備金即使跌 50% 仍極度安全</td>
+                            </tr>
+                            <tr>
+                                <td><strong>基礎訂單保證金</strong></td>
                                 <td><strong style="color: #d97706;">14.00 USDC</strong></td>
                                 <td><strong>8.00 USDC</strong></td>
                                 <td>初始建倉保證金 (名義面值 3x = $42 U)</td>
                             </tr>
                             <tr>
-                                <td><strong>加倉單保證金 (Safety Order)</strong></td>
+                                <td><strong>DCA 訂單保證金</strong></td>
                                 <td><strong style="color: #d97706;">14.00 USDC</strong></td>
                                 <td><strong>11.00 USDC</strong></td>
-                                <td>等額平滑加倉，每筆保證金清晰可控</td>
+                                <td>等額平滑加倉保證金，每筆保證金清晰可控</td>
                             </tr>
                             <tr>
-                                <td><strong>最大加倉次數 (Max Orders)</strong></td>
-                                <td><strong>9 次</strong></td>
-                                <td><strong>12 次</strong></td>
+                                <td><strong>DCA 訂單數量上限</strong></td>
+                                <td><strong>9</strong></td>
+                                <td><strong>12</strong></td>
                                 <td>9 次加倉耗資 $14 \times 9 = 126$ U；12 次加倉耗資 $11 \times 12 = 132$ U</td>
                             </tr>
                             <tr>
-                                <td><strong>加倉金額倍數 (Size Scale)</strong></td>
-                                <td><strong>1.00 (等額)</strong></td>
-                                <td><strong>1.00 (等額)</strong></td>
-                                <td>避免深海保證金指數級膨脹，有效壓低最大浮虧</td>
-                            </tr>
-                            <tr>
-                                <td><strong>機器人總投資額 (Total Margin)</strong></td>
+                                <td><strong>投入保證金 (系統自動計算)</strong></td>
                                 <td><strong style="color: #0f172a;">140.00 USDC</strong></td>
                                 <td><strong style="color: #0f172a;">140.00 USDC</strong></td>
-                                <td>$14 + (14 \times 9) = 140$ U；12級款 $8 + (11 \times 12) = 140$ U</td>
+                                <td>基礎 $14 + (14 \times 9) = 140$ U 動態開倉池</td>
                             </tr>
                             <tr>
-                                <td><strong>獨立追加保證金 (Reserve Buffer)</strong></td>
+                                <td><strong>可用餘額 (外部獨立預備金)</strong></td>
                                 <td><strong style="color: #059669;">60.00 USDC</strong></td>
                                 <td><strong style="color: #059669;">60.00 USDC</strong></td>
-                                <td><strong>關鍵！保留在合約帳戶作為自由可用保證金，不鎖進機器人</strong></td>
+                                <td><strong>核心關鍵！保留在合約錢包作為自由可用保證金，不鎖入機器人</strong></td>
                             </tr>
                             <tr>
-                                <td><strong>止損設置 (Stop Loss)</strong></td>
-                                <td><strong style="color: #dc2626;">55.00% (必填！)</strong></td>
-                                <td><strong style="color: #dc2626;">55.00% (必填！)</strong></td>
+                                <td><strong>自動追加保證金 (核取方塊)</strong></td>
+                                <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉)</span></td>
+                                <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉)</span></td>
+                                <td>由 60U 外部自由可用餘額全倉硬抗，無須機器人主動追繳</td>
+                            </tr>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】(點擊展開)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>價格偏差乘數</strong></td>
+                                <td><strong style="color: #059669;">1.35</strong></td>
+                                <td><strong>1.27</strong></td>
+                                <td>幾何拉大深海間隔，實現 <strong>-51.2% ~ -52.1% 腰斬級覆蓋</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>DCA 訂單規模乘數</strong></td>
+                                <td><strong>1.00 (等額)</strong></td>
+                                <td><strong>1.00 (等額)</strong></td>
+                                <td>合約介面欄位名為「規模乘數」；維持 1.00 避免深海指數膨脹</td>
+                            </tr>
+                            <tr>
+                                <td><strong>回合冷卻時間</strong></td>
+                                <td><span style="color: #0284c7; font-weight: 700;">無此欄位 (秒級立即重啟)</span></td>
+                                <td><span style="color: #0284c7; font-weight: 700;">無此欄位 (秒級立即重啟)</span></td>
+                                <td><strong>幣安合約 DCA 無冷卻限制</strong>；止盈後秒級立即開下一輪，資金週轉率 100%</td>
+                            </tr>
+                            <tr style="background: #f8fafc;">
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ 條件與風控】</td>
+                            </tr>
+                            <tr>
+                                <td><strong>啟動條件 / 停止條件</strong></td>
+                                <td><span style="color: #64748b;">不勾選 (留空)</span></td>
+                                <td><span style="color: #64748b;">不勾選 (留空)</span></td>
+                                <td>立即啟動，全天候 7x24 高頻運轉</td>
+                            </tr>
+                            <tr>
+                                <td><strong>[✓] 止損 ➔ 止損目標</strong></td>
+                                <td><strong style="color: #dc2626;">55.00% (必填！勾選止損)</strong></td>
+                                <td><strong style="color: #dc2626;">55.00% (必填！勾選止損)</strong></td>
                                 <td>跌破 50% 網格後觸發市價斷腕，單筆僅損 ~$50，<strong>保全 75%+ 本金</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>回合冷卻時間 (Cooldown)</strong></td>
-                                <td><span style="color: #0284c7; font-weight: 700;">無此設定 (秒級立即重啟)</span></td>
-                                <td><span style="color: #0284c7; font-weight: 700;">無此設定 (秒級立即重啟)</span></td>
-                                <td><strong>幣安合約馬丁無冷卻限制</strong>（現貨有 60s 限制）；止盈後秒級立即開出下一輪首單，資金週轉率 100% 不閒置</td>
-                            </tr>
-                            <tr>
-                                <td><strong>追蹤止盈 (Trailing TP)</strong></td>
-                                <td><span style="color: #dc2626; font-weight: 700;">關閉 (不勾選)</span></td>
-                                <td><span style="color: #dc2626; font-weight: 700;">關閉 (不勾選)</span></td>
-                                <td>合約嚴禁市價追蹤，一律採用 Maker 限價掛單止盈</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">
                     ※ <strong>合約版資金架構與止損深度審計</strong>：<br>
-                    1. <strong>60U 預備金角色</strong>：140U 打入機器人作為「動態開倉池」，60U 靜態留存於合約錢包作為「抗震緩衝墊」，使全倉保證金比率永遠處於極低風險。<br>
-                    2. <strong>-55% 剛性止損的數學必要性</strong>：在 121 萬根 1 分 K 全量回測中，<strong>「不設止損」在 -94% 歷史大熊市中爆倉率為 100%</strong>；而設了 <strong>-55% 止損</strong>，存活率直接<strong>暴升至 100%</strong>！單筆止損僅損失約 $50 U，剩餘 $150 U（75% 本金）安然無恙，徹底解決合約 DCA 爆倉歸零的世紀死穴！
+                    1. <strong>60U 預備金角色</strong>：140U 打入機器人作為「動態開倉池」，60U 靜態留存於合約錢包作為「可用餘額緩衝墊」，使全倉保證金比率永遠處於極低風險。<br>
+                    2. <strong>-55% 剛性止損的數學必要性</strong>：在 121 萬根 1 分 K 全量回測中，<strong>「不設止損」在 -94% 歷史大熊市中爆倉率為 100%</strong>；而勾選 <strong>-55% 止損目標</strong>，存活率直接<strong>暴升至 100%</strong>！單筆止損僅損失約 $50 U，剩餘 $150 U（75% 本金）安然無恙，徹底解決合約 DCA 爆倉歸零的世紀死穴！填寫完成後點擊最下方【建立 (做多)】按鈕即可啟動。
                 </div>
             </div>
         </div>
