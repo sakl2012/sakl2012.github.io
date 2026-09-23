@@ -583,13 +583,9 @@
                 <span>📋 5-Zone 三幣全天候智能持倉對照表</span>
                 <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值全自動切換）</span>
             </div>
-            <!-- 美股指數支柱切換按鈕 -->
+            <!-- 美股指數支柱標籤 -->
             <div style="display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span style="font-size: 12px; color: #64748b; font-weight: 600;">美股指數支柱：</span>
-                <div style="display: inline-flex; background: #f1f5f9; padding: 3px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 12px; font-weight: 700;">
-                    <button id="btnEquityQqqb" style="background: #8b5cf6; color: #ffffff; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: all 0.2s;" onclick="switchEquityAsset('QQQB')">🚀 那斯達克100 (QQQB - 科技成長)</button>
-                    <button id="btnEquitySpyb" style="background: transparent; color: #475569; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; transition: all 0.2s;" onclick="switchEquityAsset('SPYB')">🏛️ 標普500 (SPYB - 穩健大盤)</button>
-                </div>
+                <span class="c-pill" style="background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 9999px;">🚀 美股科技錨點：那斯達克100 (QQQB)</span>
             </div>
         </div>
         <div class="matrix-table-wrap">
@@ -786,7 +782,7 @@
         <h3 style="margin-bottom: 12px; color: var(--text-main); font-size: 16px;">💡 幣安 App 智能持倉（9 倉無人值守單元）設置步驟</h3>
         <div style="font-size: 13.5px; line-height: 1.8; color: var(--text-muted);">
             1. 打開 <strong>幣安 App ➔ 交易 ➔ 策略交易 ➔ 選擇「智能持倉 (Rebalance Bot)」</strong>。<br>
-            2. <strong>建立 9 大獨立三幣持倉組合</strong>（點擊「手動創建」，加入<strong>3 個幣種：現貨標的 ＋ QQQB/SPYB ＋ PAXG</strong>）：<br>
+            2. <strong>建立 9 大獨立三幣持倉組合</strong>（點擊「手動創建」，加入<strong>3 個幣種：現貨標的 ＋ QQQB ＋ PAXG</strong>）：<br>
             &nbsp;&nbsp;&nbsp;• <strong>👑 核心三本柱 (佔總資金 50%，採用 5-Zone 動態階梯策略，建議每倉 ≥ 700U)</strong>：<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;① <code>BTC + QQQB + PAXG</code> (20% 資金)：當前 Zone 2 設為 45%/35%/20%，觸發設 <strong>按比例 2%</strong>。<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;② <code>ETH + QQQB + PAXG</code> (20% 資金)：當前 Zone 2 設為 40%/35%/25%，觸發設 <strong>按比例 2%</strong>。<br>
@@ -1354,14 +1350,13 @@
     };
 
     let currentZone = 2;
-    let activeEquitySym = 'QQQB'; // 'QQQB' or 'SPYB'
+    let activeEquitySym = 'QQQB';
     let latestPrices = {
         BTC: 81300,
         ETH: 2620,
         PAXG: 4367,
         TAO: 256,
         QQQB: 720.4,
-        SPYB: 762.2,
         CRCLB: 90.2,
         ICP: 2.80,
         UNI: 9.02,
@@ -1496,7 +1491,7 @@
                 document.querySelectorAll('.cprice-paxg-display').forEach(el => el.innerText = priceFormat);
             }
 
-            // 若為美股代幣 (QQQB / SPYB)，同步更新美股指標與三幣卡片美股現價
+            // 若為美股科技代幣 QQQB，同步更新美股指標與三幣卡片美股現價
             if (sym === 'QQQB') {
                 const qqqbMetricEl = document.getElementById('liveQqqbPrice');
                 if (qqqbMetricEl) qqqbMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
@@ -1557,7 +1552,7 @@
             'solusdt', 'bnbusdt', 'arbusdt', 'aaveusdt', 'linkusdt',
             'renderusdt', 'fetusdt', 'suiusdt', 'enausdt', 'opusdt',
             'tonusdt', 'ldousdt',
-            'qqqbusdt', 'spybusdt', 'crclbusdt', 'icpusdt'
+            'qqqbusdt', 'crclbusdt', 'icpusdt'
         ];
         const streams = spotSymbols.map(s => `${s}@ticker`).join('/');
         const wsUrl = `wss://stream.binance.com:9443/stream?streams=${streams}`;
@@ -1656,7 +1651,7 @@
         }
     ];
 
-    // --- 渲染三大核心三幣卡片 (BTC, ETH, TAO 搭配 QQQB/SPYB 與 PAXG) ---
+    // --- 渲染三大核心三幣卡片 (BTC, ETH, TAO 搭配 QQQB 與 PAXG) ---
     function renderCoreCards() {
         const grid = document.getElementById('coreCardsGrid');
         if (!grid) return;
@@ -2033,30 +2028,9 @@
         if (el5) el5.innerText = `自頂部跌破 ≥ 20% (轉入防禦)`;
     }
 
-    // --- 美股代幣支柱切換 (QQQB vs SPYB) ---
+    // --- 美股代幣支柱（鎖定 QQQB 科技成長錨點） ---
     function switchEquityAsset(sym) {
-        activeEquitySym = sym;
-        const btnQqqb = document.getElementById('btnEquityQqqb');
-        const btnSpyb = document.getElementById('btnEquitySpyb');
-        const thCore1 = document.getElementById('th-core-1');
-        const thCore2 = document.getElementById('th-core-2');
-        const thCore3 = document.getElementById('th-core-3');
-        const thSat = document.getElementById('th-sat');
-
-        if (btnQqqb) {
-            btnQqqb.style.background = sym === 'QQQB' ? '#8b5cf6' : 'transparent';
-            btnQqqb.style.color = sym === 'QQQB' ? '#ffffff' : '#475569';
-        }
-        if (btnSpyb) {
-            btnSpyb.style.background = sym === 'SPYB' ? '#8b5cf6' : 'transparent';
-            btnSpyb.style.color = sym === 'SPYB' ? '#ffffff' : '#475569';
-        }
-
-        if (thCore1) thCore1.innerText = `核心 1: BTC + ${sym} + PAXG (20% | 5-Zone)`;
-        if (thCore2) thCore2.innerText = `核心 2: ETH + ${sym} + PAXG (20% | 5-Zone)`;
-        if (thCore3) thCore3.innerText = `核心 3: TAO + ${sym} + PAXG (10% | 5-Zone)`;
-        if (thSat) thSat.innerText = `衛星 Alpha 6大艦隊: 靜態 35/35/30 (偏差 2%)`;
-
+        activeEquitySym = 'QQQB';
         renderTableColumns();
         renderCoreCards();
         renderCPortfolioMatrix();
@@ -2097,7 +2071,7 @@
     async function fallbackPoll() {
         try {
             const spotSymbols = [
-                "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "QQQBUSDT", "SPYBUSDT", "CRCLBUSDT", "ICPUSDT",
+                "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "QQQBUSDT", "CRCLBUSDT", "ICPUSDT",
                 "UNIUSDT", "NEARUSDT", "ONDOUSDT", "PENDLEUSDT", "SOLUSDT", "BNBUSDT", "ARBUSDT", "AAVEUSDT",
                 "LINKUSDT", "RENDERUSDT", "FETUSDT", "SUIUSDT", "ENAUSDT", "OPUSDT",
                 "TONUSDT", "LDOUSDT"
