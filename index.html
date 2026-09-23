@@ -812,7 +812,7 @@
                     🟢 現貨版本：SOL/FDUSD (250U 零爆倉)
                 </button>
                 <button id="dcaTabFutures" onclick="switchDcaTab('futures')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748b;">
-                    ⚡ 合約版本：ENA/USDC (140U+60U 深度防禦)
+                    ⚡ 合約版本：ENA/USDC (200U · 8成保本款)
                 </button>
             </div>
         </div>
@@ -978,41 +978,41 @@
             </div>
         </div>
 
-        <!-- ======================= 模態二：合約版本 (ENA/USDC 140U+60U) ======================= -->
+        <!-- ======================= 模態二：合約版本 (ENA/USDC 200U 8成保本款) ======================= -->
         <div id="dcaContentFutures" style="display: none;">
             <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
                 <span class="c-pill" style="background:#f3e8ff; color:#7c3aed; border:1px solid #d8b4fe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">⚡ 3.0x 永續合約</span>
                 <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🎁 幣安 USDC 合約掛單 0.00% 免手續費 (0% Maker)</span>
-                <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 140U 網格 ＋ 60U 追加保證金 (總 200U)</span>
-                <span class="c-pill c-pill-gold">🌊 -46.79% 深度抗跌覆蓋 (回撤腰斬至 -22.1%)</span>
-                <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -55.0% 剛性防爆倉止損</span>
+                <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 125U 網格 ＋ 75U 追加保證金 (總 200U)</span>
+                <span class="c-pill c-pill-gold">🎯 99% 分位數聚焦 (-16.57% 覆蓋 · 5級精銳)</span>
+                <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -18.00% 剛性止損 (穩固保全 8 成本金)</span>
             </div>
 
             <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                本合約模組經 <strong>Ray 96 核分散式叢集</strong> 與 C 語言高速撮合引擎，基於 ENAUSDC 真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>5,540 組 0.01 精度全量窮舉</strong>，評選出之<strong>雙冠王最優解（9 級幾何款）</strong>。採用 <strong>140U 網格部署 ＋ 60U 獨立追加保證金緩衝</strong>，在 4 個月內斬獲 <strong>+$258.60 USDC (+129.30% ROI / +387.9% APR)</strong>，同時將<strong>最大回撤自 -43.9% 腰斬至 -22.08%</strong>（Calmar 風報比高達 3.923），全期零爆倉且 9 級網格最高僅觸發第 7 級！全單限價 Maker 掛單享受 <strong>0.00% 免手續費</strong>，高頻滾動利潤 100% 全額落袋！
+                本合約模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 ENAUSDC 真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>197,125 組 0.01 精度全量窮舉</strong>，專為 <strong>200U 總本金</strong> 嚴格鎖定「<strong>99% 歷史回調主戰場 ＋ 止損強制保全 8 成本金</strong>」所求解出之<strong>全局雙冠王配置（5 級精銳款）</strong>。全額 200U 納入機器人管理（<strong>125U 網格開倉 ＋ 75U 自動追加保證金鎖定保護</strong>）。在 4 個月內斬獲 <strong>+$271.46 USDC (+135.73% ROI / +407.2% APR)</strong>，累積 <strong>871 輪止盈、僅觸發 4 次止損（勝率 99.54%）</strong>！若遭遇極端插針跌破 -18.00% 止損線，<strong>單筆最大損失嚴格限制在 $39.86U（< 40U），實質穩留 $160.14U（80.07% 本金）</strong>，等市場穩定後再行重啟！
             </div>
 
             <!-- 合約四大核心量化指標卡 -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">💰 4 個月實測淨利潤 (年化折合)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #7c3aed;">+$258.60 <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+387.9% APR)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">4 個月淨賺 1.3 倍本金 (+129.30% ROI)，全期零爆倉</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">💰 4 個月淨利潤 (年化折合)</div>
+                    <div style="font-size: 20px; font-weight: 900; color: #7c3aed;">+$271.46 <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+407.2% APR)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">扣除 4 次止損後淨賺 1.35 倍本金 (+135.73% ROI)</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">⚡ 完成套利總輪次 (日均週轉)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #0f172a;">722 輪 <span style="font-size: 12px; font-weight: 700; color: #7c3aed;">(日均 6.0 輪)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">持倉均價反彈 0.75% 秒止盈，高頻收割微幅波動</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">⚡ 完成套利總輪次 (勝率 / 週轉)</div>
+                    <div style="font-size: 20px; font-weight: 900; color: #0f172a;">871 輪 <span style="font-size: 12px; font-weight: 700; color: #7c3aed;">(99.54% 勝率)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">日均 7.3 輪，均價反彈 0.91% 秒止盈</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛡️ 最大回撤 / 最低淨值 (風報比)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #10b981;">22.08% <span style="font-size: 12px; font-weight: 700; color: #059669;">(最低淨值 $162.52)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">覆蓋 -46.79%，Calmar 風報比躍升至 3.923 (回撤腰斬)</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛡️ 最大回撤 / Calmar 風報比</div>
+                    <div style="font-size: 20px; font-weight: 900; color: #10b981;">22.64% <span style="font-size: 12px; font-weight: 700; color: #059669;">(Calmar 11.99)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">最低淨值 $160.14，覆蓋 99% 歷史回調 (-16.57%)</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛑 剛性防爆倉止損 (保全 75%+ 本金)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #dc2626;">-55.0% 止損 <span style="font-size: 12px; font-weight: 700; color: #059669;">(100% 阻斷清算)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">跌穿 46.8% 網格後果斷斷腕，單筆僅損 ~$50，永不爆倉</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛑 剛性止損保本線 (嚴格保全 8 成本金)</div>
+                    <div style="font-size: 20px; font-weight: 900; color: #dc2626;">-18.00% 止損 <span style="font-size: 12px; font-weight: 700; color: #059669;">(穩留 80%+ 本金)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">跌破時單筆僅損 ~$39.8U，帳戶實留 $160.14U (80%)</div>
                 </div>
             </div>
 
@@ -1027,119 +1027,129 @@
                         <thead>
                             <tr style="background: #1e293b;">
                                 <th>分區與設定欄位 (完全對準幣安 App)</th>
-                                <th>推薦填寫數值</th>
+                                <th>0.01 極限雙冠數值 (推薦)</th>
+                                <th>整數微調數值 (差異 &lt; 0.3%)</th>
                                 <th>量化設計考量與運作機制</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr style="background: #f8fafc;">
-                                <td colspan="3" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【幣種與交易方向】</td>
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【幣種與交易方向】</td>
                             </tr>
                             <tr>
                                 <td><strong>交易對 (Pair)</strong></td>
+                                <td><strong style="color: #7c3aed;">ENAUSDC (永續)</strong></td>
                                 <td><strong style="color: #7c3aed;">ENAUSDC (永續)</strong></td>
                                 <td>享幣安 USDC 本位合約 <strong>0.00% Maker 免手續費</strong> 優惠，加倉與止盈掛單 0 磨損！</td>
                             </tr>
                             <tr>
                                 <td><strong>方向 (按鈕切換)</strong></td>
                                 <td><strong style="color: #059669;">做多 (綠色按鈕)</strong></td>
+                                <td><strong style="color: #059669;">做多 (綠色按鈕)</strong></td>
                                 <td>逢低分批加倉攤低成本，均價反彈限價止盈</td>
                             </tr>
                             <tr style="background: #f8fafc;">
-                                <td colspan="3" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【價格設定】</td>
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【價格設定】</td>
                             </tr>
                             <tr>
                                 <td><strong>價格下跌步驟</strong></td>
-                                <td><strong style="color: #059669;">1.40%</strong></td>
+                                <td><strong style="color: #059669;">1.98%</strong></td>
+                                <td><strong style="color: #059669;">2.00%</strong></td>
                                 <td>第 1 筆加倉觸發間距，平滑捕捉正常回調</td>
                             </tr>
                             <tr>
                                 <td><strong>每輪止盈</strong></td>
-                                <td><strong style="color: #0284c7;">0.75%</strong></td>
-                                <td>持倉均價反彈 0.75% 秒止盈，兼顧利潤厚度與套利頻率</td>
+                                <td><strong style="color: #0284c7;">0.91%</strong></td>
+                                <td><strong style="color: #0284c7;">0.90%</strong></td>
+                                <td>持倉均價反彈秒止盈，兼顧利潤厚度與套利頻率</td>
                             </tr>
                             <tr style="background: #f8fafc;">
-                                <td colspan="3" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【投資 (含槓桿)】</td>
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【投資 (含槓桿)】</td>
                             </tr>
                             <tr>
                                 <td><strong>槓桿倍數</strong></td>
                                 <td><strong style="color: #d97706;">3x</strong></td>
-                                <td>點擊「投資」標題右側切換；配合 60U 預備金即使跌 50% 仍極度安全</td>
+                                <td><strong style="color: #d97706;">3x</strong></td>
+                                <td>點擊「投資」標題右側切換；配合 75U 追加保證金極限安全</td>
                             </tr>
                             <tr>
                                 <td><strong>基礎訂單保證金</strong></td>
+                                <td><strong style="color: #d97706;">7.00 USDC</strong></td>
                                 <td><strong style="color: #d97706;">8.00 USDC</strong></td>
-                                <td>初始建倉保證金 (名義面值 3x = $24 U)，降低頂部暴露</td>
+                                <td>初始建倉保證金 (名義面值 3x = $21~$24 U)，頂部極低曝險</td>
                             </tr>
                             <tr>
                                 <td><strong>DCA 訂單保證金</strong></td>
-                                <td><strong style="color: #d97706;">14.67 USDC</strong></td>
-                                <td>9 筆平滑加倉保證金，每筆 $14.67 U，合計 $132.03 U</td>
+                                <td><strong style="color: #d97706;">23.60 USDC</strong></td>
+                                <td><strong style="color: #d97706;">23.40 USDC</strong></td>
+                                <td>5 筆高密度加倉保證金，強力拉低持倉均價</td>
                             </tr>
                             <tr>
                                 <td><strong>DCA 訂單數量上限</strong></td>
-                                <td><strong>9</strong></td>
-                                <td>9 次加倉耗資 $14.67 \times 9 = 132.03$ U，與首單精準對應 140U 預算</td>
+                                <td><strong>5</strong></td>
+                                <td><strong>5</strong></td>
+                                <td>5 筆加倉耗資 ~$117~$118 U，精準聚焦 99% 常態回調主戰場</td>
                             </tr>
                             <tr>
                                 <td><strong>投入保證金 (系統自動計算)</strong></td>
-                                <td><strong style="color: #0f172a;">140.03 USDC</strong></td>
-                                <td>基礎 $8 + (14.67 \times 9) \approx 140$ U 動態開倉池</td>
+                                <td><strong style="color: #0f172a;">125.00 USDC</strong></td>
+                                <td><strong style="color: #0f172a;">125.00 USDC</strong></td>
+                                <td>基礎 + (加倉 $\times$ 5) = 125.0 U 動態開倉池</td>
                             </tr>
                             <tr>
-                                <td><strong>可用餘額 (外部獨立預備金)</strong></td>
-                                <td><strong style="color: #059669;">60.00 USDC</strong></td>
-                                <td><strong>核心關鍵！保留在合約錢包作為自由可用保證金，不鎖入機器人</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>自動追加保證金 (核取方塊)</strong></td>
-                                <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉)</span></td>
-                                <td>由 60U 外部自由可用餘額全倉硬抗，無須機器人主動追繳</td>
+                                <td><strong>[✓] 自動追加保證金 (核取方塊)</strong></td>
+                                <td><strong style="color: #059669;">勾選 ➔ 填 75.00 USDC</strong></td>
+                                <td><strong style="color: #059669;">勾選 ➔ 填 75.00 USDC</strong></td>
+                                <td><strong>核心關鍵！75U 直接以追加保證金鎖入機器人，全額 200U 專款專用</strong></td>
                             </tr>
                             <tr style="background: #f8fafc;">
-                                <td colspan="3" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】(點擊展開)</td>
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】(點擊展開)</td>
                             </tr>
                             <tr>
                                 <td><strong>價格偏差乘數</strong></td>
-                                <td><strong style="color: #059669;">1.31</strong></td>
-                                <td>幾何拉大深海間隔，實現 <strong>-46.79% 深度抗跌覆蓋</strong></td>
+                                <td><strong style="color: #059669;">1.26</strong></td>
+                                <td><strong style="color: #059669;">1.25</strong></td>
+                                <td>幾何拉大間隔，5 級累計深度達 <strong>-16.57%</strong>（精確覆蓋 99% 回調）</td>
                             </tr>
                             <tr>
                                 <td><strong>DCA 訂單規模乘數</strong></td>
+                                <td><strong>1.00 (等額)</strong></td>
                                 <td><strong>1.00 (等額)</strong></td>
                                 <td>維持 1.00 避免深海指數級膨脹，有效壓低最大浮虧</td>
                             </tr>
                             <tr>
                                 <td><strong>回合冷卻時間</strong></td>
                                 <td><span style="color: #0284c7; font-weight: 700;">無此欄位 (秒級立即重啟)</span></td>
+                                <td><span style="color: #0284c7; font-weight: 700;">無此欄位 (秒級立即重啟)</span></td>
                                 <td><strong>幣安合約 DCA 無冷卻限制</strong>；止盈後秒級立即開下一輪，資金週轉率 100%</td>
                             </tr>
                             <tr style="background: #f8fafc;">
-                                <td colspan="3" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ 條件與風控】</td>
+                                <td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ 條件與風控】</td>
                             </tr>
                             <tr>
                                 <td><strong>啟動條件 / 停止條件</strong></td>
+                                <td><span style="color: #64748b;">不勾選 (留空)</span></td>
                                 <td><span style="color: #64748b;">不勾選 (留空)</span></td>
                                 <td>立即啟動，全天候 7x24 高頻運轉</td>
                             </tr>
                             <tr>
                                 <td><strong>[✓] 止損 ➔ 止損目標</strong></td>
-                                <td><strong style="color: #dc2626;">55.00% (必填！勾選止損)</strong></td>
-                                <td>跌破 46.8% 網格後觸發市價斷腕，單筆僅損 ~$50，<strong>保全 75%+ 本金</strong></td>
+                                <td><strong style="color: #dc2626;">18.00% (必填！勾選止損)</strong></td>
+                                <td><strong style="color: #dc2626;">18.00% (必填！勾選止損)</strong></td>
+                                <td>跌破 99% 邊界果斷斷腕，單筆僅損 $39.86U，<strong>實質穩留 $160.14U (80.07% 本金)</strong></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">
-                    ※ <strong>合約版資金架構與 0.01 精度全域優化審計</strong>：<br>
-                    1. <strong>首單縮小至 8U 的雙重優勢</strong>：將首單自 14U 調降為 8U，不僅減少在震盪頂部的曝險，更將資金重心轉移至每筆 14.67U 的 9 格深海加倉，使 4 個月最大回撤自 -43.94% 斷崖式腰斬至 -22.08%，最低帳戶淨值從 $132.26 大幅提升至 $162.52。<br>
-                    2. <strong>0.75% 止盈與 1.40% 步長之共振</strong>：經 96 核叢集 5,540 組 0.01 精度窮舉，此組合在 4 個月內完成 722 輪套利（日均 6 輪），淨利突破 +$258.60 USDC (+129.30% ROI / +387.9% APR)，且 4 個月內最高僅用到第 7 級加倉，預留 2 級深海護城河完全未被觸碰。<br>
-                    3. <strong>-55% 剛性止損防火牆</strong>：保留 60U 外部自由保證金，即便遭遇極端黑天鵝擊穿 -46.79% 網格，觸發 -55% 止損也能保全 75%+ 本金，徹底阻斷穿倉清算！填寫完成後點擊最下方【建立 (做多)】按鈕即可啟動。
+                    ※ <strong>合約版 99% 分位數聚焦與 8 成本金保全審計</strong>：<br>
+                    1. <strong>全額 200U 機器人雙軌管理 (125U 網格 ＋ 75U 追加保證金)</strong>：將 75U 作為「自動追加保證金」直接放入 DCA 機器人中，使本機器人具備完全獨立的保證金安全緩衝，專款專用不受合約帳戶其他交易干擾。<br>
+                    2. <strong>聚焦 99% 歷史常態回調主戰場 (-16.57%)</strong>：在 121 萬根歷史大數據中，99% 的獲利波段回撤都在 17% 以內。5 級精銳網格將資金密度提高 70%，均價拉低更迅速，4 個月實現 871 輪高頻收割。<br>
+                    3. <strong>-18.00% 剛性止損徹底保全 8 成本金</strong>：緊貼網格下沿設立止損閥門。即便遭遇 1% 級別的罕見極端插針，全單強制平倉時最大損失剛好鎖定在 $39.86U（< 40U），機器人實質保留 $160.14U（80.07% 現金），徹底杜絕深套扛單，等插針落地平穩後再行重啟！填寫完成後點擊最下方【建立 (做多)】按鈕即可啟動。
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 <script>
     // --- DCA 專區 Tab 切換函數 ---
