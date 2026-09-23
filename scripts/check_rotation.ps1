@@ -1,10 +1,11 @@
 $targets = @(
     @{ sym = "BTCUSDT"; name = "Bitcoin" },
     @{ sym = "AXSUSDT"; name = "Axie Infinity"; cost = 1.128; tp = 1.400; sl = 1.070 },
-    @{ sym = "LINKUSDT"; name = "Chainlink"; cost = 12.291; tp = 14.50; sl = 12.35 },
+    @{ sym = "APTUSDT"; name = "Aptos"; cost = 0.820; tp = 0.960; sl = 0.780 },
     @{ sym = "AAVEUSDT"; name = "Aave"; cost = 137.16; tp = 165.00; sl = 138.00 },
     @{ sym = "BCHUSDT"; name = "Bitcoin Cash"; cost = 309.50; tp = 385.00; sl = 294.00 }
 )
+
 
 Write-Host "=========================================================="
 Write-Host "      REAL-TIME ROTATION HEALTH AUDIT (BINANCE SPOT)      "

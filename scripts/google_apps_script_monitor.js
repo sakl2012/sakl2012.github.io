@@ -395,10 +395,11 @@ function get72hSMA() {
 //      - 結構：自 $0.910 築底完成，放量突破 $1.00 頸線，受惠鏈遊/元宇宙板塊補漲預期。
 //      - tpTarget: $1.400 (+24.1%) -> 前期日線大箱體強阻力平台。
 //      - slFloor:  $1.070 (-5.14%) -> 9/22 日線放量起漲腳（防守底線，假突破證偽）。
-//    • LINK (成本 $12.291):
-//      - 結構：4H 底部階梯式墊高，站穩 $12.50 平台衝擊 $13.00 整數大關。
-//      - tpTarget: $14.50 (+18.0%) -> 週線級別大箱體天花板與阻力密集區。
-//      - slFloor:  $12.35 (+0.5%)   -> 移動保本保護止損（Break-Even），覆蓋手續費鎖死零本金風險！
+//    • APT (換倉成本 $0.820，替換原 LINK):
+//      - 結構：日線突破 90 天大箱體天花板 ($0.714~$0.783)，放量主升浪啟動，測試 $0.844 阻力。
+//      - tpTarget: $0.960 (+17.1%) -> 4-5 月密集籌碼成交帶下沿與心理整數大關。
+//      - slFloor:  $0.780 (-4.88%) -> 9/22 日線放量突破之頂底轉換頸線（S/R Flip，假突破證偽）。
+
 //    • AAVE (成本 $137.16):
 //      - 結構：飛哥 9/21 觀察名單第 1 名「代幣經濟學 3.0」爆拉，起漲腳在 $138.59。
 //      - tpTarget: $165.00 (+20.3%) -> 2026 日線密集阻力天花板。
@@ -448,9 +449,10 @@ function checkCoinRotationAlert() {
   try {
     const targets = {
       AXSUSDT:    { sym: "AXS",    name: "Axie Infinity",     okxId: "AXS-USDT",    entryPrice: 1.128,  tpTarget: 1.400, slFloor: 1.070, nextRotate: "NEAR 或 DOGE" },
-      LINKUSDT:   { sym: "LINK",   name: "Chainlink",         okxId: "LINK-USDT",   entryPrice: 12.291, tpTarget: 14.50, slFloor: 12.35, nextRotate: "NEAR 或 DOGE" },
+      APTUSDT:    { sym: "APT",    name: "Aptos",             okxId: "APT-USDT",    entryPrice: 0.820,  tpTarget: 0.960, slFloor: 0.780, nextRotate: "NEAR 或 DOGE" },
       AAVEUSDT:   { sym: "AAVE",   name: "Aave",              okxId: "AAVE-USDT",   entryPrice: 137.16, tpTarget: 165.00, slFloor: 138.00, nextRotate: "FET 或 TAO" },
       BCHUSDT:    { sym: "BCH",    name: "Bitcoin Cash",      okxId: "BCH-USDT",    entryPrice: 309.50, tpTarget: 385.00, slFloor: 294.00, nextRotate: "SUI 或 FET" }
+
     };
 
     // 1. 批次取得 OKX 全現貨現價
