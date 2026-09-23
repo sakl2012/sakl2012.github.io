@@ -817,23 +817,57 @@
             </div>
         </div>
 
-        <!-- ======================= 模態一：現貨版本 (SOL/FDUSD 250U) ======================= -->
+        <!-- ======================= 模態一：現貨版本 (SOL/FDUSD) ======================= -->
         <div id="dcaContentSpot" style="display: block;">
+            <!-- ================= 🎚️ 現貨資金等比即時換算滑桿與快捷列 ================= -->
+            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 15px; font-weight: 900; color: #0f172a;">🎚️ 現貨資金等比即時換算器 (總投資額)</span>
+                        <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">拖動滑桿即時計算現貨 SOL 參數</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 12.5px; font-weight: 700; color: #64748b;">自訂總資金：</span>
+                        <input type="number" id="dcaSpotCapitalInput" min="60" max="5000" step="10" value="250" oninput="onDcaSpotCapitalChange(this.value)" style="width: 85px; padding: 4px 8px; font-size: 14px; font-weight: 900; color: #0284c7; border: 1.5px solid #cbd5e1; border-radius: 8px; text-align: center; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#0284c7'" onblur="this.style.borderColor='#cbd5e1'">
+                        <span style="font-size: 13px; font-weight: 800; color: #0f172a;">FDUSD</span>
+                    </div>
+                </div>
+
+                <!-- 滑桿主體 -->
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #94a3b8;">60U</span>
+                    <input type="range" id="dcaSpotCapitalSlider" min="60" max="2000" step="10" value="250" oninput="onDcaSpotCapitalChange(this.value)" style="flex: 1; accent-color: #0284c7; cursor: pointer; height: 6px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #94a3b8;">2,000U</span>
+                </div>
+
+                <!-- 快速換算按鈕列 -->
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; margin-right: 4px;">快速切換：</span>
+                    <button type="button" onclick="setDcaSpotCapital(60)" class="dca-spot-cap-btn" data-cap="60" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">60U (低消)</button>
+                    <button type="button" onclick="setDcaSpotCapital(100)" class="dca-spot-cap-btn" data-cap="100" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">100U</button>
+                    <button type="button" onclick="setDcaSpotCapital(200)" class="dca-spot-cap-btn" data-cap="200" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">200U</button>
+                    <button type="button" onclick="setDcaSpotCapital(250)" class="dca-spot-cap-btn active" data-cap="250" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #0284c7; background: #0284c7; color: #ffffff; cursor: pointer; transition: all 0.15s; box-shadow: 0 2px 6px rgba(2,132,199,0.25);">250U (基準)</button>
+                    <button type="button" onclick="setDcaSpotCapital(300)" class="dca-spot-cap-btn" data-cap="300" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">300U</button>
+                    <button type="button" onclick="setDcaSpotCapital(500)" class="dca-spot-cap-btn" data-cap="500" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">500U</button>
+                    <button type="button" onclick="setDcaSpotCapital(1000)" class="dca-spot-cap-btn" data-cap="1000" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">1,000U (旗艦)</button>
+                </div>
+            </div>
+
             <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
                 <span class="c-pill c-pill-green">💎 1.0x 現貨 · 零爆倉零割肉</span>
                 <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🪙 幣安 FDUSD 掛單 0% 手續費</span>
-                <span class="c-pill c-pill-gold">🛡️ 滿倉零閒置 · -22.13% 抗跌防禦 (11級精銳)</span>
+                <span class="c-pill c-pill-gold" id="spotPillFunds">🛡️ 滿倉零閒置 · 250 FDUSD 全額部署 (-22.13% 抗跌防禦 · 11級精銳)</span>
             </div>
 
             <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                本模組經 <strong>Ubuntu 4 節點 96 核心 Ray 分散式叢集</strong> 與 C 語言撮合引擎，基於幣安真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>6,516 組 0.01 精度全量窮舉</strong>，專為 <strong>250 FDUSD 本金</strong> 打造之全局最優現貨高頻套利配置：
+                本模組經 <strong>Ubuntu 4 節點 96 核心 Ray 分散式叢集</strong> 與 C 語言撮合引擎，基於幣安真實 4 個月 172,800 根 1 分鐘 K 線完成 <strong>6,516 組 0.01 精度全量窮舉</strong>，專為 <strong id="spotNarrativeCapital">250 FDUSD 本金</strong> 打造之全局最優現貨高頻套利配置：
             </div>
 
             <!-- 現貨四大核心量化指標卡 -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                     <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">💰 4 個月實盤淨利潤 (年化折合)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #0284c7;">+$68.56 FDUSD <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+27.43% ROI / +82.3% APR)</span></div>
+                    <div style="font-size: 20px; font-weight: 900; color: #0284c7;"><span id="spotCardProfit">+$68.56</span> FDUSD <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+27.43% ROI / +82.3% APR)</span></div>
                     <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">0.01 精度全局最優，較原配置利潤大增 +62.8%</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
@@ -843,7 +877,7 @@
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                     <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛡️ 最大浮動回撤 (抗跌深度覆蓋)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #10b981;">18.47% <span style="font-size: 12px; font-weight: 700; color: #059669;">(最低淨值 $209.02)</span></div>
+                    <div style="font-size: 20px; font-weight: 900; color: #10b981;">18.47% <span style="font-size: 12px; font-weight: 700; color: #059669;">(最低淨值 <span id="spotCardMinEq">$209.02</span>)</span></div>
                     <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">覆蓋 -22.13%，風報比 (Calmar) 躍升至 1.451</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
@@ -863,10 +897,10 @@
                     <table class="matrix-table" style="font-size: 12.5px;">
                         <thead>
                             <tr style="background: #1e293b;">
-                                <th>分區與設定欄位 (完全對準幣安 App)</th>
-                                <th>推薦填寫數值</th>
-                                <th>參數屬性 / 運作機制</th>
-                                <th>量化設計考量</th>
+                                <th style="width: 26%;">分區與設定欄位 (完全對準幣安 App)</th>
+                                <th style="width: 20%;">推薦填寫數值 (<span class="spot-table-cap-title">250U</span> 整數款)</th>
+                                <th style="width: 20%;">精確小數填法 (<span class="spot-table-cap-title">250U</span> 精確款)</th>
+                                <th style="width: 34%;">量化設計考量 / 避坑指南</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -876,14 +910,14 @@
                             <tr>
                                 <td><strong>交易對 (Pair)</strong></td>
                                 <td><strong style="color: #0284c7;">SOL/FDUSD</strong></td>
-                                <td>現貨交易對</td>
+                                <td><strong style="color: #0284c7;">SOL/FDUSD</strong></td>
                                 <td>享幣安 FDUSD 現貨掛單 <strong>0.00% 免手續費</strong> 優惠</td>
                             </tr>
                             <tr>
                                 <td><strong>方向 (按鈕切換)</strong></td>
                                 <td><strong style="color: #059669;">買入 (綠色按鈕)</strong></td>
-                                <td>逢低分批吸籌做多</td>
-                                <td>現貨買入持有，無爆倉清算風險</td>
+                                <td><strong style="color: #059669;">買入 (綠色按鈕)</strong></td>
+                                <td>逢低分批吸籌做多，無爆倉清算風險</td>
                             </tr>
                             <tr style="background: #f8fafc;">
                                 <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【設定價格】</td>
@@ -891,41 +925,41 @@
                             <tr>
                                 <td><strong>價格下跌步驟</strong></td>
                                 <td><strong style="color: #059669;">0.55%</strong></td>
-                                <td>第 1 格加倉觸發跌幅</td>
-                                <td>細密網格捕捉微幅震盪，防止過早踏空</td>
+                                <td><strong style="color: #059669;">0.55%</strong></td>
+                                <td>第 1 格加倉觸發跌幅，細密網格捕捉微幅震盪</td>
                             </tr>
                             <tr>
                                 <td><strong>止盈</strong></td>
                                 <td><strong style="color: #0284c7;">0.55%</strong> <span style="font-size: 11px; color: #64748b;">(類型選「固定」)</span></td>
-                                <td>持倉均價反彈 0.55% 限價止盈</td>
-                                <td>精準高頻收割，0 手續費全額落袋</td>
+                                <td><strong style="color: #0284c7;">0.55%</strong> <span style="font-size: 11px; color: #64748b;">(類型選「固定」)</span></td>
+                                <td>持倉均價反彈 0.55% 限價止盈，0 手續費全額落袋</td>
                             </tr>
                             <tr style="background: #f8fafc;">
                                 <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【投資額】</td>
                             </tr>
                             <tr>
                                 <td><strong>首單金額</strong></td>
-                                <td><strong style="color: #d97706;">8.00 FDUSD</strong></td>
-                                <td>初始首筆建倉金額 (佔 3.2%)</td>
-                                <td>降低頂部暴露風險，保留更強加倉底氣</td>
+                                <td><strong style="color: #d97706;" id="spotTblBaseInt">8.00 FDUSD</strong></td>
+                                <td><strong style="color: #d97706;" id="spotTblBaseExact">8.00 FDUSD</strong></td>
+                                <td>初始首筆建倉金額 (佔 ~3.2%)，降低頂部暴露風險</td>
                             </tr>
                             <tr>
                                 <td><strong>DCA訂單金額</strong></td>
-                                <td><strong style="color: #d97706;">22.00 FDUSD</strong></td>
-                                <td>每格加倉金額 (共 11 格)</td>
-                                <td>22U 平滑加倉，深度撮合流動性極佳</td>
+                                <td><strong style="color: #d97706;" id="spotTblDcaInt">22.00 FDUSD</strong></td>
+                                <td><strong style="color: #d97706;" id="spotTblDcaExact">22.00 FDUSD</strong></td>
+                                <td>每格加倉金額 (共 11 格)，平滑攤低持倉成本</td>
                             </tr>
                             <tr>
                                 <td><strong>DCA 訂單數量上限</strong></td>
                                 <td><strong>11</strong></td>
-                                <td>總單數 = 1 首單 + 11 筆加倉單</td>
-                                <td>172,800 根 1m K 線實測從未斷格卡單</td>
+                                <td><strong>11</strong></td>
+                                <td>總單數 = 1 首單 + 11 筆加倉單 (17.2 萬根 K 線未斷格)</td>
                             </tr>
                             <tr>
                                 <td><strong>總投資額 (系統自動計算)</strong></td>
-                                <td><strong style="color: #0f172a;">250.00 FDUSD</strong></td>
-                                <td>$8 + (22 \times 11) = 250$ (100% 部署)</td>
-                                <td>滿倉零閒置現金，資本利用率 100%</td>
+                                <td><strong style="color: #0f172a;" id="spotTblTotalInt">250.00 FDUSD</strong></td>
+                                <td><strong style="color: #0f172a;" id="spotTblTotalExact">250.00 FDUSD</strong></td>
+                                <td><span id="spotTblFormula">$8 + (22 \times 11) = 250$ (100% 部署，滿倉零閒置現金)</span></td>
                             </tr>
                             <tr style="background: #f8fafc;">
                                 <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階 (選用)】(點擊展開)</td>
@@ -933,25 +967,25 @@
                             <tr>
                                 <td><strong>觸發價格</strong></td>
                                 <td><span style="color: #64748b;">留空 (不填)</span></td>
-                                <td>建立後立即以市價打出首單</td>
-                                <td>第一時間啟動資金週轉</td>
+                                <td><span style="color: #64748b;">留空 (不填)</span></td>
+                                <td>建立後立即以市價打出首單，第一時間啟動資金週轉</td>
                             </tr>
                             <tr>
                                 <td><strong>價格偏差乘數</strong></td>
                                 <td><strong style="color: #059669;">1.24</strong></td>
-                                <td>每格跌幅幾何遞增倍率 (0.01 精度)</td>
-                                <td>向下平滑拉開防禦間距，抗跌覆蓋達 <strong>-22.13%</strong></td>
+                                <td><strong style="color: #059669;">1.24</strong></td>
+                                <td>向下幾何拉開防禦間距，抗跌覆蓋達 <strong>-22.13%</strong></td>
                             </tr>
                             <tr>
                                 <td><strong>DCA訂單金額乘數</strong></td>
-                                <td><strong>1.00 (等額平滑加倉)</strong></td>
-                                <td>每格固定加倉 22.00 FDUSD</td>
-                                <td>避免深跌時幾何膨脹，大幅平抑浮動回撤</td>
+                                <td><strong>1.00 (等額平滑)</strong></td>
+                                <td><strong>1.00 (等額平滑)</strong></td>
+                                <td>每格固定加倉 <span id="spotTblDcaNote">22.00</span> FDUSD，避免深跌幾何放大回撤</td>
                             </tr>
                             <tr>
                                 <td><strong>回合冷卻時間</strong></td>
                                 <td><strong>60 秒</strong></td>
-                                <td>幣安現貨系統允許之最速重啟極限</td>
+                                <td><strong>60 秒</strong></td>
                                 <td>止盈後冷卻 1 分鐘，隨後自動打出下一輪首單</td>
                             </tr>
                             <tr style="background: #f8fafc;">
@@ -960,20 +994,20 @@
                             <tr>
                                 <td><strong>價格範圍 (最低 - 最高)</strong></td>
                                 <td><span style="color: #64748b;">留空 (不設限)</span></td>
-                                <td>不設特定價格區間上限</td>
-                                <td>全天候自動捕捉行情</td>
+                                <td><span style="color: #64748b;">留空 (不設限)</span></td>
+                                <td>不設特定價格區間上限，全天候 7x24 自動捕捉行情</td>
                             </tr>
                             <tr>
                                 <td><strong>止損 / 觸發止損時一併終止機器人</strong></td>
                                 <td><span style="color: #10b981; font-weight: 700;">不填 / 不勾選</span></td>
-                                <td>0 槓桿現貨無爆倉強平風險</td>
-                                <td>SOL 為全球前三大藍籌公鏈，打滿也是低估值現貨</td>
+                                <td><span style="color: #10b981; font-weight: 700;">不填 / 不勾選</span></td>
+                                <td>0 槓桿現貨無爆倉強平風險，打滿也是優質藍籌現貨</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">
-                    ※ <strong>現貨版優勢</strong>：現貨槓桿為 1.0x，強平線為 0，因此可將 250U 資金 100% 滿額部署至 11 格遞增網格中，將抗跌護城河拉滿至 -22.13%，實現「0 閒置、0 爆倉、0 割肉、0 手續費」的四零被動現金流！填寫完成後點擊最下方【創建】按鈕即可啟動。
+                    ※ <strong>現貨版優勢</strong>：現貨槓桿為 1.0x，強平線為 0，因此可將 <span class="spot-dynamic-cap">250U</span> 資金 100% 滿額部署至 11 格遞增網格中，將抗跌護城河拉滿至 -22.13%，實現「0 閒置、0 爆倉、0 割肉、0 手續費」的四零被動現金流！填寫完成後點擊最下方【創建】按鈕即可啟動。
                 </div>
             </div>
         </div>
@@ -1562,6 +1596,101 @@
                 }
             }
         });
+    }
+
+
+    // --- 現貨 DCA 資金等比即時動態換算引擎 ---
+    function setDcaSpotCapital(amount) {
+        amount = Math.round(Number(amount));
+        const slider = document.getElementById('dcaSpotCapitalSlider');
+        const input = document.getElementById('dcaSpotCapitalInput');
+        if (slider) slider.value = amount;
+        if (input) input.value = amount;
+        onDcaSpotCapitalChange(amount);
+    }
+
+    function onDcaSpotCapitalChange(val) {
+        let cap = parseFloat(val);
+        if (isNaN(cap) || cap < 60) cap = 60;
+        if (cap > 5000) cap = 5000;
+
+        const slider = document.getElementById('dcaSpotCapitalSlider');
+        const input = document.getElementById('dcaSpotCapitalInput');
+        if (slider && slider.value != cap) slider.value = Math.min(2000, cap);
+        if (input && input.value != cap && document.activeElement !== input) input.value = cap;
+
+        // Button active class
+        document.querySelectorAll('.dca-spot-cap-btn').forEach(btn => {
+            if (btn.getAttribute('data-cap') == cap) {
+                btn.style.background = '#0284c7';
+                btn.style.color = '#ffffff';
+                btn.style.borderColor = '#0284c7';
+                btn.style.boxShadow = '0 2px 6px rgba(2,132,199,0.25)';
+            } else {
+                btn.style.background = '#ffffff';
+                btn.style.color = '#475569';
+                btn.style.borderColor = '#cbd5e1';
+                btn.style.boxShadow = 'none';
+            }
+        });
+
+        // Table cap title badges
+        document.querySelectorAll('.spot-table-cap-title').forEach(el => {
+            el.innerText = Math.round(cap) + 'U';
+        });
+
+        const s = cap / 250.0;
+
+        // Mathematical scaling (11 tiers)
+        // Binance minimum notional per order is 5 FDUSD
+        let baseInt = Math.max(5, Math.round(8 * s));
+        let dcaInt = Math.max(5, Math.round((cap - baseInt) / 11));
+        let totalInt = baseInt + dcaInt * 11;
+
+        let baseExact = Math.max(5.0, 8.00 * s);
+        let dcaExact = Math.max(5.0, (cap - baseExact) / 11.0);
+        let totalExact = baseExact + dcaExact * 11.0;
+
+        const profit = (68.56 * s).toFixed(2);
+        const minEquity = (209.02 * s).toFixed(2);
+
+        // Update DOM
+        const pill = document.getElementById('spotPillFunds');
+        if (pill) pill.innerText = `🛡️ 滿倉零閒置 · ${Math.round(cap)} FDUSD 全額部署 (-22.13% 抗跌防禦 · 11級精銳)`;
+
+        const narrCap = document.getElementById('spotNarrativeCapital');
+        if (narrCap) narrCap.innerText = `${Math.round(cap)} FDUSD 本金`;
+
+        const cardProf = document.getElementById('spotCardProfit');
+        if (cardProf) cardProf.innerText = `+$${profit}`;
+
+        const cardMinEq = document.getElementById('spotCardMinEq');
+        if (cardMinEq) cardMinEq.innerText = `$${minEquity}`;
+
+        // Table elements
+        const tblBaseInt = document.getElementById('spotTblBaseInt');
+        if (tblBaseInt) tblBaseInt.innerText = `${baseInt.toFixed(2)} FDUSD`;
+        const tblBaseExact = document.getElementById('spotTblBaseExact');
+        if (tblBaseExact) tblBaseExact.innerText = `${baseExact.toFixed(2)} FDUSD`;
+
+        const tblDcaInt = document.getElementById('spotTblDcaInt');
+        if (tblDcaInt) tblDcaInt.innerText = `${dcaInt.toFixed(2)} FDUSD`;
+        const tblDcaExact = document.getElementById('spotTblDcaExact');
+        if (tblDcaExact) tblDcaExact.innerText = `${dcaExact.toFixed(2)} FDUSD`;
+
+        const tblTotalInt = document.getElementById('spotTblTotalInt');
+        if (tblTotalInt) tblTotalInt.innerText = `${totalInt.toFixed(2)} FDUSD`;
+        const tblTotalExact = document.getElementById('spotTblTotalExact');
+        if (tblTotalExact) tblTotalExact.innerText = `${totalExact.toFixed(2)} FDUSD`;
+
+        const tblFormula = document.getElementById('spotTblFormula');
+        if (tblFormula) tblFormula.innerHTML = `$${baseInt} + (${dcaInt} &times; 11) = ${totalInt} FDUSD (實質部署 ${((totalInt/cap)*100).toFixed(1)}%)`;
+
+        const tblDcaNote = document.getElementById('spotTblDcaNote');
+        if (tblDcaNote) tblDcaNote.innerText = `${dcaInt.toFixed(2)}`;
+
+        const auditCap = document.querySelectorAll('.spot-dynamic-cap');
+        auditCap.forEach(el => { el.innerText = Math.round(cap) + 'U'; });
     }
 
     // --- DCA 資金等比即時動態換算引擎 ---
