@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Triad 三元策略 - 智能持倉指令中心</title>
+    <title>Triad Portfolio - 四大核心投資策略中心</title>
     
     <!-- 網路預連線加速 (減少 Binance WebSocket & REST API 握手延遲) -->
     <link rel="preconnect" href="https://stream.binance.com:9443">
@@ -469,73 +469,279 @@
             .command-center { padding: 16px; }
             .zone-main-title { font-size: 24px; }
         }
+    
+        /* ================= 四大核心投資策略導航 Tab 系統 ================= */
+        .strategy-nav-bar {
+            display: flex;
+            gap: 10px;
+            background: #ffffff;
+            padding: 8px 10px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 22px;
+            position: sticky;
+            top: 10px;
+            z-index: 1000;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .strategy-nav-btn {
+            flex: 1;
+            min-width: 175px;
+            padding: 11px 16px;
+            font-size: 13.5px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background: transparent;
+            color: #64748b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .strategy-nav-btn:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .strategy-nav-btn.active {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
+        }
+        .strategy-section {
+            display: none;
+            animation: fadeInTab 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .strategy-section.active {
+            display: block;
+        }
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 策略概覽卡片 */
+        .strategy-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+        }
+        .strategy-banner-title {
+            font-size: 19px;
+            font-weight: 900;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .strategy-banner-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* 美股 bStock 專用簡潔卡片樣式 */
+        .bstock-header-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .bstock-live-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .bstock-live-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+        }
+        .bstock-symbol-tag {
+            font-size: 12px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .bstock-price-val {
+            font-size: 18px;
+            font-weight: 900;
+            color: #0f172a;
+        }
+        .bstock-fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+        .bstock-fleet-card {
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .bstock-fleet-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 12px;
+        }
+        .bstock-badge-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+        .bstock-asset-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .bstock-asset-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        .bstock-metrics-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #edf2f7;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .bstock-metric-sub { font-size: 11px; color: #64748b; font-weight: 600; }
+        .bstock-metric-num { font-size: 15px; font-weight: 800; color: #0f172a; margin-top: 2px; }
     </style>
+
 </head>
 <body>
 <div class="container">
-    <!-- 頂部標題列 -->
     <div class="page-header">
         <h1 class="brand-title" style="display: flex; align-items: center; gap: 10px;">
             <img src="icon-192.png" alt="Triad Logo" style="width: 30px; height: 30px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.18);">
-            <span>Triad 三元策略</span>
+            <span>Triad Portfolio · 四大核心投資策略中心</span>
         </h1>
-        <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:6px 14px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:#10b981; background:#ecfdf5; padding:4px 10px; border-radius:20px; border:1px solid #a7f3d0;"><span style="width:7px; height:7px; border-radius:50%; background:#10b981;"></span>即時串流連線</span> <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:6px 14px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
+    </div>
+    
+    <!-- 全局市場微儀表盤 (頂部緊湊型即時行情) -->
+    <div style="background:#ffffff; border:1px solid var(--border); border-radius:14px; padding:12px 16px; margin-bottom:18px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#64748b;">⚡ 宏觀市場即時信號</span>
+                <span class="zone-main-title" id="liveZoneDisplay" style="font-size:16px; font-weight:900; color:#0284c7;">Zone 2 (牛市巡航階段)</span>
+            </div>
+            <div class="zone-threshold-alert" style="margin:0; padding:6px 12px; font-size:12px; background:#f8fafc; border-color:#e2e8f0; color:#475569;">
+                <div class="alert-target" id="downwardAlert" style="margin-right:12px;">🔻 回跌 Zone 1: <span style="color:#059669; font-weight:700;">BTC < $--</span></div>
+                <div class="alert-target" id="upwardAlert">🔺 升至 Zone 3: <span style="color:#d97706; font-weight:700;">BTC &ge; $--</span></div>
+            </div>
+        </div>
+        <div class="market-metrics-grid" style="margin-top:0;">
+            <div class="metric-card">
+                <div class="metric-label" style="display: flex; align-items: center; gap: 5px;">
+                    <img src="icons/btc.png" alt="BTC" style="width: 15px; height: 15px; border-radius: 50%;">
+                    <span>BTC 即時現價</span>
+                </div>
+                <div class="metric-val" id="liveBtcPrice">$--</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.35);">
+                <div class="metric-label" style="color: #fcd34d; display: flex; align-items: center; gap: 5px;">
+                    <img src="icons/paxg.png" alt="PAXG" style="width: 15px; height: 15px; border-radius: 50%;">
+                    <span>PAXG 儲備金價</span>
+                </div>
+                <div class="metric-val" id="livePaxgPrice" style="color: #fbbf24;">$--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">200日均線 (MA200)</div>
+                <div class="metric-val" id="liveMa200">$--</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(56, 189, 248, 0.35);">
+                <div class="metric-label" style="color: #7dd3fc;">當前比值 (BTC/MA200)</div>
+                <div class="metric-val" id="liveRatio" style="color: #38bdf8;">--</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(139, 92, 246, 0.35);">
+                <div class="metric-label" style="color: #c4b5fd; display: flex; align-items: center; gap: 5px;">
+                    <span style="font-size: 13px;">🇺🇸</span>
+                    <span>QQQB 納指現價</span>
+                </div>
+                <div class="metric-val" id="liveQqqbPrice" style="color: #a78bfa;">$--</div>
+            </div>
+        </div>
     </div>
 
-    <!-- ================= 0秒對照：智能持倉即時指令中心 ================= -->
-    <div class="command-center">
-        <div class="cc-top-row">
-            <div class="zone-signal-wrap">
-                <div class="zone-tag">⚡ 當前即時市場信號</div>
-                <div class="zone-main-title" id="liveZoneDisplay">Zone 2 (牛市巡航階段)</div>
+    
+    <!-- 四大核心投資策略頂部導航切換列 -->
+    <nav class="strategy-nav-bar" id="strategyNavBar">
+        <button class="strategy-nav-btn active" id="tabBtn-macro" onclick="switchStrategy('macro')">
+            <span style="font-size: 16px;">🏛️</span>
+            <span>加密貨幣核心智能持倉</span>
+        </button>
+        <button class="strategy-nav-btn" id="tabBtn-alpha" onclick="switchStrategy('alpha')">
+            <span style="font-size: 16px;">⚡</span>
+            <span>加密貨幣 Alpha 智能持倉</span>
+        </button>
+        <button class="strategy-nav-btn" id="tabBtn-bstock" onclick="switchStrategy('bstock')">
+            <span style="font-size: 16px;">🇺🇸</span>
+            <span>美股 bStock 智能持倉</span>
+        </button>
+        <button class="strategy-nav-btn" id="tabBtn-dca" onclick="switchStrategy('dca')">
+            <span style="font-size: 16px;">🤖</span>
+            <span>加密貨幣 DCA (現貨/合約)</span>
+        </button>
+    </nav>
+
+
+    
+    <!-- ================= 策略一：加密貨幣核心智能持倉 ================= -->
+    <section class="strategy-section active" id="sec-strategy-macro">
+        <div class="strategy-banner">
+            <div class="strategy-banner-title">
+                <span>🏛️ 加密貨幣核心智能持倉 (6-Zone 動態階梯)</span>
+                <span style="font-size: 11.5px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 9999px;">佔總資金 50%</span>
             </div>
-            <div class="market-metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-label" style="display: flex; align-items: center; gap: 5px;">
-                        <img src="icons/btc.png" alt="BTC" style="width: 15px; height: 15px; border-radius: 50%;">
-                        <span>BTC 即時現價</span>
-                    </div>
-                    <div class="metric-val" id="liveBtcPrice">$--</div>
-                </div>
-                <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.35);">
-                    <div class="metric-label" style="color: #fcd34d; display: flex; align-items: center; gap: 5px;">
-                        <img src="icons/paxg.png" alt="PAXG" style="width: 15px; height: 15px; border-radius: 50%;">
-                        <span>PAXG 儲備金價</span>
-                    </div>
-                    <div class="metric-val" id="livePaxgPrice" style="color: #fbbf24;">$--</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">200日均線 (MA200)</div>
-                    <div class="metric-val" id="liveMa200">$--</div>
-                </div>
-                <div class="metric-card" style="border-color: rgba(56, 189, 248, 0.35);">
-                    <div class="metric-label" style="color: #7dd3fc;">當前比值 (BTC/MA200)</div>
-                    <div class="metric-val" id="liveRatio" style="color: #38bdf8;">--</div>
-                </div>
-                <div class="metric-card" style="border-color: rgba(139, 92, 246, 0.35);">
-                    <div class="metric-label" style="color: #c4b5fd; display: flex; align-items: center; gap: 5px;">
-                        <span style="font-size: 13px;">🇺🇸</span>
-                        <span>QQQB 納指現價</span>
-                    </div>
-                    <div class="metric-val" id="liveQqqbPrice" style="color: #a78bfa;">$--</div>
-                </div>
+            <div class="strategy-banner-desc">
+                以 <strong>BTC (20%) + ETH (20%) + TAO (10%)</strong> 為核心資產，結合 <strong>QQQB (美股科技) + PAXG (實體黃金)</strong> 作為雙軌蓄水池。依據 BTC / MA200 歷史週期比值劃分 6 個宏觀階段，動態階梯式配置權重；全盤統一設定 <strong>按比例 2% 偏差自動再平衡</strong>，兼顧主升浪利潤奔跑與熊市實體金防禦。
             </div>
         </div>
-
-        <!-- 換倉警戒線監控 -->
-        <div class="zone-threshold-alert">
-            <div style="color: #94a3b8; font-weight: 600;">🎯 換倉安全監控：</div>
-            <div class="alert-target" id="downwardAlert">🔻 跌回 Zone 1 警戒價：<span style="color: #4ade80;">BTC < $-- (--%)</span></div>
-            <div class="alert-target" id="upwardAlert">🔺 升至 Zone 3 警戒價：<span style="color: #fbbf24;">BTC ≥ $-- (--%)</span></div>
-        </div>
-
+        
         <!-- 三大核心壓艙柱 (Core Big 3) 獨立三幣專卡 -->
         <div style="margin-top: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-            <div style="font-size: 15px; font-weight: 800; color: #f8fafc; display: flex; align-items: center; gap: 8px;">
+            <div style="font-size: 15px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px;">
                 <span>👑 核心壓艙三本柱 (佔總資金 50%)</span>
-                <span style="font-size: 11px; font-weight: 600; color: #94a3b8;">BTC (20%) + ETH (20%) + TAO (10%) | 👑 6-Zone 動態階梯策略</span>
+                <span style="font-size: 11px; font-weight: 600; color: #64748b;">BTC (20%) + ETH (20%) + TAO (10%) | 👑 6-Zone 動態階梯策略</span>
             </div>
-            <div style="font-size: 12px; color: #38bdf8; font-weight: 600;">
+            <div style="font-size: 12px; color: #0284c7; font-weight: 700;">
                 🎯 全艦隊統一：2% 偏差自動再平衡 (核心建議每倉 ≥ 700U / Alpha 建議每倉 ≥ 350U)
             </div>
         </div>
@@ -543,40 +749,7 @@
         <div class="c-matrix-grid" id="coreCardsGrid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 22px;">
             <!-- 由 JavaScript renderCoreCards() 動態生成高清晰三幣卡片 -->
         </div>
-
-        <!-- 衛星三幣 Alpha 矩陣艦隊 -->
-        <div class="c-matrix-container">
-            <div class="c-matrix-top-bar">
-                <div>
-                    <div class="c-matrix-title">
-                        <span>⚡ 菁英 Alpha 9大艦隊 (9 大全賽道真現金流龍頭 | 佔總資金 50%)</span>
-                    </div>
-                    <div class="c-matrix-subtitle">
-                        三大宏觀核心 (50% 採 6-Zone 動態) + 九大菁英 Alpha (各 5.56% = 50% 採全天候靜態 35/35/30) | 全盤共 12 組獨立三幣機器人 | 全盤 2% 再平衡
-                    </div>
-                </div>
-                <div class="c-badges-wrap">
-                    <span class="c-pill c-pill-gold">💎 頂級核心 9 大長拿藍籌</span>
-                    <span class="c-pill c-pill-green">🎯 單倉約 5.56% (建議每倉 ≥ 350U) | 偏差 2%</span>
-                    <span class="c-pill" style="background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; border-radius: 9999px; padding: 4px 10px; font-size: 11.5px; font-weight: 700;">⚖️ 9 大 Alpha 永久靜態 35/35/30</span>
-                </div>
-            </div>
-
-            <!-- 梯隊快速分類篩選標籤 -->
-            <div class="c-filter-tabs">
-                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">🔥 9 大長拿 Alpha</button>
-                <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">🏦 DeFi / 衍生品 (UNI, HYPE, AAVE, ENA, PENDLE)</button>
-                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">🌐 RWA / AI / 公鏈 / 預言機 (ONDO, NEAR, SUI, LINK)</button>
-            </div>
-
-            <!-- 三幣卡片網格 -->
-            <div class="c-matrix-grid" id="cMatrixGrid">
-                <!-- 由 JavaScript 動態依最新即時行情與當前 Zone 比例渲染三幣卡片 -->
-            </div>
-        </div>
-    </div>
-
-    <!-- 六階段全景對照標準表 -->
+        <!-- 六階段全景對照標準表 -->
     <div class="matrix-card">
         <div class="matrix-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             <div>
@@ -714,95 +887,336 @@
             </div>
         </div>
     </div>
-
-    <!-- Zone 4 / Zone 5 純現貨雙壁智能持倉逃頂與避險機制卡片 -->
-    <div class="audit-card" style="border-left-color: #059669;">
-        <div class="audit-title" style="color: #047857;">
-            <span>🛡️ Zone 4 / Zone 5 純現貨雙壁逃頂與避險機制（QQQB 35% ＋ PAXG 60%~65%）</span>
-            <span style="font-size: 11.5px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 2px 8px; border-radius: 12px; font-weight: 700;">零合約摩擦 ➔ 零負費率風險 ➔ 純現貨極致省心</span>
-        </div>
-        <div style="font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.6;">
-            為徹底擺脫合約市場資金費率倒扣、平倉滑點與繁複操作的心智負擔，本系統在逃頂與熊市<strong>100% 採用純現貨「QQQB 科技巨頭 ＋ PAXG 實體黃金」雙壁架構</strong>，終生運行於同一個幣安智能持倉中：
-        </div>
-        <div class="audit-grid">
-            <div class="audit-item" style="border-left: 3px solid #10b981;">
-                <strong style="color: #065f46;">🚀 Zone 4 極度逃頂鎖利（核心 5% / Alpha 0% / QQQB 35% / PAXG 60%~65%）</strong>
-                <span>當 <code>BTC / MA200 ≥ 1.40</code> 衝頂時，<strong>9 大 Alpha 山寨率先 100% 清零出清</strong>（直接鎖定至 QQQB 35% ＋ PAXG 65%）；核心三本柱僅留 5% 象徵底倉防踏空（95% 出清至黃金美股），落袋為安。</span>
-            </div>
-            <div class="audit-item" style="border-left: 3px solid #8b5cf6;">
-                <strong style="color: #6d28d9;">🛑 Zone 5 熊市主跌防禦（核心 0% / Alpha 0% / QQQB 35% / PAXG 65%）</strong>
-                <span>大頂確認回撤 ≥ 20% 轉熊時，<strong>核心最後 5% 現貨也正式清零（0%）</strong>，全盤 12 大機器人 100% 全額由 <strong>PAXG 65% ＋ QQQB 35%</strong> 純現貨雙壁守護，避開深熊暴跌主跌浪！</span>
-            </div>
-            <div class="audit-item" style="border-left: 3px solid #3b82f6;">
-                <strong style="color: #1d4ed8;">🎯 Zone 0 歷史大底抄底（現貨 65% / QQQB 25% / PAXG 10%）</strong>
-                <span>當市場跌透至 <code>BTC / MA200 &lt; 0.80</code>，直接一鍵改回 65/25/10！機器人<strong>自動賣出 55% 高位黃金與 10% 美股</strong>，以天量購買力全自動掃貨歷史大底便宜現貨！</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 宏觀大週期與點位模擬校準報告卡片 -->
-    <div class="audit-card">
-        <div class="audit-title">
-            <span>🔍 宏觀大週期與點位模擬校準報告（基於跨週期 21,107 根真實歷史數據驗證）</span>
-            <span style="font-size: 11.5px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 2px 8px; border-radius: 12px; font-weight: 700;">✅ 100% 毫釐不差驗證通過</span>
-        </div>
-        <div style="font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.6;">
-            本系統的 <code>BTC / MA200</code> 階梯門檻（0.80 / 1.00 / 1.25 / 1.40）經跨週期全量真實行情數據萃取比對，與歷史牛熊關鍵轉折點位高度吻合：
-        </div>
-        <div class="audit-grid">
-            <div class="audit-item">
-                <strong>🛡️ Zone 0 抄底點（&lt; $5.56萬）</strong>
-                <span>精準錨定歷史 <strong>5.7 萬熊市大底</strong>（歷史級估值底部，敢拿現貨迎反彈），比值 &lt; 0.80 進入黃金坑。</span>
-            </div>
-            <div class="audit-item">
-                <strong>🚩 Zone 1 牛初分水嶺（$5.56萬 ~ $7.0萬）</strong>
-                <span>完美契合 <strong>7.0 萬牛市確認線</strong>（站上 70,000 附近時，確認牛市趨勢成型，分批上車不空倉）。</span>
-            </div>
-            <div class="audit-item">
-                <strong>🚀 Zone 2 健康巡航區（$7.0萬 ~ $8.69萬）</strong>
-                <span>現正運行！對應 <strong>7.6 萬健康支撐</strong> 蓄勢區間，目前 BTC 7.9 萬處於 Zone 2 核心巡航。</span>
-            </div>
-            <div class="audit-item">
-                <strong>🔥 Zone 3 過熱警戒區（$8.69萬 ~ $9.74萬）</strong>
-                <span>對應 BTC <strong>衝擊 10 萬大關</strong>，山寨季全面狂熱，系統開始分批獲利了結至美股與黃金。</span>
-            </div>
-            <div class="audit-item">
-                <strong>🚨 Zone 4 極限逃頂區（≥ $9.74萬，向 12~15萬衝頂）</strong>
-                <span>完全契合 <strong>15 萬極限目標逃頂原則</strong>，95% 全自動換成 QQQB 美股科技與 PAXG 實體黃金純現貨雙壁避險。</span>
-            </div>
-            <div class="audit-item" style="border-left: 3px solid #8b5cf6;">
-                <strong style="color: #7c3aed;">💡 核心 3 (TAO) 爆發力配置說明</strong>
-                <span>量化模擬審查指出：6-Zone 動態階梯在 TAO 上產生了高達 +153.9% 的超額回報（比靜態多賺 $693 U），充沛釋放去中心化 AI 算力主升浪爆發力！</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 系統操作指南卡片 -->
-    <div class="card" style="margin-bottom: 25px;">
-        <h3 style="margin-bottom: 12px; color: var(--text-main); font-size: 16px;">💡 幣安 App 智能持倉（12 倉無人值守單元：3 宏觀 ＋ 9 菁英 Alpha）設置步驟</h3>
-        <div style="font-size: 13.5px; line-height: 1.8; color: var(--text-muted);">
+        
+    <div class="card" style="margin-top: 20px; margin-bottom: 25px;">
+        <h3 style="margin-bottom: 10px; color: var(--text-main); font-size: 15px; display: flex; align-items: center; gap: 8px;">
+            <span>💡 幣安 App 智能持倉建立指南（核心三本柱）</span>
+            <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 6px; font-weight: 700;">各倉獨立運行</span>
+        </h3>
+        <div style="font-size: 13px; line-height: 1.8; color: #475569;">
             1. 打開 <strong>幣安 App ➔ 交易 ➔ 策略交易 ➔ 選擇「智能持倉 (Rebalance Bot)」</strong>。<br>
-            2. <strong>建立 12 大獨立三幣持倉組合</strong>（點擊「手動創建」，加入<strong>3 個幣種：現貨標的 ＋ QQQB ＋ PAXG</strong>）：<br>
-            &nbsp;&nbsp;&nbsp;• <strong>👑 核心三本柱 (佔總資金 50%，採用 6-Zone 動態階梯策略，建議每倉 ≥ 700U)</strong>：<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;① <code>BTC + QQQB + PAXG</code> (20% 資金)：當前 Zone 2 設為 45%/35%/20%，觸發設 <strong>按比例 2%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;② <code>ETH + QQQB + PAXG</code> (20% 資金)：當前 Zone 2 設為 40%/35%/25%，觸發設 <strong>按比例 2%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;③ <code>TAO + QQQB + PAXG</code> (10% 資金)：當前 Zone 2 設為 35%/35%/30%，觸發設 <strong>按比例 2%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;• <strong>⚡ 菁英 Alpha 9大艦隊 (9 大全賽道真現金流龍頭，各佔約 5.56% 資金，採用全天候靜態 35/35/30 策略，建議每倉 ≥ 350U)</strong>：<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;① <code>UNI + QQQB + PAXG</code> (DEX 現貨交易所龍頭 · 費用開關回購，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;② <code>HYPE + QQQB + PAXG</code> (PerpDEX 合約交易所霸主 · 日量百億手續費之王，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;③ <code>AAVE + QQQB + PAXG</code> (DeFi 借貸貨幣市場鐵王座 · 100% 國庫造血，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;④ <code>ENA + QQQB + PAXG</code> (穩定幣與合成資產印鈔機 · 基差利差與 sENA 回購，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⑤ <code>NEAR + QQQB + PAXG</code> (AI 代理與鏈抽象基建 · 用戶自主 AI 與 GAS 銷毀，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⑥ <code>ONDO + QQQB + PAXG</code> (RWA 現實資產代幣化龍頭 · 貝萊德美債合規上鏈，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⑦ <code>PENDLE + QQQB + PAXG</code> (利率互換與收益衍生品之王 · 80% 協議收入暴力回購，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⑧ <code>SUI + QQQB + PAXG</code> (Move 新興高性能公鏈龍頭 · 極致爆發彈性黑馬，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⑨ <code>LINK + QQQB + PAXG</code> (預言機與機構跨鏈 CCIP · 美國傳統金融上鏈唯一標準，5.56% 資金)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>※ 9 大 Alpha 比例一律永久固定為：<strong>各幣 35% / QQQB 35% / PAXG 30%</strong>，觸發條件全盤統一設 <strong>按比例 2%</strong>（建議每倉 ≥ 350U）。</em><br>
-            3. <strong>2% 閾值量化實證優勢</strong>：經 2023～2026 年 15 分鐘（130,396 根真實 K 線）全量回測，<strong>2% 再平衡閾值全面打敗 1%</strong>（總資產多賺 +$300 U 以上，交易次數減少 70% 避免磨損），完美平衡了「香農套利」與「主升浪波段收益」！
+            2. 點擊「手動創建」，各自建立 3 組獨立三幣組合（每組各含<strong>主幣 ＋ QQQB ＋ PAXG</strong>）：<br>
+            &nbsp;&nbsp;&nbsp;① <code>BTC + QQQB + PAXG</code> (佔總資金 20%)：當前 Zone 2 設為 <strong>45% / 35% / 20%</strong>，調倉條件選 <strong>按比例 2%</strong>。<br>
+            &nbsp;&nbsp;&nbsp;② <code>ETH + QQQB + PAXG</code> (佔總資金 20%)：當前 Zone 2 設為 <strong>40% / 35% / 25%</strong>，調倉條件選 <strong>按比例 2%</strong>。<br>
+            &nbsp;&nbsp;&nbsp;③ <code>TAO + QQQB + PAXG</code> (佔總資金 10%)：當前 Zone 2 設為 <strong>35% / 35% / 30%</strong>，調倉條件選 <strong>按比例 2%</strong>。<br>
+            3. <strong>動態再平衡機制</strong>：當市場跨越 Zone 階梯門檻時，進入機器人詳情頁點擊「編輯比例」，更新為新階梯目標權重即可。
         </div>
     </div>
 
-    <!-- ================= 專用高頻被動現金流：雙模態 DCA 智能網格專區 (現貨 vs 合約) ================= -->
+    </section>
+
+    
+    <!-- ================= 策略二：加密貨幣 Alpha 智能持倉 ================= -->
+    <section class="strategy-section" id="sec-strategy-alpha">
+        <div class="strategy-banner" style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border-color: #3730a3;">
+            <div class="strategy-banner-title" style="color: #a5b4fc;">
+                <span>⚡ 加密貨幣 Alpha 智能持倉 (9大賽道 35/35/30)</span>
+                <span style="font-size: 11.5px; background: rgba(165, 180, 252, 0.15); color: #c7d2fe; border: 1px solid rgba(165, 180, 252, 0.3); padding: 2px 8px; border-radius: 9999px;">9大賽道龍頭 · 各佔 5.56%</span>
+            </div>
+            <div class="strategy-banner-desc">
+                精選加密全賽道具備真實協議現金流與深厚護城河的 9 大長拿藍籌（UNI, HYPE, AAVE, ENA, PENDLE, ONDO, NEAR, SUI, LINK）。全天候採用實證最優之 <strong>永久靜態 35% 標的 + 35% QQQB + 30% PAXG</strong> 配置，統一設定 <strong>按比例 2% 自動再平衡</strong>，極致獲取單幣爆發與相對波動的香農套利收益。
+            </div>
+        </div>
+
+        <!-- 衛星三幣 Alpha 矩陣艦隊 -->
+        <div class="c-matrix-container">
+            <div class="c-matrix-top-bar">
+                <div>
+                    <div class="c-matrix-title">
+                        <span>⚡ 菁英 Alpha 9大艦隊 (9 大全賽道真現金流龍頭 | 佔總資金 50%)</span>
+                    </div>
+                    <div class="c-matrix-subtitle">
+                        三大宏觀核心 (50% 採 6-Zone 動態) + 九大菁英 Alpha (各 5.56% = 50% 採全天候靜態 35/35/30) | 全盤共 12 組獨立三幣機器人 | 全盤 2% 再平衡
+                    </div>
+                </div>
+                <div class="c-badges-wrap">
+                    <span class="c-pill c-pill-gold">💎 頂級核心 9 大長拿藍籌</span>
+                    <span class="c-pill c-pill-green">🎯 單倉約 5.56% (建議每倉 ≥ 350U) | 偏差 2%</span>
+                    <span class="c-pill" style="background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; border-radius: 9999px; padding: 4px 10px; font-size: 11.5px; font-weight: 700;">⚖️ 9 大 Alpha 永久靜態 35/35/30</span>
+                </div>
+            </div>
+
+            <!-- 梯隊快速分類篩選標籤 -->
+            <div class="c-filter-tabs">
+                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">🔥 9 大長拿 Alpha</button>
+                <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">🏦 DeFi / 衍生品 (UNI, HYPE, AAVE, ENA, PENDLE)</button>
+                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">🌐 RWA / AI / 公鏈 / 預言機 (ONDO, NEAR, SUI, LINK)</button>
+            </div>
+
+            <!-- 三幣卡片網格 -->
+            <div class="c-matrix-grid" id="cMatrixGrid">
+                <!-- 由 JavaScript 動態依最新即時行情與當前 Zone 比例渲染三幣卡片 -->
+            </div>
+        </div>
+        
+    <div class="card" style="margin-top: 20px; margin-bottom: 25px;">
+        <h3 style="margin-bottom: 10px; color: var(--text-main); font-size: 15px; display: flex; align-items: center; gap: 8px;">
+            <span>💡 幣安 App 智能持倉建立指南（9 大菁英 Alpha 艦隊）</span>
+            <span style="font-size: 11px; background: #f5f3ff; color: #7c3aed; padding: 2px 8px; border-radius: 6px; font-weight: 700;">永久靜態 35/35/30</span>
+        </h3>
+        <div style="font-size: 13px; line-height: 1.8; color: #475569;">
+            1. 打開 <strong>幣安 App ➔ 交易 ➔ 策略交易 ➔ 選擇「智能持倉」➔ 點擊「手動創建」</strong>。<br>
+            2. 依次建立 9 組獨立機器人，每組均加入 3 個幣種：<strong>現貨 Alpha 標的 ＋ QQQB ＋ PAXG</strong>。<br>
+            3. <strong>目標比例一律設定為</strong>：<code>Alpha 標的 (35%) + QQQB (35%) + PAXG (30%)</code>。<br>
+            4. <strong>再平衡條件</strong>：一律勾選 <strong>按比例 2%</strong>（建議每倉資金 ≥ 350U，充沛覆蓋最小下單面額）。<br>
+            5. <strong>運作邏輯</strong>：日常無須手動干預，全自動吃下單幣大漲大跌的波動紅利，並持續將利潤沉澱至美股科技與黃金中。
+        </div>
+    </div>
+
+    </section>
+
+    
+    <!-- ================= 策略三：美股 bStock 智能持倉 ================= -->
+    <section class="strategy-section" id="sec-strategy-bstock">
+        <div class="strategy-banner" style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); border-color: #065f46;">
+            <div class="strategy-banner-title" style="color: #6ee7b7;">
+                <span>🇺🇸 美股 bStock 智能持倉 (科技巨頭雙三幣艦隊)</span>
+                <span style="font-size: 11.5px; background: rgba(110, 231, 183, 0.15); color: #a7f3d0; border: 1px solid rgba(110, 231, 183, 0.3); padding: 2px 8px; border-radius: 9999px;">100% 純科技股權 · 2% 再平衡</span>
+            </div>
+            <div class="strategy-banner-desc">
+                針對幣安代幣化股票（bStock）量身打造，嚴選全球萬億級市值、資產負債表極度健全的六大科技霸主。維持 <strong>100% 純股權純度（0% 黃金）</strong>，避免與加密端 PAXG 蓄水池重複配置造成資本拖累。兩大艦隊無重疊配置，經 280 組全空間窮舉實證，<strong>Calmar 收益回撤比 (0.93) 榮獲全市場第 1 名</strong>！
+            </div>
+        </div>
+
+        <!-- 即時 6 大 bStock 行情微看板 -->
+        <div class="bstock-header-grid">
+            <div class="bstock-live-card">
+                <div class="bstock-symbol-tag">
+                    <span style="color: #76b900;">NVDAB (輝達)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊一</span>
+                </div>
+                <div class="bstock-price-val" id="live-nvdab-price">$--</div>
+                <div style="font-size: 11px; color: #64748b;" id="live-nvdab-chg">24h: --</div>
+            </div>
+            <div class="bstock-live-card">
+                <div class="bstock-symbol-tag">
+                    <span style="color: #cc092f;">AVGOB (博通)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊一</span>
+                </div>
+                <div class="bstock-price-val" id="live-avgob-price">$--</div>
+                <div style="font-size: 11px; color: #64748b;" id="live-avgob-chg">24h: --</div>
+            </div>
+            <div class="bstock-live-card">
+                <div class="bstock-symbol-tag">
+                    <span style="color: #dc2626;">TSMB (台積電)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊一</span>
+                </div>
+                <div class="bstock-price-val" id="live-tsmb-price">$--</div>
+                <div style="font-size: 11px; color: #64748b;" id="live-tsmb-chg">24h: --</div>
+            </div>
+            <div class="bstock-live-card">
+                <div class="bstock-symbol-tag">
+                    <span style="color: #475569;">AAPLB (蘋果)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊二</span>
+                </div>
+                <div class="bstock-price-val" id="live-aaplb-price">$--</div>
+                <div style="font-size: 11px; color: #64748b;" id="live-aaplb-chg">24h: --</div>
+            </div>
+            <div class="bstock-live-card">
+                <div class="bstock-symbol-tag">
+                    <span style="color: #4285f4;">GOOGLB (谷歌)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊二</span>
+                </div>
+                <div class="bstock-price-val" id="live-googlb-price">$--</div>
+                <div style="font-size: 11px; color: #64748b;" id="live-googlb-chg">24h: --</div>
+            </div>
+            <div class="bstock-live-card">
+                <div class="bstock-symbol-tag">
+                    <span style="color: #00a4ef;">MSFTB (微軟)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊二</span>
+                </div>
+                <div class="bstock-price-val" id="live-msftb-price">$--</div>
+                <div style="font-size: 11px; color: #64748b;" id="live-msftb-chg">24h: --</div>
+            </div>
+        </div>
+
+        <!-- 兩大獨立三幣艦隊核心卡片 -->
+        <div class="bstock-fleet-grid">
+            <!-- 艦隊一：算力硬體矛 -->
+            <div class="bstock-fleet-card" style="border-top: 4px solid #10b981;">
+                <div class="bstock-fleet-top">
+                    <div>
+                        <div style="font-size: 17px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                            <span>🚀 艦隊一：硬體物理算力矛</span>
+                        </div>
+                        <div style="font-size: 12px; color: #64748b; margin-top: 2px;">
+                            專注 AI 實體算力鏈 · 晶片設計 ＋ 客製 ASIC ＋ 晶圓代工壟斷
+                        </div>
+                    </div>
+                    <span class="bstock-badge-tag" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">佔股權資金 50%</span>
+                </div>
+
+                <!-- 標的權重清單 -->
+                <div class="bstock-asset-list">
+                    <div class="bstock-asset-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 800; color: #76b900;">NVDAB</span>
+                            <span style="font-size: 11.5px; color: #64748b;">GPU 算力標準與 CUDA 軟體生態系</span>
+                        </div>
+                        <strong style="color: #0f172a;">33.3%</strong>
+                    </div>
+                    <div class="bstock-asset-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 800; color: #cc092f;">AVGOB</span>
+                            <span style="font-size: 11.5px; color: #64748b;">客製化 ASIC 晶片與超大數據中心網通</span>
+                        </div>
+                        <strong style="color: #0f172a;">33.3%</strong>
+                    </div>
+                    <div class="bstock-asset-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 800; color: #dc2626;">TSMB</span>
+                            <span style="font-size: 11.5px; color: #64748b;">全球 90%+ 先進製程與 CoWoS 封裝壟斷</span>
+                        </div>
+                        <strong style="color: #0f172a;">33.3%</strong>
+                    </div>
+                </div>
+
+                <!-- 回測量化指標 -->
+                <div class="bstock-metrics-bar">
+                    <div>
+                        <div class="bstock-metric-sub">5年 CAGR</div>
+                        <div class="bstock-metric-num" style="color: #059669;">50.5%</div>
+                    </div>
+                    <div>
+                        <div class="bstock-metric-sub">夏普比率</div>
+                        <div class="bstock-metric-num">1.16</div>
+                    </div>
+                    <div>
+                        <div class="bstock-metric-sub">近半年回報</div>
+                        <div class="bstock-metric-num" style="color: #0284c7;">+34.4%</div>
+                    </div>
+                    <div>
+                        <div class="bstock-metric-sub">調倉閾值</div>
+                        <div class="bstock-metric-num" style="color: #d97706;">2% 偏差</div>
+                    </div>
+                </div>
+
+                <!-- 幣安建立指南 -->
+                <div style="font-size: 12px; background: #f8fafc; border-radius: 8px; padding: 10px 12px; line-height: 1.6; color: #475569;">
+                    <strong>🎯 幣安 App 建立：</strong>智能持倉 ➔ 手動創建 ➔ 加入 <code>NVDAB (33.3%) + AVGOB (33.3%) + TSMB (33.3%)</code> ➔ 觸發條件勾選 <strong>按比例 2%</strong>。
+                </div>
+            </div>
+
+            <!-- 艦隊二：軟體生態盾 -->
+            <div class="bstock-fleet-card" style="border-top: 4px solid #0284c7;">
+                <div class="bstock-fleet-top">
+                    <div>
+                        <div style="font-size: 17px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                            <span>🛡️ 艦隊二：軟體生態現金流盾</span>
+                        </div>
+                        <div style="font-size: 12px; color: #64748b; margin-top: 2px;">
+                            專注終端現金流護城河 · 22億設備 ＋ 搜尋/AI流量 ＋ 企業雲
+                        </div>
+                    </div>
+                    <span class="bstock-badge-tag" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">佔股權資金 50%</span>
+                </div>
+
+                <!-- 標的權重清單 -->
+                <div class="bstock-asset-list">
+                    <div class="bstock-asset-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 800; color: #475569;">AAPLB</span>
+                            <span style="font-size: 11.5px; color: #64748b;">22億高淨值硬體終端與年金式高毛利服務</span>
+                        </div>
+                        <strong style="color: #0f172a;">33.3%</strong>
+                    </div>
+                    <div class="bstock-asset-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 800; color: #4285f4;">GOOGLBUSDT</span>
+                            <span style="font-size: 11.5px; color: #64748b;">90% 搜尋壟斷、YouTube 流量與全端 Gemini AI</span>
+                        </div>
+                        <strong style="color: #0f172a;">33.3%</strong>
+                    </div>
+                    <div class="bstock-asset-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 800; color: #00a4ef;">MSFTBUSDT</span>
+                            <span style="font-size: 11.5px; color: #64748b;">企業級 Office SaaS、Azure 雲端與 Copilot 變現</span>
+                        </div>
+                        <strong style="color: #0f172a;">33.3%</strong>
+                    </div>
+                </div>
+
+                <!-- 回測量化指標 -->
+                <div class="bstock-metrics-bar">
+                    <div>
+                        <div class="bstock-metric-sub">5年最大回撤</div>
+                        <div class="bstock-metric-num" style="color: #059669;">-35.7%</div>
+                    </div>
+                    <div>
+                        <div class="bstock-metric-sub">近半年夏普</div>
+                        <div class="bstock-metric-num" style="color: #0284c7;">2.87</div>
+                    </div>
+                    <div>
+                        <div class="bstock-metric-sub">近半年回報</div>
+                        <div class="bstock-metric-num" style="color: #0284c7;">+36.8%</div>
+                    </div>
+                    <div>
+                        <div class="bstock-metric-sub">調倉閾值</div>
+                        <div class="bstock-metric-num" style="color: #d97706;">2% 偏差</div>
+                    </div>
+                </div>
+
+                <!-- 幣安建立指南 -->
+                <div style="font-size: 12px; background: #f8fafc; border-radius: 8px; padding: 10px 12px; line-height: 1.6; color: #475569;">
+                    <strong>🎯 幣安 App 建立：</strong>智能持倉 ➔ 手動創建 ➔ 加入 <code>AAPLB (33.3%) + GOOGLBUSDT (33.3%) + MSFTBUSDT (33.3%)</code> ➔ 觸發條件勾選 <strong>按比例 2%</strong>。
+                </div>
+            </div>
+        </div>
+
+        <!-- 綜合資產配置效果面板 -->
+        <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 18px 22px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+                <div style="font-size: 15px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                    <span>📊 雙艦隊 50/50 綜合投資組合效益審計（全市場 280 組窮舉實證）</span>
+                </div>
+                <span style="font-size: 11px; background: #fef3c7; color: #b45309; border: 1px solid #fde68a; padding: 3px 9px; border-radius: 9999px; font-weight: 800;">
+                    🏆 收益回撤比 (Calmar 0.93) 榮獲全市場第 1 名
+                </span>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">綜合 5年 CAGR (年化)</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #059669;">38.14%</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">$10,000 本金 5 年翻至 $49,990</div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">綜合夏普比率 (Sharpe)</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #0284c7;">1.08</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">遠超 QQQ 基準夏普 (0.68)</div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">綜合最大回撤 (MDD)</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #0f172a;">-41.20%</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">軟體盾成功平滑晶片組 -50% 回撤</div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">調倉頻率 (2% 閾值)</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #d97706;">約 1.2 次/月</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">低頻精準捕獲波動，手續費損耗 &lt; 0.15%</div>
+                </div>
+            </div>
+
+            <div style="font-size: 12px; color: #64748b; line-height: 1.6;">
+                ※ <strong>閉環共生架構優勢</strong>：微軟與谷歌每年投入數百億美元資本支出採購輝達與博通的晶片，而輝達與博通將訂單交由台積電投片製造；蘋果則將先進晶片整合入 22 億終端設備向全球變現。六大巨頭利潤內部閉環，在 2% 智能持倉機制下，個股的強弱錯位週期轉化為持續的再平衡紅利。
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- ================= 策略四：加密貨幣 DCA (現貨/合約) ================= -->
+    <section class="strategy-section" id="sec-strategy-dca">
+        <div class="strategy-banner" style="background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%); border-color: #0369a1;">
+            <div class="strategy-banner-title" style="color: #7dd3fc;">
+                <span>🤖 策略四：加密貨幣 DCA (現貨/合約被動現金流)</span>
+                <span style="font-size: 11.5px; background: rgba(125, 211, 252, 0.15); color: #bae6fd; border: 1px solid rgba(125, 211, 252, 0.3); padding: 2px 8px; border-radius: 9999px;">現貨零爆倉 ＋ 合約8成保本</span>
+            </div>
+            <div class="strategy-banner-desc">
+                專為產生穩定被動現金流設計的量化網格系統。提供 <strong>現貨 SOL/FDUSD DCA（零爆倉零割肉 · 0% 手續費）</strong> 與 <strong>合約 ENA / SOL / SUI DCA（250U 基準 · 3x 逐倉 · 80% 本金保全剛性止損）</strong> 雙模態配置，內建等比動態換算滑桿，一鍵精確計算實盤開單參數。
+            </div>
+        </div>
+
+        <!-- ================= 專用高頻被動現金流：雙模態 DCA 智能網格專區 (現貨 vs 合約) ================= -->
     <div class="matrix-card" style="border-top: 4px solid #0284c7; box-shadow: 0 6px 18px rgba(2, 132, 199, 0.08); margin-bottom: 25px;">
         <div class="matrix-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -1545,8 +1959,82 @@
         </div>
         </div>
     </div>
+    </section>
+
+</div>
 
 <script>
+
+    // --- 四大投資策略頂部導航 Tab 切換系統 ---
+    function switchStrategy(tabKey) {
+        const validTabs = ['macro', 'alpha', 'bstock', 'dca'];
+        if (!validTabs.includes(tabKey)) tabKey = 'macro';
+
+        // Update nav buttons
+        document.querySelectorAll('.strategy-nav-btn').forEach(btn => {
+            if (btn.id === 'tabBtn-' + tabKey) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // Update sections
+        document.querySelectorAll('.strategy-section').forEach(sec => {
+            if (sec.id === 'sec-strategy-' + tabKey) {
+                sec.classList.add('active');
+            } else {
+                sec.classList.remove('active');
+            }
+        });
+
+        // Sync with URL Hash
+        try {
+            if (history.replaceState) {
+                history.replaceState(null, null, '#' + tabKey);
+            } else {
+                location.hash = '#' + tabKey;
+            }
+        } catch(e) {}
+
+        // If switching to bStock tab, ensure live prices are fetched
+        if (tabKey === 'bstock') {
+            fetchBStockPrices();
+        }
+    }
+
+    // --- bStock 即時行情查詢引擎 (Binance REST API + WebSocket) ---
+    const bstockSymbols = ['NVDABUSDT', 'AVGOBUSDT', 'TSMBUSDT', 'AAPLBUSDT', 'GOOGLBUSDT', 'MSFTBUSDT'];
+    
+    async function fetchBStockPrices() {
+        try {
+            const symStr = encodeURIComponent(JSON.stringify(bstockSymbols));
+            const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${symStr}`);
+            if (!res.ok) return;
+            const data = await res.json();
+            
+            data.forEach(item => {
+                const sym = item.symbol.replace('BUSDT', '').toLowerCase();
+                const price = parseFloat(item.lastPrice);
+                const chg = parseFloat(item.priceChangePercent);
+                
+                const priceEl = document.getElementById(`live-${sym}b-price`);
+                const chgEl = document.getElementById(`live-${sym}b-chg`);
+                
+                if (priceEl) {
+                    priceEl.innerText = '$' + (price >= 100 ? price.toFixed(2) : price.toFixed(3));
+                }
+                if (chgEl) {
+                    const sign = chg >= 0 ? '+' : '';
+                    const color = chg >= 0 ? '#10b981' : '#ef4444';
+                    chgEl.innerHTML = `24h: <strong style="color:${color};">${sign}${chg.toFixed(2)}%</strong>`;
+                }
+            });
+        } catch (e) {
+            console.warn('bStock price fetch notice:', e);
+        }
+    }
+
     // --- DCA 專區 Tab 切換函數 (現貨 vs 合約艦隊) ---
     function switchDcaTab(mode) {
         const spotBtn = document.getElementById('dcaTabSpot');
@@ -2298,6 +2786,17 @@
                 cardPriceEl.innerHTML = `${priceFormat}${chgHtml}`;
             }
 
+            // 若為 bStock 標的，同步更新美股 bStock 即時看板
+            if (['NVDAB', 'AVGOB', 'TSMB', 'AAPLB', 'GOOGLB', 'MSFTB'].includes(sym)) {
+                const bSym = sym.toLowerCase();
+                const bPriceEl = document.getElementById(`live-${bSym}-price`);
+                const bChgEl = document.getElementById(`live-${bSym}-chg`);
+                if (bPriceEl) bPriceEl.innerText = priceFormat;
+                if (bChgEl && typeof chg === 'number') {
+                    bChgEl.innerHTML = `24h: <strong class="ticker-chg ${chgClass}">${chgSign}${chg.toFixed(2)}%</strong>`;
+                }
+            }
+
             if (sym === 'BTC') {
                 btcUpdated = true;
                 const liveBtcEl = document.getElementById('liveBtcPrice');
@@ -2344,7 +2843,8 @@
             'solusdt', 'bnbusdt', 'arbusdt', 'aaveusdt', 'linkusdt',
             'renderusdt', 'fetusdt', 'suiusdt', 'enausdt', 'hypeusdt', 'opusdt',
             'tonusdt', 'ldousdt',
-            'qqqbusdt', 'crclbusdt', 'icpusdt'
+            'qqqbusdt', 'crclbusdt', 'icpusdt',
+            'nvdabusdt', 'avgobusdt', 'tsmbusdt', 'aaplbusdt', 'googlbusdt', 'msftbusdt'
         ];
         const streams = spotSymbols.map(s => `${s}@ticker`).join('/');
         const wsUrl = `wss://stream.binance.com:9443/stream?streams=${streams}`;
@@ -2905,6 +3405,19 @@
         syncMa200();
         fallbackPoll(); // 立即拉取所有代幣與 PAXG/QQQB 24hr 快照，達成毫秒級瞬間載入
         initWebSocketStream();
+
+        // 自動依照 URL Hash 切換對應策略分頁 (預設為 macro)
+        const initialHash = (location.hash || '').replace('#', '').toLowerCase();
+        if (['macro', 'alpha', 'bstock', 'dca'].includes(initialHash)) {
+            switchStrategy(initialHash);
+        } else {
+            switchStrategy('macro');
+        }
+        
+        // 初始載入一次 bStock 報價
+        fetchBStockPrices();
+        setInterval(fetchBStockPrices, 10000);
+
         // 每 5 分鐘同步一次 MA200
         setInterval(syncMa200, 300000);
     });
@@ -2950,6 +3463,5 @@
         });
     }
 </script>
-</div>
 </body>
 </html>
