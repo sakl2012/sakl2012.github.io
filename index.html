@@ -668,6 +668,7 @@
             </div>
         </div>
         <div class="market-metrics-grid" style="margin-top:0;">
+            <!-- BTC 宏觀雷達 -->
             <div class="metric-card">
                 <div class="metric-label" style="display: flex; align-items: center; gap: 5px;">
                     <img src="icons/btc.png" alt="BTC" style="width: 15px; height: 15px; border-radius: 50%;">
@@ -675,27 +676,39 @@
                 </div>
                 <div class="metric-val" id="liveBtcPrice">$--</div>
             </div>
-            <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.35);">
-                <div class="metric-label" style="color: #fcd34d; display: flex; align-items: center; gap: 5px;">
-                    <img src="icons/paxg.png" alt="PAXG" style="width: 15px; height: 15px; border-radius: 50%;">
-                    <span>PAXG 儲備金價</span>
-                </div>
-                <div class="metric-val" id="livePaxgPrice" style="color: #fbbf24;">$--</div>
-            </div>
             <div class="metric-card">
-                <div class="metric-label">200日均線 (MA200)</div>
+                <div class="metric-label">BTC 均線 (MA200)</div>
                 <div class="metric-val" id="liveMa200">$--</div>
             </div>
             <div class="metric-card" style="border-color: rgba(56, 189, 248, 0.35);">
-                <div class="metric-label" style="color: #7dd3fc;">當前比值 (BTC/MA200)</div>
+                <div class="metric-label" style="color: #7dd3fc;">BTC / MA200 比值</div>
                 <div class="metric-val" id="liveRatio" style="color: #38bdf8;">--</div>
             </div>
+
+            <!-- QQQB 科技宏觀雷達 -->
             <div class="metric-card" style="border-color: rgba(139, 92, 246, 0.35);">
                 <div class="metric-label" style="color: #c4b5fd; display: flex; align-items: center; gap: 5px;">
                     <span style="font-size: 13px;">🇺🇸</span>
                     <span>QQQB 納指現價</span>
                 </div>
                 <div class="metric-val" id="liveQqqbPrice" style="color: #a78bfa;">$--</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(139, 92, 246, 0.25);">
+                <div class="metric-label" style="color: #cbd5e1;">QQQB 均線 (MA200)</div>
+                <div class="metric-val" id="liveQqqbMa200" style="color: #e2e8f0;">$666.14</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(16, 185, 129, 0.35);">
+                <div class="metric-label" style="color: #6ee7b7;">QQQB / MA200 比值</div>
+                <div class="metric-val" id="liveQqqbRatio" style="color: #34d399;">1.106 <span style="font-size:11px; color:#10b981; font-weight:normal;">🟢 巡航</span></div>
+            </div>
+
+            <!-- PAXG 實體黃金儲備盾 -->
+            <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.35);">
+                <div class="metric-label" style="color: #fcd34d; display: flex; align-items: center; gap: 5px;">
+                    <img src="icons/paxg.png" alt="PAXG" style="width: 15px; height: 15px; border-radius: 50%;">
+                    <span>PAXG 儲備金價</span>
+                </div>
+                <div class="metric-val" id="livePaxgPrice" style="color: #fbbf24;">$--</div>
             </div>
         </div>
     </div>
@@ -975,6 +988,25 @@
             </div>
             <div class="strategy-banner-desc">
                 針對幣安代幣化股票（bStock）量身打造，嚴選全球萬億級市值、資產負債表極度健全的六大科技霸主。維持 <strong>100% 純股權純度（0% 黃金）</strong>，避免與加密端 PAXG 蓄水池重複配置造成資本拖累。兩大艦隊無重疊配置，經 280 組全空間窮舉實證，<strong>Calmar 收益回撤比 (0.93) 榮獲全市場第 1 名</strong>！
+            </div>
+        </div>
+
+        <!-- 美股科技宏觀熔斷雷達 (QQQB / MA200) -->
+        <div class="bstock-risk-radar" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 22px;">🛡️</span>
+                <div>
+                    <div style="font-weight: 700; font-size: 13.5px; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+                        <span>美股科技宏觀熔斷雷達 (QQQB / MA200)</span>
+                        <span id="qqqRiskBadge" style="font-size: 11px; padding: 2px 8px; border-radius: 9999px; background: #ecfdf5; color: #059669; font-weight: 700; border: 1px solid #a7f3d0;">🟢 多頭安全巡航</span>
+                    </div>
+                    <div style="font-size: 12px; color: #64748b; margin-top: 3px;">
+                        納指基準現價 <strong id="radarQqqPrice" style="color: #6366f1;">$736.53</strong> ｜ 200日均線 <strong id="radarQqqMa200" style="color: #475569;">$666.14</strong> ｜ 當前比值 <strong id="radarQqqRatio" style="color: #059669;">1.106</strong> (安全緩衝墊 <span id="radarQqqBuffer" style="font-weight: 600; color: #059669;">+10.6%</span>)
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 11.5px; color: #64748b; line-height: 1.5; text-align: right; max-width: 460px;">
+                ※ <strong>熔斷風控 SOP</strong>：當 QQQB / MA200 &ge; 1.00 時，正常開啟 2% 再平衡享受高 ROE 複利；若實體跌破 1.00 超過 3 日，觸發系統性防禦，暫停雙艦隊並轉入 USDT/PAXG 避險。
             </div>
         </div>
 
@@ -2735,6 +2767,79 @@
         }
     }
 
+    // --- QQQB 納指 MA200 科技宏觀雷達 ---
+    let qqqHistory200 = [];
+    let currentQqqMa200 = 666.14;
+    let currentQqqRatio = 1.1057;
+
+    async function syncQqqMa200() {
+        try {
+            const res = await fetch('./qqq_ma200.json');
+            if (res.ok) {
+                const data = await res.json();
+                if (data.history_200 && data.history_200.length >= 100) {
+                    qqqHistory200 = data.history_200;
+                }
+                if (data.ma200) currentQqqMa200 = parseFloat(data.ma200);
+                if (data.ratio) currentQqqRatio = parseFloat(data.ratio);
+            }
+        } catch(e) {
+            console.warn('Using default QQQ MA200:', e);
+        }
+        updateQqqMetrics();
+    }
+
+    function updateQqqMetrics() {
+        const liveQqqPrice = latestPrices['QQQB'] || 736.53;
+        if (qqqHistory200 && qqqHistory200.length >= 199) {
+            const sumPrior = qqqHistory200.slice(0, 199).reduce((a, b) => a + b, 0);
+            currentQqqMa200 = (sumPrior + liveQqqPrice) / 200;
+            currentQqqRatio = liveQqqPrice / currentQqqMa200;
+        }
+
+        const elMa = document.getElementById('liveQqqbMa200');
+        const elRatio = document.getElementById('liveQqqbRatio');
+        const elRadarPrice = document.getElementById('radarQqqPrice');
+        const elRadarMa = document.getElementById('radarQqqMa200');
+        const elRadarRatio = document.getElementById('radarQqqRatio');
+        const elRadarBuffer = document.getElementById('radarQqqBuffer');
+        const elRadarBadge = document.getElementById('qqqRiskBadge');
+
+        if (elMa) elMa.innerText = '$' + currentQqqMa200.toFixed(2);
+        
+        const isBull = currentQqqRatio >= 1.00;
+        const bufferPct = ((currentQqqRatio - 1.0) * 100).toFixed(1);
+
+        if (elRatio) {
+            elRatio.style.color = isBull ? '#34d399' : '#f87171';
+            elRatio.innerHTML = `${currentQqqRatio.toFixed(3)} <span style="font-size:11px; color:${isBull ? '#059669':'#dc2626'}; font-weight:normal;">${isBull ? '🟢 巡航' : '🚨 警戒'}</span>`;
+        }
+
+        if (elRadarPrice) elRadarPrice.innerText = '$' + liveQqqPrice.toFixed(2);
+        if (elRadarMa) elRadarMa.innerText = '$' + currentQqqMa200.toFixed(2);
+        if (elRadarRatio) {
+            elRadarRatio.innerText = currentQqqRatio.toFixed(3);
+            elRadarRatio.style.color = isBull ? '#059669' : '#dc2626';
+        }
+        if (elRadarBuffer) {
+            elRadarBuffer.innerText = (bufferPct >= 0 ? `+${bufferPct}%` : `${bufferPct}%`);
+            elRadarBuffer.style.color = isBull ? '#059669' : '#dc2626';
+        }
+        if (elRadarBadge) {
+            if (isBull) {
+                elRadarBadge.innerText = '🟢 多頭安全巡航';
+                elRadarBadge.style.background = '#ecfdf5';
+                elRadarBadge.style.color = '#059669';
+                elRadarBadge.style.borderColor = '#a7f3d0';
+            } else {
+                elRadarBadge.innerText = '🚨 破位防禦警戒';
+                elRadarBadge.style.background = '#fef2f2';
+                elRadarBadge.style.color = '#dc2626';
+                elRadarBadge.style.borderColor = '#fecaca';
+            }
+        }
+    }
+
     // --- 批次 DOM 更新調度器 (Batch DOM Updates via requestAnimationFrame) ---
     const pendingPriceUpdates = {};
     let rafScheduled = false;
@@ -2775,6 +2880,7 @@
             if (sym === 'QQQB') {
                 const qqqbMetricEl = document.getElementById('liveQqqbPrice');
                 if (qqqbMetricEl) qqqbMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
+                updateQqqMetrics();
             }
             if (sym === activeEquitySym) {
                 document.querySelectorAll('.cprice-eq-display').forEach(el => el.innerText = priceFormat);
@@ -3403,6 +3509,7 @@
         updateTablePriceRanges(currentMa200);
         renderTableColumns();
         syncMa200();
+        syncQqqMa200();
         fallbackPoll(); // 立即拉取所有代幣與 PAXG/QQQB 24hr 快照，達成毫秒級瞬間載入
         initWebSocketStream();
 
@@ -3418,8 +3525,9 @@
         fetchBStockPrices();
         setInterval(fetchBStockPrices, 10000);
 
-        // 每 5 分鐘同步一次 MA200
+        // 每 5 分鐘同步一次 MA200 (BTC & QQQ)
         setInterval(syncMa200, 300000);
+        setInterval(syncQqqMa200, 300000);
     });
 
     // --- PWA 支援與 Android 安裝邏輯 ---

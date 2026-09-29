@@ -1,0 +1,37 @@
+name: Update QQQ MA200 Daily
+
+on:
+  schedule:
+    # Runs at 22:00 UTC (after US market close) on Monday through Friday
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  update-qqq:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch and calculate QQQ MA200
+        run: |
+          python3 scripts/update_qqq_ma200.py
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add qqq_ma200.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore(data): auto-update QQQ MA200 daily metrics"
+            git push
+          fi
