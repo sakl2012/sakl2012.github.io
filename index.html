@@ -1612,7 +1612,7 @@
                     🟣 ENA/USDC (進攻衝鋒 · 9級深海 -33% 防禦)
                 </button>
                 <button id="subTabSol" onclick="switchFuturesToken('sol')" style="padding: 7px 16px; font-size: 12.5px; font-weight: 800; border-radius: 8px; border: 1px solid #cbd5e1; cursor: pointer; transition: all 0.2s; background: #ffffff; color: #475569;">
-                    🔵 SOL/USDC (公鏈基石 · 6級深海 -17% 防禦)
+                    🔵 SOL/USDC (公鏈基石 · 7級深海 -21% 防禦)
                 </button>
             </div>
 
@@ -1778,35 +1778,35 @@
                     <span class="c-pill" style="background:#eff6ff; color:#0284c7; border:1px solid #bae6fd; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">⚡ 3.0x 永續合約</span>
                     <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🎁 幣安 USDC 合約掛單 0.00% 免手續費 (0% Maker)</span>
                     <span class="c-pill" id="solPillFunds" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 175U 網格 ＋ 75U 開倉後手動追加 (總 250U 專款專用)</span>
-                    <span class="c-pill c-pill-gold">🎯 6級深海防禦 (-16.80% 覆蓋 · 99.8% 存活)</span>
-                    <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -18.00% 剛性止損 (實質穩留 86.2% 本金)</span>
+                    <span class="c-pill c-pill-gold">🎯 7級深海防禦 (-20.90% 覆蓋 · 99.85% 存活)</span>
+                    <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -22.00% 剛性止損 (實質穩留 75%+ 本金)</span>
                 </div>
 
                 <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 SOLUSDC 真實 1 分鐘 K 線完成 0.01 精度全量窮舉，專為 <strong id="solNarrativeCapital">250U 總本金</strong> 嚴格鎖定「<strong>覆蓋前 6 個月極限回調 ＋ 止損強制保全 8 成本金</strong>」所求解出之<strong>公鏈基石旗艦配置（6 級深海款）</strong>。全額納入機器人管理（<strong>175U 網格開倉 ＋ 75U 啟動後手動追加鎖定保護</strong>）。在將抗跌深度拉深至 <strong>-16.80%</strong> 的同時，實測累積 <strong>480+ 輪止盈、年化 APR 高達 +210%</strong>！若遭遇極端插針跌破 -18.00% 止損線，單筆最大損失嚴格限制在 <strong id="solNarrativeLoss">$34.50U</strong> 以內，實質穩留 <strong id="solNarrativePreserve">$215.50U（86.2% 本金）</strong>，安全邊際極高！
+                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 SOLUSDC 真實 1 分鐘 K 線（27 萬根，187.5 天）完成全量窮舉，專為 <strong id="solNarrativeCapital">250U 總本金</strong> 嚴格鎖定「<strong>覆蓋前 6 個月極限回調 ＋ 止損強制保全 75%+ 本金</strong>」所求解出之<strong>公鏈基石黑馬旗艦（7 級深海款）</strong>。全額納入機器人管理（<strong>175U 網格開倉 ＋ 75U 啟動後手動追加鎖定保護</strong>）。在將抗跌深度拉深至 <strong>-20.90%</strong> 的同時，實測累積 <strong>674 輪止盈、半年淨利潤高達 <span id="solNarrativeProfit">+$117.53 USDC (+91.5% APR)</span></strong>！若遭遇極端插針跌破 -22.00% 止損線，單筆最大損失嚴格限制在 <strong id="solNarrativeLoss">$63.10U</strong> 以內，實質穩留 <strong id="solNarrativePreserve">$186.90U（74.8% 本金）</strong>，安全邊際極高！
                 </div>
 
                 <!-- SOL 四大核心量化指標卡 -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px;">
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                         <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">💰 實盤淨利潤 (年化折合)</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #0284c7;"><span id="solCardProfit">+$178.50</span> <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+214.2% APR)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">6級深海防禦，實測 100% 零爆倉存活</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #0284c7;"><span id="solCardProfit">+$117.53</span> <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+91.5% APR)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">7級深海防禦，實測 100% 零爆倉存活</div>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                         <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">⚡ 完成套利總輪次 (勝率 / 週轉)</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #0f172a;">486 輪 <span style="font-size: 12px; font-weight: 700; color: #0284c7;">(99.6% 勝率)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">日均 4.0 輪，均價反彈 0.55% 秒止盈</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #0f172a;">674 輪 <span style="font-size: 12px; font-weight: 700; color: #0284c7;">(99.85% 勝率)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">日均 3.6 輪，均價反彈 0.50% 秒止盈</div>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                         <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛡️ 最大回撤 / 抗跌深度覆蓋</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #10b981;">18.25% <span style="font-size: 12px; font-weight: 700; color: #059669;">(覆蓋 -16.80%)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">最低淨值 <span id="solCardMinEq">$215.50</span>，包容 SOL 前6個月所有大幅洗盤</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #10b981;">34.34% <span style="font-size: 12px; font-weight: 700; color: #059669;">(覆蓋 -20.90%)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">最低淨值 <span id="solCardMinEq">$186.89</span>，包容 SOL 前6個月所有大幅洗盤</div>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛑 剛性止損保本線 (極限保全 86% 本金)</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #dc2626;">-18.00% 止損 <span style="font-size: 12px; font-weight: 700; color: #059669;">(穩留 86.2% 本金)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">跌破時單筆損 <span id="solCardLoss">$34.50U</span>，帳戶實留 <span id="solCardPreserve">$215.50U+</span></div>
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛑 剛性止損保本線 (穩留 75%+ 本金)</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #dc2626;">-22.00% 止損 <span style="font-size: 12px; font-weight: 700; color: #059669;">(半年僅 1 次觸發)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">跌破時單筆損 <span id="solCardLoss">$63.10U</span>，帳戶實留 <span id="solCardPreserve">$186.90U+</span></div>
                     </div>
                 </div>
 
@@ -1843,15 +1843,15 @@
                                 <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【價格設定】</td></tr>
                                 <tr>
                                     <td><strong>價格下跌步驟</strong></td>
-                                    <td><strong style="color: #059669;">1.15%</strong></td>
-                                    <td><strong style="color: #059669;">1.15%</strong></td>
+                                    <td><strong style="color: #059669;">1.00%</strong></td>
+                                    <td><strong style="color: #059669;">1.00%</strong></td>
                                     <td>對齊 SOL 日內標準差，平滑捕捉微幅回調</td>
                                 </tr>
                                 <tr>
                                     <td><strong>每輪止盈</strong></td>
-                                    <td><strong style="color: #0284c7;">0.55%</strong></td>
-                                    <td><strong style="color: #0284c7;">0.55%</strong></td>
-                                    <td>SOL 波動較穩，0.55% 止盈兼顧利潤厚度與高週轉</td>
+                                    <td><strong style="color: #0284c7;">0.50%</strong></td>
+                                    <td><strong style="color: #0284c7;">0.50%</strong></td>
+                                    <td>SOL 波動較穩，0.50% 止盈兼顧利潤厚度與高週轉</td>
                                 </tr>
                                 <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【投資 (含槓桿)】</td></tr>
                                 <tr>
@@ -1868,21 +1868,21 @@
                                 </tr>
                                 <tr>
                                     <td><strong>DCA 訂單保證金</strong></td>
-                                    <td><strong style="color: #d97706;" id="solTblDcaInt">28.00 USDC</strong></td>
-                                    <td><strong style="color: #d97706;" id="solTblDcaExact">28.00 USDC</strong></td>
-                                    <td>6 筆高密度等額加倉，強力拉低持倉均價</td>
+                                    <td><strong style="color: #d97706;" id="solTblDcaInt">24.00 USDC</strong></td>
+                                    <td><strong style="color: #d97706;" id="solTblDcaExact">24.00 USDC</strong></td>
+                                    <td>7 筆高密度等額加倉，強力拉低持倉均價</td>
                                 </tr>
                                 <tr>
                                     <td><strong>DCA 訂單數量上限</strong></td>
-                                    <td><strong>6</strong></td>
-                                    <td><strong>6</strong></td>
-                                    <td>6 級加倉深度達 -16.80%，包容 SOL 前 6 個月極限回調</td>
+                                    <td><strong>7</strong></td>
+                                    <td><strong>7</strong></td>
+                                    <td>7 級加倉深度達 -20.90%，包容 SOL 前 6 個月極限回調</td>
                                 </tr>
                                 <tr>
                                     <td><strong>投入保證金 (系統自動計算)</strong></td>
                                     <td><strong style="color: #0f172a;" id="solTblOrderInt">175.00 USDC</strong></td>
                                     <td><strong style="color: #0f172a;" id="solTblOrderExact">175.00 USDC</strong></td>
-                                    <td>基礎 + (加倉 × 6) 動態開倉池</td>
+                                    <td>基礎 + (加倉 × 7) 動態開倉池</td>
                                 </tr>
                                 <tr>
                                     <td><strong>自動追加保證金 (建立時)</strong></td>
@@ -1899,9 +1899,9 @@
                                 <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】</td></tr>
                                 <tr>
                                     <td><strong>價格偏差乘數</strong></td>
-                                    <td><strong style="color: #059669;">1.26</strong></td>
-                                    <td><strong style="color: #059669;">1.26</strong></td>
-                                    <td>幾何擴張加倉間距，6 級累計深度達 <strong>-16.80%</strong></td>
+                                    <td><strong style="color: #059669;">1.25</strong></td>
+                                    <td><strong style="color: #059669;">1.25</strong></td>
+                                    <td>幾何擴張加倉間距，7 級累計深度達 <strong>-20.90%</strong></td>
                                 </tr>
                                 <tr>
                                     <td><strong>DCA 訂單規模乘數</strong></td>
@@ -1918,9 +1918,9 @@
                                 </tr>
                                 <tr>
                                     <td><strong>[✓] 止損 ➔ 止損目標</strong></td>
-                                    <td><strong style="color: #dc2626;">18.00% (必填！勾選止損)</strong></td>
-                                    <td><strong style="color: #dc2626;">18.00% (必填！勾選止損)</strong></td>
-                                    <td>跌破 6 級深海斷腕，單筆僅損 <span id="solTblLoss">$34.50U</span>，<strong>實質穩留 <span id="solTblPreserve">$215.50U+</span> (86.2% 本金)</strong></td>
+                                    <td><strong style="color: #dc2626;">22.00% (必填！勾選止損)</strong></td>
+                                    <td><strong style="color: #dc2626;">22.00% (必填！勾選止損)</strong></td>
+                                    <td>跌破 7 級深海斷腕，單筆僅損 <span id="solTblLoss">$63.10U</span>，<strong>實質穩留 <span id="solTblPreserve">$186.90U+</span> (74.8% 本金)</strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1934,8 +1934,8 @@
                 1. <strong>全額專款專用（建立時不勾選自動 ➔ 開倉後手動追加保證金）</strong>：拖動上方滑桿可隨時等比試算任意資金規模；建立機器人時投入保證金照表填入，「自動追加保證金」保持<strong>不勾選</strong>；啟動開倉後，立即至機器人詳情頁點擊「追加保證金」，手動填入對應追加額，將防禦安全墊一次性鎖入機器人內部，徹底隔離全域合約風險！<br>
                 2. <strong>雙幣屬性與艦隊互補優勢</strong>：<br>
                    • <strong>ENA (進攻衝鋒)</strong>：DeFi 收益龍頭，9 級深海網格 (-32.98%) ＋ 35% 止損，年化 APR 高達 +648%，穩留 80.2% 本金！<br>
-                   • <strong>SOL (基石重盾)</strong>：公鏈王者，流動性與抗跌性極佳，6 級深海網格 (-16.80%) ＋ 18% 止損，勝率 99.6%，最大回撤僅 18.25%，穩留 86.2% 本金！<br>
-                3. <strong>剛性止損與等止跌重開 SOP</strong>：若遇罕見極端黑天鵝，跌破止損線時果斷斷腕，單筆損失嚴格壓在 14%~20% 以內（實質留存 80%~86% 現金），冷卻待盤面走平築底後再行重啟！填寫完成後點擊最下方【建立 (做多)】按鈕即可啟動。
+                   • <strong>SOL (基石重盾)</strong>：公鏈王者，流動性與抗跌性極佳，7 級深海網格 (-20.90%) ＋ 22% 止損，勝率 99.85%，半年淨賺 +$117.53U，穩留 75%+ 本金！<br>
+                3. <strong>剛性止損與等止跌重開 SOP</strong>：若遇罕見極端黑天鵝，跌破止損線時果斷斷腕，單筆損失嚴格壓在 20%~25% 以內（實質留存 75%~80%+ 現金），冷卻待盤面走平築底後再行重啟！填寫完成後點擊最下方【建立 (做多)】按鈕即可啟動。
             </div>
         </div>
         </div>
@@ -2620,33 +2620,33 @@
         const enaTblPresEl = document.getElementById('enaTblPreserve');
         if (enaTblPresEl) enaTblPresEl.innerText = `$${enaPreserveMin}U+`;
 
-        // 2. SOL/USDC dynamic updates (6-tier deep sea: 175U grid + 75U add = 250U)
+        // 2. SOL/USDC dynamic updates (7-tier deep sea: 175U grid + 75U add = 250U)
         const solOrderInt = Math.round(175 * s);
         const solAddInt = Math.round(cap - solOrderInt);
         const solBaseInt = Math.round(7 * s);
-        const solDcaInt = Math.round((solOrderInt - solBaseInt) / 6);
-        const solOrderIntFinal = solBaseInt + solDcaInt * 6;
+        const solDcaInt = Math.round((solOrderInt - solBaseInt) / 7);
+        const solOrderIntFinal = solBaseInt + solDcaInt * 7;
         const solAddIntFinal = cap - solOrderIntFinal;
 
         const solOrderExact = (175.00 * s).toFixed(2);
         const solAddExact = (75.00 * s).toFixed(2);
         const solBaseExact = (7.00 * s).toFixed(2);
-        const solDcaExact = (28.00 * s).toFixed(2);
+        const solDcaExact = (24.00 * s).toFixed(2);
 
-        const solProfit = (178.50 * s).toFixed(2);
-        const solLoss = (34.50 * s).toFixed(2);
-        const solPreserve = (cap - 34.50 * s).toFixed(2);
+        const solProfit = (117.53 * s).toFixed(2);
+        const solLoss = (63.10 * s).toFixed(2);
+        const solPreserve = (cap - 63.10 * s).toFixed(2);
 
         const solPill = document.getElementById('solPillFunds');
         if (solPill) solPill.innerText = `🛡️ ${solOrderIntFinal}U 網格 ＋ ${solAddIntFinal}U 開倉後手動追加 (總 ${Math.round(cap)}U 專款專用)`;
         const solNarrCap = document.getElementById('solNarrativeCapital');
         if (solNarrCap) solNarrCap.innerText = `${Math.round(cap)}U 總本金`;
         const solNarrProf = document.getElementById('solNarrativeProfit');
-        if (solNarrProf) solNarrProf.innerText = `+$${solProfit} USDC (+214.2% APR)`;
+        if (solNarrProf) solNarrProf.innerText = `+$${solProfit} USDC (+91.5% APR)`;
         const solNarrLoss = document.getElementById('solNarrativeLoss');
         if (solNarrLoss) solNarrLoss.innerText = `$${solLoss}U`;
         const solNarrPres = document.getElementById('solNarrativePreserve');
-        if (solNarrPres) solNarrPres.innerText = `$${solPreserve}U (86.20% 本金)`;
+        if (solNarrPres) solNarrPres.innerText = `$${solPreserve}U (74.76% 本金)`;
 
         const solCardProf = document.getElementById('solCardProfit');
         if (solCardProf) solCardProf.innerText = `+$${solProfit}`;
