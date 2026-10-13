@@ -1349,11 +1349,11 @@
         <div class="strategy-banner" style="background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%); border-color: #0369a1;">
             <div class="strategy-banner-title" style="color: #7dd3fc;">
                 <span>🤖 策略四：加密貨幣 DCA (現貨/合約被動現金流)</span>
-                <span style="font-size: 11.5px; background: rgba(125, 211, 252, 0.15); color: #bae6fd; border: 1px solid rgba(125, 211, 252, 0.3); padding: 2px 8px; border-radius: 9999px;">現貨零爆倉 ＋ 合約8成保本</span>
+                <span style="font-size: 11.5px; background: rgba(125, 211, 252, 0.15); color: #bae6fd; border: 1px solid rgba(125, 211, 252, 0.3); padding: 2px 8px; border-radius: 9999px;">現貨零爆倉 ＋ 合約6.4成保本</span>
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.15); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 700; cursor: pointer;">💰 查看起步本金 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                專為產生穩定被動現金流設計的量化網格系統。提供 <strong>現貨 SOL/FDUSD DCA（零爆倉零割肉 · 0% 手續費 · 12級深海 -29.8% 防禦）</strong> 與 <strong>合約艦隊 ENA / SOL DCA（250U 基準 · 3x 逐倉 · 80%+ 本金保全剛性止損）</strong> 雙模態配置，內建等比動態換算滑桿，一鍵精確計算實盤開單參數。
+                專為產生穩定被動現金流設計的量化網格系統。提供 <strong>現貨 SOL/FDUSD DCA（零爆倉零割肉 · 0% 手續費 · 12級深海 -26.9% 防禦）</strong> 與 <strong>合約旗艦 ENA/USDC DCA（250U 基準 · 3x 逐倉 · 9級深海 -32.35% 防禦 · 64%+ 本金保全剛性止損）</strong> 雙模態配置，內建等比動態換算滑桿，一鍵精確計算實盤開單參數。
             </div>
         </div>
 
@@ -1370,7 +1370,7 @@
                     🟢 現貨版本：SOL/FDUSD (250U 零爆倉)
                 </button>
                 <button id="dcaTabFutures" onclick="switchDcaTab('futures')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748b;">
-                    ⚡ 合約艦隊：ENA / SOL (250U · 8成保本)
+                    ⚡ 合約旗艦：ENA/USDC (250U · 9級深海防禦)
                 </button>
             </div>
         </div>
@@ -1570,14 +1570,14 @@
             </div>
         </div>
 
-                <!-- ======================= 模態二：合約艦隊 (ENA / SOL / SUI 250U 8成保本款) ======================= -->
+                <!-- ======================= 模態二：合約旗艦 (ENA/USDC 250U 9級深海防禦款) ======================= -->
         <div id="dcaContentFutures" style="display: none;">
             <!-- ================= 🎚️ 資金等比即時換算滑桿與快捷列 ================= -->
             <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 15px; font-weight: 900; color: #0f172a;">🎚️ 資金等比即時換算器 (總投資額)</span>
-                        <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">拖動滑桿即時計算所有幣種</span>
+                        <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">拖動滑桿即時計算實盤參數</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 6px;">
                         <span style="font-size: 12.5px; font-weight: 700; color: #64748b;">自訂總資金：</span>
@@ -1606,17 +1606,7 @@
                 </div>
             </div>
 
-            <!-- 二級幣種切換 Tab -->
-            <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; background: #f8fafc; padding: 6px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                <button id="subTabEna" onclick="switchFuturesToken('ena')" style="padding: 7px 16px; font-size: 12.5px; font-weight: 800; border-radius: 8px; border: 1px solid #7c3aed; cursor: pointer; transition: all 0.2s; background: #7c3aed; color: #ffffff; box-shadow: 0 2px 8px rgba(124,58,237,0.3);">
-                    🟣 ENA/USDC (進攻衝鋒 · 9級深海 -33% 防禦)
-                </button>
-                <button id="subTabSol" onclick="switchFuturesToken('sol')" style="padding: 7px 16px; font-size: 12.5px; font-weight: 800; border-radius: 8px; border: 1px solid #cbd5e1; cursor: pointer; transition: all 0.2s; background: #ffffff; color: #475569;">
-                    🔵 SOL/USDC (公鏈基石 · 7級深海 -21% 防禦)
-                </button>
-            </div>
-
-            <!-- ======================= 標的一：ENA/USDC (進攻衝鋒款) ======================= -->
+            <!-- ======================= 合約旗艦：ENA/USDC (9級深海防禦款) ======================= -->
             <div id="futuresTokenEna" style="display: block;">
                 <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
                     <span class="c-pill" style="background:#f3e8ff; color:#7c3aed; border:1px solid #d8b4fe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">⚡ 3.0x 永續合約</span>
@@ -1772,170 +1762,13 @@
                 </div>
             </div>
 
-            <!-- ======================= 標的二：SOL/USDC (公鏈基石款) ======================= -->
-            <div id="futuresTokenSol" style="display: none;">
-                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
-                    <span class="c-pill" style="background:#eff6ff; color:#0284c7; border:1px solid #bae6fd; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">⚡ 3.0x 永續合約</span>
-                    <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🎁 幣安 USDC 合約掛單 0.00% 免手續費 (0% Maker)</span>
-                    <span class="c-pill" id="solPillFunds" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 175U 網格 ＋ 75U 開倉後手動追加 (總 250U 專款專用)</span>
-                    <span class="c-pill c-pill-gold">🎯 7級深海防禦 (-15.05% 覆蓋 · 99.86% 存活)</span>
-                    <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -20.00% 剛性止損 (實質穩留 77.3%+ 本金)</span>
-                </div>
-
-                <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 SOLUSDC 真實 1 分鐘 K 線（27 萬根，187.5 天）完成 0.01 精度全量窮舉，專為 <strong id="solNarrativeCapital">250U 總本金</strong> 嚴格鎖定「<strong>覆蓋前 6 個月極限回調 ＋ 止損強制保全 77%+ 本金</strong>」所求解出之<strong>公鏈基石黑馬旗艦（7 級深海款）</strong>。全額納入機器人管理（<strong>175U 網格開倉 ＋ 75U 啟動後手動追加鎖定保護</strong>）。在覆蓋 <strong>-15.05%</strong> 的同時，實測累積 <strong>710 輪止盈、半年淨利潤高達 <span id="solNarrativeProfit">+$137.56 USDC (+107.1% APR)</span></strong>！若遭遇極端插針跌破 -20.00% 止損線，單筆最大損失嚴格限制在 <strong id="solNarrativeLoss">$56.65U</strong> 以內，實質穩留 <strong id="solNarrativePreserve">$193.35U（77.3% 本金）</strong>，安全邊際極高！
-                </div>
-
-                <!-- SOL 四大核心量化指標卡 -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px;">
-                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">💰 實盤淨利潤 (年化折合)</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #0284c7;"><span id="solCardProfit">+$137.56</span> <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+107.1% APR)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">7級深海防禦，實測 100% 零爆倉存活</div>
-                    </div>
-                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">⚡ 完成套利總輪次 (勝率 / 週轉)</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #0f172a;">710 輪 <span style="font-size: 12px; font-weight: 700; color: #0284c7;">(99.86% 勝率)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">日均 3.8 輪，均價反彈 0.50% 秒止盈</div>
-                    </div>
-                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛡️ 最大回撤 / 抗跌深度覆蓋</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #10b981;">31.20% <span style="font-size: 12px; font-weight: 700; color: #059669;">(覆蓋 -15.05%)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">最低淨值 <span id="solCardMinEq">$193.35</span>，包容 SOL 前6個月所有大幅洗盤</div>
-                    </div>
-                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛑 剛性止損保本線 (穩留 77.3%+ 本金)</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #dc2626;">-20.00% 止損 <span style="font-size: 12px; font-weight: 700; color: #059669;">(半年僅 1 次觸發)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">跌破時單筆損 <span id="solCardLoss">$56.65U</span>，帳戶實留 <span id="solCardPreserve">$193.35U+</span></div>
-                    </div>
-                </div>
-
-                <!-- SOL 參數表 -->
-                <div style="margin-top: 14px;">
-                    <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                        <span>📋 幣安 App【SOL/USDC 合約 DCA】<span class="dca-table-cap-title">250U</span> 填寫對照表</span>
-                        <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(幣安 App ➔ 交易 ➔ 機器人 ➔ 合約 DCA ➔ 手動創建)</span>
-                    </div>
-                    <div class="matrix-table-wrap">
-                        <table class="matrix-table" style="font-size: 12.5px;">
-                            <thead>
-                                <tr style="background: #1e293b;">
-                                    <th>設定欄位 (對準幣安 App)</th>
-                                    <th>推薦好填整數解 (首選)</th>
-                                    <th>極致精確小數解</th>
-                                    <th>量化設計考量與運作機制</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【幣種與交易方向】</td></tr>
-                                <tr>
-                                    <td><strong>交易對 (Pair)</strong></td>
-                                    <td><strong style="color: #0284c7;">SOLUSDC (永續)</strong></td>
-                                    <td><strong style="color: #0284c7;">SOLUSDC (永續)</strong></td>
-                                    <td>享幣安 USDC 本位合約 <strong>0.00% Maker 免手續費</strong>，掛單 0 磨損！</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>方向 (按鈕切換)</strong></td>
-                                    <td><strong style="color: #059669;">做多 (綠色按鈕)</strong></td>
-                                    <td><strong style="color: #059669;">做多 (綠色按鈕)</strong></td>
-                                    <td>分批加倉攤低成本，均價反彈限價止盈</td>
-                                </tr>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【價格設定】</td></tr>
-                                <tr>
-                                    <td><strong>價格下跌步驟</strong></td>
-                                    <td><strong style="color: #059669;">1.03%</strong></td>
-                                    <td><strong style="color: #059669;">1.03%</strong></td>
-                                    <td>對齊 SOL 日內標準差，平滑捕捉微幅回調</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>每輪止盈</strong></td>
-                                    <td><strong style="color: #0284c7;">0.50%</strong></td>
-                                    <td><strong style="color: #0284c7;">0.50%</strong></td>
-                                    <td>SOL 波動較穩，0.50% 止盈兼顧利潤厚度與高週轉</td>
-                                </tr>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【投資 (含槓桿)】</td></tr>
-                                <tr>
-                                    <td><strong>槓桿倍數</strong></td>
-                                    <td><strong style="color: #d97706;">3x</strong></td>
-                                    <td><strong style="color: #d97706;">3x</strong></td>
-                                    <td>點擊「投資」右側切換；鎖死逐倉 3x 保障資金安全</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>基礎訂單保證金</strong></td>
-                                    <td><strong style="color: #d97706;" id="solTblBaseInt">7.00 USDC</strong></td>
-                                    <td><strong style="color: #d97706;" id="solTblBaseExact">7.00 USDC</strong></td>
-                                    <td>初始建倉保證金 (名義面值 3x)，頂部極低曝險</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>DCA 訂單保證金</strong></td>
-                                    <td><strong style="color: #d97706;" id="solTblDcaInt">24.00 USDC</strong></td>
-                                    <td><strong style="color: #d97706;" id="solTblDcaExact">24.00 USDC</strong></td>
-                                    <td>7 筆高密度等額加倉，強力拉低持倉均價</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>DCA 訂單數量上限</strong></td>
-                                    <td><strong>7</strong></td>
-                                    <td><strong>7</strong></td>
-                                    <td>7 級加倉深度達 -15.05%，包容 SOL 前 6 個月極限回調</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>投入保證金 (系統自動計算)</strong></td>
-                                    <td><strong style="color: #0f172a;" id="solTblOrderInt">175.00 USDC</strong></td>
-                                    <td><strong style="color: #0f172a;" id="solTblOrderExact">175.00 USDC</strong></td>
-                                    <td>基礎 + (加倉 × 7) 動態開倉池</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>自動追加保證金 (建立時)</strong></td>
-                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
-                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
-                                    <td>建立時<strong>不勾選</strong>，避免系統不可控地自動從錢包抽調資金</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>手動追加保證金 (開倉後)</strong></td>
-                                    <td><strong style="color: #059669;" id="solTblAddInt">手動追加 75.00 USDC</strong></td>
-                                    <td><strong style="color: #059669;" id="solTblAddExact">手動追加 75.00 USDC</strong></td>
-                                    <td><strong>【核心操作】開倉後於機器人詳情手動追加，安全墊一次鎖入！</strong></td>
-                                </tr>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】</td></tr>
-                                <tr>
-                                    <td><strong>價格偏差乘數</strong></td>
-                                    <td><strong style="color: #059669;">1.24</strong></td>
-                                    <td><strong style="color: #059669;">1.24</strong></td>
-                                    <td>幾何擴張加倉間距，7 級累計深度達 <strong>-15.05%</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>DCA 訂單規模乘數</strong></td>
-                                    <td><strong>1.00 (等額)</strong></td>
-                                    <td><strong>1.00 (等額)</strong></td>
-                                    <td>維持 1.00 等額部位，避免深海倉位過重</td>
-                                </tr>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ 條件與風控】</td></tr>
-                                <tr>
-                                    <td><strong>啟動條件 / 停止條件</strong></td>
-                                    <td><span style="color: #64748b;">不勾選 (留空)</span></td>
-                                    <td><span style="color: #64748b;">不勾選 (留空)</span></td>
-                                    <td>立即啟動，全天候 7x24 高頻運轉</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>[✓] 止損 ➔ 止損目標</strong></td>
-                                    <td><strong style="color: #dc2626;">20.00% (必填！勾選止損)</strong></td>
-                                    <td><strong style="color: #dc2626;">20.00% (必填！勾選止損)</strong></td>
-                                    <td>跌破 7 級深海斷腕，單筆僅損 <span id="solTblLoss">$56.65U</span>，<strong>實質穩留 <span id="solTblPreserve">$193.35U+</span> (77.3% 本金)</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 全局艦隊審計註釋 -->
+            <!-- 全局旗艦審計註釋 -->
             <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 12px; line-height: 1.6; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
-                ※ <strong>合約艦隊資金等比動態換算與 8 成本金保全審計</strong>：<br>
+                ※ <strong>合約旗艦資金等比動態換算與 6.4 成本金保全審計</strong>：<br>
                 1. <strong>全額專款專用（建立時不勾選自動 ➔ 開倉後手動追加保證金）</strong>：拖動上方滑桿可隨時等比試算任意資金規模；建立機器人時投入保證金照表填入，「自動追加保證金」保持<strong>不勾選</strong>；啟動開倉後，立即至機器人詳情頁點擊「追加保證金」，手動填入對應追加額，將防禦安全墊一次性鎖入機器人內部，徹底隔離全域合約風險！<br>
-                2. <strong>雙幣屬性與艦隊互補優勢</strong>：<br>
-                   • <strong>ENA (進攻衝鋒)</strong>：DeFi 收益龍頭，9 級深海網格 (-32.35%) ＋ 35% 止損，年化 APR 高達 +260.0%（半年淨賺 +$343.15U），穩留 64.0% 本金！<br>
-                   • <strong>SOL (基石重盾)</strong>：公鏈王者，流動性與抗跌性極佳，7 級深海網格 (-15.05%) ＋ 20% 止損，勝率 99.86%，半年淨賺 +$137.56U（年化 +107.1%），穩留 77.3% 本金！<br>
-                3. <strong>剛性止損與等止跌重開 SOP</strong>：若遇罕見極端黑天鵝，跌破止損線時果斷斷腕，單筆損失嚴格壓在 20%~25% 以內（實質留存 75%~80%+ 現金），冷卻待盤面走平築底後再行重啟！填寫完成後點擊最下方【建立 (做多)】按鈕即可啟動。
+                2. <strong>旗艦標的優勢</strong>：<br>
+                   • <strong>ENA/USDC (進攻旗艦)</strong>：DeFi 收益龍頭，9 級深海網格 (-32.35%) ＋ 35% 剛性止損，年化 APR 高達 +260.0%（半年淨賺 +$343.15U），極端行情穩守 64.03% 本金！<br>
+                3. <strong>剛性止損與等止跌重開 SOP</strong>：若遇罕見極端黑天鵝，跌破 -35.00% 止損線時果斷斷腕，單筆損失嚴格壓在 36% 以內（實質留存 64.03%+ 現金），冷卻待盤面走平築底後再行重啟！填寫完成後點擊最下方【建立 (做多)】按鈕即可啟動。
             </div>
         </div>
         </div>
@@ -2117,9 +1950,9 @@
                             <tr>
                                 <td><strong>策略四：加密貨幣 DCA</strong></td>
                                 <td>
-                                    <strong>現貨 SOL DCA ＋ 合約 DCA</strong><br>
-                                    • 現貨 SOL DCA 網格<br>
-                                    • 合約 DCA (ENA / SOL 儲備金)
+                                    <strong>現貨 SOL DCA ＋ 合約旗艦 DCA</strong><br>
+                                    • 現貨 SOL DCA 網格 (零爆倉)<br>
+                                    • 合約 ENA/USDC DCA (9級深海防禦)
                                 </td>
                                 <td>
                                     <strong style="color: #dc2626;">300 USDT</strong><br>
@@ -2127,10 +1960,10 @@
                                 </td>
                                 <td>
                                     <strong style="color: #059669; font-size: 13.5px;">500 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(現貨 200U + 合約 300U)</span>
+                                    <span style="font-size: 11px; color: #64748b;">(現貨 250U + 合約 250U)</span>
                                 </td>
                                 <td>
-                                    提供專屬隔離防禦儲備池，覆蓋前 6 個月極端回調與插針補倉需求，確保嚴格保留 80%~86% 本金的剛性止損防線不被擊穿。
+                                    提供專屬隔離防禦儲備池，覆蓋前 6 個月極端去槓桿深度與插針補倉需求，確保嚴格保留 64%+ 本金的剛性止損防線不被擊穿。
                                 </td>
                             </tr>
                             <tr style="background: #f8fafc; font-weight: 800;">
@@ -2396,31 +2229,6 @@
         }
     }
 
-    // --- 合約 DCA 艦隊二級幣種切換函數 (ENA / SOL) ---
-    function switchFuturesToken(token) {
-        const tokens = ['ena', 'sol'];
-        const colors = { ena: '#7c3aed', sol: '#0284c7' };
-        tokens.forEach(t => {
-            const btn = document.getElementById('subTab' + t.charAt(0).toUpperCase() + t.slice(1));
-            const content = document.getElementById('futuresToken' + t.charAt(0).toUpperCase() + t.slice(1));
-            if (btn && content) {
-                if (t === token) {
-                    btn.style.background = colors[t];
-                    btn.style.color = '#ffffff';
-                    btn.style.borderColor = colors[t];
-                    btn.style.boxShadow = `0 2px 8px ${colors[t]}4d`;
-                    content.style.display = 'block';
-                } else {
-                    btn.style.background = '#ffffff';
-                    btn.style.color = '#475569';
-                    btn.style.borderColor = '#cbd5e1';
-                    btn.style.boxShadow = 'none';
-                    content.style.display = 'none';
-                }
-            }
-        });
-    }
-
 
     // --- 現貨 DCA 資金等比即時動態換算引擎 ---
     function setDcaSpotCapital(amount) {
@@ -2618,63 +2426,7 @@
         const enaTblPresEl = document.getElementById('enaTblPreserve');
         if (enaTblPresEl) enaTblPresEl.innerText = `$${enaMinEq}U+`;
 
-        // 2. SOL/USDC dynamic updates (7-tier deep sea: 175U grid + 75U add = 250U)
-        const solOrderInt = Math.round(175 * s);
-        const solAddInt = Math.round(cap - solOrderInt);
-        const solBaseInt = Math.round(7 * s);
-        const solDcaInt = Math.round((solOrderInt - solBaseInt) / 7);
-        const solOrderIntFinal = solBaseInt + solDcaInt * 7;
-        const solAddIntFinal = cap - solOrderIntFinal;
-
-        const solOrderExact = (175.00 * s).toFixed(2);
-        const solAddExact = (75.00 * s).toFixed(2);
-        const solBaseExact = (7.00 * s).toFixed(2);
-        const solDcaExact = (24.00 * s).toFixed(2);
-
-        const solProfit = (137.56 * s).toFixed(2);
-        const solLoss = (56.65 * s).toFixed(2);
-        const solPreserve = (193.35 * s).toFixed(2);
-
-        const solPill = document.getElementById('solPillFunds');
-        if (solPill) solPill.innerText = `🛡️ ${solOrderIntFinal}U 網格 ＋ ${solAddIntFinal}U 開倉後手動追加 (總 ${Math.round(cap)}U 專款專用)`;
-        const solNarrCap = document.getElementById('solNarrativeCapital');
-        if (solNarrCap) solNarrCap.innerText = `${Math.round(cap)}U 總本金`;
-        const solNarrProf = document.getElementById('solNarrativeProfit');
-        if (solNarrProf) solNarrProf.innerText = `+$${solProfit} USDC (+107.1% APR)`;
-        const solNarrLoss = document.getElementById('solNarrativeLoss');
-        if (solNarrLoss) solNarrLoss.innerText = `$${solLoss}U`;
-        const solNarrPres = document.getElementById('solNarrativePreserve');
-        if (solNarrPres) solNarrPres.innerText = `$${solPreserve}U (77.34% 本金)`;
-
-        const solCardProf = document.getElementById('solCardProfit');
-        if (solCardProf) solCardProf.innerText = `+$${solProfit}`;
-        const solCardMinEq = document.getElementById('solCardMinEq');
-        if (solCardMinEq) solCardMinEq.innerText = `$${solPreserve}`;
-        const solCardLoss = document.getElementById('solCardLoss');
-        if (solCardLoss) solCardLoss.innerText = `$${solLoss}U`;
-        const solCardPres = document.getElementById('solCardPreserve');
-        if (solCardPres) solCardPres.innerText = `$${solPreserve}U+`;
-
-        const solTblBaseIntEl = document.getElementById('solTblBaseInt');
-        if (solTblBaseIntEl) solTblBaseIntEl.innerText = `${solBaseInt.toFixed(2)} USDC`;
-        const solTblBaseExactEl = document.getElementById('solTblBaseExact');
-        if (solTblBaseExactEl) solTblBaseExactEl.innerText = `${solBaseExact} USDC`;
-        const solTblDcaIntEl = document.getElementById('solTblDcaInt');
-        if (solTblDcaIntEl) solTblDcaIntEl.innerText = `${solDcaInt.toFixed(2)} USDC`;
-        const solTblDcaExactEl = document.getElementById('solTblDcaExact');
-        if (solTblDcaExactEl) solTblDcaExactEl.innerText = `${solDcaExact} USDC`;
-        const solTblOrderIntEl = document.getElementById('solTblOrderInt');
-        if (solTblOrderIntEl) solTblOrderIntEl.innerText = `${solOrderIntFinal.toFixed(2)} USDC`;
-        const solTblOrderExactEl = document.getElementById('solTblOrderExact');
-        if (solTblOrderExactEl) solTblOrderExactEl.innerText = `${solOrderExact} USDC`;
-        const solTblAddIntEl = document.getElementById('solTblAddInt');
-        if (solTblAddIntEl) solTblAddIntEl.innerText = `手動追加 ${solAddIntFinal.toFixed(2)} USDC`;
-        const solTblAddExactEl = document.getElementById('solTblAddExact');
-        if (solTblAddExactEl) solTblAddExactEl.innerText = `手動追加 ${solAddExact} USDC`;
-        const solTblLossEl = document.getElementById('solTblLoss');
-        if (solTblLossEl) solTblLossEl.innerText = `$${solLoss}U`;
-        const solTblPresEl = document.getElementById('solTblPreserve');
-        if (solTblPresEl) solTblPresEl.innerText = `$${solPreserve}U+`;
+        // (ENA/USDC is the sole flagship futures DCA token)
     }
 
     // --- 6-Zone 階梯配置定義 (三大核心 50% + 6 大菁英 Alpha 50%，全盤 9 組獨立三幣機器人) ---
