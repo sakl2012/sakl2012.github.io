@@ -1,5 +1,5 @@
-// Service Worker v16 - Instant Dual-Pipeline (REST Snapshot + WebSocket Stream)
-const CACHE_NAME = '5zone-pwa-v16';
+// Service Worker v17 - Instant Dual-Pipeline (REST Snapshot + WebSocket Stream)
+const CACHE_NAME = '5zone-pwa-v17';
 const ASSETS = [
   './',
   './index.html',
@@ -17,17 +17,10 @@ const ASSETS = [
   './icons/ondo.png',
   './icons/pendle.png',
   './icons/sol.png',
-  './icons/bnb.png',
-  './icons/arb.png',
   './icons/aave.png',
   './icons/link.png',
-  './icons/render.png',
-  './icons/fet.png',
   './icons/sui.png',
-  './icons/ena.png',
-  './icons/op.png',
-  './icons/ton.png',
-  './icons/ldo.png'
+  './icons/ena.png'
 ];
 
 self.addEventListener('install', (e) => {

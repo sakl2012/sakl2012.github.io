@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Triad Portfolio - 四大核心投資策略中心</title>
+    <title>Triad Portfolio · 量化資產配置終端</title>
     
     <!-- 網路預連線加速 (減少 Binance WebSocket & REST API 握手延遲) -->
     <link rel="preconnect" href="https://stream.binance.com:9443">
@@ -750,21 +750,21 @@
     <div class="page-header">
         <h1 class="brand-title" style="display: flex; align-items: center; gap: 10px;">
             <img src="icon-192.png" alt="Triad Logo" style="width: 30px; height: 30px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.18);">
-            <span>Triad Portfolio · 四大核心投資策略中心</span>
+            <span>Triad Portfolio · 量化資產配置終端</span>
         </h1>
-        <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:#10b981; background:#ecfdf5; padding:4px 10px; border-radius:20px; border:1px solid #a7f3d0;"><span style="width:7px; height:7px; border-radius:50%; background:#10b981;"></span>即時串流連線</span> <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:6px 14px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">📲 安裝 App 至手機</button>
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:#10b981; background:#ecfdf5; padding:4px 10px; border-radius:20px; border:1px solid #a7f3d0;"><span style="width:7px; height:7px; border-radius:50%; background:#10b981;"></span>即時數據連線</span> <button id="btnPwaInstall" style="display:none; background:#0284c7; color:white; border:none; border-radius:20px; padding:6px 14px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 5px rgba(2,132,199,0.3);" onclick="installPWA()">安裝至主畫面</button>
     </div>
     
     <!-- 全局市場微儀表盤 (頂部緊湊型即時行情) -->
     <div style="background:#ffffff; border:1px solid var(--border); border-radius:14px; padding:12px 16px; margin-bottom:18px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#64748b;">⚡ 宏觀市場即時信號</span>
-                <span class="zone-main-title" id="liveZoneDisplay" style="font-size:16px; font-weight:900; color:#0284c7;">Zone 2 (牛市巡航階段)</span>
+                <span style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#64748b;">宏觀週期狀態</span>
+                <span class="zone-main-title" id="liveZoneDisplay" style="font-size:16px; font-weight:900; color:#0284c7;">Zone 2 (多頭巡航區間)</span>
             </div>
             <div class="zone-threshold-alert" style="margin:0; padding:6px 12px; font-size:12px; background:#f8fafc; border-color:#e2e8f0; color:#475569;">
-                <div class="alert-target" id="downwardAlert" style="margin-right:12px;">🔻 回跌 Zone 1: <span style="color:#059669; font-weight:700;">BTC < $--</span></div>
-                <div class="alert-target" id="upwardAlert">🔺 升至 Zone 3: <span style="color:#d97706; font-weight:700;">BTC &ge; $--</span></div>
+                <div class="alert-target" id="downwardAlert" style="margin-right:12px;">下界 Zone 1: <span style="color:#059669; font-weight:700;">BTC &lt; $--</span></div>
+                <div class="alert-target" id="upwardAlert">上界 Zone 3: <span style="color:#d97706; font-weight:700;">BTC &ge; $--</span></div>
             </div>
         </div>
         <div class="market-metrics-grid" style="margin-top:0;">
@@ -772,12 +772,12 @@
             <div class="metric-card" style="background: #f8fafc; border: 1px solid #e2e8f0;">
                 <div class="metric-label" style="display: flex; align-items: center; gap: 5px; color: #475569;">
                     <img src="icons/btc.png" alt="BTC" style="width: 15px; height: 15px; border-radius: 50%;">
-                    <span>BTC 即時現價</span>
+                    <span>BTC 現價</span>
                 </div>
                 <div class="metric-val" id="liveBtcPrice" style="color: #0f172a;">$--</div>
             </div>
             <div class="metric-card" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-                <div class="metric-label" style="color: #475569;">BTC 均線 (MA200)</div>
+                <div class="metric-label" style="color: #475569;">BTC 200日均線</div>
                 <div class="metric-val" id="liveMa200" style="color: #334155;">$--</div>
             </div>
             <div class="metric-card" style="background: #f0f9ff; border: 1px solid #bae6fd;">
@@ -788,25 +788,24 @@
             <!-- QQQB 科技宏觀雷達 -->
             <div class="metric-card" style="background: #faf5ff; border: 1px solid #e9d5ff;">
                 <div class="metric-label" style="color: #6b21a8; display: flex; align-items: center; gap: 5px;">
-                    <span style="font-size: 13px;">🇺🇸</span>
                     <span>QQQB 納指現價</span>
                 </div>
                 <div class="metric-val" id="liveQqqbPrice" style="color: #7c3aed;">$--</div>
             </div>
             <div class="metric-card" style="background: #faf5ff; border: 1px solid #e9d5ff;">
-                <div class="metric-label" style="color: #6b21a8;">QQQB 均線 (MA200)</div>
-                <div class="metric-val" id="liveQqqbMa200" style="color: #334155;">$666.14</div>
+                <div class="metric-label" style="color: #6b21a8;">QQQB 200日均線</div>
+                <div class="metric-val" id="liveQqqbMa200" style="color: #334155;">$--</div>
             </div>
             <div class="metric-card" style="background: #ecfdf5; border: 1px solid #a7f3d0;">
                 <div class="metric-label" style="color: #047857;">QQQB / MA200 比值</div>
-                <div class="metric-val" id="liveQqqbRatio" style="color: #059669;">1.106 <span style="font-size:11px; color:#059669; font-weight:normal;">🟢 巡航</span></div>
+                <div class="metric-val" id="liveQqqbRatio" style="color: #059669;">--</div>
             </div>
 
             <!-- PAXG 實體黃金儲備盾 -->
             <div class="metric-card" style="background: #fffbeb; border: 1px solid #fde68a;">
                 <div class="metric-label" style="color: #92400e; display: flex; align-items: center; gap: 5px;">
                     <img src="icons/paxg.png" alt="PAXG" style="width: 15px; height: 15px; border-radius: 50%;">
-                    <span>PAXG 儲備金價</span>
+                    <span>PAXG 金價</span>
                 </div>
                 <div class="metric-val" id="livePaxgPrice" style="color: #b45309;">$--</div>
             </div>
@@ -817,25 +816,20 @@
     <!-- 四大核心投資策略頂部導航切換列 -->
     <nav class="strategy-nav-bar" id="strategyNavBar">
         <button class="strategy-nav-btn active" id="tabBtn-macro" onclick="switchStrategy('macro')">
-            <span style="font-size: 16px;">🏛️</span>
-            <span>加密貨幣核心智能持倉</span>
+            <span>策略一：核心資產配置</span>
         </button>
         <button class="strategy-nav-btn" id="tabBtn-alpha" onclick="switchStrategy('alpha')">
-            <span style="font-size: 16px;">⚡</span>
-            <span>加密貨幣 Alpha 智能持倉</span>
+            <span>策略二：Alpha 雙幣配置</span>
         </button>
         <button class="strategy-nav-btn" id="tabBtn-bstock" onclick="switchStrategy('bstock')">
-            <span style="font-size: 16px;">🇺🇸</span>
-            <span>美股 bStock 智能持倉</span>
+            <span>策略三：美股 bStock 配置</span>
         </button>
         <button class="strategy-nav-btn" id="tabBtn-dca" onclick="switchStrategy('dca')">
-            <span style="font-size: 16px;">🤖</span>
-            <span>加密貨幣 DCA (現貨/合約)</span>
+            <span>策略四：DCA 量化網格</span>
         </button>
         <div style="border-left: 1px solid var(--border); margin: 4px 2px;"></div>
-        <button class="strategy-guide-trigger" onclick="openCapitalModal()" title="查看幣安撮合底層限制與三階段起步本金">
-            <span style="font-size: 15px;">💰</span>
-            <span>起步本金指引</span>
+        <button class="strategy-guide-trigger" onclick="openCapitalModal()" title="查看撮合最小面額限制與資金配置">
+            <span>資金配置規格</span>
         </button>
     </nav>
 
@@ -845,183 +839,130 @@
     <section class="strategy-section active" id="sec-strategy-macro">
         <div class="strategy-banner">
             <div class="strategy-banner-title">
-                <span>🏛️ 加密貨幣核心智能持倉 (6-Zone 動態階梯)</span>
-                <span style="font-size: 11.5px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 9999px;">佔總資金 50%</span>
+                <span>策略一：核心三元動態配置 (6-Zone 狀態機)</span>
+                <span style="font-size: 11.5px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 9999px;">權重 50% · 2% 偏離再平衡</span>
+                <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                以 <strong>BTC (20%) + ETH (20%) + TAO (10%)</strong> 為核心資產，結合 <strong>QQQB (美股科技) + PAXG (實體黃金)</strong> 作為雙軌蓄水池。依據 BTC / MA200 歷史週期比值劃分 6 個宏觀階段，動態階梯式配置權重；全盤統一設定 <strong>按比例 2% 偏差自動再平衡</strong>，兼顧主升浪利潤奔跑與熊市實體金防禦。
-            </div>
-        </div>
-        
-        <!-- 三大核心壓艙柱 (Core Big 3) 獨立三幣專卡 -->
-        <div style="margin-top: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-            <div style="font-size: 15px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-                <span>👑 核心壓艙三本柱 (佔總資金 50%)</span>
-                <span style="font-size: 11px; font-weight: 600; color: #64748b;">BTC (20%) + ETH (20%) + TAO (10%) | 👑 6-Zone 動態階梯策略</span>
-            </div>
-            <div style="font-size: 12px; color: #0284c7; font-weight: 700; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span>🎯 全艦隊統一：2% 偏差自動再平衡 (核心建議每倉 ≥ 700U)</span>
-                <button onclick="openCapitalModal()" style="background: rgba(2, 132, 199, 0.1); border: 1px solid rgba(2, 132, 199, 0.3); color: #0284c7; border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 0.2s;">💰 查看本金門檻與分步啟動 ➔</button>
+                配置標的：<strong>BTC (20%)、ETH (20%)、TAO (10%)</strong>，各搭配 <strong>QQQB (納指100)</strong> 與 <strong>PAXG (實體黃金)</strong> 組成獨立三幣組合。依據 BTC / MA200 比值劃分 6 個區間動態調整目標權重，統一設定 <strong>2% 比例偏離觸發再平衡</strong>（建議單倉 &ge; 700 USDT）。
             </div>
         </div>
 
-        <div class="c-matrix-grid" id="coreCardsGrid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 22px;">
-            <!-- 由 JavaScript renderCoreCards() 動態生成高清晰三幣卡片 -->
+        <div class="c-matrix-grid" id="coreCardsGrid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 14px; margin-bottom: 20px;">
+            <!-- 由 JavaScript renderCoreCards() 動態生成三幣卡片 -->
         </div>
+
         <!-- 六階段全景對照標準表 -->
-    <div class="matrix-card">
-        <div class="matrix-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-            <div>
-                <span>📋 6-Zone 三幣全天候智能持倉對照表</span>
-                <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值全自動切換）</span>
+        <div class="matrix-card">
+            <div class="matrix-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <span>6-Zone 階段權重對照表</span>
+                    <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">（依 BTC / MA200 比值與回撤狀態切換）</span>
+                </div>
+                <div style="display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <span class="c-pill" style="background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 9999px;">再平衡條件：按比例 2%</span>
+                </div>
             </div>
-            <!-- 美股指數支柱標籤 -->
-            <div style="display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span class="c-pill" style="background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 9999px;">🚀 美股科技錨點：那斯達克100 (QQQB)</span>
+            <div class="matrix-table-wrap">
+                <table class="matrix-table">
+                    <thead>
+                        <tr id="zoneTableHead">
+                            <th>市場階段 (Zone)</th>
+                            <th>比值門檻</th>
+                            <th>對應 BTC 點位</th>
+                            <th>階段特徵與配置邏輯</th>
+                            <th id="th-core-1">核心 1: BTC + QQQB + PAXG (20%)</th>
+                            <th id="th-core-2">核心 2: ETH + QQQB + PAXG (20%)</th>
+                            <th id="th-core-3">核心 3: TAO + QQQB + PAXG (10%)</th>
+                            <th id="th-sat">策略二 Alpha 組合對應狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody id="zoneTableBody">
+                        <tr id="row-zone-0">
+                            <td><strong>Zone 0 (折價累積區)</strong></td>
+                            <td>&lt; 0.80</td>
+                            <td><span id="tbl-range-0" style="color: #10b981; font-weight: 700;">&lt; $55,630</span></td>
+                            <td>
+                                <strong style="color: #065f46;">深度折價區間</strong>
+                                <div style="font-size: 11.5px; color: #64748b;">提高現貨目標權重至 65%，由黃金與科技股部位逢低轉入現貨</div>
+                            </td>
+                            <td class="col-c1">BTC 65% / QQQB 25% / PAXG 10%</td>
+                            <td class="col-c2">ETH 65% / QQQB 25% / PAXG 10%</td>
+                            <td class="col-c3">TAO 65% / QQQB 25% / PAXG 10%</td>
+                            <td class="col-sat">維持 COIN 60% / PAXG 40%</td>
+                        </tr>
+                        <tr id="row-zone-1">
+                            <td><strong>Zone 1 (均值回歸區)</strong></td>
+                            <td>0.80 ~ 1.00</td>
+                            <td><span id="tbl-range-1" style="color: #0284c7; font-weight: 700;">$55,630 ~ $69,538</span></td>
+                            <td>
+                                <strong style="color: #0369a1;">年線下方修復區間</strong>
+                                <div style="font-size: 11.5px; color: #64748b;">現貨配置 50%，搭配 30% QQQB 與 20% PAXG 均衡配置</div>
+                            </td>
+                            <td class="col-c1">BTC 50% / QQQB 30% / PAXG 20%</td>
+                            <td class="col-c2">ETH 50% / QQQB 30% / PAXG 20%</td>
+                            <td class="col-c3">TAO 50% / QQQB 30% / PAXG 20%</td>
+                            <td class="col-sat">維持 COIN 60% / PAXG 40%</td>
+                        </tr>
+                        <tr id="row-zone-2" class="row-active-zone">
+                            <td><strong>Zone 2 (多頭巡航區)</strong> <span class="active-tag" id="zone2-tag">現正運行</span></td>
+                            <td>1.00 ~ 1.25</td>
+                            <td><span id="tbl-range-2" style="color: #0284c7; font-weight: 700;">$69,538 ~ $86,922</span></td>
+                            <td>
+                                <strong style="color: #0284c7;">年線上方常態擴張</strong>
+                                <div style="font-size: 11.5px; color: #64748b;">站穩 200 日均線，依波動率梯度配置 35%~45% 現貨與雙避險資產</div>
+                            </td>
+                            <td class="col-c1">BTC 45% / QQQB 35% / PAXG 20%</td>
+                            <td class="col-c2">ETH 40% / QQQB 35% / PAXG 25%</td>
+                            <td class="col-c3">TAO 35% / QQQB 35% / PAXG 30%</td>
+                            <td class="col-sat">維持 COIN 60% / PAXG 40%</td>
+                        </tr>
+                        <tr id="row-zone-3">
+                            <td><strong>Zone 3 (溢價調節區)</strong></td>
+                            <td>1.25 ~ 1.40</td>
+                            <td><span id="tbl-range-3" style="color: #d97706; font-weight: 700;">$86,922 ~ $97,353</span></td>
+                            <td>
+                                <strong style="color: #b45309;">高溢價階段性減倉</strong>
+                                <div style="font-size: 11.5px; color: #64748b;">逐步下調現貨比重至 20%~30%，將漲幅利潤移轉至 QQQB 與 PAXG</div>
+                            </td>
+                            <td class="col-c1">BTC 30% / QQQB 35% / PAXG 35%</td>
+                            <td class="col-c2">ETH 25% / QQQB 35% / PAXG 40%</td>
+                            <td class="col-c3">TAO 20% / QQQB 40% / PAXG 40%</td>
+                            <td class="col-sat">維持 COIN 60% / PAXG 40%</td>
+                        </tr>
+                        <tr id="row-zone-4">
+                            <td><strong>Zone 4 (右側鎖利區)</strong></td>
+                            <td>&ge; 1.40</td>
+                            <td><span id="tbl-range-4" style="color: #dc2626; font-weight: 700;">&ge; $97,353</span></td>
+                            <td>
+                                <strong style="color: #b91c1c;">高估區間鎖利（單向鎖定）</strong>
+                                <div style="font-size: 11.5px; color: #64748b;">核心保留 5% 現貨底倉；<strong>策略二 Alpha 標的同步降至 0% 並轉為 100% PAXG</strong></div>
+                            </td>
+                            <td class="col-c1">BTC 5% / QQQB 35% / PAXG 60%</td>
+                            <td class="col-c2">ETH 5% / QQQB 35% / PAXG 60%</td>
+                            <td class="col-c3">TAO 5% / QQQB 35% / PAXG 60%</td>
+                            <td class="col-sat">Alpha 出清，轉為 100% PAXG</td>
+                        </tr>
+                        <tr id="row-zone-5">
+                            <td><strong>Zone 5 (空頭防禦區)</strong></td>
+                            <td>高點回撤 &ge; 20%</td>
+                            <td><span id="tbl-range-5" style="color: #8b5cf6; font-weight: 700;">自週期高點回撤 &ge; 20%</span></td>
+                            <td>
+                                <strong style="color: #7c3aed;">右側轉空確認</strong>
+                                <div style="font-size: 11.5px; color: #64748b;">觸發 Zone 4 後若自高點回撤達 20%，核心現貨降至 0%，由 QQQB 35% + PAXG 65% 避險直至回到 Zone 0</div>
+                            </td>
+                            <td class="col-c1">BTC 0% / QQQB 35% / PAXG 65%</td>
+                            <td class="col-c2">ETH 0% / QQQB 35% / PAXG 65%</td>
+                            <td class="col-c3">TAO 0% / QQQB 35% / PAXG 65%</td>
+                            <td class="col-sat">維持 100% PAXG 避險</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="matrix-table-wrap">
-            <table class="matrix-table">
-                <thead>
-                    <tr id="zoneTableHead">
-                        <th>市場階段 (Zone)</th>
-                        <th>比值門檻</th>
-                        <th>實時換算 BTC 點位</th>
-                        <th>宏觀週期點位對照 &amp; 操盤準則</th>
-                        <th id="th-core-1">核心 1: BTC + QQQB + PAXG (20% | 6-Zone)</th>
-                        <th id="th-core-2">核心 2: ETH + QQQB + PAXG (20% | 6-Zone)</th>
-                        <th id="th-core-3">核心 3: TAO + QQQB + PAXG (10% | 6-Zone)</th>
-                        <th id="th-sat">菁英 Alpha 9大艦隊: 純雙幣 60/40 (偏差 2%)</th>
-                    </tr>
-                </thead>
-                <tbody id="zoneTableBody">
-                    <tr id="row-zone-0">
-                        <td><strong>Zone 0 (深熊大底)</strong></td>
-                        <td>&lt; 0.80</td>
-                        <td><span id="tbl-range-0" style="color: #10b981; font-weight: 700;">&lt; $55,630</span></td>
-                        <td>
-                            <strong style="color: #065f46;">5.7 萬歷史深熊大底</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「歷史級熊市底部區間，極致恐慌時敢拿現貨，科技與加密雙抄底」</div>
-                        </td>
-                        <td class="col-c1">BTC 65% / QQQB 25% / PAXG 10%</td>
-                        <td class="col-c2">ETH 65% / QQQB 25% / PAXG 10%</td>
-                        <td class="col-c3">TAO 65% / QQQB 25% / PAXG 10%</td>
-                        <td class="col-sat">各雙幣組合：COIN 60% / PAXG 40% (全天候純雙幣 60/40)</td>
-                    </tr>
-                    <tr id="row-zone-1">
-                        <td><strong>Zone 1 (初牛修復)</strong></td>
-                        <td>0.80 ~ 1.00</td>
-                        <td><span id="tbl-range-1" style="color: #0284c7; font-weight: 700;">$55,630 ~ $69,538</span></td>
-                        <td>
-                            <strong style="color: #0369a1;">7.0 萬牛初分水嶺</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「突破牛熊過渡分水嶺，站穩 7 萬確認牛市來臨，均勢動態累積」</div>
-                        </td>
-                        <td class="col-c1">BTC 50% / QQQB 30% / PAXG 20%</td>
-                        <td class="col-c2">ETH 50% / QQQB 30% / PAXG 20%</td>
-                        <td class="col-c3">TAO 50% / QQQB 30% / PAXG 20%</td>
-                        <td class="col-sat">各雙幣組合：COIN 60% / PAXG 40% (全天候純雙幣 60/40)</td>
-                    </tr>
-                    <tr id="row-zone-2" class="row-active-zone">
-                        <td><strong>Zone 2 (牛市巡航)</strong> <span class="active-tag" id="zone2-tag">現正運行</span></td>
-                        <td>1.00 ~ 1.25</td>
-                        <td><span id="tbl-range-2" style="color: #0284c7; font-weight: 700;">$69,538 ~ $86,922</span></td>
-                        <td>
-                            <strong style="color: #0284c7;">7.6 萬 ~ 8.5 萬健康巡航</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「7~8 萬區間震盪蓄勢，主升浪進攻釋放彈性，美股科技與黃金雙蓄水池」</div>
-                        </td>
-                        <td class="col-c1">BTC 45% / QQQB 35% / PAXG 20%</td>
-                        <td class="col-c2">ETH 40% / QQQB 35% / PAXG 25%</td>
-                        <td class="col-c3">TAO 35% / QQQB 35% / PAXG 30%</td>
-                        <td class="col-sat">各雙幣組合：COIN 60% / PAXG 40% (全天候純雙幣 60/40)</td>
-                    </tr>
-                    <tr id="row-zone-3">
-                        <td><strong>Zone 3 (過熱警戒)</strong></td>
-                        <td>1.25 ~ 1.40</td>
-                        <td><span id="tbl-range-3" style="color: #d97706; font-weight: 700;">$86,922 ~ $97,353</span></td>
-                        <td>
-                            <strong style="color: #b45309;">8.5 萬 ~ 10 萬過熱前哨</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「衝擊 10 萬整數大關，市場狂熱山寨加速，嚴格大幅鎖利至美股與實體金」</div>
-                        </td>
-                        <td class="col-c1">BTC 30% / QQQB 35% / PAXG 35%</td>
-                        <td class="col-c2">ETH 25% / QQQB 35% / PAXG 40%</td>
-                        <td class="col-c3">TAO 20% / QQQB 40% / PAXG 40%</td>
-                        <td class="col-sat">各雙幣組合：COIN 60% / PAXG 40% (全天候純雙幣 60/40)</td>
-                    </tr>
-                    <tr id="row-zone-4">
-                        <td><strong>Zone 4 (極度貪婪/逃頂鎖利)</strong></td>
-                        <td>&ge; 1.40</td>
-                        <td><span id="tbl-range-4" style="color: #dc2626; font-weight: 700;">&ge; $97,353 (向 12~15 萬衝頂)</span></td>
-                        <td>
-                            <strong style="color: #b91c1c;">15 萬狂頂逃頂 ➔ 梯隊分步出清</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「核心 BTC/ETH/TAO 留 5% 象徵底倉防踏空，95% 出清至黃金美股；<strong>9 大 Alpha 山寨幣率先 100% 清零出清至 PAXG</strong>，利潤全盤沉澱至實體黃金」</div>
-                        </td>
-                        <td class="col-c1">BTC 5% / QQQB 35% / PAXG 60%</td>
-                        <td class="col-c2">ETH 5% / QQQB 35% / PAXG 60%</td>
-                        <td class="col-c3">TAO 5% / QQQB 35% / PAXG 60%</td>
-                        <td class="col-sat">山寨季落幕，Alpha 率先 100% 清零出清至 PAXG 100% 避險</td>
-                    </tr>
-                    <tr id="row-zone-5">
-                        <td><strong>Zone 5 (熊市確認/主跌防禦)</strong></td>
-                        <td>大頂破位回撤</td>
-                        <td><span id="tbl-range-5" style="color: #8b5cf6; font-weight: 700;">自頂部回撤 &ge; 20%</span></td>
-                        <td>
-                            <strong style="color: #7c3aed;">大頂破位，核心正式清零</strong>
-                            <div style="font-size: 11.5px; color: #64748b;">操盤準則：「大頂確認破位，嚴禁抄底接飛刀！<strong>核心最後 5% 現貨正式清零</strong>，核心大軍進入 QQQB 35% + PAXG 65% 純現貨雙壁死鎖避險，Alpha 保持 100% PAXG 實體金防守，靜待 Zone 0」</div>
-                        </td>
-                        <td class="col-c1">BTC 0% / QQQB 35% / PAXG 65%</td>
-                        <td class="col-c2">ETH 0% / QQQB 35% / PAXG 65%</td>
-                        <td class="col-c3">TAO 0% / QQQB 35% / PAXG 65%</td>
-                        <td class="col-sat">Alpha 保持 100% PAXG 純實體金避險，核心進入 QQQB 35% + PAXG 65% 終極防禦</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">
-            ※ 註：實時換算 BTC 點位依即時 MA200 動態連動計算；全套持倉全部由幣安智能持倉（Rebalance Bot）獨立機器人單元 100% 全自動再平衡運行（全盤統一設定按比例 2% 觸發，經 15m 回測顯著降低 70% 磨損並提升總收益）。<br>
-            ※ <strong>量化驗證</strong>：核心三本柱採 6-Zone 三幣動態階梯捕捉宏觀大週期最高 Alpha 溢價；9 大 Alpha 菁英採全天候純雙幣 60/40 徹底擺脫美股拖累（3 年回測 CAGR 高達 +66.3%）。全艦隊統一 2% 閾值！
-        </div>
-    </div>
-
-    <!-- 三元香農全天候模型量化審計與風控卡片 -->
-    <div class="audit-card" style="border-left-color: #8b5cf6;">
-        <div class="audit-title" style="color: #6d28d9;">
-            <span>🏛️ 三元香農全天候模型（現貨 COIN ＋ 美股科技 QQQB ＋ 實體黃金 PAXG）運行機制</span>
-            <span style="font-size: 11.5px; background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; padding: 2px 8px; border-radius: 12px; font-weight: 700;">跨界香農惡魔套利 (偏差 2% 最優)</span>
-        </div>
-        <div style="font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.6;">
-            本系統將每個機器人構建為自給自足的「微型三元全天候基金」，經 15 分鐘級別全週期大數據驗證，採用<strong>幣安 2% 比例閾值</strong>進行全自動機械化動態平衡（大幅降低高頻磨損，收益顯著打敗 1%）：
-        </div>
-        <div class="audit-grid">
-            <div class="audit-item" style="border-left: 3px solid #10b981;">
-                <strong style="color: #065f46;">🚀 暴衝獲利 ➔ 雙軌截流</strong>
-                <span>當加密主升浪爆發觸發 2% 偏差，機器人自動賣出漲多的現貨，<strong>同步分流沉澱至全球頂級科技股權 QQQB（享受高 ROE 複利）與實體黃金 PAXG</strong>，讓利潤充分奔跑不被過早切碎。</span>
-            </div>
-            <div class="audit-item" style="border-left: 3px solid #3b82f6;">
-                <strong style="color: #1d4ed8;">📉 深跌回調 ➔ 雙庫抄底</strong>
-                <span>當幣圈遭遇黑天鵝回撤時，QQQB 與 PAXG 雙蓄水池自動提供彈藥，<strong>以 7x24 無情緒干擾的機械化操作逢低買入便宜現貨</strong>，達成全自動香農定投。</span>
-            </div>
-            <div class="audit-item" style="border-left: 3px solid #f59e0b;">
-                <strong style="color: #b45309;">🛡️ 股幣雙殺 ➔ 實體金防禦</strong>
-                <span>若遭遇宏觀緊縮引發美股與幣圈雙殺，<strong>NYDFS 獨立信託的實體金條 PAXG</strong> 作為絕對非信用實物，充當最後的安全護城河。</span>
+            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 10px; line-height: 1.6;">
+                ※ <strong>執行路徑</strong>：幣安 App ➔ 交易 ➔ 策略交易 ➔ 智能持倉 (Rebalance Bot) ➔ 手動建立 3 組三幣機器人（調倉條件選「按比例 2%」）。跨越區間門檻時，於機器人詳情頁「編輯比例」更新權重。
             </div>
         </div>
-    </div>
-        
-    <div class="card" style="margin-top: 20px; margin-bottom: 25px;">
-        <h3 style="margin-bottom: 10px; color: var(--text-main); font-size: 15px; display: flex; align-items: center; gap: 8px;">
-            <span>💡 幣安 App 智能持倉建立指南（核心三本柱）</span>
-            <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 6px; font-weight: 700;">各倉獨立運行</span>
-        </h3>
-        <div style="font-size: 13px; line-height: 1.8; color: #475569;">
-            1. 打開 <strong>幣安 App ➔ 交易 ➔ 策略交易 ➔ 選擇「智能持倉 (Rebalance Bot)」</strong>。<br>
-            2. 點擊「手動創建」，各自建立 3 組獨立三幣組合（每組各含<strong>主幣 ＋ QQQB ＋ PAXG</strong>）：<br>
-            &nbsp;&nbsp;&nbsp;① <code>BTC + QQQB + PAXG</code> (佔總資金 20%)：當前 Zone 2 設為 <strong>45% / 35% / 20%</strong>，調倉條件選 <strong>按比例 2%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;② <code>ETH + QQQB + PAXG</code> (佔總資金 20%)：當前 Zone 2 設為 <strong>40% / 35% / 25%</strong>，調倉條件選 <strong>按比例 2%</strong>。<br>
-            &nbsp;&nbsp;&nbsp;③ <code>TAO + QQQB + PAXG</code> (佔總資金 10%)：當前 Zone 2 設為 <strong>35% / 35% / 30%</strong>，調倉條件選 <strong>按比例 2%</strong>。<br>
-            3. <strong>動態再平衡機制</strong>：當市場跨越 Zone 階梯門檻時，進入機器人詳情頁點擊「編輯比例」，更新為新階梯目標權重即可。
-        </div>
-    </div>
-
     </section>
 
     
@@ -1029,11 +970,12 @@
     <section class="strategy-section" id="sec-strategy-alpha">
         <div class="strategy-banner" style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border-color: #3730a3;">
             <div class="strategy-banner-title" style="color: #a5b4fc;">
-                <span>⚡ 加密貨幣 Alpha 智能持倉 (9大賽道純雙幣 60/40)</span>
-                <span style="font-size: 11.5px; background: rgba(165, 180, 252, 0.15); color: #c7d2fe; border: 1px solid rgba(165, 180, 252, 0.3); padding: 2px 8px; border-radius: 9999px;">9大賽道龍頭 · 純雙幣 60/40</span>
+                <span>策略二：Alpha 雙幣再平衡配置 (COIN 60% / PAXG 40%)</span>
+                <span style="font-size: 11.5px; background: rgba(165, 180, 252, 0.15); color: #c7d2fe; border: 1px solid rgba(165, 180, 252, 0.3); padding: 2px 8px; border-radius: 9999px;">權重 50% · 9 組獨立雙幣</span>
+                <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                精選加密全賽道具備真實協議現金流與深厚護城河的 9 大長拿藍籌（UNI, HYPE, AAVE, ENA, PENDLE, ONDO, NEAR, SUI, LINK）。全天候採用實證最優之 <strong>永久穩健 60% 標的 + 40% PAXG (實體黃金)</strong> 純雙幣配置，統一設定 <strong>按比例 2% 自動再平衡</strong>。山寨暴衝利潤 100% 直接沉澱至實體黃金，徹底告別 QQQ 稀釋拖累，實證 3 年回測 CAGR 高達 <strong>66.3%</strong>！
+                篩選具備協議收入與鏈上結算需求的 9 項標的（UNI, HYPE, AAVE, ENA, PENDLE, ONDO, NEAR, SUI, LINK），各佔總配置約 5.56%。Zone 0~3 固定採用 <strong>60% 標的 + 40% PAXG</strong> 雙幣結構（2% 偏離再平衡，建議單倉 &ge; 350 USDT），將單幣超額波動收斂為黃金部位。
             </div>
         </div>
 
@@ -1042,47 +984,30 @@
             <div class="c-matrix-top-bar">
                 <div>
                     <div class="c-matrix-title">
-                        <span>⚡ 菁英 Alpha 9大艦隊 (9 大全賽道真現金流龍頭 | 佔總資金 50%)</span>
+                        <span>Alpha 9 標的雙幣配置矩陣</span>
                     </div>
                     <div class="c-matrix-subtitle">
-                        三大宏觀核心 (50% 採 6-Zone 三幣動態) + 九大菁英 Alpha (各 5.56% = 50% 採純雙幣 60/40) | 全盤 2% 自動再平衡
+                        執行路徑：幣安 App ➔ 智能持倉 ➔ 手動建立 <code>標的 (60%) + PAXG (40%)</code> ➔ 按比例 2% 再平衡
                     </div>
                 </div>
                 <div class="c-badges-wrap">
-                    <span class="c-pill c-pill-gold">💎 頂級核心 9 大長拿藍籌</span>
-                    <span class="c-pill c-pill-green">🎯 單倉約 5.56% (建議每倉 ≥ 350U) | 偏差 2%</span>
-                    <span class="c-pill" style="background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; border-radius: 9999px; padding: 4px 10px; font-size: 11.5px; font-weight: 700;">⚖️ 9 大 Alpha 永久純雙幣 60/40</span>
-                    <button onclick="openCapitalModal()" class="c-pill" style="background: rgba(2, 132, 199, 0.1); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.3); border-radius: 9999px; padding: 4px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer;">💰 查看起步本金 ➔</button>
+                    <span class="c-pill c-pill-green">單倉權重 5.56% (建議 &ge; 350U)</span>
+                    <span class="c-pill" style="background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; border-radius: 9999px; padding: 4px 10px; font-size: 11.5px; font-weight: 700;">固定 60/40 雙幣結構</span>
                 </div>
             </div>
 
             <!-- 梯隊快速分類篩選標籤 -->
             <div class="c-filter-tabs">
-                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">🔥 9 大長拿 Alpha</button>
-                <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">🏦 DeFi / 衍生品 (UNI, HYPE, AAVE, ENA, PENDLE)</button>
-                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">🌐 RWA / AI / 公鏈 / 預言機 (ONDO, NEAR, SUI, LINK)</button>
+                <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">全部標的 (9)</button>
+                <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">DeFi 與衍生品 (UNI, HYPE, AAVE, ENA, PENDLE)</button>
+                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">基礎設施與公鏈 (ONDO, NEAR, SUI, LINK)</button>
             </div>
 
             <!-- 雙幣卡片網格 -->
             <div class="c-matrix-grid" id="cMatrixGrid">
-                <!-- 由 JavaScript 動態依最新即時行情與當前比例渲染雙幣卡片 -->
+                <!-- 由 JavaScript 動態渲染雙幣卡片 -->
             </div>
         </div>
-        
-    <div class="card" style="margin-top: 20px; margin-bottom: 25px;">
-        <h3 style="margin-bottom: 10px; color: var(--text-main); font-size: 15px; display: flex; align-items: center; gap: 8px;">
-            <span>💡 幣安 App 智能持倉建立指南（9 大菁英 Alpha 艦隊）</span>
-            <span style="font-size: 11px; background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; padding: 2px 8px; border-radius: 6px; font-weight: 700;">永久純雙幣 60/40</span>
-        </h3>
-        <div style="font-size: 13px; line-height: 1.8; color: #475569;">
-            1. 打開 <strong>幣安 App ➔ 交易 ➔ 策略交易 ➔ 選擇「智能持倉」➔ 點擊「手動創建」</strong>。<br>
-            2. 依次建立 9 組獨立雙幣機器人，每組僅需加入 2 個幣種：<strong>現貨 Alpha 標的 ＋ PAXG (實體黃金)</strong>。<br>
-            3. <strong>目標比例一律設定為</strong>：<code>Alpha 標的 (60%) + PAXG (40%)</code>。<br>
-            4. <strong>再平衡條件</strong>：一律勾選 <strong>按比例 2%</strong>（建議每倉資金 ≥ 350U，充沛覆蓋最小下單面額）。<br>
-            5. <strong>運作邏輯</strong>：日常完全無須手動干預，極致收割單幣暴衝利潤，並 100% 機械化沉澱至實體黃金安全儲備中；免去 QQQ 稀釋與管理負擔，操作快 3 倍！
-        </div>
-    </div>
-
     </section>
 
     
@@ -1090,31 +1015,30 @@
     <section class="strategy-section" id="sec-strategy-bstock">
         <div class="strategy-banner" style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); border-color: #065f46;">
             <div class="strategy-banner-title" style="color: #6ee7b7;">
-                <span>🇺🇸 美股 bStock 智能持倉 (科技巨頭雙三幣艦隊)</span>
-                <span style="font-size: 11.5px; background: rgba(110, 231, 183, 0.15); color: #a7f3d0; border: 1px solid rgba(110, 231, 183, 0.3); padding: 2px 8px; border-radius: 9999px;">100% 純科技股權 · 2% 再平衡</span>
+                <span>策略三：美股 bStock 科技權值配置</span>
+                <span style="font-size: 11.5px; background: rgba(110, 231, 183, 0.15); color: #a7f3d0; border: 1px solid rgba(110, 231, 183, 0.3); padding: 2px 8px; border-radius: 9999px;">純股權等權重 · 2% 再平衡</span>
+                <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                針對幣安代幣化股票（bStock）量身打造，嚴選全球萬億級市值、資產負債表極度健全的六大科技霸主。維持 <strong>100% 純股權純度（0% 黃金）</strong>，避免與加密端 PAXG 蓄水池重複配置造成資本拖累。兩大艦隊無重疊配置，經 280 組全空間窮舉實證，<strong>Calmar 收益回撤比 (0.93) 榮獲全市場第 1 名</strong>！
+                採用幣安代幣化股票（bStock），將六大科技權值股拆分為「硬體半導體組」與「軟體生態組」兩組獨立三幣等權重組合（33.3% / 33.3% / 33.3%），維持 100% 股權部位以放大組內輪動再平衡效益。
             </div>
         </div>
 
         <!-- 美股科技宏觀熔斷雷達 (QQQB / MA200) -->
         <div class="bstock-risk-radar" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
             <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 22px;">🛡️</span>
                 <div>
                     <div style="font-weight: 700; font-size: 13.5px; color: #1e293b; display: flex; align-items: center; gap: 8px;">
-                        <span>美股科技宏觀熔斷雷達 (QQQB / MA200)</span>
-                        <span id="qqqRiskBadge" style="font-size: 11px; padding: 2px 8px; border-radius: 9999px; background: #ecfdf5; color: #059669; font-weight: 700; border: 1px solid #a7f3d0;">🟢 多頭安全巡航</span>
-                        <button onclick="openCapitalModal()" style="background: #eff6ff; color: #0284c7; border: 1px solid #bae6fd; border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 700; cursor: pointer;">💰 起步本金指引 ➔</button>
+                        <span>納指趨勢風控指標 (QQQB / MA200)</span>
+                        <span id="qqqRiskBadge" style="font-size: 11px; padding: 2px 8px; border-radius: 9999px; background: #ecfdf5; color: #059669; font-weight: 700; border: 1px solid #a7f3d0;">均線上方運行</span>
                     </div>
                     <div style="font-size: 12px; color: #64748b; margin-top: 3px;">
-                        納指基準現價 <strong id="radarQqqPrice" style="color: #6366f1;">$736.53</strong> ｜ 200日均線 <strong id="radarQqqMa200" style="color: #475569;">$666.14</strong> ｜ 當前比值 <strong id="radarQqqRatio" style="color: #059669;">1.106</strong> (安全緩衝墊 <span id="radarQqqBuffer" style="font-weight: 600; color: #059669;">+10.6%</span>)
+                        QQQB 現價 <strong id="radarQqqPrice" style="color: #6366f1;">$--</strong> ｜ 200日均線 <strong id="radarQqqMa200" style="color: #475569;">$--</strong> ｜ 比值 <strong id="radarQqqRatio" style="color: #059669;">--</strong> (偏離幅度 <span id="radarQqqBuffer" style="font-weight: 600; color: #059669;">--</span>)
                     </div>
                 </div>
             </div>
             <div style="font-size: 11.5px; color: #64748b; line-height: 1.5; text-align: right; max-width: 460px;">
-                ※ <strong>熔斷風控 SOP</strong>：當 QQQB / MA200 &ge; 1.00 時，正常開啟 2% 再平衡享受高 ROE 複利；若實體跌破 1.00 超過 3 日，觸發系統性防禦，暫停雙艦隊並轉入 USDT/PAXG 避險。
+                ※ <strong>風控準則</strong>：當 QQQB / MA200 &ge; 1.00 時維持常態 2% 再平衡；若日線收盤跌破 1.00 連續 3 日，建議暫停機器人並轉入防禦資產。
             </div>
         </div>
 
@@ -1122,48 +1046,48 @@
         <div class="bstock-header-grid">
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
-                    <span style="color: #76b900;">NVDAB (輝達)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊一</span>
+                    <span style="color: #76b900;">NVDAB (NVIDIA)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">硬體組</span>
                 </div>
                 <div class="bstock-price-val" id="live-nvdab-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-nvdab-chg">24h: --</div>
             </div>
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
-                    <span style="color: #cc092f;">AVGOB (博通)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊一</span>
+                    <span style="color: #cc092f;">AVGOB (Broadcom)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">硬體組</span>
                 </div>
                 <div class="bstock-price-val" id="live-avgob-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-avgob-chg">24h: --</div>
             </div>
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
-                    <span style="color: #dc2626;">TSMB (台積電)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊一</span>
+                    <span style="color: #dc2626;">TSMB (TSMC)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">硬體組</span>
                 </div>
                 <div class="bstock-price-val" id="live-tsmb-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-tsmb-chg">24h: --</div>
             </div>
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
-                    <span style="color: #475569;">AAPLB (蘋果)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊二</span>
+                    <span style="color: #475569;">AAPLB (Apple)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">軟體組</span>
                 </div>
                 <div class="bstock-price-val" id="live-aaplb-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-aaplb-chg">24h: --</div>
             </div>
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
-                    <span style="color: #4285f4;">GOOGLB (谷歌)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊二</span>
+                    <span style="color: #4285f4;">GOOGLB (Alphabet)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">軟體組</span>
                 </div>
                 <div class="bstock-price-val" id="live-googlb-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-googlb-chg">24h: --</div>
             </div>
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
-                    <span style="color: #00a4ef;">MSFTB (微軟)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">艦隊二</span>
+                    <span style="color: #00a4ef;">MSFTB (Microsoft)</span>
+                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">軟體組</span>
                 </div>
                 <div class="bstock-price-val" id="live-msftb-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-msftb-chg">24h: --</div>
@@ -1172,18 +1096,18 @@
 
         <!-- 兩大獨立三幣艦隊核心卡片 -->
         <div class="bstock-fleet-grid">
-            <!-- 艦隊一：算力硬體矛 -->
+            <!-- 組合一：算力硬體 -->
             <div class="bstock-fleet-card" style="border-top: 4px solid #10b981;">
                 <div class="bstock-fleet-top">
                     <div>
-                        <div style="font-size: 17px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-                            <span>🚀 艦隊一：硬體物理算力矛</span>
+                        <div style="font-size: 16px; font-weight: 800; color: #0f172a;">
+                            <span>組合一：半導體與算力硬體組</span>
                         </div>
                         <div style="font-size: 12px; color: #64748b; margin-top: 2px;">
-                            專注 AI 實體算力鏈 · 晶片設計 ＋ 客製 ASIC ＋ 晶圓代工壟斷
+                            涵蓋 GPU 架構、客製化 ASIC 與先進晶圓代工製程
                         </div>
                     </div>
-                    <span class="bstock-badge-tag" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">佔股權資金 50%</span>
+                    <span class="bstock-badge-tag" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">股權配置 50%</span>
                 </div>
 
                 <!-- 標的權重清單 -->
@@ -1191,21 +1115,21 @@
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #76b900;">NVDAB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">GPU 算力標準與 CUDA 軟體生態系</span>
+                            <span style="font-size: 11.5px; color: #64748b;">資料中心加速運算與 CUDA 軟體生態</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #cc092f;">AVGOB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">客製化 ASIC 晶片與超大數據中心網通</span>
+                            <span style="font-size: 11.5px; color: #64748b;">雲端客製化 ASIC 晶片與高速網通設備</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #dc2626;">TSMB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">全球 90%+ 先進製程與 CoWoS 封裝壟斷</span>
+                            <span style="font-size: 11.5px; color: #64748b;">先進製程晶圓代工與 CoWoS 先進封裝</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
@@ -1214,41 +1138,41 @@
                 <!-- 回測量化指標 -->
                 <div class="bstock-metrics-bar">
                     <div>
-                        <div class="bstock-metric-sub">5年 CAGR</div>
+                        <div class="bstock-metric-sub">5年年化 (CAGR)</div>
                         <div class="bstock-metric-num" style="color: #059669;">50.5%</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">夏普比率</div>
+                        <div class="bstock-metric-sub">Sharpe Ratio</div>
                         <div class="bstock-metric-num">1.16</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">近半年回報</div>
+                        <div class="bstock-metric-sub">近 180 日報酬</div>
                         <div class="bstock-metric-num" style="color: #0284c7;">+34.4%</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">調倉閾值</div>
-                        <div class="bstock-metric-num" style="color: #d97706;">2% 偏差</div>
+                        <div class="bstock-metric-sub">再平衡閾值</div>
+                        <div class="bstock-metric-num" style="color: #d97706;">2.0%</div>
                     </div>
                 </div>
 
                 <!-- 幣安建立指南 -->
                 <div style="font-size: 12px; background: #f8fafc; border-radius: 8px; padding: 10px 12px; line-height: 1.6; color: #475569;">
-                    <strong>🎯 幣安 App 建立：</strong>智能持倉 ➔ 手動創建 ➔ 加入 <code>NVDAB (33.3%) + AVGOB (33.3%) + TSMB (33.3%)</code> ➔ 觸發條件勾選 <strong>按比例 2%</strong>。
+                    <strong>參數規格：</strong>智能持倉 ➔ 手動創建 ➔ <code>NVDAB (33.3%) + AVGOB (33.3%) + TSMB (33.3%)</code> ➔ 按比例 2%。
                 </div>
             </div>
 
-            <!-- 艦隊二：軟體生態盾 -->
+            <!-- 組合二：軟體生態 -->
             <div class="bstock-fleet-card" style="border-top: 4px solid #0284c7;">
                 <div class="bstock-fleet-top">
                     <div>
-                        <div style="font-size: 17px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-                            <span>🛡️ 艦隊二：軟體生態現金流盾</span>
+                        <div style="font-size: 16px; font-weight: 800; color: #0f172a;">
+                            <span>組合二：大型雲端與軟體生態組</span>
                         </div>
                         <div style="font-size: 12px; color: #64748b; margin-top: 2px;">
-                            專注終端現金流護城河 · 22億設備 ＋ 搜尋/AI流量 ＋ 企業雲
+                            涵蓋消費終端生態、搜尋廣告引擎與企業雲端服務
                         </div>
                     </div>
-                    <span class="bstock-badge-tag" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">佔股權資金 50%</span>
+                    <span class="bstock-badge-tag" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">股權配置 50%</span>
                 </div>
 
                 <!-- 標的權重清單 -->
@@ -1256,21 +1180,21 @@
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #475569;">AAPLB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">22億高淨值硬體終端與年金式高毛利服務</span>
+                            <span style="font-size: 11.5px; color: #64748b;">全球硬體終端裝置與高毛利訂閱服務</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #4285f4;">GOOGLB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">90% 搜尋壟斷、YouTube 流量與全端 Gemini AI</span>
+                            <span style="font-size: 11.5px; color: #64748b;">全球搜尋引擎、YouTube 與 Gemini 雲端模型</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #00a4ef;">MSFTB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">企業級 Office SaaS、Azure 雲端與 Copilot 變現</span>
+                            <span style="font-size: 11.5px; color: #64748b;">企業級 SaaS 軟體、Azure 雲端與 AI 商業化應用</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
@@ -1283,22 +1207,22 @@
                         <div class="bstock-metric-num" style="color: #059669;">-35.7%</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">近半年夏普</div>
+                        <div class="bstock-metric-sub">近 180 日 Sharpe</div>
                         <div class="bstock-metric-num" style="color: #0284c7;">2.87</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">近半年回報</div>
+                        <div class="bstock-metric-sub">近 180 日報酬</div>
                         <div class="bstock-metric-num" style="color: #0284c7;">+36.8%</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">調倉閾值</div>
-                        <div class="bstock-metric-num" style="color: #d97706;">2% 偏差</div>
+                        <div class="bstock-metric-sub">再平衡閾值</div>
+                        <div class="bstock-metric-num" style="color: #d97706;">2.0%</div>
                     </div>
                 </div>
 
                 <!-- 幣安建立指南 -->
                 <div style="font-size: 12px; background: #f8fafc; border-radius: 8px; padding: 10px 12px; line-height: 1.6; color: #475569;">
-                    <strong>🎯 幣安 App 建立：</strong>智能持倉 ➔ 手動創建 ➔ 加入 <code>AAPLB (33.3%) + GOOGLB (33.3%) + MSFTB (33.3%)</code> ➔ 觸發條件勾選 <strong>按比例 2%</strong>。
+                    <strong>參數規格：</strong>智能持倉 ➔ 手動創建 ➔ <code>AAPLB (33.3%) + GOOGLB (33.3%) + MSFTB (33.3%)</code> ➔ 按比例 2%。
                 </div>
             </div>
         </div>
@@ -1306,39 +1230,35 @@
         <!-- 綜合資產配置效果面板 -->
         <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 18px 22px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
-                <div style="font-size: 15px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-                    <span>📊 雙艦隊 50/50 綜合投資組合效益審計（全市場 280 組窮舉實證）</span>
+                <div style="font-size: 15px; font-weight: 800; color: #0f172a;">
+                    <span>雙組合 50/50 等權重歷史回測指標 (5 年期日線數據)</span>
                 </div>
-                <span style="font-size: 11px; background: #fef3c7; color: #b45309; border: 1px solid #fde68a; padding: 3px 9px; border-radius: 9999px; font-weight: 800;">
-                    🏆 收益回撤比 (Calmar 0.93) 榮獲全市場第 1 名
+                <span style="font-size: 11px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; padding: 3px 9px; border-radius: 9999px; font-weight: 700;">
+                    Calmar Ratio: 0.93
                 </span>
             </div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">綜合 5年 CAGR (年化)</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">5年複合年化 (CAGR)</div>
                     <div style="font-size: 22px; font-weight: 900; color: #059669;">38.14%</div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">$10,000 本金 5 年翻至 $49,990</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">同期 QQQ 基準為 18.2%</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">綜合夏普比率 (Sharpe)</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">夏普比率 (Sharpe)</div>
                     <div style="font-size: 22px; font-weight: 900; color: #0284c7;">1.08</div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">遠超 QQQ 基準夏普 (0.68)</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">同期 QQQ 基準為 0.68</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">綜合最大回撤 (MDD)</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">最大回撤 (MDD)</div>
                     <div style="font-size: 22px; font-weight: 900; color: #0f172a;">-41.20%</div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">軟體盾成功平滑晶片組 -50% 回撤</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">較單一硬體組 (-50.1%) 收斂</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">調倉頻率 (2% 閾值)</div>
-                    <div style="font-size: 22px; font-weight: 900; color: #d97706;">約 1.2 次/月</div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">低頻精準捕獲波動，手續費損耗 &lt; 0.15%</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">平均調倉頻率 (2% 閾值)</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #d97706;">1.2 次/月</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">年化交易摩擦成本 &lt; 0.15%</div>
                 </div>
-            </div>
-
-            <div style="font-size: 12px; color: #64748b; line-height: 1.6;">
-                ※ <strong>閉環共生架構優勢</strong>：微軟與谷歌每年投入數百億美元資本支出採購輝達與博通的晶片，而輝達與博通將訂單交由台積電投片製造；蘋果則將先進晶片整合入 22 億終端設備向全球變現。六大巨頭利潤內部閉環，在 2% 智能持倉機制下，個股的強弱錯位週期轉化為持續的再平衡紅利。
             </div>
         </div>
     </section>
@@ -1348,44 +1268,44 @@
     <section class="strategy-section" id="sec-strategy-dca">
         <div class="strategy-banner" style="background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%); border-color: #0369a1;">
             <div class="strategy-banner-title" style="color: #7dd3fc;">
-                <span>🤖 策略四：加密貨幣 DCA (現貨/合約被動現金流)</span>
-                <span style="font-size: 11.5px; background: rgba(125, 211, 252, 0.15); color: #bae6fd; border: 1px solid rgba(125, 211, 252, 0.3); padding: 2px 8px; border-radius: 9999px;">現貨零爆倉 ＋ 合約6.4成保本</span>
-                <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.15); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 700; cursor: pointer;">💰 查看起步本金 ➔</button>
+                <span>策略四：DCA 幾何加倉網格系統 (現貨 / 永續合約)</span>
+                <span style="font-size: 11.5px; background: rgba(125, 211, 252, 0.15); color: #bae6fd; border: 1px solid rgba(125, 211, 252, 0.3); padding: 2px 8px; border-radius: 9999px;">0% Maker 費率交易對</span>
+                <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                專為產生穩定被動現金流設計的量化網格系統。提供 <strong>現貨 SOL/FDUSD DCA（零爆倉零割肉 · 0% 手續費 · 12級深海 -26.9% 防禦）</strong> 與 <strong>合約旗艦 ENA/USDC DCA（250U 基準 · 3x 逐倉 · 9級深海 -32.35% 防禦 · 64%+ 本金保全剛性止損）</strong> 雙模態配置，內建等比動態換算滑桿，一鍵精確計算實盤開單參數。
+                針對震盪均值回歸設計的馬丁格爾（DCA）網格配置。提供 <strong>現貨 SOL/FDUSD（1.0x 無強平 · 12 階覆蓋 -26.92% 跌幅）</strong> 與 <strong>合約 ENA/USDC（3.0x 逐倉 · 9 階覆蓋 -32.35% 跌幅 · -35.00% 止損）</strong> 兩種風險模態，支援資金規模等比試算。
             </div>
         </div>
 
-        <!-- ================= 專用高頻被動現金流：雙模態 DCA 智能網格專區 (現貨 vs 合約) ================= -->
+        <!-- ================= 雙模態 DCA 量化網格專區 (現貨 vs 合約) ================= -->
     <div class="matrix-card" style="border-top: 4px solid #0284c7; box-shadow: 0 6px 18px rgba(2, 132, 199, 0.08); margin-bottom: 25px;">
         <div class="matrix-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
             <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 18px; font-weight: 900; color: #0f172a;">🤖 專用被動現金流：高頻 DCA 智能網格系統</span>
-                <span style="font-size: 11px; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">雙模態實戰系統</span>
+                <span style="font-size: 17px; font-weight: 800; color: #0f172a;">DCA 網格參數試算與設定規格</span>
+                <span style="font-size: 11px; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">1 分鐘 K 線回測校準</span>
             </div>
             <!-- Tab 切換按鈕 -->
             <div style="display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 9999px; border: 1px solid #e2e8f0;">
                 <button id="dcaTabSpot" onclick="switchDcaTab('spot')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: #0284c7; color: #ffffff; box-shadow: 0 2px 8px rgba(2,132,199,0.3);">
-                    🟢 現貨版本：SOL/FDUSD (250U 零爆倉)
+                    現貨模態：SOL/FDUSD (12 階無槓桿)
                 </button>
                 <button id="dcaTabFutures" onclick="switchDcaTab('futures')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748b;">
-                    ⚡ 合約旗艦：ENA/USDC (250U · 9級深海防禦)
+                    合約模態：ENA/USDC (3x 逐倉 · 9 階)
                 </button>
             </div>
         </div>
 
         <!-- ======================= 模態一：現貨版本 (SOL/FDUSD) ======================= -->
         <div id="dcaContentSpot" style="display: block;">
-            <!-- ================= 🎚️ 現貨資金等比即時換算滑桿與快捷列 ================= -->
+            <!-- 現貨資金等比即時換算滑桿與快捷列 -->
             <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 15px; font-weight: 900; color: #0f172a;">🎚️ 現貨資金等比即時換算器 (總投資額)</span>
-                        <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">拖動滑桿即時計算現貨 SOL 參數</span>
+                        <span style="font-size: 14.5px; font-weight: 800; color: #0f172a;">現貨資金等比試算器 (總投資額)</span>
+                        <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 9999px; font-weight: 600;">依本金比例自動換算各階參數</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="font-size: 12.5px; font-weight: 700; color: #64748b;">自訂總資金：</span>
+                        <span style="font-size: 12.5px; font-weight: 700; color: #64748b;">投入本金：</span>
                         <input type="number" id="dcaSpotCapitalInput" min="60" max="5000" step="10" value="250" oninput="onDcaSpotCapitalChange(this.value)" style="width: 85px; padding: 4px 8px; font-size: 14px; font-weight: 900; color: #0284c7; border: 1.5px solid #cbd5e1; border-radius: 8px; text-align: center; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#0284c7'" onblur="this.style.borderColor='#cbd5e1'">
                         <span style="font-size: 13px; font-weight: 800; color: #0f172a;">FDUSD</span>
                     </div>
@@ -1400,187 +1320,156 @@
 
                 <!-- 快速換算按鈕列 -->
                 <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: #64748b; margin-right: 4px;">快速切換：</span>
-                    <button type="button" onclick="setDcaSpotCapital(60)" class="dca-spot-cap-btn" data-cap="60" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">60U (低消)</button>
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; margin-right: 4px;">預設本金：</span>
+                    <button type="button" onclick="setDcaSpotCapital(60)" class="dca-spot-cap-btn" data-cap="60" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">60U (最低門檻)</button>
                     <button type="button" onclick="setDcaSpotCapital(100)" class="dca-spot-cap-btn" data-cap="100" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">100U</button>
                     <button type="button" onclick="setDcaSpotCapital(200)" class="dca-spot-cap-btn" data-cap="200" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">200U</button>
                     <button type="button" onclick="setDcaSpotCapital(250)" class="dca-spot-cap-btn active" data-cap="250" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #0284c7; background: #0284c7; color: #ffffff; cursor: pointer; transition: all 0.15s; box-shadow: 0 2px 6px rgba(2,132,199,0.25);">250U (基準)</button>
                     <button type="button" onclick="setDcaSpotCapital(300)" class="dca-spot-cap-btn" data-cap="300" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">300U</button>
                     <button type="button" onclick="setDcaSpotCapital(500)" class="dca-spot-cap-btn" data-cap="500" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">500U</button>
-                    <button type="button" onclick="setDcaSpotCapital(1000)" class="dca-spot-cap-btn" data-cap="1000" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">1,000U (旗艦)</button>
+                    <button type="button" onclick="setDcaSpotCapital(1000)" class="dca-spot-cap-btn" data-cap="1000" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">1,000U</button>
                 </div>
             </div>
 
-            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
-                <span class="c-pill c-pill-green">💎 1.0x 現貨 · 零爆倉零割肉</span>
-                <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🪙 幣安 FDUSD 掛單 0% 手續費</span>
-                <span class="c-pill c-pill-gold" id="spotPillFunds">🛡️ 滿倉零閒置 · 250 FDUSD 全額部署 (-26.92% 抗跌防禦 · 12級深海旗艦)</span>
-            </div>
-
-            <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                本模組經 <strong>Ubuntu 4 節點 96 核心 Ray 分散式叢集</strong> 與 C 語言撮合引擎，基於幣安真實 1 分鐘 K 線完成 0.01 精度全量窮舉，專為 <strong id="spotNarrativeCapital">250 FDUSD 本金</strong> 打造之 <strong>12 級深海抗跌旗艦配置</strong>。全額滿倉部署至 12 格遞增網格，徹底鎖定近三成（-26.92%）暴跌防禦：
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;">
+                <span class="c-pill c-pill-green">1.0x 現貨無強平風險</span>
+                <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">FDUSD 掛單 0% Maker 費率</span>
+                <span class="c-pill c-pill-gold" id="spotPillFunds">250 FDUSD 全額部署 (12 階覆蓋 -26.92% 跌幅)</span>
             </div>
 
             <!-- 現貨四大核心量化指標卡 -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">💰 半年實盤淨利潤 (年化折合)</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">180天回測淨收益 (年化)</div>
                     <div style="font-size: 20px; font-weight: 900; color: #0284c7;"><span id="spotCardProfit">+$51.48</span> FDUSD <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+40.1% APR)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">真實 60 秒冷卻下穩定週轉，0% 手續費全額落袋</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">基於 <span id="spotNarrativeCapital">250 FDUSD 本金</span> 與 60 秒冷卻期回測</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">⚡ 完成套利總輪次 (日均週轉)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #0f172a;">374 輪 <span style="font-size: 12px; font-weight: 700; color: #0284c7;">(日均 ~2.1 輪)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">高頻捕捉微幅震盪，均價反彈 0.50% 秒止盈</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">止盈完成輪次 (日均週轉)</div>
+                    <div style="font-size: 20px; font-weight: 900; color: #0f172a;">374 輪 <span style="font-size: 12px; font-weight: 700; color: #0284c7;">(日均 2.1 輪)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">持倉均價反彈 0.50% 觸發限價止盈</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛡️ 最大浮動回撤 (抗跌深度覆蓋)</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">最大浮動回撤 (網格覆蓋深度)</div>
                     <div style="font-size: 20px; font-weight: 900; color: #10b981;">23.09% <span style="font-size: 12px; font-weight: 700; color: #059669;">(覆蓋 -26.92%)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">最低淨值 <span id="spotCardMinEq">$192.28</span>，深海 12 級金字塔承接</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">回測最低淨值 <span id="spotCardMinEq">$192.28</span> (12 階加倉)</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🔒 物理清算風險 (爆倉率)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #10b981;">0.00% <span style="font-size: 12px; font-weight: 700; color: #059669;">(絕對零清算)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">現貨 1.0x 槓桿，強平線為 0，無割肉止損損失</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">槓桿與強平風險</div>
+                    <div style="font-size: 20px; font-weight: 900; color: #10b981;">1.0x 現貨 <span style="font-size: 12px; font-weight: 700; color: #059669;">(無強平價)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">現貨持倉無合約強平與資金費率成本</div>
                 </div>
             </div>
 
             <!-- 現貨參數表 -->
             <div style="margin-top: 14px;">
                 <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                    <span>📋 幣安 App【現貨 DCA】一鍵填寫對照表</span>
-                    <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(路徑：幣安 App ➔ 交易 ➔ 機器人 ➔ 現貨 DCA)</span>
+                    <span>幣安 App【現貨 DCA】參數對照表</span>
+                    <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(路徑：交易 ➔ 機器人 ➔ 現貨 DCA)</span>
                 </div>
                 <div class="matrix-table-wrap">
                     <table class="matrix-table" style="font-size: 12.5px;">
                         <thead>
                             <tr style="background: #1e293b;">
-                                <th style="width: 26%;">分區與設定欄位 (完全對準幣安 App)</th>
-                                <th style="width: 20%;">推薦填寫數值 (<span class="spot-table-cap-title">250U</span> 旗艦款)</th>
-                                <th style="width: 20%;">精確小數填法 (<span class="spot-table-cap-title">250U</span> 精確款)</th>
-                                <th style="width: 34%;">量化設計考量 / 避坑指南</th>
+                                <th style="width: 26%;">設定欄位</th>
+                                <th style="width: 20%;">整數建議值 (<span class="spot-table-cap-title">250U</span>)</th>
+                                <th style="width: 20%;">精確計算值 (<span class="spot-table-cap-title">250U</span>)</th>
+                                <th style="width: 34%;">參數功能說明</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr style="background: #f8fafc;">
-                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【幣種與交易方向】</td>
+                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【基本設定與價格】</td>
                             </tr>
                             <tr>
-                                <td><strong>交易對 (Pair)</strong></td>
-                                <td><strong style="color: #0284c7;">SOL/FDUSD</strong></td>
-                                <td><strong style="color: #0284c7;">SOL/FDUSD</strong></td>
-                                <td>享幣安 FDUSD 現貨掛單 <strong>0.00% 免手續費</strong> 優惠</td>
-                            </tr>
-                            <tr>
-                                <td><strong>方向 (按鈕切換)</strong></td>
-                                <td><strong style="color: #059669;">買入 (綠色按鈕)</strong></td>
-                                <td><strong style="color: #059669;">買入 (綠色按鈕)</strong></td>
-                                <td>逢低分批吸籌做多，無爆倉清算風險</td>
-                            </tr>
-                            <tr style="background: #f8fafc;">
-                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【設定價格】</td>
+                                <td><strong>交易對 / 方向</strong></td>
+                                <td><strong style="color: #0284c7;">SOL/FDUSD (買入)</strong></td>
+                                <td><strong style="color: #0284c7;">SOL/FDUSD (買入)</strong></td>
+                                <td>適用幣安 FDUSD 現貨掛單 0% Maker 費率</td>
                             </tr>
                             <tr>
                                 <td><strong>價格下跌步驟</strong></td>
                                 <td><strong style="color: #059669;">0.60%</strong></td>
                                 <td><strong style="color: #059669;">0.60%</strong></td>
-                                <td>第 1 格加倉觸發跌幅，細密網格捕捉微幅震盪</td>
+                                <td>第 1 階加倉單與首單之初始價格間距</td>
                             </tr>
                             <tr>
-                                <td><strong>止盈</strong></td>
-                                <td><strong style="color: #0284c7;">0.50%</strong> <span style="font-size: 11px; color: #64748b;">(類型選「固定」)</span></td>
-                                <td><strong style="color: #0284c7;">0.50%</strong> <span style="font-size: 11px; color: #64748b;">(類型選「固定」)</span></td>
-                                <td>持倉均價反彈 0.50% 限價止盈，0 手續費全額落袋</td>
+                                <td><strong>止盈比例</strong></td>
+                                <td><strong style="color: #0284c7;">0.50%</strong> <span style="font-size: 11px; color: #64748b;">(固定)</span></td>
+                                <td><strong style="color: #0284c7;">0.50%</strong> <span style="font-size: 11px; color: #64748b;">(固定)</span></td>
+                                <td>持倉均價反彈 0.50% 觸發限價賣出止盈</td>
                             </tr>
                             <tr style="background: #f8fafc;">
-                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【投資額】</td>
+                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【投資額配置】</td>
                             </tr>
                             <tr>
                                 <td><strong>首單金額</strong></td>
                                 <td><strong style="color: #d97706;" id="spotTblBaseInt">10.00 FDUSD</strong></td>
                                 <td><strong style="color: #d97706;" id="spotTblBaseExact">10.00 FDUSD</strong></td>
-                                <td>初始首筆建倉金額 (佔 ~4.0%)，降低頂部暴露風險</td>
+                                <td>每輪起始市價建倉金額 (佔總本金約 4.0%)</td>
                             </tr>
                             <tr>
-                                <td><strong>DCA訂單金額</strong></td>
+                                <td><strong>DCA 訂單金額</strong></td>
                                 <td><strong style="color: #d97706;" id="spotTblDcaInt">20.00 FDUSD</strong></td>
                                 <td><strong style="color: #d97706;" id="spotTblDcaExact">20.00 FDUSD</strong></td>
-                                <td>每格加倉金額 (共 12 格)，平滑攤低持倉成本</td>
+                                <td>單階限價加倉金額 (共 12 階等額加倉)</td>
                             </tr>
                             <tr>
                                 <td><strong>DCA 訂單數量上限</strong></td>
                                 <td><strong>12</strong></td>
                                 <td><strong>12</strong></td>
-                                <td>總單數 = 1 首單 + 12 筆加倉單 (17.2 萬根 K 線未斷格)</td>
+                                <td>最大加倉次數 (1 首單 + 12 加倉單)</td>
                             </tr>
                             <tr>
-                                <td><strong>總投資額 (系統自動計算)</strong></td>
+                                <td><strong>總投資額 (自動計算)</strong></td>
                                 <td><strong style="color: #0f172a;" id="spotTblTotalInt">250.00 FDUSD</strong></td>
                                 <td><strong style="color: #0f172a;" id="spotTblTotalExact">250.00 FDUSD</strong></td>
-                                <td><span id="spotTblFormula">10 + (20 &times; 12) = 250 FDUSD (100% 部署，滿倉零閒置現金)</span></td>
+                                <td><span id="spotTblFormula">10 + (20 &times; 12) = 250 FDUSD (100% 部署)</span></td>
                             </tr>
                             <tr style="background: #f8fafc;">
-                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階 (選用)】(點擊展開)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>觸發價格</strong></td>
-                                <td><span style="color: #64748b;">留空 (不填)</span></td>
-                                <td><span style="color: #64748b;">留空 (不填)</span></td>
-                                <td>建立後立即以市價打出首單，第一時間啟動資金週轉</td>
+                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階參數】</td>
                             </tr>
                             <tr>
                                 <td><strong>價格偏差乘數</strong></td>
                                 <td><strong style="color: #059669;">1.22</strong></td>
                                 <td><strong style="color: #059669;">1.22</strong></td>
-                                <td>向下幾何拉開防禦間距，抗跌覆蓋達 <strong>-26.92%</strong></td>
+                                <td>各階加倉間距按 1.22 倍幾何遞增，總覆蓋跌幅 <strong>-26.92%</strong></td>
                             </tr>
                             <tr>
-                                <td><strong>DCA訂單金額乘數</strong></td>
-                                <td><strong>1.00 (等額平滑)</strong></td>
-                                <td><strong>1.00 (等額平滑)</strong></td>
-                                <td>每格固定加倉 <span id="spotTblDcaNote">20.00</span> FDUSD，避免深跌幾何放大回撤</td>
+                                <td><strong>DCA 訂單金額乘數</strong></td>
+                                <td><strong>1.00</strong></td>
+                                <td><strong>1.00</strong></td>
+                                <td>每階固定加倉 <span id="spotTblDcaNote">20.00</span> FDUSD，維持線性部位權重</td>
                             </tr>
                             <tr>
                                 <td><strong>回合冷卻時間</strong></td>
                                 <td><strong>60 秒</strong></td>
                                 <td><strong>60 秒</strong></td>
-                                <td>止盈後冷卻 1 分鐘，隨後自動打出下一輪首單</td>
-                            </tr>
-                            <tr style="background: #f8fafc;">
-                                <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【價格範圍 / 止損】</td>
+                                <td>止盈平倉後間隔 60 秒啟動下一輪首單</td>
                             </tr>
                             <tr>
-                                <td><strong>價格範圍 (最低 - 最高)</strong></td>
-                                <td><span style="color: #64748b;">留空 (不設限)</span></td>
-                                <td><span style="color: #64748b;">留空 (不設限)</span></td>
-                                <td>不設特定價格區間上限，全天候 7x24 自動捕捉行情</td>
-                            </tr>
-                            <tr>
-                                <td><strong>止損 / 觸發止損時一併終止機器人</strong></td>
-                                <td><span style="color: #10b981; font-weight: 700;">不填 / 不勾選</span></td>
-                                <td><span style="color: #10b981; font-weight: 700;">不填 / 不勾選</span></td>
-                                <td>0 槓桿現貨無爆倉強平風險，打滿也是優質藍籌現貨</td>
+                                <td><strong>觸發價格 / 價格範圍 / 止損</strong></td>
+                                <td><span style="color: #64748b;">留空 (不勾選)</span></td>
+                                <td><span style="color: #64748b;">留空 (不勾選)</span></td>
+                                <td>現貨無強平機制，不設硬性止損平倉</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">
-                    ※ <strong>現貨版優勢</strong>：現貨槓桿為 1.0x，強平線為 0，因此可將 <span class="spot-dynamic-cap">250U</span> 資金 100% 滿額部署至 12 格遞增網格中，將抗跌護城河拉滿至 -26.92%，實現「0 閒置、0 爆倉、0 割肉、0 手續費」的四零被動現金流！填寫完成後點擊最下方【創建】按鈕即可啟動。
-                </div>
             </div>
         </div>
 
-                <!-- ======================= 模態二：合約旗艦 (ENA/USDC 250U 9級深海防禦款) ======================= -->
+        <!-- ======================= 模態二：合約旗艦 (ENA/USDC 250U 9級) ======================= -->
         <div id="dcaContentFutures" style="display: none;">
-            <!-- ================= 🎚️ 資金等比即時換算滑桿與快捷列 ================= -->
+            <!-- 資金等比即時換算滑桿與快捷列 -->
             <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 15px; font-weight: 900; color: #0f172a;">🎚️ 資金等比即時換算器 (總投資額)</span>
-                        <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">拖動滑桿即時計算實盤參數</span>
+                        <span style="font-size: 14.5px; font-weight: 800; color: #0f172a;">合約資金等比試算器 (總投資額)</span>
+                        <span style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 9999px; font-weight: 600;">含網格投入保證金與手動追加儲備</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="font-size: 12.5px; font-weight: 700; color: #64748b;">自訂總資金：</span>
+                        <span style="font-size: 12.5px; font-weight: 700; color: #64748b;">投入本金：</span>
                         <input type="number" id="dcaCapitalInput" min="50" max="5000" step="10" value="250" oninput="onDcaCapitalChange(this.value)" style="width: 85px; padding: 4px 8px; font-size: 14px; font-weight: 900; color: #7c3aed; border: 1.5px solid #cbd5e1; border-radius: 8px; text-align: center; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#cbd5e1'">
                         <span style="font-size: 13px; font-weight: 800; color: #0f172a;">USDC</span>
                     </div>
@@ -1595,198 +1484,169 @@
 
                 <!-- 快速換算按鈕列 -->
                 <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: #64748b; margin-right: 4px;">快速切換：</span>
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; margin-right: 4px;">預設本金：</span>
                     <button type="button" onclick="setDcaCapital(100)" class="dca-cap-btn" data-cap="100" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">100U</button>
                     <button type="button" onclick="setDcaCapital(200)" class="dca-cap-btn" data-cap="200" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">200U</button>
                     <button type="button" onclick="setDcaCapital(230)" class="dca-cap-btn" data-cap="230" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">230U</button>
                     <button type="button" onclick="setDcaCapital(250)" class="dca-cap-btn active" data-cap="250" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #7c3aed; background: #7c3aed; color: #ffffff; cursor: pointer; transition: all 0.15s; box-shadow: 0 2px 6px rgba(124,58,237,0.25);">250U (基準)</button>
                     <button type="button" onclick="setDcaCapital(300)" class="dca-cap-btn" data-cap="300" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">300U</button>
                     <button type="button" onclick="setDcaCapital(500)" class="dca-cap-btn" data-cap="500" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">500U</button>
-                    <button type="button" onclick="setDcaCapital(1000)" class="dca-cap-btn" data-cap="1000" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">1,000U (艦隊)</button>
+                    <button type="button" onclick="setDcaCapital(1000)" class="dca-cap-btn" data-cap="1000" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">1,000U</button>
                 </div>
             </div>
 
-            <!-- ======================= 合約旗艦：ENA/USDC (9級深海防禦款) ======================= -->
+            <!-- 合約模態：ENA/USDC (9 階配置) -->
             <div id="futuresTokenEna" style="display: block;">
-                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
-                    <span class="c-pill" style="background:#f3e8ff; color:#7c3aed; border:1px solid #d8b4fe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">⚡ 3.0x 永續合約</span>
-                    <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🎁 幣安 USDC 合約掛單 0.00% 免手續費 (0% Maker)</span>
-                    <span class="c-pill" id="enaPillFunds" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛡️ 180U 網格 ＋ 70U 開倉後手動追加 (總 250U 專款專用)</span>
-                    <span class="c-pill c-pill-gold">🎯 前6個月極限覆蓋 (-32.35% 覆蓋 · 9級深海防禦)</span>
-                    <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">🛑 -35.00% 剛性止損 (穩固保全 64%+ 本金)</span>
-                </div>
-
-                <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.6;">
-                    本模組經 <strong>Ubuntu 96 核 Ray 分散式叢集</strong> 與 C 語言高速撮合引擎，基於 ENAUSDC 真實歷史 1 分鐘 K 線（192.7 天，27.7 萬根）完成 0.01 精度全量窮舉，專為 <strong id="enaNarrativeCapital">250U 總本金</strong> 嚴格鎖定「<strong>覆蓋前 6 個月極限去槓桿深度 ＋ 止損強制保全本金 ＋ 高頻波動最大化產出</strong>」所求解出之<strong>全局雙料冠軍配置（9 級深海防禦款）</strong>。全額納入機器人管理（<strong>180U 網格開倉 ＋ 70U 啟動後手動追加鎖定保護</strong>）。在覆蓋高達 <strong>-32.35%</strong> 暴跌深度的同時，半年狂暴套利 <strong id="enaNarrativeProfit">+$343.15 USDC (+260.0% APR)</strong>，累積 <strong>1,217 輪止盈、半年僅 1 次止損、100% 零爆倉存活</strong>！若遭遇極端黑天鵝跌破 -35.00% 止損線，最低淨值穩守在 <strong id="enaNarrativePreserve">$160.08U（64.03% 本金）</strong>，從容等待市場走平重啟！
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;">
+                    <span class="c-pill" style="background:#f3e8ff; color:#7c3aed; border:1px solid #d8b4fe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">3.0x 逐倉永續合約</span>
+                    <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">USDC 合約 0.00% Maker 費率</span>
+                    <span class="c-pill" id="enaPillFunds" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">180U 網格 ＋ 70U 開倉後手動追加 (總計 250U)</span>
+                    <span class="c-pill c-pill-gold">9 階覆蓋 -32.35% 跌幅</span>
+                    <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">-35.00% 止損 (保留 64% 本金)</span>
                 </div>
 
                 <!-- ENA 四大核心量化指標卡 -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px;">
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">💰 實盤淨利潤 (年化折合)</div>
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">192天回測淨收益 (年化)</div>
                         <div style="font-size: 20px; font-weight: 900; color: #7c3aed;"><span id="enaCardProfit">+$343.15</span> <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+260.0% APR)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">9級深海防禦，半年淨賺 343U (+137% ROI)</div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">基於 <span id="enaNarrativeCapital">250U 總本金</span> 1m K 線回測</div>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">⚡ 完成套利總輪次 (勝率 / 週轉)</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #0f172a;">1,217 輪 <span style="font-size: 12px; font-weight: 700; color: #7c3aed;">(100% 零爆倉)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">平均 3.80 小時一輪，均價反彈 0.65% 止盈落袋</div>
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">止盈完成輪次 (平均週期)</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #0f172a;">1,217 輪 <span style="font-size: 12px; font-weight: 700; color: #7c3aed;">(均值 3.8h/輪)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">持倉均價反彈 0.65% 觸發限價止盈</div>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛡️ 最大回撤 / 抗跌深度覆蓋</div>
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">最大回撤 / 網格覆蓋深度</div>
                         <div style="font-size: 20px; font-weight: 900; color: #10b981;">51.37% <span style="font-size: 12px; font-weight: 700; color: #059669;">(覆蓋 -32.35%)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">最低淨值 <span id="enaCardMinEq">$160.08</span>，金字塔 9 級幾何吸籌</div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">最低淨值 <span id="enaCardMinEq">$160.08</span> (9 階幾何加倉)</div>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">🛑 剛性止損保本線 (嚴格保全 64%+ 本金)</div>
-                        <div style="font-size: 20px; font-weight: 900; color: #dc2626;">-35.00% 止損 <span style="font-size: 12px; font-weight: 700; color: #059669;">(穩留 64%+ 本金)</span></div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">跌破時最低淨值穩守 <span id="enaCardPreserve">$160.08U+</span></div>
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">止損風控線 (本金保全比例)</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #dc2626;">-35.00% 止損 <span style="font-size: 12px; font-weight: 700; color: #059669;">(留存 64.0%)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">觸發止損時留存淨值 <span id="enaCardPreserve">$160.08U+</span></div>
                     </div>
                 </div>
 
                 <!-- ENA 參數表 -->
                 <div style="margin-top: 14px;">
                     <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                        <span>📋 幣安 App【ENA/USDC 合約 DCA】<span class="dca-table-cap-title">250U</span> 填寫對照表</span>
-                        <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(幣安 App ➔ 交易 ➔ 機器人 ➔ 合約 DCA ➔ 手動創建)</span>
+                        <span>幣安 App【ENA/USDC 合約 DCA】(<span class="dca-table-cap-title">250U</span>) 參數對照表</span>
+                        <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(路徑：交易 ➔ 機器人 ➔ 合約 DCA ➔ 手動創建)</span>
                     </div>
                     <div class="matrix-table-wrap">
                         <table class="matrix-table" style="font-size: 12.5px;">
                             <thead>
                                 <tr style="background: #1e293b;">
-                                    <th>設定欄位 (對準幣安 App)</th>
-                                    <th>推薦好填整數解 (首選)</th>
-                                    <th>極致精確小數解</th>
-                                    <th>量化設計考量與運作機制</th>
+                                    <th>設定欄位</th>
+                                    <th>整數建議值</th>
+                                    <th>精確計算值</th>
+                                    <th>參數功能與風控說明</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【幣種與交易方向】</td></tr>
+                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【基本設定與價格】</td></tr>
                                 <tr>
-                                    <td><strong>交易對 (Pair)</strong></td>
-                                    <td><strong style="color: #7c3aed;">ENAUSDC (永續)</strong></td>
-                                    <td><strong style="color: #7c3aed;">ENAUSDC (永續)</strong></td>
-                                    <td>享幣安 USDC 本位合約 <strong>0.00% Maker 免手續費</strong>，掛單 0 磨損！</td>
+                                    <td><strong>交易對 / 方向</strong></td>
+                                    <td><strong style="color: #7c3aed;">ENAUSDC 永續 (做多)</strong></td>
+                                    <td><strong style="color: #7c3aed;">ENAUSDC 永續 (做多)</strong></td>
+                                    <td>適用幣安 USDC 本位合約 0.00% Maker 掛單費率</td>
                                 </tr>
-                                <tr>
-                                    <td><strong>方向 (按鈕切換)</strong></td>
-                                    <td><strong style="color: #059669;">做多 (綠色按鈕)</strong></td>
-                                    <td><strong style="color: #059669;">做多 (綠色按鈕)</strong></td>
-                                    <td>分批加倉攤低成本，均價反彈限價止盈</td>
-                                </tr>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【價格設定】</td></tr>
                                 <tr>
                                     <td><strong>價格下跌步驟</strong></td>
                                     <td><strong style="color: #059669;">1.15%</strong></td>
                                     <td><strong style="color: #059669;">1.15%</strong></td>
-                                    <td>第 1 筆加倉觸發間距，平滑捕捉正常回調</td>
+                                    <td>第 1 階加倉單觸發間距</td>
                                 </tr>
                                 <tr>
                                     <td><strong>每輪止盈</strong></td>
                                     <td><strong style="color: #0284c7;">0.65%</strong></td>
                                     <td><strong style="color: #0284c7;">0.65%</strong></td>
-                                    <td>兼顧高 ATR 波動利潤厚度與高頻週轉，較 0.50% 總利潤大幅提升</td>
+                                    <td>持倉均價反彈 0.65% 觸發限價止盈</td>
                                 </tr>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【投資 (含槓桿)】</td></tr>
+                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【槓桿與保證金配置】</td></tr>
                                 <tr>
                                     <td><strong>槓桿倍數</strong></td>
-                                    <td><strong style="color: #d97706;">3x</strong></td>
-                                    <td><strong style="color: #d97706;">3x</strong></td>
-                                    <td>點擊「投資」右側切換；嚴守逐倉 3x 杜絕過度槓桿</td>
+                                    <td><strong style="color: #d97706;">3x (逐倉)</strong></td>
+                                    <td><strong style="color: #d97706;">3x (逐倉)</strong></td>
+                                    <td>採用 3x 槓桿控制強平距離</td>
                                 </tr>
                                 <tr>
                                     <td><strong>基礎訂單保證金</strong></td>
                                     <td><strong style="color: #d97706;" id="enaTblBaseInt">9.00 USDC</strong></td>
                                     <td><strong style="color: #d97706;" id="enaTblBaseExact">7.78 USDC</strong></td>
-                                    <td>初始建倉保證金 (名義面值 3x)，頂部極低曝險</td>
+                                    <td>首筆建倉保證金（名義部位為 3 倍）</td>
                                 </tr>
                                 <tr>
                                     <td><strong>DCA 訂單保證金</strong></td>
                                     <td><strong style="color: #d97706;" id="enaTblDcaInt">19.00 USDC</strong></td>
                                     <td><strong style="color: #d97706;" id="enaTblDcaExact">19.14 USDC</strong></td>
-                                    <td>9 筆高密度等額加倉，強力拉低深海均價</td>
+                                    <td>單階加倉保證金（共 9 階等額加倉）</td>
                                 </tr>
                                 <tr>
                                     <td><strong>DCA 訂單數量上限</strong></td>
                                     <td><strong>9</strong></td>
                                     <td><strong>9</strong></td>
-                                    <td>9 筆幾何加倉覆蓋前 6 個月極限下殺 (-32.35%)</td>
+                                    <td>最大加倉階數（累計覆蓋 -32.35% 跌幅）</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>投入保證金 (系統自動計算)</strong></td>
+                                    <td><strong>投入保證金 (自動計算)</strong></td>
                                     <td><strong style="color: #0f172a;" id="enaTblOrderInt">180.00 USDC</strong></td>
                                     <td><strong style="color: #0f172a;" id="enaTblOrderExact">180.04 USDC</strong></td>
-                                    <td>基礎 + (加倉 × 9) 動態開倉池</td>
+                                    <td>基礎保證金 + (DCA 保證金 &times; 9)</td>
                                 </tr>
                                 <tr>
                                     <td><strong>自動追加保證金 (建立時)</strong></td>
-                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
-                                    <td><span style="color: #64748b; font-weight: 700;">不勾選 (關閉自動)</span></td>
-                                    <td>建立時<strong>不勾選</strong>，避免系統不可控地自動從錢包抽調資金</td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選</span></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選</span></td>
+                                    <td>關閉自動抽調，避免影響合約帳戶其他資金</td>
                                 </tr>
                                 <tr>
                                     <td><strong>手動追加保證金 (開倉後)</strong></td>
                                     <td><strong style="color: #059669;" id="enaTblAddInt">手動追加 70.00 USDC</strong></td>
                                     <td><strong style="color: #059669;" id="enaTblAddExact">手動追加 69.96 USDC</strong></td>
-                                    <td><strong>【核心操作】開倉後於機器人詳情手動追加，安全墊一次鎖入！</strong></td>
+                                    <td><strong>開倉後於機器人詳情點擊「追加保證金」手動鎖入</strong></td>
                                 </tr>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ DCA 訂單詳情】</td></tr>
+                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階參數與止損風控】</td></tr>
                                 <tr>
-                                    <td><strong>價格偏差乘數</strong></td>
-                                    <td><strong style="color: #059669;">1.27</strong></td>
-                                    <td><strong style="color: #059669;">1.27</strong></td>
-                                    <td>幾何拉大間隔，9 級累計深度達 <strong>-32.35%</strong>（覆蓋 6 個月極限回調）</td>
+                                    <td><strong>價格偏差乘數 / 規模乘數</strong></td>
+                                    <td><strong style="color: #059669;">1.27</strong> / <strong>1.00</strong></td>
+                                    <td><strong style="color: #059669;">1.27</strong> / <strong>1.00</strong></td>
+                                    <td>間距按 1.27 倍幾何遞增（覆蓋 -32.35%），每階等額 1.00 倍</td>
                                 </tr>
-                                <tr>
-                                    <td><strong>DCA 訂單規模乘數</strong></td>
-                                    <td><strong>1.00 (等額)</strong></td>
-                                    <td><strong>1.00 (等額)</strong></td>
-                                    <td>維持 1.00 等額部位，避免深海倉位指數級膨脹</td>
-                                </tr>
-                                <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 800; color: #7c3aed; padding: 6px 10px; font-size: 11.5px;">【進階 (選用) ➔ 條件與風控】</td></tr>
                                 <tr>
                                     <td><strong>啟動條件 / 停止條件</strong></td>
                                     <td><span style="color: #64748b;">不勾選 (留空)</span></td>
                                     <td><span style="color: #64748b;">不勾選 (留空)</span></td>
-                                    <td>立即啟動，全天候 7x24 高頻運轉</td>
+                                    <td>建立後立即啟動，預設冷卻 60 秒</td>
                                 </tr>
                                 <tr>
                                     <td><strong>[✓] 止損 ➔ 止損目標</strong></td>
-                                    <td><strong style="color: #dc2626;">35.00% (必填！勾選止損)</strong></td>
-                                    <td><strong style="color: #dc2626;">35.00% (必填！勾選止損)</strong></td>
-                                    <td>覆蓋 9 級深海 (-32.35%) 後留 2.65% 緩衝斷腕，最低淨值穩守 <span id="enaTblPreserve">$160.08U+</span> (64.03% 本金)</td>
+                                    <td><strong style="color: #dc2626;">35.00% (勾選止損)</strong></td>
+                                    <td><strong style="color: #dc2626;">35.00% (勾選止損)</strong></td>
+                                    <td>第 9 階 (-32.35%) 下方預留 2.65% 緩衝，止損後留存 <span id="enaTblPreserve">$160.08U+</span> (64.03%)</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
-            <!-- 全局旗艦審計註釋 -->
-            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 12px; line-height: 1.6; border-top: 1px dashed #cbd5e1; padding-top: 10px;">
-                ※ <strong>合約旗艦資金等比動態換算與 6.4 成本金保全審計</strong>：<br>
-                1. <strong>全額專款專用（建立時不勾選自動 ➔ 開倉後手動追加保證金）</strong>：拖動上方滑桿可隨時等比試算任意資金規模；建立機器人時投入保證金照表填入，「自動追加保證金」保持<strong>不勾選</strong>；啟動開倉後，立即至機器人詳情頁點擊「追加保證金」，手動填入對應追加額，將防禦安全墊一次性鎖入機器人內部，徹底隔離全域合約風險！<br>
-                2. <strong>旗艦標的優勢</strong>：<br>
-                   • <strong>ENA/USDC (進攻旗艦)</strong>：DeFi 收益龍頭，9 級深海網格 (-32.35%) ＋ 35% 剛性止損，年化 APR 高達 +260.0%（半年淨賺 +$343.15U），極端行情穩守 64.03% 本金！<br>
-                3. <strong>剛性止損與等止跌重開 SOP</strong>：若遇罕見極端黑天鵝，跌破 -35.00% 止損線時果斷斷腕，單筆損失嚴格壓在 36% 以內（實質留存 64.03%+ 現金），冷卻待盤面走平築底後再行重啟！填寫完成後點擊最下方【建立 (做多)】按鈕即可啟動。
-            </div>
-        </div>
         </div>
     </div>
     </section>
 
 </div>
 
-<!-- ================= 起步本金與分步啟動全景彈窗 Modal ================= -->
+<!-- ================= 資金配置規格與分步啟動彈窗 Modal ================= -->
 <div id="capitalGuideModal" class="capital-modal-overlay" onclick="closeCapitalModal(event)">
     <div class="capital-modal-content" onclick="event.stopPropagation()">
         <!-- Modal 頂部標題列 -->
         <div class="capital-modal-header">
             <div style="display: flex; align-items: center; gap: 12px;">
-                <span style="font-size: 24px;">💰</span>
                 <div>
-                    <div style="font-size: 17px; font-weight: 900; color: #ffffff; letter-spacing: 0.3px;">全策略本金規劃與實戰啟動指引</div>
-                    <div style="font-size: 11.5px; color: #94a3b8; margin-top: 1px;">幣安撮合底層約束 × 2% 調倉滑價防護 × 三階段靈活起步</div>
+                    <div style="font-size: 17px; font-weight: 800; color: #ffffff; letter-spacing: 0.3px;">全策略資金配置規格與撮合門檻說明</div>
+                    <div style="font-size: 11.5px; color: #94a3b8; margin-top: 2px;">幣安最小名義價值 (Min Notional) 約束 × 2% 再平衡公式推導</div>
                 </div>
             </div>
             <button class="capital-modal-close" onclick="closeCapitalModal()">&times;</button>
@@ -1795,305 +1655,148 @@
         <!-- Modal 內容滾動區 -->
         <div class="capital-modal-body">
             <!-- 快速導言卡片 -->
-            <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 16px; font-size: 13px; color: #334155; line-height: 1.6;">
-                💡 <strong>為什麼需要精算本金？</strong> 幣安智能持倉（Rebalance Bot）限制現貨單筆下單金額不得低於 <strong>5 USDT</strong>（部分代幣與 bStock 為 10 USDT）。若單倉投入資金過低，在觸發 <strong>2% 再平衡</strong> 時計算出的買賣金額將小於 5U 導致系統報錯跳過。以下為您拆解各策略極限門檻與推薦資金，並提供三階段循序漸進啟動路線圖。
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #334155; line-height: 1.6;">
+                <strong>最小委託面額約束：</strong>幣安智能持倉（Rebalance Bot）規定現貨單筆下單金額不得低於 <strong>5 USDT</strong>（部分交易對與 bStock 建議預留 10 USDT）。若單台機器人本金過低，當價格偏離達 <strong>2%</strong> 觸發調倉時，計算出的買賣金額若小於 5 USDT 將被系統略過。
             </div>
 
             <!-- 四大核心資金指標微看板 (4 Bento Cards) -->
             <div class="market-metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px;">
                 <div class="metric-card" style="border-left: 4px solid #ef4444; background: #ffffff;">
                     <div class="metric-label" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>⚠️ 極限起步門檻 (全滿開)</span>
-                        <span style="font-size: 10px; background: #fee2e2; color: #dc2626; padding: 1px 6px; border-radius: 4px; font-weight: 800;">5U 底線</span>
+                        <span>最低觸發門檻 (14 組全開)</span>
+                        <span style="font-size: 10px; background: #fee2e2; color: #dc2626; padding: 1px 6px; border-radius: 4px; font-weight: 700;">5U 臨界值</span>
                     </div>
                     <div class="metric-val" style="color: #dc2626; font-size: 21px;">~3,950 USDT</div>
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
-                        約 <strong>13 萬 NTD</strong> ｜ 14 組機器人剛好壓在 5U 門檻，極小波動偶發跳過調倉。
+                        14 組機器人處於 5U 最小調倉臨界值，小幅波動可能略過調倉。
                     </div>
                 </div>
 
                 <div class="metric-card" style="border-left: 4px solid #10b981; background: #f0fdf4;">
                     <div class="metric-label" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>🏆 實戰推薦標準配置</span>
-                        <span style="font-size: 10px; background: #dcfce7; color: #059669; padding: 1px 6px; border-radius: 4px; font-weight: 800;">無痛抗滑價</span>
+                        <span>標準完整配置 (推薦)</span>
+                        <span style="font-size: 10px; background: #dcfce7; color: #059669; padding: 1px 6px; border-radius: 4px; font-weight: 700;">含滑價緩衝</span>
                     </div>
                     <div class="metric-val" style="color: #059669; font-size: 21px;">~6,650 USDT</div>
                     <div style="font-size: 11px; color: #166534; margin-top: 2px;">
-                        約 <strong>21 ~ 23 萬 NTD</strong> ｜ 核心 2,000U + Alpha 3,150U + bStock 1,000U + DCA 500U，調倉零卡單！
+                        核心 2,000U + Alpha 3,150U + bStock 1,000U + DCA 500U。
                     </div>
                 </div>
 
                 <div class="metric-card" style="border-left: 4px solid #0284c7; background: #ffffff;">
                     <div class="metric-label" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>🌱 輕量極簡起步版</span>
-                        <span style="font-size: 10px; background: #e0f2fe; color: #0284c7; padding: 1px 6px; border-radius: 4px; font-weight: 800;">新手低壓</span>
+                        <span>階段一：基礎核心配置</span>
+                        <span style="font-size: 10px; background: #e0f2fe; color: #0284c7; padding: 1px 6px; border-radius: 4px; font-weight: 700;">3 台機器人</span>
                     </div>
                     <div class="metric-val" style="color: #0284c7; font-size: 21px;">1,200 ~ 1,500 USDT</div>
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
-                        約 <strong>4 ~ 5 萬 NTD</strong> ｜ 先行啟動核心 BTC/ETH (各 500U) + bStock 科技艦隊 (350U)。
+                        先行部署核心 BTC/ETH (各 500U) + bStock 硬體組 (350~500U)。
                     </div>
                 </div>
 
                 <div class="metric-card" style="border-left: 4px solid #8b5cf6; background: #ffffff;">
                     <div class="metric-label" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>⚔️ 精選 Alpha 戰鬥版</span>
-                        <span style="font-size: 10px; background: #ede9fe; color: #7c3aed; padding: 1px 6px; border-radius: 4px; font-weight: 800;">高資金效率</span>
+                        <span>階段二：進階核心＋重點 Alpha</span>
+                        <span style="font-size: 10px; background: #ede9fe; color: #7c3aed; padding: 1px 6px; border-radius: 4px; font-weight: 700;">7 台機器人</span>
                     </div>
                     <div class="metric-val" style="color: #7c3aed; font-size: 21px;">3,000 ~ 3,500 USDT</div>
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
-                        約 <strong>10 ~ 11.5 萬 NTD</strong> ｜ 核心滿配 (1,500U) + bStock (700U) + 精選 3 隻頂級 Alpha (各 350U)。
+                        核心 3 倉 (1,500U) + bStock 2 倉 (700U) + Alpha 前 3 倉 (1,050U)。
                     </div>
                 </div>
             </div>
 
             <!-- 一、底層限制與數學推導卡片 -->
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
-                <div style="font-weight: 800; font-size: 14.5px; color: #0f172a; margin-bottom: 10px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;">
-                    <span>🧮 幣安機器人底層機制與資金推導公式</span>
-                    <span style="font-size: 12px; color: #64748b; font-weight: normal;">(為什麼不能只放 50U 或 100U？)</span>
+                <div style="font-weight: 800; font-size: 14.5px; color: #0f172a; margin-bottom: 10px;">
+                    <span>2% 偏離調倉與最小本金推導公式</span>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 10px; font-size: 13px; line-height: 1.6; color: #334155;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; font-size: 13px; line-height: 1.6; color: #334155;">
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px;">
-                        <strong style="color: #0f172a; display: block; margin-bottom: 3px;">1. 幣安現貨最小單筆委託 (Min Notional)</strong>
-                        現貨限制單筆下單金額不得低於 <strong>5 USDT</strong>（美股 bStock 撮合端建議預留 <strong>10 USDT</strong> 安全邊際）。
+                        <strong style="color: #0f172a; display: block; margin-bottom: 3px;">1. 交易所最小委託面額 (Min Notional)</strong>
+                        幣安現貨單筆委託下限為 <strong>5 USDT</strong>；若單台機器人本金僅 100 USDT，2% 偏離時調倉金額僅 2 USDT（低於 5 USDT），系統將跳過該次再平衡。
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px;">
-                        <strong style="color: #0f172a; display: block; margin-bottom: 3px;">2. 策略 2% 偏離調倉公式推導</strong>
-                        當機器人內某資產偏離目標比例 2% 時觸發再平衡：
-                        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; margin: 6px 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; color: #0f172a; line-height: 1.6;">
-                            • <strong>單次調倉金額</strong> = 機器人本金 &times; 2% &ge; 5 USDT<br>
-                            &rarr; <strong>最低本金</strong> &ge; 5 &divide; 0.02 = <strong style="color: #0284c7; font-size: 13.5px;">250 USDT</strong><br>
-                            <span style="color: #64748b;">• 若考慮 10 USDT 安全邊際（防滑價）：10 &divide; 0.02 = <strong style="color: #059669;">500 USDT</strong></span>
-                        </div>
+                        <strong style="color: #0f172a; display: block; margin-bottom: 3px;">2. 單倉最低本金計算</strong>
+                        <code>單次調倉金額 = 單倉本金 &times; 2% &ge; 5 USDT</code><br>
+                        &rarr; 最低臨界本金 = <code>5 &divide; 0.02 = 250 USDT</code>（建議配置 <strong>350 ~ 500 USDT</strong> 預留滑價緩衝）。
                     </div>
-                </div>
-                <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #92400e; line-height: 1.6;">
-                    ⚠️ <strong>避坑警示</strong>：若單台機器人投入資金低於 250 USDT（例如只放 100 USDT），當價格波動達 2% 觸發調倉時，系統計算出買賣金額僅有 <strong>100 &times; 2% = 2 USDT</strong>，因小於幣安 <strong>5 USDT</strong> 限制，系統將報錯 <code>Order size below minimum notional</code> 並直接跳過該次再平衡，導致自動高拋低吸複利機制實質失效！
                 </div>
             </div>
 
             <!-- 二、全策略模組資金需求詳細對照表 -->
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
-                <div style="font-weight: 800; font-size: 14.5px; color: #0f172a; margin-bottom: 10px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;">
-                    <span>📋 四大策略模組資金需求詳細對照表</span>
-                    <span style="font-size: 12px; color: #64748b; font-weight: normal;">(基於 2% 再平衡與 5U/10U 撮合邊界實測)</span>
+                <div style="font-weight: 800; font-size: 14.5px; color: #0f172a; margin-bottom: 10px;">
+                    <span>四大策略模組資金規格對照表</span>
                 </div>
                 <div class="matrix-table-wrap">
                     <table class="matrix-table" style="font-size: 12.5px;">
                         <thead>
                             <tr style="background: #1e293b;">
                                 <th>策略模組</th>
-                                <th>機器人架構與配置</th>
-                                <th>極限起步門檻 (5U 觸發)</th>
-                                <th>實戰推薦平滑運作 (安全邊際)</th>
-                                <th>量化設計考量與機制說明</th>
+                                <th>子組合數量與結構</th>
+                                <th>最低臨界門檻</th>
+                                <th>標準建議配置</th>
+                                <th>資金分配明細</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>策略一：加密核心持倉</strong></td>
-                                <td>
-                                    <strong>3 組三幣機器人</strong><br>
-                                    • BTC 核心倉 (2:1:1)<br>
-                                    • ETH 核心倉 (2:1:1)<br>
-                                    • TAO 核心倉 (1:1:1)
-                                </td>
-                                <td>
-                                    <strong style="color: #dc2626;">700 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(BTC 250U, ETH 250U, TAO 200U)</span>
-                                </td>
-                                <td>
-                                    <strong style="color: #059669; font-size: 13.5px;">2,000 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(BTC 800U, ETH 800U, TAO 400U)</span>
-                                </td>
-                                <td>
-                                    完美對齊 <strong>20% : 20% : 10%</strong> 資金權重。每倉高於 400U，無論 6-Zone 如何切換，內部最小資產（5%~10%）在 2% 調倉時皆穩超 5U，調倉零卡單。
-                                </td>
+                                <td><strong>策略一：核心資產配置</strong></td>
+                                <td>3 組三幣組合 (BTC / ETH / TAO)</td>
+                                <td><strong style="color: #dc2626;">700 USDT</strong></td>
+                                <td><strong style="color: #059669; font-size: 13.5px;">2,000 USDT</strong></td>
+                                <td>標準配置：BTC 800U、ETH 800U、TAO 400U (對應 2:2:1 權重)</td>
                             </tr>
                             <tr>
-                                <td><strong>策略二：加密 Alpha 持倉</strong></td>
-                                <td>
-                                    <strong>9 組純雙幣 60/40 機器人</strong><br>
-                                    (UNI, HYPE, AAVE, ENA, PENDLE, ONDO, NEAR, SUI, LINK 各配 60% + PAXG 40%)
-                                </td>
-                                <td>
-                                    <strong style="color: #dc2626;">2,250 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(9 組 × 250 USDT)</span>
-                                </td>
-                                <td>
-                                    <strong style="color: #059669; font-size: 13.5px;">3,150 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(9 組 × 350 USDT)</span>
-                                </td>
-                                <td>
-                                    純雙幣 60/40 極其簡潔。每倉 350U 時，2% 偏離調倉金額達 <strong>7.0 USDT</strong>，留足 40% 滑價緩衝，暴漲暴跌時自動將利潤 100% 沉澱至實體黃金。
-                                </td>
+                                <td><strong>策略二：Alpha 雙幣配置</strong></td>
+                                <td>9 組雙幣 60/40 組合</td>
+                                <td><strong style="color: #dc2626;">2,250 USDT</strong></td>
+                                <td><strong style="color: #059669; font-size: 13.5px;">3,150 USDT</strong></td>
+                                <td>標準配置：9 組各 350U (單次 2% 調倉金額約 7.0 USDT)</td>
                             </tr>
                             <tr>
-                                <td><strong>策略三：美股 bStock 持倉</strong></td>
-                                <td>
-                                    <strong>2 組三幣艦隊 (100% 純股權)</strong><br>
-                                    • 艦隊一：NVDA + AVGO + TSM<br>
-                                    • 艦隊二：AAPL + GOOGL + MSFT
-                                </td>
-                                <td>
-                                    <strong style="color: #dc2626;">700 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(2 組 × 350 USDT)</span>
-                                </td>
-                                <td>
-                                    <strong style="color: #059669; font-size: 13.5px;">1,000 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(2 組 × 500 USDT)</span>
-                                </td>
-                                <td>
-                                    美股單股價格較高（約 $140~$500+），每艦隊配置 500U 能使碎股撮合與 2% 再平衡更加平滑，有效降低撮合精度捨入磨損。
-                                </td>
+                                <td><strong>策略三：美股 bStock 配置</strong></td>
+                                <td>2 組三幣等權重組合</td>
+                                <td><strong style="color: #dc2626;">700 USDT</strong></td>
+                                <td><strong style="color: #059669; font-size: 13.5px;">1,000 USDT</strong></td>
+                                <td>標準配置：硬體組 500U、軟體組 500U</td>
                             </tr>
                             <tr>
-                                <td><strong>策略四：加密貨幣 DCA</strong></td>
-                                <td>
-                                    <strong>現貨 SOL DCA ＋ 合約旗艦 DCA</strong><br>
-                                    • 現貨 SOL DCA 網格 (零爆倉)<br>
-                                    • 合約 ENA/USDC DCA (9級深海防禦)
-                                </td>
-                                <td>
-                                    <strong style="color: #dc2626;">300 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(現貨 100U + 合約 200U)</span>
-                                </td>
-                                <td>
-                                    <strong style="color: #059669; font-size: 13.5px;">500 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(現貨 250U + 合約 250U)</span>
-                                </td>
-                                <td>
-                                    提供專屬隔離防禦儲備池，覆蓋前 6 個月極端去槓桿深度與插針補倉需求，確保嚴格保留 64%+ 本金的剛性止損防線不被擊穿。
-                                </td>
+                                <td><strong>策略四：DCA 量化網格</strong></td>
+                                <td>現貨 SOL DCA + 合約 ENA DCA</td>
+                                <td><strong style="color: #dc2626;">300 USDT</strong></td>
+                                <td><strong style="color: #059669; font-size: 13.5px;">500 USDT</strong></td>
+                                <td>標準配置：現貨 250 FDUSD + 合約 250 USDC (含 70U 追加保證金)</td>
                             </tr>
                             <tr style="background: #f8fafc; font-weight: 800;">
                                 <td colspan="2" style="font-size: 13px; color: #0f172a; text-align: right; padding-right: 18px;">
-                                    🎯 <strong>全策略滿配啟動總計 (14 台機器人)</strong>
+                                    <strong>全系統合計 (14 組配置)</strong>
                                 </td>
-                                <td>
-                                    <strong style="color: #dc2626; font-size: 14.5px;">~3,950 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #64748b;">(約 13 萬 NTD · 臨界剛好運轉)</span>
-                                </td>
-                                <td>
-                                    <strong style="color: #059669; font-size: 15.5px;">~6,650 USDT</strong><br>
-                                    <span style="font-size: 11px; color: #166534;">(約 21~23 萬 NTD · 最優平滑運轉)</span>
-                                </td>
-                                <td style="font-size: 11.5px; color: #0284c7;">
-                                    全資產 7x24 動態輪動，跨週期抗崩盤，自動高拋低吸複利閉環。
-                                </td>
+                                <td><strong style="color: #dc2626; font-size: 14px;">~3,950 USDT</strong></td>
+                                <td><strong style="color: #059669; font-size: 14.5px;">~6,650 USDT</strong></td>
+                                <td style="font-size: 11.5px; color: #475569;">可依資金規模分三階段逐步部署</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 三、預算有限？三階段模組化分步啟動路線圖 -->
+            <!-- 三、帳戶管理注意事項 -->
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
-                <div style="font-weight: 800; font-size: 14.5px; color: #0f172a; margin-bottom: 12px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;">
-                    <span>🚀 預算有限？三階段模組化分步啟動路線圖</span>
-                    <span style="font-size: 12px; color: #64748b; font-weight: normal;">(不需一次性投入 6,500U，按預算步步為營)</span>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
-                    <!-- 階段一卡片 -->
-                    <div style="border: 2px solid #38bdf8; border-radius: 10px; padding: 14px; background: #f0f9ff; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <span style="font-size: 14px; font-weight: 900; color: #0369a1;">🌱 階段一：極簡穩健版</span>
-                                <span style="font-size: 10px; background: #0284c7; color: white; padding: 2px 7px; border-radius: 9999px; font-weight: 700;">入門首選</span>
-                            </div>
-                            <div style="font-size: 20px; font-weight: 900; color: #0f172a; margin-bottom: 4px;">
-                                1,200 ~ 1,500 <span style="font-size: 12px; font-weight: 600; color: #64748b;">USDT (約 4~5 萬 NTD)</span>
-                            </div>
-                            <div style="font-size: 12px; color: #334155; line-height: 1.5; margin-bottom: 10px;">
-                                <strong>核心目標</strong>：低成本驗證系統、享受加密主流大盤成長，同時吃到全球 AI 巨頭紅利，完全零看盤壓力。
-                            </div>
-                            <div style="background: white; border: 1px solid #bae6fd; border-radius: 6px; padding: 8px 10px; font-size: 11.5px; color: #1e293b; line-height: 1.6;">
-                                <strong>啟動清單 (共 3 台機器人)</strong>：<br>
-                                1. <strong>策略一 (核心倉)</strong>：BTC 倉 <strong>500U</strong> (BTC+QQQB+PAXG)<br>
-                                2. <strong>策略一 (核心倉)</strong>：ETH 倉 <strong>500U</strong> (ETH+QQQB+PAXG)<br>
-                                3. <strong>策略三 (美股 bStock)</strong>：科技艦隊 <strong>350~500U</strong> (NVDA+AVGO+TSM)<br>
-                                <span style="color: #64748b;">※ Alpha 9 倉與合約暫緩，先以雙核心鎖定穩健大盤。</span>
-                            </div>
-                        </div>
-                        <div style="margin-top: 10px; font-size: 11px; color: #0284c7; font-weight: 700;">
-                            ✨ 特色：大餅、以太、黃金、美股科技一次到位，完全無爆倉風險。
-                        </div>
-                    </div>
-
-                    <!-- 階段二卡片 -->
-                    <div style="border: 2px solid #8b5cf6; border-radius: 10px; padding: 14px; background: #faf5ff; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <span style="font-size: 14px; font-weight: 900; color: #6d28d9;">⚔️ 階段二：精選 Alpha 戰鬥版</span>
-                                <span style="font-size: 10px; background: #7c3aed; color: white; padding: 2px 7px; border-radius: 9999px; font-weight: 700;">高資金效率</span>
-                            </div>
-                            <div style="font-size: 20px; font-weight: 900; color: #0f172a; margin-bottom: 4px;">
-                                3,000 ~ 3,500 <span style="font-size: 12px; font-weight: 600; color: #64748b;">USDT (約 10~11.5 萬 NTD)</span>
-                            </div>
-                            <div style="font-size: 12px; color: #334155; line-height: 1.5; margin-bottom: 10px;">
-                                <strong>核心目標</strong>：以核心壓艙，精選 3 隻當前市場最強敘事與現金流龍頭，以純雙幣 60/40 捕捉主升浪暴利。
-                            </div>
-                            <div style="background: white; border: 1px solid #ddd6fe; border-radius: 6px; padding: 8px 10px; font-size: 11.5px; color: #1e293b; line-height: 1.6;">
-                                <strong>啟動清單 (共 7 台機器人)</strong>：<br>
-                                1. <strong>策略一 (核心倉)</strong>：BTC (600U) + ETH (600U) + TAO (300U) = <strong>1,500U</strong><br>
-                                2. <strong>策略三 (美股 bStock)</strong>：科技 (350U) + 藍籌 (350U) = <strong>700U</strong><br>
-                                3. <strong>策略二 (精選 3 大 Alpha)</strong>：各 350U = <strong>1,050U</strong><br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;• <strong>HYPE</strong> 350U (去中心化永續合約龍頭，全鏈衍生品王者)<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;• <strong>AAVE</strong> 350U (DeFi 借貸王者，百億協議淨利)<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;• <strong>ENA</strong> 350U (新一代合成美元穩定幣龍頭)
-                            </div>
-                        </div>
-                        <div style="margin-top: 10px; font-size: 11px; color: #7c3aed; font-weight: 700;">
-                            ✨ 特色：集中火力捕捉牛市最強主線，暴賺利潤全數落袋黃金。
-                        </div>
-                    </div>
-
-                    <!-- 階段三卡片 -->
-                    <div style="border: 2px solid #10b981; border-radius: 10px; padding: 14px; background: #f0fdf4; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <span style="font-size: 14px; font-weight: 900; color: #047857;">🏆 階段三：全功能旗艦版</span>
-                                <span style="font-size: 10px; background: #059669; color: white; padding: 2px 7px; border-radius: 9999px; font-weight: 700;">完整滿配</span>
-                            </div>
-                            <div style="font-size: 20px; font-weight: 900; color: #0f172a; margin-bottom: 4px;">
-                                6,500 ~ 7,000 <span style="font-size: 12px; font-weight: 600; color: #64748b;">USDT (約 21~23 萬 NTD)</span>
-                            </div>
-                            <div style="font-size: 12px; color: #334155; line-height: 1.5; margin-bottom: 10px;">
-                                <strong>核心目標</strong>：14 台機器人 + 現貨/合約 DCA 全部就位，建構跨美股、主流幣、9 大賽道山寨與黃金的全閉環資產帝國。
-                            </div>
-                            <div style="background: white; border: 1px solid #a7f3d0; border-radius: 6px; padding: 8px 10px; font-size: 11.5px; color: #1e293b; line-height: 1.6;">
-                                <strong>啟動清單 (14 台全自動運轉)</strong>：<br>
-                                1. <strong>策略一 (核心倉)</strong>：BTC 800U + ETH 800U + TAO 400U = <strong>2,000U</strong><br>
-                                2. <strong>策略二 (Alpha 9 艦隊)</strong>：9 組各 350U = <strong>3,150U</strong> (純雙幣 60/40)<br>
-                                3. <strong>策略三 (美股 bStock)</strong>：科技 500U + 藍籌 500U = <strong>1,000U</strong><br>
-                                4. <strong>策略四 (現貨/合約 DCA)</strong>：防禦儲備池 = <strong>500U</strong>
-                            </div>
-                        </div>
-                        <div style="margin-top: 10px; font-size: 11px; color: #059669; font-weight: 700;">
-                            ✨ 特色：全自動運轉無痛調倉，任何單一資產暴跌皆有黃金美股對沖，長拿複利最大化。
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 四、實戰建立與資金管理操作 SOP -->
-            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
-                <div style="font-weight: 800; font-size: 14.5px; color: #0f172a; margin-bottom: 10px;">
-                    💡 實戰建立與資金管理操作 SOP (避免踩坑)
+                <div style="font-weight: 800; font-size: 14.5px; color: #0f172a; margin-bottom: 8px;">
+                    <span>執行與帳戶管理要點</span>
                 </div>
                 <div style="font-size: 12.5px; line-height: 1.7; color: #334155;">
                     <ol style="margin: 0; padding-left: 18px;">
-                        <li style="margin-bottom: 6px;">
-                            <strong>必備 BNB 折抵手續費（強烈推薦）</strong>：在現貨帳戶常備 0.05~0.1 BNB 並開啟 BNB 折抵手續費，享 <strong>25% 折扣</strong>，大幅降低 2% 再平衡摩擦。
+                        <li style="margin-bottom: 4px;">
+                            <strong>手續費折抵</strong>：建議於現貨帳戶保留少量 BNB 並開啟 25% 手續費折抵，降低 2% 再平衡摩擦成本。
                         </li>
-                        <li style="margin-bottom: 6px;">
-                            <strong>帳戶資金風險隔離（現貨 vs 合約）</strong>：策略一、二、三智能持倉與現貨 SOL DCA 位於<strong>現貨帳戶</strong>；合約 DCA 必須使用獨立合約保證金或逐倉模式，杜絕合約插針波及現貨。
-                        </li>
-                        <li style="margin-bottom: 6px;">
-                            <strong>理解 2% 再平衡的正常觸發頻率與心態</strong>：日常橫盤每週約 2~5 次；突發暴衝或急跌時密集觸發，自動「賣出暴衝山寨換實體金」與「低位撿便宜籌碼」，切忌手動頻繁干預。
+                        <li style="margin-bottom: 4px;">
+                            <strong>資金隔離</strong>：策略一至三與現貨 DCA 運行於現貨帳戶；合約 DCA 運行於合約逐倉模式並關閉「自動追加保證金」，確保單一策略風險完全隔離。
                         </li>
                         <li>
-                            <strong>隨時等比例追加投資（不需終止機器人）</strong>：後續加倉直接在機器人詳情頁點擊「<strong>追加投資</strong>」，系統自動依比例分配購買，完全不需重開！
+                            <strong>追加資金</strong>：後續欲擴大部位時，可直接於機器人詳情頁點選「追加投資」，系統將按當前目標比例自動分配買入，無須關閉重開。
                         </li>
                     </ol>
                 </div>
@@ -2287,7 +1990,7 @@
 
         // Update DOM
         const pill = document.getElementById('spotPillFunds');
-        if (pill) pill.innerText = `🛡️ 滿倉零閒置 · ${Math.round(cap)} FDUSD 全額部署 (-26.92% 抗跌防禦 · 12級深海旗艦)`;
+        if (pill) pill.innerText = `${Math.round(cap)} FDUSD 全額部署 (12 階覆蓋 -26.92% 跌幅)`;
 
         const narrCap = document.getElementById('spotNarrativeCapital');
         if (narrCap) narrCap.innerText = `${Math.round(cap)} FDUSD 本金`;
@@ -2315,7 +2018,7 @@
         if (tblTotalExact) tblTotalExact.innerText = `${totalExact.toFixed(2)} FDUSD`;
 
         const tblFormula = document.getElementById('spotTblFormula');
-        if (tblFormula) tblFormula.innerHTML = `$${baseInt} + (${dcaInt} &times; 12) = ${totalInt} FDUSD (實質部署 ${((totalInt/cap)*100).toFixed(1)}%)`;
+        if (tblFormula) tblFormula.innerHTML = `$${baseInt} + (${dcaInt} &times; 12) = ${totalInt} FDUSD (資金利用率 ${((totalInt/cap)*100).toFixed(1)}%)`;
 
         const tblDcaNote = document.getElementById('spotTblDcaNote');
         if (tblDcaNote) tblDcaNote.innerText = `${dcaInt.toFixed(2)}`;
@@ -2367,7 +2070,7 @@
         // Ratio multiplier compared to 250U baseline
         const s = cap / 250.0;
 
-        // 1. ENA/USDC dynamic updates (9-tier deep sea: 180U grid + 70U add = 250U)
+        // 1. ENA/USDC dynamic updates (9-tier: 180U grid + 70U add = 250U)
         const enaOrderInt = Math.round(180 * s);
         const enaAddInt = Math.round(cap - enaOrderInt);
         const enaBaseInt = Math.round(9 * s);
@@ -2386,7 +2089,7 @@
 
         // Update ENA DOM elements
         const enaPill = document.getElementById('enaPillFunds');
-        if (enaPill) enaPill.innerText = `🛡️ ${enaOrderIntFinal}U 網格 ＋ ${enaAddIntFinal}U 開倉後手動追加 (總 ${Math.round(cap)}U 專款專用)`;
+        if (enaPill) enaPill.innerText = `${enaOrderIntFinal}U 網格 ＋ ${enaAddIntFinal}U 開倉後手動追加 (總計 ${Math.round(cap)}U)`;
         const enaNarrCap = document.getElementById('enaNarrativeCapital');
         if (enaNarrCap) enaNarrCap.innerText = `${Math.round(cap)}U 總本金`;
         const enaNarrProf = document.getElementById('enaNarrativeProfit');
@@ -2425,14 +2128,12 @@
         if (enaTblLossEl) enaTblLossEl.innerText = `$${enaLoss}U`;
         const enaTblPresEl = document.getElementById('enaTblPreserve');
         if (enaTblPresEl) enaTblPresEl.innerText = `$${enaMinEq}U+`;
-
-        // (ENA/USDC is the sole flagship futures DCA token)
     }
 
-    // --- 6-Zone 階梯配置定義 (三大核心 50% + 6 大菁英 Alpha 50%，全盤 9 組獨立三幣機器人) ---
+    // --- 6-Zone 階梯配置定義 ---
     const ZONE_CONFIGS = {
         0: {
-            name: 'Zone 0 (深熊大底階段)',
+            name: 'Zone 0 (折價累積區間)',
             color: '#10b981',
             ratios: {
                 CORE_BTC: { coin: 0.65, equity: 0.25, paxg: 0.10 },
@@ -2442,7 +2143,7 @@
             }
         },
         1: {
-            name: 'Zone 1 (初牛修復階段)',
+            name: 'Zone 1 (均值回歸區間)',
             color: '#06b6d4',
             ratios: {
                 CORE_BTC: { coin: 0.50, equity: 0.30, paxg: 0.20 },
@@ -2452,7 +2153,7 @@
             }
         },
         2: {
-            name: 'Zone 2 (牛市巡航階段)',
+            name: 'Zone 2 (多頭巡航區間)',
             color: '#38bdf8',
             ratios: {
                 CORE_BTC: { coin: 0.45, equity: 0.35, paxg: 0.20 },
@@ -2462,7 +2163,7 @@
             }
         },
         3: {
-            name: 'Zone 3 (過熱警戒階段)',
+            name: 'Zone 3 (溢價調節區間)',
             color: '#fbbf24',
             ratios: {
                 CORE_BTC: { coin: 0.30, equity: 0.35, paxg: 0.35 },
@@ -2472,7 +2173,7 @@
             }
         },
         4: {
-            name: 'Zone 4 (極度貪婪/逃頂鎖利)',
+            name: 'Zone 4 (右側鎖利區間)',
             color: '#ef4444',
             ratios: {
                 CORE_BTC: { coin: 0.05, equity: 0.35, paxg: 0.60 },
@@ -2482,7 +2183,7 @@
             }
         },
         5: {
-            name: 'Zone 5 (熊市確認/主跌防禦)',
+            name: 'Zone 5 (空頭防禦區間)',
             color: '#8b5cf6',
             ratios: {
                 CORE_BTC: { coin: 0.00, equity: 0.35, paxg: 0.65 },
@@ -2493,7 +2194,7 @@
         }
     };
 
-    // --- 菁英三幣 Alpha 矩陣標的 (9 大全賽道真現金流龍頭，各佔總資金約 5.56%) ---
+    // --- 策略二 Alpha 雙幣矩陣標的 (9 項配置，各佔總資金約 5.56%) ---
     const C_SATELLITE_CANDIDATES = [
         {
             sym: 'UNI',
@@ -2501,10 +2202,10 @@
             icon: 'icons/uni.png',
             rank: '1',
             rankClass: 'rank-top1',
-            tier: '🦄 DEX 霸主 (費用開關回購)',
-            capitalPct: '佔比 5.56%',
-            title: '全球最大去中心化現貨交易所',
-            quote: '鏈上現貨撮合天花板！渣打銀行預測長線 40 倍至 100 美元，Fee Switch 啟動二級市場銷毀通縮',
+            tier: '去中心化現貨交易協議 (DEX)',
+            capitalPct: '權重 5.56%',
+            title: 'AMM 自動化做市商流動性基礎設施',
+            quote: '具備 Unichain L2 結算架構與協議費用分配機制（Fee Switch），捕捉鏈上現貨交易量與流動性費用。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2515,10 +2216,10 @@
             icon: 'icons/hype.png',
             rank: '2',
             rankClass: 'rank-top1',
-            tier: '⚡ PerpDEX 霸主 (百億手續費之王)',
-            capitalPct: '佔比 5.56%',
-            title: '去中心化合約交易所第一龍頭',
-            quote: '剛剛強勢登陸幣安現貨！日交易量百億美元，合約手續費與獨立高性能 L1 之王，下輪 10 倍想像空間',
+            tier: '去中心化永續合約公鏈 (PerpDEX)',
+            capitalPct: '權重 5.56%',
+            title: '高性能訂單簿衍生品專用 L1',
+            quote: '原生鏈上訂單簿架構，協議手續費透過援助基金（Assistance Fund）於次級市場執行常態性代幣回購。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2529,10 +2230,10 @@
             icon: 'icons/aave.png',
             rank: '3',
             rankClass: 'rank-top2',
-            tier: '🏦 借貸鐵王座 (100%國庫造血)',
-            capitalPct: '佔比 5.56%',
-            title: '鏈上抵押借貸第一品牌',
-            quote: '百億 TVL 絕對壟斷！Anchorage 機構託管 + V4 護城河極深，放貸與清算手續費 100% 歸入國庫造血',
+            tier: '鏈上超額抵押借貸協議 (Lending)',
+            capitalPct: '權重 5.56%',
+            title: '多鏈流動性池與借貸利率市場',
+            quote: '涵蓋機構級託管介面與 V4 統一流動性架構，放貸利差、閃電貸與清算收入直接歸入協議國庫。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2543,10 +2244,10 @@
             icon: 'icons/ena.png',
             rank: '4',
             rankClass: 'rank-top2',
-            tier: '🪙 穩定幣印鈔機 (基差利差回購)',
-            capitalPct: '佔比 5.56%',
-            title: '去中心化合成美元 USDe 龍頭',
-            quote: '數十億美元 USDe 帶來龐大合約基差真實現金流！sENA 費用開關已正式通過，二級市場主動回購',
+            tier: '合成美元與基差收益協議 (Basis)',
+            capitalPct: '權重 5.56%',
+            title: 'Delta 中性合成美元 USDe 發行協議',
+            quote: '結合現貨質押與永續合約空頭對沖捕捉資金費率與美債利差，具備 sENA 協議收益分配機制。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2557,10 +2258,10 @@
             icon: 'icons/near.png',
             rank: '5',
             rankClass: 'rank-top3',
-            tier: '🤖 AI與鏈抽象 (用戶自主AI龍頭)',
-            capitalPct: '佔比 5.56%',
-            title: 'AI 代理與夜影分片擴容公鏈',
-            quote: '頂級跨界綜合體！用戶自主 AI 領頭羊，日活躍地址數全網領先，真實鏈上交互持續消耗並銷毀 GAS',
+            tier: '分片擴容與鏈抽象公鏈 (L1 / AI)',
+            capitalPct: '權重 5.56%',
+            title: 'Nightshade 分片架構與跨鏈帳戶抽象',
+            quote: '提供高吞吐量分片執行環境與鏈抽象簽章介面，支援高頻消費級應用與 AI 代理鏈上互動。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2571,10 +2272,10 @@
             icon: 'icons/ondo.png',
             rank: '6',
             rankClass: 'rank-top3',
-            tier: '🏛️ RWA 賽道龍頭 (華爾街資產上鏈)',
-            capitalPct: '佔比 5.56%',
-            title: '美債代幣化與機構資產唯一通道',
-            quote: '與貝萊德合作推出代幣化智能投資組合引爆全網！美債代幣化第一品牌，華爾街資本上鏈核心門戶',
+            tier: '實體資產代幣化協議 (RWA)',
+            capitalPct: '權重 5.56%',
+            title: '鏈上美國國債與機構級固定收益產品',
+            quote: '提供 USDY 與 OUSG 等合規代幣化美債資產，連結傳統金融機構貨幣市場基金與鏈上清算層。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2585,10 +2286,10 @@
             icon: 'icons/pendle.png',
             rank: '7',
             rankClass: 'rank-top3',
-            tier: '📈 利率衍生品 (80%協議收入回購)',
-            capitalPct: '佔比 5.56%',
-            title: '收益代幣化與美股股息市場龍頭',
-            quote: '2026 最新革命！高達 80% 協議手續費直接在市場暴力回購 PENDLE，通膨大砍 92%，淨買入代幣之王',
+            tier: '鏈上利率衍生品協議 (Yield)',
+            capitalPct: '權重 5.56%',
+            title: '本金與收益分離代幣化交易市場',
+            quote: '將生息資產拆分為 PT（固定收益）與 YT（浮動收益），協議手續費按比例執行公開市場代幣回購。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2599,10 +2300,10 @@
             icon: 'icons/sui.png',
             rank: '8',
             rankClass: 'rank-top4',
-            tier: '🟢 Move 新興公鏈 (極致爆發彈性)',
-            capitalPct: '佔比 5.56%',
-            title: '取代 SOL 的新一代高性能公鏈黑馬',
-            quote: 'Move 語言生態第一龍頭！歷經暴跌徹底出清，向上爆發彈性（High Beta）極強，2% 再平衡套利神幣',
+            tier: 'Move 語言並行執行公鏈 (L1)',
+            capitalPct: '權重 5.56%',
+            title: '物件導向資料模型與低延遲共識引擎',
+            quote: '採用 Mysticeti 共識與並行交易執行架構，具備高 Beta 波動率特徵，適合 2% 雙幣網格頻繁再平衡。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2613,41 +2314,15 @@
             icon: 'icons/link.png',
             rank: '9',
             rankClass: 'rank-top4',
-            tier: '🔗 機構預言機 (全美資產上鏈標準)',
-            capitalPct: '佔比 5.56%',
-            title: '全球金融機構跨鏈唯一標準',
-            quote: 'Web3 基礎設施核心！SWIFT 與 DTCC 全球跨鏈清算唯一合作預言機，萬億代幣化不可或缺的鏈上眼睛',
+            tier: '去中心化預言機與跨鏈標準 (Oracle)',
+            capitalPct: '權重 5.56%',
+            title: '鏈上喂價網路與 CCIP 跨鏈互操作協議',
+            quote: '提供 DeFi 清算喂價、儲備證明（PoR）與傳統金融機構跨鏈訊息傳遞之標準化中繼基礎設施。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
         }
     ];
-
-    const COIN_ICONS = {
-        BTC: '🟠 BTC',
-        PAXG: '🟡 PAXG (黃金)',
-        ETH: '🔷 ETH',
-        TAO: '🔵 TAO',
-        UNI: '🦄 UNI',
-        NEAR: '🤖 NEAR',
-        HYPE: '⚡ HYPE',
-        ONDO: '🏛️ ONDO',
-        PENDLE: '📈 PENDLE',
-        SOL: '☀️ SOL',
-        BNB: '🟡 BNB',
-        ARB: '🔷 ARB',
-        AAVE: '🏦 AAVE',
-        LINK: '🔗 LINK',
-        RENDER: '🎨 RENDER',
-        FET: '🧬 FET',
-        SUI: '🟢 SUI',
-        ENA: '🪙 ENA',
-        OP: '🔴 OP',
-        TON: '💎 TON',
-        LDO: '💧 LDO',
-        CRCLB: '⚡ CRCLB (Circle)',
-        ICP: '🌐 ICP (互聯網計算機)'
-    };
 
     let currentZone = 2;
     let activeEquitySym = 'QQQB';
@@ -2657,25 +2332,16 @@
         PAXG: 4367,
         TAO: 256,
         QQQB: 720.4,
-        CRCLB: 90.2,
-        ICP: 2.80,
         UNI: 9.02,
         NEAR: 3.84,
         HYPE: 94.4,
         ONDO: 0.409,
         PENDLE: 2.69,
         SOL: 113.6,
-        BNB: 615,
-        ARB: 0.216,
         AAVE: 144.3,
         LINK: 12.44,
-        RENDER: 6.2,
-        FET: 1.35,
         SUI: 0.83,
-        ENA: 0.48,
-        OP: 1.45,
-        TON: 5.1,
-        LDO: 1.25
+        ENA: 0.48
     };
     let latest24hChange = {};
     let currentMa200 = 69538;
@@ -2693,15 +2359,13 @@
         hasReachedZone4 = localStorage.getItem('5z_hasReachedZone4') === 'true';
     } catch(e) {}
 
-    // --- 抓取 1000 日 K 線（近 2.7 年，遠超一年半）計算 MA200 與動態週期歷史記憶 ---
+    // --- 抓取 1000 日 K 線計算 MA200 與動態週期歷史記憶 ---
     async function syncMa200() {
         try {
-            // 幣安 API 單次請求上限為 1000 根，涵蓋近 2.74 年歷史日線
             const res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000');
             if (res.ok) {
                 const klines = await res.json();
                 let sum = 0;
-                // 用最近 200 根日線計算當前最新 MA200
                 const recent200 = klines.slice(-200);
                 for (let i = 0; i < recent200.length; i++) {
                     sum += parseFloat(recent200[i][4]);
@@ -2709,11 +2373,9 @@
                 currentMa200 = sum / recent200.length;
                 document.getElementById('liveMa200').innerText = '$' + Math.round(currentMa200).toLocaleString('en-US');
 
-                // 掃描近 1000 根日線歷史陣列，以動態滾動 MA200 準確重構本輪週期的頂部與狀態
                 const closes = klines.map(k => parseFloat(k[4]));
                 const highs = klines.map(k => parseFloat(k[2]));
                 
-                // 建立前綴和陣列以 O(1) 極速計算任意日期的 200 日滾動均線
                 const prefixSums = [0];
                 for (let i = 0; i < closes.length; i++) {
                     prefixSums.push(prefixSums[i] + closes[i]);
@@ -2730,7 +2392,6 @@
                         activeZ4 = true;
                         if (highs[i] > activePeak) activePeak = highs[i];
                     } else if (activeZ4 && r < 0.80) {
-                        // 週期已於歷史上跌透到底（Zone 0），完成上一輪大週期閉環並重置
                         activeZ4 = false;
                         activePeak = 0;
                     } else if (activeZ4) {
@@ -2741,7 +2402,6 @@
                 hasReachedZone4 = activeZ4;
                 cyclePeakPrice = activePeak;
 
-                // 持久化備份至 localStorage
                 try {
                     localStorage.setItem('5z_cyclePeakPrice', cyclePeakPrice.toString());
                     localStorage.setItem('5z_hasReachedZone4', hasReachedZone4 ? 'true' : 'false');
@@ -2800,7 +2460,7 @@
 
         if (elRatio) {
             elRatio.style.color = isBull ? '#059669' : '#dc2626';
-            elRatio.innerHTML = `${currentQqqRatio.toFixed(3)} <span style="font-size:11px; color:${isBull ? '#059669':'#dc2626'}; font-weight:normal;">${isBull ? '🟢 巡航' : '🚨 警戒'}</span>`;
+            elRatio.innerHTML = `${currentQqqRatio.toFixed(3)} <span style="font-size:11px; color:${isBull ? '#059669':'#dc2626'}; font-weight:normal;">(${isBull ? '均線上方' : '跌破均線'})</span>`;
         }
 
         if (elRadarPrice) elRadarPrice.innerText = '$' + liveQqqPrice.toFixed(2);
@@ -2815,12 +2475,12 @@
         }
         if (elRadarBadge) {
             if (isBull) {
-                elRadarBadge.innerText = '🟢 多頭安全巡航';
+                elRadarBadge.innerText = '均線上方運行';
                 elRadarBadge.style.background = '#ecfdf5';
                 elRadarBadge.style.color = '#059669';
                 elRadarBadge.style.borderColor = '#a7f3d0';
             } else {
-                elRadarBadge.innerText = '🚨 破位防禦警戒';
+                elRadarBadge.innerText = '跌破均線警戒';
                 elRadarBadge.style.background = '#fef2f2';
                 elRadarBadge.style.color = '#dc2626';
                 elRadarBadge.style.borderColor = '#fecaca';
@@ -2857,14 +2517,12 @@
             const chgSign = chg >= 0 ? '+' : '';
             const chgHtml = typeof chg === 'number' ? ` <span class="ticker-chg ${chgClass}">(${chgSign}${chg.toFixed(1)}%)</span>` : '';
 
-            // 若為 PAXG，同步更新指令中心與所有三幣卡片內的黃金報價
             if (sym === 'PAXG') {
                 const paxgMetricEl = document.getElementById('livePaxgPrice');
                 if (paxgMetricEl) paxgMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
                 document.querySelectorAll('.cprice-paxg-display').forEach(el => el.innerText = priceFormat);
             }
 
-            // 若為美股科技代幣 QQQB，同步更新美股指標與三幣卡片美股現價
             if (sym === 'QQQB') {
                 const qqqbMetricEl = document.getElementById('liveQqqbPrice');
                 if (qqqbMetricEl) qqqbMetricEl.innerHTML = `${priceFormat}${chgHtml}`;
@@ -2874,13 +2532,11 @@
                 document.querySelectorAll('.cprice-eq-display').forEach(el => el.innerText = priceFormat);
             }
 
-            // 更新各現貨卡片內的主幣報價
             const cardPriceEl = document.getElementById(`cprice-${sym}`);
             if (cardPriceEl) {
                 cardPriceEl.innerHTML = `${priceFormat}${chgHtml}`;
             }
 
-            // 若為 bStock 標的，同步更新美股 bStock 即時看板
             if (['NVDAB', 'AVGOB', 'TSMB', 'AAPLB', 'GOOGLB', 'MSFTB'].includes(sym)) {
                 const bSym = sym.toLowerCase();
                 const bPriceEl = document.getElementById(`live-${bSym}-price`);
@@ -2900,18 +2556,15 @@
             }
         }
 
-        // 清空當批暫存
         for (const sym in pendingPriceUpdates) {
             delete pendingPriceUpdates[sym];
         }
 
-        // 若 BTC 現價更新，觸發狀態機判定與換倉警戒計算
         if (btcUpdated) {
             updateMetricsAndZone();
         }
     }
 
-    // --- 輔助：更新行情 UI（向批次佇列推入更新） ---
     function updateTickerUI(sym, curPrice, chg) {
         queuePriceUpdate(sym, curPrice, chg);
     }
@@ -2932,12 +2585,9 @@
         }
 
         const spotSymbols = [
-            'btcusdt', 'ethusdt', 'paxgusdt', 'taousdt',
+            'btcusdt', 'ethusdt', 'paxgusdt', 'taousdt', 'qqqbusdt',
             'uniusdt', 'nearusdt', 'ondousdt', 'pendleusdt',
-            'solusdt', 'bnbusdt', 'arbusdt', 'aaveusdt', 'linkusdt',
-            'renderusdt', 'fetusdt', 'suiusdt', 'enausdt', 'hypeusdt', 'opusdt',
-            'tonusdt', 'ldousdt',
-            'qqqbusdt', 'crclbusdt', 'icpusdt',
+            'solusdt', 'aaveusdt', 'linkusdt', 'suiusdt', 'enausdt', 'hypeusdt',
             'nvdabusdt', 'avgobusdt', 'tsmbusdt', 'aaplbusdt', 'googlbusdt', 'msftbusdt'
         ];
         const streams = spotSymbols.map(s => `${s}@ticker`).join('/');
@@ -2967,7 +2617,6 @@
             fallbackPoll();
         }
 
-        // HYPE 期貨 WebSocket
         if (reconnectFuturesTimer) {
             clearTimeout(reconnectFuturesTimer);
             reconnectFuturesTimer = null;
@@ -3005,11 +2654,11 @@
             icon: 'icons/btc.png',
             rank: '1',
             rankClass: 'rank-top1',
-            tier: '👑 核心基石 (數位黃金儲備)',
-            capitalPct: '佔比 20%',
+            tier: '核心配置 (數位價值儲備)',
+            capitalPct: '權重 20%',
             topBorder: '#f59e0b',
             accentColor: '#f59e0b',
-            quote: '數位黃金與實物黃金強強輪動，深跌最大化吸籌，瘋牛向黃金強制套現'
+            quote: '與 QQQB 及 PAXG 構成三元組合，依 MA200 偏離度執行 6-Zone 區間權重調整與 2% 閾值再平衡。'
         },
         {
             sym: 'ETH',
@@ -3017,11 +2666,11 @@
             icon: 'icons/eth.png',
             rank: '2',
             rankClass: 'rank-top1',
-            tier: '🏛️ 核心基石 (世界電腦與結算層)',
-            capitalPct: '佔比 20%',
+            tier: '核心配置 (智能合約結算層)',
+            capitalPct: '權重 20%',
             topBorder: '#3b82f6',
             accentColor: '#3b82f6',
-            quote: '智能合約底層與真實結算層核心，抗量子與機構資產鏈上沉澱首選'
+            quote: 'DeFi、穩定幣與 RWA 資產主要結算網路，透過三幣動態配置平滑單一公鏈週期波動。'
         },
         {
             sym: 'TAO',
@@ -3029,11 +2678,11 @@
             icon: 'icons/tao.svg',
             rank: '3',
             rankClass: 'rank-top1',
-            tier: '🧠 核心基石 (去中心化 AI 算力)',
-            capitalPct: '佔比 10%',
+            tier: '核心配置 (去中心化 AI 網路)',
+            capitalPct: '權重 10%',
             topBorder: '#8b5cf6',
             accentColor: '#8b5cf6',
-            quote: '去中心化 AI 算力與次世代網絡龍頭，強大社群共識與週期爆發力'
+            quote: '子網激勵架構之去中心化機器學習協議，高波動特性搭配 QQQB 與 PAXG 提高再平衡頻率。'
         }
     ];
 
@@ -3055,9 +2704,6 @@
             const coinPct = Math.round(ratios.coin * 100);
             const equityPct = Math.round(ratios.equity * 100);
             const paxgPct = Math.round(ratios.paxg * 100);
-            const extraPct = 0;
-            const extraHtml = '';
-            const extraBar = '';
 
             const p = latestPrices[c.sym] || 0;
             const chg = latest24hChange[c.sym];
@@ -3072,7 +2718,7 @@
             html += `
                 <div class="c-pair-card" id="cpair-${c.sym}" style="border-top: 4px solid ${c.topBorder};">
                     <div class="c-card-header">
-                        <span class="c-rank-badge ${c.rankClass}">#${c.rank} 核心優先級</span>
+                        <span class="c-rank-badge ${c.rankClass}">核心 #${c.rank}</span>
                         <span class="c-tier-text">${c.tier}</span>
                     </div>
                     <div class="c-card-coin-row">
@@ -3084,42 +2730,38 @@
                             <span style="font-size:10px; color:#1d4ed8; background:#eff6ff; border:1px solid #bfdbfe; padding:1px 6px; border-radius:4px; font-weight:700;">${c.capitalPct}</span>
                         </div>
                     </div>
-                    <!-- 即時三幣現價小橫列 -->
                     <div class="c-tri-prices">
                         <div class="c-tri-price-item">
                             <span style="color:#059669;">${c.sym} 現價</span>
                             <strong id="cprice-${c.sym}">${priceStr}${chgStr}</strong>
                         </div>
                         <div class="c-tri-price-item">
-                            <span style="color:#7c3aed;">${eqSym} 指數</span>
+                            <span style="color:#7c3aed;">${eqSym} 現價</span>
                             <strong class="cprice-eq-display">${eqPriceStr}</strong>
                         </div>
                         <div class="c-tri-price-item">
-                            <span style="color:#d97706;">PAXG 黃金</span>
+                            <span style="color:#d97706;">PAXG 金價</span>
                             <strong class="cprice-paxg-display">${paxgPriceStr}</strong>
                         </div>
                     </div>
-                    <!-- 當前 Zone 三幣目標佔比進度條 -->
                     <div class="c-ratio-display">
                         <div class="c-ratio-labels">
                             <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 12px; height: 12px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
-                            <span style="color: #7c3aed;">🇺🇸 ${eqSym}: ${equityPct}%</span>
+                            <span style="color: #7c3aed;">${eqSym}: ${equityPct}%</span>
                             <span style="color: #d97706; display: inline-flex; align-items: center; gap: 4px;"><img src="icons/paxg.png" alt="PAXG" style="width: 12px; height: 12px; border-radius: 50%;"> PAXG: ${paxgPct}%</span>
-                            ${extraHtml}
                         </div>
                         <div class="c-prog-track">
                             <div class="c-prog-coin" style="width: ${coinPct}%;"></div>
                             <div class="c-prog-equity" style="width: ${equityPct}%;"></div>
                             <div class="c-prog-paxg" style="width: ${paxgPct}%;"></div>
-                            ${extraBar}
                         </div>
                     </div>
                     <div class="c-quote-box" style="border-left-color: ${c.accentColor};">
-                        <strong>💡 策略點評：</strong>${c.quote}
+                        <strong>配置定位：</strong>${c.quote}
                     </div>
                     <div class="c-card-footer">
-                        <span>👑 6-Zone 閉環循環 (偏差 2% | 建議每倉 ≥ 700U)</span>
-                        <button class="c-toggle-btn active" style="cursor: default; pointer-events: none;">✅ 三幣持倉中</button>
+                        <span>6-Zone 動態權重 (按比例 2% | 建議單倉 &ge; 700U)</span>
+                        <button class="c-toggle-btn active" style="cursor: default; pointer-events: none;">三幣組合</button>
                     </div>
                 </div>
             `;
@@ -3142,12 +2784,10 @@
         renderCPortfolioMatrix();
     }
 
-    // --- 渲染衛星雙幣 Alpha 矩陣卡片 (固定採用實證最優之純雙幣 60/40 策略) ---
+    // --- 渲染衛星雙幣 Alpha 矩陣卡片 ---
     function renderCPortfolioMatrix() {
         const grid = document.getElementById('cMatrixGrid');
         if (!grid) return;
-        // 衛星 Alpha 艦隊在 Zone 0~3 採全天候純雙幣 60/40 (COIN 60% + PAXG 40%)
-        // 在 Zone 4 率先 100% 清零轉入 PAXG 100% 避險；在 Zone 5 保持 0/100 防禦
         let coinPct = 60;
         let paxgPct = 40;
         if (currentZone === 4 || currentZone === 5) {
@@ -3160,7 +2800,6 @@
 
         let html = '';
         C_SATELLITE_CANDIDATES.forEach((c, idx) => {
-            // 梯隊標籤篩選比對
             let match = true;
             if (currentFleetFilter === 'defi') match = ['UNI', 'HYPE', 'AAVE', 'ENA', 'PENDLE'].includes(c.sym);
             else if (currentFleetFilter === 'infra') match = ['ONDO', 'NEAR', 'SUI', 'LINK'].includes(c.sym);
@@ -3178,36 +2817,34 @@
 
             const activeClass = c.active ? '' : 'inactive';
             const toggleBtnClass = c.active ? 'active' : 'inactive';
-            const toggleBtnText = c.active ? '✅ 雙幣持倉中' : '⏳ 待投資儲備';
-            const spotBadge = !c.isSpot ? `<span style="font-size:10px; color:#d97706; background:rgba(245,158,11,0.12); padding:1px 6px; border-radius:4px; font-weight:700;">幣安合約/DEX</span>` : '';
+            const toggleBtnText = c.active ? '配置啟用' : '備選觀察';
+            const spotBadge = !c.isSpot ? `<span style="font-size:10px; color:#d97706; background:rgba(245,158,11,0.12); padding:1px 6px; border-radius:4px; font-weight:700;">衍生品/DEX</span>` : '';
 
             html += `
                 <div class="c-pair-card ${activeClass}" id="cpair-${c.sym}">
                     <div class="c-card-header">
-                        <span class="c-rank-badge ${c.rankClass}">#${c.rank} 優先級</span>
+                        <span class="c-rank-badge ${c.rankClass}">Alpha #${c.rank}</span>
                         <span class="c-tier-text">${c.tier}</span>
                     </div>
                     <div class="c-card-coin-row">
                         <div class="c-pair-name" style="font-size: 15px;">
                             <span style="display: inline-flex; align-items: center; gap: 6px;">
                                 <img src="${c.icon}" alt="${c.sym}" style="width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">
-                                <span>${c.sym} ＋ PAXG 雙幣全天候</span>
+                                <span>${c.sym} + PAXG</span>
                             </span>
                             ${spotBadge}
                         </div>
                     </div>
-                    <!-- 即時雙幣現價小橫列 -->
                     <div class="c-tri-prices" style="grid-template-columns: repeat(2, 1fr);">
                         <div class="c-tri-price-item">
                             <span style="color:#059669;">${c.sym} 現價</span>
                             <strong id="cprice-${c.sym}">${priceStr}${chgStr}</strong>
                         </div>
                         <div class="c-tri-price-item">
-                            <span style="color:#d97706;">PAXG 實體金價</span>
+                            <span style="color:#d97706;">PAXG 金價</span>
                             <strong class="cprice-paxg-display">${paxgPriceStr}</strong>
                         </div>
                     </div>
-                    <!-- 當前雙幣目標佔比進度條 -->
                     <div class="c-ratio-display">
                         <div class="c-ratio-labels">
                             <span style="color: #059669; display: inline-flex; align-items: center; gap: 4px;"><img src="${c.icon}" alt="${c.sym}" style="width: 12px; height: 12px; border-radius: 50%;"> ${c.sym}: ${coinPct}%</span>
@@ -3219,10 +2856,10 @@
                         </div>
                     </div>
                     <div class="c-quote-box">
-                        <strong>💡 策略點評：</strong>${c.quote}
+                        <strong>基本面機制：</strong>${c.quote}
                     </div>
                     <div class="c-card-footer">
-                        <span>⚖️ 永久穩健 60/40 (按比例 2% | 建議每倉 ≥ 350U)</span>
+                        <span>雙幣 60/40 (按比例 2% | 建議單倉 &ge; 350U)</span>
                         <button class="c-toggle-btn ${toggleBtnClass}" onclick="toggleCPair(${idx})">${toggleBtnText}</button>
                     </div>
                 </div>
@@ -3231,7 +2868,6 @@
         grid.innerHTML = html;
     }
 
-    // --- 切換單個三幣組合激活狀態 ---
     function toggleCPair(index) {
         if (C_SATELLITE_CANDIDATES[index]) {
             C_SATELLITE_CANDIDATES[index].active = !C_SATELLITE_CANDIDATES[index].active;
@@ -3239,7 +2875,7 @@
         }
     }
 
-    // --- 即時計算比值與更新 UI (6-Zone 閉環循環防脆弱狀態機) ---
+    // --- 即時計算比值與更新 UI (6-Zone 閉環狀態機) ---
     function updateMetricsAndZone() {
         const curBtcPrice = latestPrices.BTC;
         if (!curBtcPrice || !currentMa200) return;
@@ -3247,20 +2883,15 @@
         const ratio = curBtcPrice / currentMa200;
         document.getElementById('liveRatio').innerText = ratio.toFixed(3);
 
-        // 判定 Zone (6-Zone 閉環單向狀態機：嚴禁 Zone 4 倒退回 Zone 3/2/1)
         let newZone = currentZone || 2;
 
-        // 1. 若已經觸發過 Zone 4（週期逃頂期已激活，進入單向不可逆防禦）
         if (hasReachedZone4) {
-            // 若價格創本輪週期新高，動態刷新週期大頂
             if (curBtcPrice > cyclePeakPrice) {
                 cyclePeakPrice = curBtcPrice;
                 try { localStorage.setItem('5z_cyclePeakPrice', cyclePeakPrice.toString()); } catch(e) {}
             }
 
-            // 判斷是否跌穿深熊大底 (< 0.80)
             if (ratio < 0.80) {
-                // 熊市跌透到底，正式交棒給 Zone 0 深熊大底，並重置本輪週期標記！
                 hasReachedZone4 = false;
                 cyclePeakPrice = 0;
                 newZone = 0;
@@ -3269,23 +2900,19 @@
                     localStorage.setItem('5z_cyclePeakPrice', '0');
                 } catch(e) {}
             } 
-            // 判斷是否自大頂回撤 ≥ 20%（技術性轉熊）或已處於 Zone 5
             else if ((cyclePeakPrice > 0 && curBtcPrice <= cyclePeakPrice * 0.80) || currentZone === 5) {
-                newZone = 5; // 進入或死鎖在 Zone 5 熊市主跌防禦！
+                newZone = 5;
             } 
-            // 否則（回撤未達 20%）：死鎖在 Zone 4！絕對禁止退回 Zone 3、Zone 2 或 Zone 1！
             else {
                 newZone = 4;
             }
         } 
-        // 2. 尚未觸發過 Zone 4 時的正常牛市爬坡階梯 (Zone 0 -> 1 -> 2 -> 3 -> 4)
         else {
             if (ratio < 0.80) newZone = 0;
             else if (ratio < 1.00) newZone = 1;
             else if (ratio < 1.25) newZone = 2;
             else if (ratio < 1.40) newZone = 3;
             else {
-                // 首次突破 1.40，正式進入 Zone 4 逃頂期！鎖定狀態機！
                 hasReachedZone4 = true;
                 cyclePeakPrice = curBtcPrice;
                 newZone = 4;
@@ -3309,7 +2936,6 @@
             updateTableActiveRow();
         }
 
-        // 更新安全警戒價
         updateZoneAlerts(curBtcPrice, currentMa200, currentZone);
     }
 
@@ -3342,38 +2968,38 @@
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
             const riseTarget = ma200 * 1.25;
             const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
-            downEl.innerHTML = `🔻 跌入 <strong>Zone 1 (初熊防禦)</strong> 觸發價：<span style="color: #38bdf8;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【7 萬牛市分水嶺】</span>`;
-            upEl.innerHTML = `🔺 突破至 <strong>Zone 3 (過熱警戒)</strong> 觸發價：<span style="color: #fbbf24;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【8.5 萬突破/衝擊 10 萬大關】</span>`;
+            downEl.innerHTML = `下界 <strong>Zone 1 (均值回歸)</strong>：<span style="color: #0284c7;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
+            upEl.innerHTML = `上界 <strong>Zone 3 (溢價調節)</strong>：<span style="color: #d97706;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
         } else if (zone === 1) {
             const dropTarget = ma200 * 0.80;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
             const riseTarget = ma200 * 1.00;
             const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
-            downEl.innerHTML = `🔻 跌入 <strong>Zone 0 (深熊大底)</strong> 觸發價：<span style="color: #10b981;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【5.7 萬歷史深熊大底】</span>`;
-            upEl.innerHTML = `🔺 回升至 <strong>Zone 2 (牛市巡航)</strong> 觸發價：<span style="color: #38bdf8;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【7 萬確認牛初站穩】</span>`;
+            downEl.innerHTML = `下界 <strong>Zone 0 (折價累積)</strong>：<span style="color: #10b981;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
+            upEl.innerHTML = `上界 <strong>Zone 2 (多頭巡航)</strong>：<span style="color: #0284c7;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
         } else if (zone === 0) {
             const riseTarget = ma200 * 0.80;
             const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
-            downEl.innerHTML = `🛡️ 當前處於極限深熊大底階段 (Zone 0 - 歷史大底，頂級抄底模式)`;
-            upEl.innerHTML = `🔺 脫離大底進入 <strong>Zone 1</strong> 觸發價：<span style="color: #06b6d4;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
+            downEl.innerHTML = `當前處於 <strong>Zone 0 (折價累積區間)</strong>`;
+            upEl.innerHTML = `上界 <strong>Zone 1 (均值回歸)</strong>：<span style="color: #06b6d4;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
         } else if (zone === 3) {
             const dropTarget = ma200 * 1.25;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
             const riseTarget = ma200 * 1.40;
             const risePct = ((riseTarget - btcPrice) / btcPrice) * 100;
-            downEl.innerHTML = `🔻 降回 <strong>Zone 2 (牛市巡航)</strong> 觸發價：<span style="color: #38bdf8;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
-            upEl.innerHTML = `🔺 進入 <strong>Zone 4 逃頂</strong> 觸發價：<span style="color: #f87171;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【15 萬極限逃頂目標位】</span>`;
+            downEl.innerHTML = `下界 <strong>Zone 2 (多頭巡航)</strong>：<span style="color: #0284c7;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
+            upEl.innerHTML = `上界 <strong>Zone 4 (右側鎖利)</strong>：<span style="color: #dc2626;">BTC &ge; $${Math.round(riseTarget).toLocaleString()} (+${risePct.toFixed(1)}%)</span>`;
         } else if (zone === 4) {
             const dropTarget = cyclePeakPrice > 0 ? cyclePeakPrice * 0.80 : ma200 * 1.40;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
-            const peakStr = cyclePeakPrice > 0 ? `$${Math.round(cyclePeakPrice).toLocaleString()}` : '衝頂高點';
-            downEl.innerHTML = `🔻 跌破 <strong>Zone 5 熊市確認線 (大頂回撤 20%)</strong>：<span style="color: #fbbf24;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【自大頂 ${peakStr} 回撤 20% 觸發轉熊】</span>`;
-            upEl.innerHTML = `🚨 當前處於極度貪婪/狂頂逃頂 (Zone 4 - 核心留 5% 底倉，Alpha 率先清零，QQQB 35% ＋ PAXG 60%~65% 鎖利；<strong>單向死鎖絕不退回 Zone 3</strong>)`;
+            const peakStr = cyclePeakPrice > 0 ? `$${Math.round(cyclePeakPrice).toLocaleString()}` : '週期高點';
+            downEl.innerHTML = `下界 <strong>Zone 5 (高點回撤 20%)</strong>：<span style="color: #d97706;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%，自 ${peakStr} 計算)</span>`;
+            upEl.innerHTML = `當前處於 <strong>Zone 4 (右側鎖利區間 · 單向鎖定)</strong>`;
         } else if (zone === 5) {
             const dropTarget = ma200 * 0.80;
             const dropPct = ((dropTarget - btcPrice) / btcPrice) * 100;
-            downEl.innerHTML = `🔻 靜待跌入 <strong>Zone 0 (深熊大底抄底)</strong> 觸發價：<span style="color: #10b981;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span> <span style="font-size:11px; color:#94a3b8; margin-left:4px;">【歷史深熊大底】</span>`;
-            upEl.innerHTML = `🚨 <strong>Zone 5 熊市主跌防禦中</strong>：大頂破位確認，現貨清零！全倉由 QQQB 35% ＋ PAXG 65% 純現貨雙壁死鎖避險，靜待 Zone 0`;
+            downEl.innerHTML = `下界 <strong>Zone 0 (折價累積)</strong>：<span style="color: #10b981;">BTC &lt; $${Math.round(dropTarget).toLocaleString()} (${dropPct.toFixed(1)}%)</span>`;
+            upEl.innerHTML = `當前處於 <strong>Zone 5 (空頭防禦區間 · QQQB 35% + PAXG 65%)</strong>`;
         }
     }
 
@@ -3394,12 +3020,11 @@
         const el3 = document.getElementById('tbl-range-3');
         if (el3) el3.innerText = `$${p2.toLocaleString()} ~ $${p3.toLocaleString()}`;
         const el4 = document.getElementById('tbl-range-4');
-        if (el4) el4.innerText = `≥ $${p3.toLocaleString()} (向 12~15 萬衝頂)`;
+        if (el4) el4.innerText = `≥ $${p3.toLocaleString()}`;
         const el5 = document.getElementById('tbl-range-5');
-        if (el5) el5.innerText = `自頂部跌破 ≥ 20% (轉入防禦)`;
+        if (el5) el5.innerText = `自週期高點回撤 ≥ 20%`;
     }
 
-    // --- 美股代幣支柱（鎖定 QQQB 科技成長錨點） ---
     function switchEquityAsset(sym) {
         activeEquitySym = 'QQQB';
         renderTableColumns();
@@ -3407,7 +3032,6 @@
         renderCPortfolioMatrix();
     }
 
-    // --- 動態渲染 6-Zone 對照表格內容 ---
     function renderTableColumns() {
         for (let zone = 0; zone <= 5; zone++) {
             const config = ZONE_CONFIGS[zone];
@@ -3429,23 +3053,22 @@
             if (c3) c3.innerText = `TAO ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
 
             if (zone === 5) {
-                if (sat) sat.innerText = `Alpha 保持 100% PAXG 純實體金避險，核心進入 QQQB 35% + PAXG 65% 終極防禦`;
+                if (sat) sat.innerText = `維持 100% PAXG 避險`;
             } else if (zone === 4) {
-                if (sat) sat.innerText = `山寨季落幕，Alpha 率先 100% 清零出清至 PAXG 100% 避險`;
+                if (sat) sat.innerText = `Alpha 出清，轉為 100% PAXG`;
             } else {
-                if (sat) sat.innerText = `各雙幣組合：COIN 60% / PAXG 40% (全天候純雙幣 60/40，偏差 2%)`;
+                if (sat) sat.innerText = `維持 COIN 60% / PAXG 40% (按比例 2%)`;
             }
         }
     }
 
-    // --- 備用 1 秒輪詢 (Fallback Polling) ---
+    // --- 備用輪詢 (Fallback Polling) ---
     async function fallbackPoll() {
         try {
             const spotSymbols = [
-                "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "QQQBUSDT", "CRCLBUSDT", "ICPUSDT",
-                "UNIUSDT", "NEARUSDT", "ONDOUSDT", "PENDLEUSDT", "SOLUSDT", "BNBUSDT", "ARBUSDT", "AAVEUSDT",
-                "LINKUSDT", "RENDERUSDT", "FETUSDT", "SUIUSDT", "ENAUSDT", "HYPEUSDT", "OPUSDT",
-                "TONUSDT", "LDOUSDT"
+                "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "QQQBUSDT",
+                "UNIUSDT", "NEARUSDT", "ONDOUSDT", "PENDLEUSDT", "SOLUSDT",
+                "AAVEUSDT", "LINKUSDT", "SUIUSDT", "ENAUSDT", "HYPEUSDT"
             ];
             const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(spotSymbols))}`);
             if (res.ok) {
@@ -3463,7 +3086,6 @@
             }
         } catch (e) {}
 
-        // 輪詢 HYPE 期貨
         try {
             const resHype = await fetch('https://fapi.binance.com/fapi/v1/ticker/24hr?symbol=HYPEUSDT');
             if (resHype.ok) {

@@ -1,7 +1,7 @@
 {
-  "name": "Triad 三元策略",
+  "name": "Triad Portfolio · 量化資產配置終端",
   "short_name": "Triad",
-  "description": "Triad 三元資產全天候動態再平衡量化系統",
+  "description": "Triad 多策略量化資產配置與風險監控終端",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
