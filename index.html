@@ -1273,7 +1273,7 @@
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                針對震盪均值回歸設計的馬丁格爾（DCA）網格配置。提供 <strong>現貨 SOL/FDUSD（1.0x 無強平 · 12 階覆蓋 -26.92% 跌幅）</strong> 與 <strong>合約 ENA/USDC（3.0x 逐倉 · 9 階覆蓋 -32.35% 跌幅 · -35.00% 止損）</strong> 兩種風險模態，支援資金規模等比試算。
+                針對震盪均值回歸設計的馬丁格爾（DCA）網格配置。提供 <strong>現貨 SOL/FDUSD（1.0x 無強平 · 12 階覆蓋 -26.92% 跌幅）</strong>、<strong>合約多頭 ENA/USDC（牛市 3.0x 做多 · 9 階覆蓋 -32.35% · -35.00% 止損）</strong> 與 <strong>合約空頭 ENA/USDC（熊市 3.0x 做空 · 9 階覆蓋 +46.41% · +50.00% 止損）</strong> 三種模態，支援資金規模等比試算。
             </div>
         </div>
 
@@ -1285,12 +1285,15 @@
                 <span style="font-size: 11px; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">1 分鐘 K 線回測校準</span>
             </div>
             <!-- Tab 切換按鈕 -->
-            <div style="display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 9999px; border: 1px solid #e2e8f0;">
+            <div style="display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 9999px; border: 1px solid #e2e8f0; flex-wrap: wrap;">
                 <button id="dcaTabSpot" onclick="switchDcaTab('spot')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: #0284c7; color: #ffffff; box-shadow: 0 2px 8px rgba(2,132,199,0.3);">
                     現貨模態：SOL/FDUSD (12 階無槓桿)
                 </button>
                 <button id="dcaTabFutures" onclick="switchDcaTab('futures')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748b;">
-                    合約模態：ENA/USDC (3x 逐倉 · 9 階)
+                    合約多頭 (牛市)：ENA/USDC (3x 做多 · -35% 止損)
+                </button>
+                <button id="dcaTabFuturesShort" onclick="switchDcaTab('futuresShort')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748b;">
+                    合約空頭 (熊市)：ENA/USDC (3x 做空 · +50% 止損)
                 </button>
             </div>
         </div>
@@ -1633,6 +1636,181 @@
                 </div>
             </div>
         </div>
+
+        <!-- ======================= 模態三：合約空頭 (熊市 ENA/USDC 250U 9級 +50% 止損) ======================= -->
+        <div id="dcaContentFuturesShort" style="display: none;">
+            <!-- 資金等比即時換算滑桿與快捷列 -->
+            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 14.5px; font-weight: 800; color: #0f172a;">熊市做空資金等比試算器 (總投資額)</span>
+                        <span style="font-size: 11px; background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 2px 8px; border-radius: 9999px; font-weight: 600;">適用 Zone 4/5 轉熊期 · 含網格保證金與手動追加儲備</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 12.5px; font-weight: 700; color: #64748b;">投入本金：</span>
+                        <input type="number" id="dcaShortCapitalInput" min="50" max="5000" step="10" value="250" oninput="onDcaCapitalChange(this.value)" style="width: 85px; padding: 4px 8px; font-size: 14px; font-weight: 900; color: #dc2626; border: 1.5px solid #cbd5e1; border-radius: 8px; text-align: center; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#dc2626'" onblur="this.style.borderColor='#cbd5e1'">
+                        <span style="font-size: 13px; font-weight: 800; color: #0f172a;">USDC</span>
+                    </div>
+                </div>
+
+                <!-- 滑桿主體 -->
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #94a3b8;">50U</span>
+                    <input type="range" id="dcaShortCapitalSlider" min="50" max="2000" step="10" value="250" oninput="onDcaCapitalChange(this.value)" style="flex: 1; accent-color: #dc2626; cursor: pointer; height: 6px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #94a3b8;">2,000U</span>
+                </div>
+
+                <!-- 快速換算按鈕列 -->
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: #64748b; margin-right: 4px;">預設本金：</span>
+                    <button type="button" onclick="setDcaCapital(100)" class="dca-cap-btn" data-cap="100" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">100U</button>
+                    <button type="button" onclick="setDcaCapital(200)" class="dca-cap-btn" data-cap="200" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">200U</button>
+                    <button type="button" onclick="setDcaCapital(230)" class="dca-cap-btn" data-cap="230" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">230U</button>
+                    <button type="button" onclick="setDcaCapital(250)" class="dca-cap-btn active" data-cap="250" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #7c3aed; background: #7c3aed; color: #ffffff; cursor: pointer; transition: all 0.15s; box-shadow: 0 2px 6px rgba(124,58,237,0.25);">250U (基準)</button>
+                    <button type="button" onclick="setDcaCapital(300)" class="dca-cap-btn" data-cap="300" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">300U</button>
+                    <button type="button" onclick="setDcaCapital(500)" class="dca-cap-btn" data-cap="500" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">500U</button>
+                    <button type="button" onclick="setDcaCapital(1000)" class="dca-cap-btn" data-cap="1000" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; transition: all 0.15s;">1,000U</button>
+                </div>
+            </div>
+
+            <!-- 合約空頭模態：ENA/USDC (9 階 +46.41% 覆蓋 / +50.00% 止損) -->
+            <div id="futuresTokenEnaShort" style="display: block;">
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;">
+                    <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">3.0x 逐倉做空 (Short)</span>
+                    <span class="c-pill" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">USDC 合約 0.00% Maker 費率</span>
+                    <span class="c-pill" id="enaShortPillFunds" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">180U 網格 ＋ 70U 開倉後手動追加 (總計 250U)</span>
+                    <span class="c-pill c-pill-gold">9 階覆蓋 +46.41% 死貓跳反彈</span>
+                    <span class="c-pill" style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">+50.00% 止損 (抗熊市軋空)</span>
+                </div>
+
+                <!-- ENA 空頭四大核心量化指標卡 -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px;">
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">188天熊市回測淨收益 (年化)</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #dc2626;"><span id="enaShortCardProfit">+$525.73</span> <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+406.5% APR)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">基於 <span id="enaShortNarrativeCapital">250U 總本金</span> ($1.33➔$0.22 熊市 1m 回測)</div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">止盈完成輪次 (平均週期)</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #0f172a;">1,647 輪 <span style="font-size: 12px; font-weight: 700; color: #dc2626;">(均值 2.7h/輪)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">空頭均價下跌 0.75% 觸發限價買回止盈</div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">最大回撤 / 抗軋空覆蓋深度</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #10b981;">43.60% <span style="font-size: 12px; font-weight: 700; color: #059669;">(覆蓋 +46.41%)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">回測最低淨值 <span id="enaShortCardMinEq">$173.18</span> (9 階遞增布空)</div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">止損風控線 (做空虧損鈍化效應)</div>
+                        <div style="font-size: 20px; font-weight: 900; color: #dc2626;">+50.00% 止損 <span style="font-size: 12px; font-weight: 700; color: #059669;">(留存 35.5%)</span></div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">價格暴漲 50% 止損時留存 <span id="enaShortCardPreserve">$88.67U+</span></div>
+                    </div>
+                </div>
+
+                <!-- ENA 空頭參數表 -->
+                <div style="margin-top: 14px;">
+                    <div style="font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+                        <span>幣安 App【ENA/USDC 熊市做空 DCA】(<span class="dca-table-cap-title">250U</span>) 參數對照表</span>
+                        <span style="font-size: 11.5px; font-weight: normal; color: #64748b;">(啟動時機：BTC 觸發 Zone 4 見頂或 Zone 5 轉熊時切換)</span>
+                    </div>
+                    <div class="matrix-table-wrap">
+                        <table class="matrix-table" style="font-size: 12.5px;">
+                            <thead>
+                                <tr style="background: #1e293b;">
+                                    <th>設定欄位</th>
+                                    <th>整數建議值</th>
+                                    <th>精確計算值</th>
+                                    <th>參數功能與防軋空說明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background: #fef2f2;"><td colspan="4" style="font-weight: 800; color: #dc2626; padding: 6px 10px; font-size: 11.5px;">【基本設定與價格 (做空 Short 模態)】</td></tr>
+                                <tr>
+                                    <td><strong>交易對 / 方向</strong></td>
+                                    <td><strong style="color: #dc2626;">ENAUSDC 永續 (做空 Short)</strong></td>
+                                    <td><strong style="color: #dc2626;">ENAUSDC 永續 (做空 Short)</strong></td>
+                                    <td>熊市順勢做空，高處限價加空享 0.00% Maker 費率</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>價格上漲步驟</strong></td>
+                                    <td><strong style="color: #059669;">1.65%</strong></td>
+                                    <td><strong style="color: #059669;">1.65%</strong></td>
+                                    <td>第 1 階加空單觸發間距（較做多拉寬以防熊市死貓跳）</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>每輪止盈</strong></td>
+                                    <td><strong style="color: #0284c7;">0.75%</strong></td>
+                                    <td><strong style="color: #0284c7;">0.75%</strong></td>
+                                    <td>空單持倉均價回落 0.75% 觸發限價買回止盈</td>
+                                </tr>
+                                <tr style="background: #fef2f2;"><td colspan="4" style="font-weight: 800; color: #dc2626; padding: 6px 10px; font-size: 11.5px;">【槓桿與保證金配置】</td></tr>
+                                <tr>
+                                    <td><strong>槓桿倍數</strong></td>
+                                    <td><strong style="color: #d97706;">3x (逐倉)</strong></td>
+                                    <td><strong style="color: #d97706;">3x (逐倉)</strong></td>
+                                    <td>採用 3x 槓桿搭配往上加倉顆數遞減之天然防禦</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>基礎訂單保證金</strong></td>
+                                    <td><strong style="color: #d97706;" id="enaShortTblBaseInt">9.00 USDC</strong></td>
+                                    <td><strong style="color: #d97706;" id="enaShortTblBaseExact">7.78 USDC</strong></td>
+                                    <td>首筆開空保證金（名義部位為 3 倍）</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>DCA 訂單保證金</strong></td>
+                                    <td><strong style="color: #d97706;" id="enaShortTblDcaInt">19.00 USDC</strong></td>
+                                    <td><strong style="color: #d97706;" id="enaShortTblDcaExact">19.14 USDC</strong></td>
+                                    <td>單階加空保證金（共 9 階等額加倉，越高處顆數越少）</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>DCA 訂單數量上限</strong></td>
+                                    <td><strong>9</strong></td>
+                                    <td><strong>9</strong></td>
+                                    <td>最大加倉階數（累計覆蓋 <strong>+46.41%</strong> 反彈漲幅）</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>投入保證金 (自動計算)</strong></td>
+                                    <td><strong style="color: #0f172a;" id="enaShortTblOrderInt">180.00 USDC</strong></td>
+                                    <td><strong style="color: #0f172a;" id="enaShortTblOrderExact">180.04 USDC</strong></td>
+                                    <td>基礎保證金 + (DCA 保證金 &times; 9)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>自動追加保證金 (建立時)</strong></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選</span></td>
+                                    <td><span style="color: #64748b; font-weight: 700;">不勾選</span></td>
+                                    <td>關閉自動抽調，避免影響合約帳戶其他資金</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>手動追加保證金 (開倉後)</strong></td>
+                                    <td><strong style="color: #059669;" id="enaShortTblAddInt">手動追加 70.00 USDC</strong></td>
+                                    <td><strong style="color: #059669;" id="enaShortTblAddExact">手動追加 69.96 USDC</strong></td>
+                                    <td><strong>開倉後於機器人詳情點擊「追加保證金」手動鎖入</strong></td>
+                                </tr>
+                                <tr style="background: #fef2f2;"><td colspan="4" style="font-weight: 800; color: #dc2626; padding: 6px 10px; font-size: 11.5px;">【進階參數與 +50% 止損風控】</td></tr>
+                                <tr>
+                                    <td><strong>價格偏差乘數 / 規模乘數</strong></td>
+                                    <td><strong style="color: #059669;">1.27</strong> / <strong>1.00</strong></td>
+                                    <td><strong style="color: #059669;">1.27</strong> / <strong>1.00</strong></td>
+                                    <td>間距按 1.27 倍幾何遞增（覆蓋 +46.41%），每階等額 1.00 倍</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>啟動條件 / 停止條件</strong></td>
+                                    <td><span style="color: #64748b;">不勾選 (留空)</span></td>
+                                    <td><span style="color: #64748b;">不勾選 (留空)</span></td>
+                                    <td>建立後立即啟動，預設冷卻 60 秒</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>[✓] 止損 ➔ 止損目標</strong></td>
+                                    <td><strong style="color: #dc2626;">50.00% (勾選止損)</strong></td>
+                                    <td><strong style="color: #dc2626;">50.00% (勾選止損)</strong></td>
+                                    <td>第 9 階 (+46.41%) 上方預留 3.59% 緩衝，免除 +35%~+45% 死貓跳掃損，觸發止損仍留存 <span id="enaShortTblPreserve">$88.67U+</span> (35.47%)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     </section>
 
@@ -1903,31 +2081,44 @@
         }
     }
 
-    // --- DCA 專區 Tab 切換函數 (現貨 vs 合約艦隊) ---
+    // --- DCA 專區 Tab 切換函數 (現貨 vs 合約多頭 vs 合約空頭) ---
     function switchDcaTab(mode) {
         const spotBtn = document.getElementById('dcaTabSpot');
         const futuresBtn = document.getElementById('dcaTabFutures');
+        const futuresShortBtn = document.getElementById('dcaTabFuturesShort');
         const spotContent = document.getElementById('dcaContentSpot');
         const futuresContent = document.getElementById('dcaContentFutures');
+        const futuresShortContent = document.getElementById('dcaContentFuturesShort');
         if (!spotBtn || !futuresBtn || !spotContent || !futuresContent) return;
+
+        // Reset all tabs
+        [spotBtn, futuresBtn, futuresShortBtn].forEach(btn => {
+            if (btn) {
+                btn.style.background = 'transparent';
+                btn.style.color = '#64748b';
+                btn.style.boxShadow = 'none';
+            }
+        });
+        if (spotContent) spotContent.style.display = 'none';
+        if (futuresContent) futuresContent.style.display = 'none';
+        if (futuresShortContent) futuresShortContent.style.display = 'none';
 
         if (mode === 'spot') {
             spotBtn.style.background = '#0284c7';
             spotBtn.style.color = '#ffffff';
             spotBtn.style.boxShadow = '0 2px 8px rgba(2,132,199,0.3)';
-            futuresBtn.style.background = 'transparent';
-            futuresBtn.style.color = '#64748b';
-            futuresBtn.style.boxShadow = 'none';
             spotContent.style.display = 'block';
-            futuresContent.style.display = 'none';
+        } else if (mode === 'futuresShort') {
+            if (futuresShortBtn) {
+                futuresShortBtn.style.background = '#dc2626';
+                futuresShortBtn.style.color = '#ffffff';
+                futuresShortBtn.style.boxShadow = '0 2px 8px rgba(220,38,38,0.3)';
+            }
+            if (futuresShortContent) futuresShortContent.style.display = 'block';
         } else {
             futuresBtn.style.background = '#7c3aed';
             futuresBtn.style.color = '#ffffff';
             futuresBtn.style.boxShadow = '0 2px 8px rgba(124,58,237,0.3)';
-            spotBtn.style.background = 'transparent';
-            spotBtn.style.color = '#64748b';
-            spotBtn.style.boxShadow = 'none';
-            spotContent.style.display = 'none';
             futuresContent.style.display = 'block';
         }
     }
@@ -2044,8 +2235,12 @@
 
         const slider = document.getElementById('dcaCapitalSlider');
         const input = document.getElementById('dcaCapitalInput');
+        const shortSlider = document.getElementById('dcaShortCapitalSlider');
+        const shortInput = document.getElementById('dcaShortCapitalInput');
         if (slider && slider.value != cap) slider.value = Math.min(2000, cap);
         if (input && input.value != cap && document.activeElement !== input) input.value = cap;
+        if (shortSlider && shortSlider.value != cap) shortSlider.value = Math.min(2000, cap);
+        if (shortInput && shortInput.value != cap && document.activeElement !== shortInput) shortInput.value = cap;
 
         // Update active class on quick buttons
         document.querySelectorAll('.dca-cap-btn').forEach(btn => {
@@ -2128,6 +2323,41 @@
         if (enaTblLossEl) enaTblLossEl.innerText = `$${enaLoss}U`;
         const enaTblPresEl = document.getElementById('enaTblPreserve');
         if (enaTblPresEl) enaTblPresEl.innerText = `$${enaMinEq}U+`;
+
+        // 2. ENA/USDC Short (Bear Market +50% SL) dynamic updates
+        const enaShortProfit = (525.73 * s).toFixed(2);
+        const enaShortMinEq = (173.18 * s).toFixed(2);
+        const enaShortPreserve = (88.67 * s).toFixed(2);
+
+        const enaShortPill = document.getElementById('enaShortPillFunds');
+        if (enaShortPill) enaShortPill.innerText = `${enaOrderIntFinal}U 網格 ＋ ${enaAddIntFinal}U 開倉後手動追加 (總計 ${Math.round(cap)}U)`;
+        const enaShortNarrCap = document.getElementById('enaShortNarrativeCapital');
+        if (enaShortNarrCap) enaShortNarrCap.innerText = `${Math.round(cap)}U 總本金`;
+        const enaShortCardProf = document.getElementById('enaShortCardProfit');
+        if (enaShortCardProf) enaShortCardProf.innerText = `+$${enaShortProfit}`;
+        const enaShortCardMinEq = document.getElementById('enaShortCardMinEq');
+        if (enaShortCardMinEq) enaShortCardMinEq.innerText = `$${enaShortMinEq}`;
+        const enaShortCardPres = document.getElementById('enaShortCardPreserve');
+        if (enaShortCardPres) enaShortCardPres.innerText = `$${enaShortPreserve}U+`;
+
+        const enaShortTblBaseIntEl = document.getElementById('enaShortTblBaseInt');
+        if (enaShortTblBaseIntEl) enaShortTblBaseIntEl.innerText = `${enaBaseInt.toFixed(2)} USDC`;
+        const enaShortTblBaseExactEl = document.getElementById('enaShortTblBaseExact');
+        if (enaShortTblBaseExactEl) enaShortTblBaseExactEl.innerText = `${enaBaseExact} USDC`;
+        const enaShortTblDcaIntEl = document.getElementById('enaShortTblDcaInt');
+        if (enaShortTblDcaIntEl) enaShortTblDcaIntEl.innerText = `${enaDcaInt.toFixed(2)} USDC`;
+        const enaShortTblDcaExactEl = document.getElementById('enaShortTblDcaExact');
+        if (enaShortTblDcaExactEl) enaShortTblDcaExactEl.innerText = `${enaDcaExact} USDC`;
+        const enaShortTblOrderIntEl = document.getElementById('enaShortTblOrderInt');
+        if (enaShortTblOrderIntEl) enaShortTblOrderIntEl.innerText = `${enaOrderIntFinal.toFixed(2)} USDC`;
+        const enaShortTblOrderExactEl = document.getElementById('enaShortTblOrderExact');
+        if (enaShortTblOrderExactEl) enaShortTblOrderExactEl.innerText = `${enaOrderExact} USDC`;
+        const enaShortTblAddIntEl = document.getElementById('enaShortTblAddInt');
+        if (enaShortTblAddIntEl) enaShortTblAddIntEl.innerText = `手動追加 ${enaAddIntFinal.toFixed(2)} USDC`;
+        const enaShortTblAddExactEl = document.getElementById('enaShortTblAddExact');
+        if (enaShortTblAddExactEl) enaShortTblAddExactEl.innerText = `手動追加 ${enaAddExact} USDC`;
+        const enaShortTblPresEl = document.getElementById('enaShortTblPreserve');
+        if (enaShortTblPresEl) enaShortTblPresEl.innerText = `$${enaShortPreserve}U+`;
     }
 
     // --- 6-Zone 階梯配置定義 ---
