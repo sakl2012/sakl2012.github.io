@@ -844,7 +844,7 @@
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                配置標的：<strong>BTC (20%)、ETH (20%)、TAO (10%)</strong>，各搭配 <strong>QQQB (納指100)</strong> 與 <strong>PAXG (實體黃金)</strong> 組成獨立三幣組合。依據 BTC / MA200 比值劃分 6 個區間動態調整目標權重，統一設定 <strong>2% 比例偏離觸發再平衡</strong>（建議單倉 &ge; 700 USDT）。
+                配置標的：<strong>BTC (20%)、ETH (20%)、NEAR (10%)</strong>，各搭配 <strong>QQQB (納指100)</strong> 與 <strong>PAXG (實體黃金)</strong> 組成獨立三幣組合。依據 BTC / MA200 比值劃分 6 個區間動態調整目標權重，統一設定 <strong>2% 比例偏離觸發再平衡</strong>（建議單倉 &ge; 700 USDT）。
             </div>
         </div>
 
@@ -873,7 +873,7 @@
                             <th>階段特徵與配置邏輯</th>
                             <th id="th-core-1">核心 1: BTC + QQQB + PAXG (20%)</th>
                             <th id="th-core-2">核心 2: ETH + QQQB + PAXG (20%)</th>
-                            <th id="th-core-3">核心 3: TAO + QQQB + PAXG (10%)</th>
+                            <th id="th-core-3">核心 3: NEAR + QQQB + PAXG (10%)</th>
                             <th id="th-sat">策略二 Alpha 組合對應狀態</th>
                         </tr>
                     </thead>
@@ -888,7 +888,7 @@
                             </td>
                             <td class="col-c1">BTC 65% / QQQB 25% / PAXG 10%</td>
                             <td class="col-c2">ETH 65% / QQQB 25% / PAXG 10%</td>
-                            <td class="col-c3">TAO 65% / QQQB 25% / PAXG 10%</td>
+                            <td class="col-c3">NEAR 65% / QQQB 25% / PAXG 10%</td>
                             <td class="col-sat">維持 COIN 60% / PAXG 40%</td>
                         </tr>
                         <tr id="row-zone-1">
@@ -901,7 +901,7 @@
                             </td>
                             <td class="col-c1">BTC 50% / QQQB 30% / PAXG 20%</td>
                             <td class="col-c2">ETH 50% / QQQB 30% / PAXG 20%</td>
-                            <td class="col-c3">TAO 50% / QQQB 30% / PAXG 20%</td>
+                            <td class="col-c3">NEAR 50% / QQQB 30% / PAXG 20%</td>
                             <td class="col-sat">維持 COIN 60% / PAXG 40%</td>
                         </tr>
                         <tr id="row-zone-2" class="row-active-zone">
@@ -914,7 +914,7 @@
                             </td>
                             <td class="col-c1">BTC 45% / QQQB 35% / PAXG 20%</td>
                             <td class="col-c2">ETH 40% / QQQB 35% / PAXG 25%</td>
-                            <td class="col-c3">TAO 35% / QQQB 35% / PAXG 30%</td>
+                            <td class="col-c3">NEAR 35% / QQQB 35% / PAXG 30%</td>
                             <td class="col-sat">維持 COIN 60% / PAXG 40%</td>
                         </tr>
                         <tr id="row-zone-3">
@@ -927,7 +927,7 @@
                             </td>
                             <td class="col-c1">BTC 30% / QQQB 35% / PAXG 35%</td>
                             <td class="col-c2">ETH 25% / QQQB 35% / PAXG 40%</td>
-                            <td class="col-c3">TAO 20% / QQQB 40% / PAXG 40%</td>
+                            <td class="col-c3">NEAR 20% / QQQB 40% / PAXG 40%</td>
                             <td class="col-sat">維持 COIN 60% / PAXG 40%</td>
                         </tr>
                         <tr id="row-zone-4">
@@ -940,7 +940,7 @@
                             </td>
                             <td class="col-c1">BTC 5% / QQQB 35% / PAXG 60%</td>
                             <td class="col-c2">ETH 5% / QQQB 35% / PAXG 60%</td>
-                            <td class="col-c3">TAO 5% / QQQB 35% / PAXG 60%</td>
+                            <td class="col-c3">NEAR 5% / QQQB 35% / PAXG 60%</td>
                             <td class="col-sat">Alpha 出清，轉為 100% PAXG</td>
                         </tr>
                         <tr id="row-zone-5">
@@ -953,7 +953,7 @@
                             </td>
                             <td class="col-c1">BTC 0% / QQQB 35% / PAXG 65%</td>
                             <td class="col-c2">ETH 0% / QQQB 35% / PAXG 65%</td>
-                            <td class="col-c3">TAO 0% / QQQB 35% / PAXG 65%</td>
+                            <td class="col-c3">NEAR 0% / QQQB 35% / PAXG 65%</td>
                             <td class="col-sat">維持 100% PAXG 避險</td>
                         </tr>
                     </tbody>
@@ -975,7 +975,7 @@
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                篩選具備協議收入與鏈上結算需求的 9 項標的（UNI, HYPE, AAVE, ENA, PENDLE, ONDO, NEAR, SUI, LINK），各佔總配置約 5.56%。Zone 0~3 固定採用 <strong>60% 標的 + 40% PAXG</strong> 雙幣結構（2% 偏離再平衡，建議單倉 &ge; 350 USDT），將單幣超額波動收斂為黃金部位。
+                篩選具備協議收入與鏈上結算需求的 9 項標的（UNI, HYPE, AAVE, ENA, PENDLE, ONDO, TAO, SUI, LINK），各佔總配置約 5.56%。Zone 0~3 固定採用 <strong>60% 標的 + 40% PAXG</strong> 雙幣結構（2% 偏離再平衡，建議單倉 &ge; 350 USDT），將單幣超額波動收斂為黃金部位。
             </div>
         </div>
 
@@ -1000,7 +1000,7 @@
             <div class="c-filter-tabs">
                 <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">全部標的 (9)</button>
                 <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">DeFi 與衍生品 (UNI, HYPE, AAVE, ENA, PENDLE)</button>
-                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">基礎設施與公鏈 (ONDO, NEAR, SUI, LINK)</button>
+                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">基礎設施與公鏈 (ONDO, TAO, SUI, LINK)</button>
             </div>
 
             <!-- 雙幣卡片網格 -->
@@ -1921,10 +1921,10 @@
                         <tbody>
                             <tr>
                                 <td><strong>策略一：核心資產配置</strong></td>
-                                <td>3 組三幣組合 (BTC / ETH / TAO)</td>
+                                <td>3 組三幣組合 (BTC / ETH / NEAR)</td>
                                 <td><strong style="color: #dc2626;">700 USDT</strong></td>
                                 <td><strong style="color: #059669; font-size: 13.5px;">2,000 USDT</strong></td>
-                                <td>標準配置：BTC 800U、ETH 800U、TAO 400U (對應 2:2:1 權重)</td>
+                                <td>標準配置：BTC 800U、ETH 800U、NEAR 400U (對應 2:2:1 權重)</td>
                             </tr>
                             <tr>
                                 <td><strong>策略二：Alpha 雙幣配置</strong></td>
@@ -2483,15 +2483,15 @@
             active: true
         },
         {
-            sym: 'NEAR',
-            name: 'NEAR',
-            icon: 'icons/near.png',
+            sym: 'TAO',
+            name: 'TAO',
+            icon: 'icons/tao.svg',
             rank: '5',
             rankClass: 'rank-top3',
-            tier: '分片擴容與鏈抽象公鏈 (L1 / AI)',
+            tier: '去中心化 AI 算力網路 (AI / DePIN)',
             capitalPct: '權重 5.56%',
-            title: 'Nightshade 分片架構與跨鏈帳戶抽象',
-            quote: '提供高吞吐量分片執行環境與鏈抽象簽章介面，支援高頻消費級應用與 AI 代理鏈上互動。',
+            title: '子網激勵架構與去中心化機器學習協議',
+            quote: '具備 100+ AI 專業子網與 dTAO 動態激勵機制，搭配 PAXG 60/40 雙幣結構吸收高波動並轉化為黃金部位。',
             baseWeight: 0.0556,
             isSpot: true,
             active: true
@@ -2560,10 +2560,10 @@
         BTC: 81300,
         ETH: 2620,
         PAXG: 4367,
-        TAO: 256,
+        TAO: 258.3,
         QQQB: 720.4,
         UNI: 9.02,
-        NEAR: 3.84,
+        NEAR: 4.90,
         HYPE: 94.4,
         ONDO: 0.409,
         PENDLE: 2.69,
@@ -2903,16 +2903,16 @@
             quote: 'DeFi、穩定幣與 RWA 資產主要結算網路，透過三幣動態配置平滑單一公鏈週期波動。'
         },
         {
-            sym: 'TAO',
+            sym: 'NEAR',
             ratioKey: 'CORE_TAO',
-            icon: 'icons/tao.svg',
+            icon: 'icons/near.png',
             rank: '3',
             rankClass: 'rank-top1',
-            tier: '核心配置 (去中心化 AI 網路)',
+            tier: '核心配置 (AI 代理與鏈抽象 L1)',
             capitalPct: '權重 10%',
             topBorder: '#8b5cf6',
             accentColor: '#8b5cf6',
-            quote: '子網激勵架構之去中心化機器學習協議，高波動特性搭配 QQQB 與 PAXG 提高再平衡頻率。'
+            quote: '提供 Nightshade 分片擴容、鏈抽象與隱私計算基礎設施，高流動性搭配 QQQB 與 PAXG 提高再平衡頻率。'
         }
     ];
 
@@ -3032,7 +3032,7 @@
         C_SATELLITE_CANDIDATES.forEach((c, idx) => {
             let match = true;
             if (currentFleetFilter === 'defi') match = ['UNI', 'HYPE', 'AAVE', 'ENA', 'PENDLE'].includes(c.sym);
-            else if (currentFleetFilter === 'infra') match = ['ONDO', 'NEAR', 'SUI', 'LINK'].includes(c.sym);
+            else if (currentFleetFilter === 'infra') match = ['ONDO', 'TAO', 'SUI', 'LINK'].includes(c.sym);
             if (!match) return;
 
             const p = latestPrices[c.sym] || 0;
@@ -3280,7 +3280,7 @@
 
             if (c1) c1.innerText = `BTC ${Math.round(btcR.coin*100)}% / ${eqSym} ${Math.round(btcR.equity*100)}% / PAXG ${Math.round(btcR.paxg*100)}%`;
             if (c2) c2.innerText = `ETH ${Math.round(ethR.coin*100)}% / ${eqSym} ${Math.round(ethR.equity*100)}% / PAXG ${Math.round(ethR.paxg*100)}%`;
-            if (c3) c3.innerText = `TAO ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
+            if (c3) c3.innerText = `NEAR ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
 
             if (zone === 5) {
                 if (sat) sat.innerText = `維持 100% PAXG 避險`;
