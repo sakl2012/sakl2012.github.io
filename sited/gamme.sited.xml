@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<sited>
+<sited ver="2">
     <meta>
         <title>卡卡洛普</title>
         <intro>重要聲明：本網站為提供內容及檔案上載之平台，內容發佈者請確保所提供之檔案/內容無任何違法或牴觸法令之虞。卡卡洛普無法調解版權歸屬等相關法律糾紛，對所有上載之檔案和內容不負任何法律責任，一切檔案內容及言論為內容發佈者個人意見，並非本網站立場。</intro>
@@ -112,6 +112,15 @@
                     if (itemLogo.includes('no-150x110.gif')) {
                         itemLogo = null;
                     }
+                }
+
+                // 補齊相對路徑 URL (如 /1775199 或 /20261030274188.html)
+                if (itemUrl.startsWith('//')) {
+                    itemUrl = 'https:' + itemUrl;
+                } else if (itemUrl.startsWith('/')) {
+                    const originMatch = url.match(/^(https?:\/\/[^\/]+)/i);
+                    const baseOrigin = originMatch ? originMatch[1] : 'https://news.gamme.com.tw';
+                    itemUrl = baseOrigin + itemUrl;
                 }
 
                 list.push({

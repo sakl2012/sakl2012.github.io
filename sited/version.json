@@ -2,34 +2,34 @@
   "versionCode": 2,
   "versionName": "1.1.0",
   "apkUrl": "https://sakl2012.github.io/sited/app-release.apk",
-  "changelog": "1. 新增磁力連結 (Magnet) P2P 邊下邊播與外部播放器支援\n2. 新增蜜柑計畫 (Mikan)、動漫花園 (DMHY)、Nyaa 與 Sukebei Nyaa (隱藏) 四款插件\n3. 新增啟動時插件自動熱更新與 App 版本自動檢查/一鍵升級功能",
+  "changelog": "1. 新增磁力連結 (Magnet) P2P 邊下邊播與外部播放器支援\n2. 新增蜜柑計畫 (Mikan)、動漫花園 (DMHY)、Nyaa 與 Sukebei Nyaa (隱藏) 四款插件\n3. 新增啟動時插件自動熱更新與 App 版本自動檢查/一鍵升級功能\n4. 修復天天看小說 (ttkan) Gatekeeper PoW 驗證與卡卡洛普 (gamme) 相對網址解析",
   "plugins": [
     {
       "fileName": "123av.sited.xml",
       "url": "123av.com",
       "updateUrl": "https://sakl2012.github.io/sited/123av.sited.xml",
-      "sha256": "c395db5d5c1ad7e0db42cbd5db2f8ad24802b398fc1f5fdb647add833464f9f4",
+      "sha256": "7cab925d1008f6c52652574f8b51e63ca1a1d13a317142ad3d05407a80ef472f",
       "ver": 2
     },
     {
       "fileName": "8comic.sited.xml",
       "url": "8comic.com",
       "updateUrl": "https://sakl2012.github.io/sited/8comic.sited.xml",
-      "sha256": "ac55df0e64d15a830ea038c3f103606b6ad102f235e93e06dc1b9b150308c898",
+      "sha256": "db9cbeb22206eacc6a784291a65862de0901d3d8d218d816431e481925418b14",
       "ver": 1
     },
     {
       "fileName": "anime1.sited.xml",
       "url": "anime1.me",
       "updateUrl": "https://sakl2012.github.io/sited/anime1.sited.xml",
-      "sha256": "82a0ab53cd04422fe6ab813e675452647b9f5ead9b043855e495be594774425d",
+      "sha256": "fc71d5ee97728d5673cfc408003832ecd72d88e78e2cb6a29aa1b6b4498c1743",
       "ver": 2
     },
     {
       "fileName": "clickme.sited.xml",
       "url": "clickme.net",
       "updateUrl": "https://sakl2012.github.io/sited/clickme.sited.xml",
-      "sha256": "7b32b112f848cce1f51e8437ccbfc28acb6759f30857ff302b9761dbeda5fc50",
+      "sha256": "b1fcab5cfc56383802faedf3d8c75e8df3a9c8e7b7a06f7ed1f88d0af365840c",
       "ver": 1
     },
     {
@@ -43,14 +43,14 @@
       "fileName": "gamme.sited.xml",
       "url": "gamme.com.tw",
       "updateUrl": "https://sakl2012.github.io/sited/gamme.sited.xml",
-      "sha256": "47e8747cbcc741a48cf7186bbffd29d8d1b22534473506e76864ee422969f50e",
-      "ver": 1
+      "sha256": "2f0ba4ad9d41403da19b47be549b9f4b1429e864e6da62742965212abc93d732",
+      "ver": 2
     },
     {
       "fileName": "gimy.sited.xml",
       "url": "gimytw.cc",
       "updateUrl": "https://sakl2012.github.io/sited/gimy.sited.xml",
-      "sha256": "c0475eed2aa898dbcbfb283c5043f31d5cdaaf70fab1777167757fd9d1db2d87",
+      "sha256": "7aa92524ee42ae1578e505ae27deb16f9383cd44595829e70c01984992623843",
       "ver": 2
     },
     {
@@ -78,14 +78,14 @@
       "fileName": "ttkan.sited.xml",
       "url": "ttkan.co",
       "updateUrl": "https://sakl2012.github.io/sited/ttkan.sited.xml",
-      "sha256": "c229279d0efecb0c719ac0b62d47e8783aff9651d310ae7331c9da2588003adb",
+      "sha256": "81826783074af96907f343c7d4520eb5e92d6597e993e77a8eca2fd6c0836c48",
       "ver": 1
     },
     {
       "fileName": "wnacg.sited.xml",
       "url": "wnacg.com",
       "updateUrl": "https://sakl2012.github.io/sited/wnacg.sited.xml",
-      "sha256": "ea076eebc16a647482037b0ebeda75f98f7157446d208ab2dcfc69d47f3c2a59",
+      "sha256": "0739484ae95a4b267d54a3d424b20b55b80a5a6569bb3c4234eb51071d5803bd",
       "ver": 1
     }
   ]
