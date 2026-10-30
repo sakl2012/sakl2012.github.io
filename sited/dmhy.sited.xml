@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited ver="1">
+    <meta>
+        <title>動漫花園 DMHY</title>
+        <intro>動漫花園資源網 - 動漫愛好者的自由交流與磁力串流平台</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+        <url>share.dmhy.org</url>
+        <updateUrl>https://sakl2012.github.io/sited/dmhy.sited.xml</updateUrl>
+    </meta>
+
+    <main>
+        <home url="https://share.dmhy.org/topics/list/page/@page" parse="list_parse" />
+        <tags tagParse="list_parse">
+            <item group="資源分類" title="全部資源" url="https://share.dmhy.org/topics/list/page/@page"/>
+            <item group="資源分類" title="動畫" url="https://share.dmhy.org/topics/list/sort_id/2/page/@page"/>
+            <item group="資源分類" title="季度全集" url="https://share.dmhy.org/topics/list/sort_id/31/page/@page"/>
+            <item group="資源分類" title="RAW 生肉" url="https://share.dmhy.org/topics/list/sort_id/7/page/@page"/>
+            <item group="資源分類" title="日劇" url="https://share.dmhy.org/topics/list/sort_id/6/page/@page"/>
+            <item group="資源分類" title="特攝" url="https://share.dmhy.org/topics/list/sort_id/12/page/@page"/>
+            <item group="資源分類" title="動漫音樂" url="https://share.dmhy.org/topics/list/sort_id/4/page/@page"/>
+            <item group="資源分類" title="漫畫" url="https://share.dmhy.org/topics/list/sort_id/3/page/@page"/>
+
+            <item group="熱門字幕組" title="ANi" url="https://share.dmhy.org/topics/list/team_id/823/page/@page"/>
+            <item group="熱門字幕組" title="LoliHouse" url="https://share.dmhy.org/topics/list/team_id/803/page/@page"/>
+            <item group="熱門字幕組" title="極影字幕社" url="https://share.dmhy.org/topics/list/team_id/185/page/@page"/>
+            <item group="熱門字幕組" title="悠哈璃羽字幕社" url="https://share.dmhy.org/topics/list/team_id/39/page/@page"/>
+            <item group="熱門字幕組" title="櫻都字幕組" url="https://share.dmhy.org/topics/list/team_id/619/page/@page"/>
+            <item group="熱門字幕組" title="喵萌奶茶屋" url="https://share.dmhy.org/topics/list/team_id/669/page/@page"/>
+            <item group="熱門字幕組" title="動漫國字幕組" url="https://share.dmhy.org/topics/list/team_id/303/page/@page"/>
+            <item group="熱門字幕組" title="幻櫻字幕組" url="https://share.dmhy.org/topics/list/team_id/241/page/@page"/>
+            <item group="熱門字幕組" title="千夏字幕組" url="https://share.dmhy.org/topics/list/team_id/454/page/@page"/>
+            <item group="熱門字幕組" title="諸神字幕組" url="https://share.dmhy.org/topics/list/team_id/283/page/@page"/>
+        </tags>
+        <search parse="list_parse" url="https://share.dmhy.org/topics/list/page/@page?keyword=@key"/>
+        <book parse="book_parse"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+
+    <script>
+        <![CDATA[
+        const baseUrl = "https://share.dmhy.org";
+
+        function base32ToHex(base32) {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+            let bits = 0;
+            let value = 0;
+            let hex = "";
+            const clean = base32.toUpperCase();
+            for (let i = 0; i < clean.length; i++) {
+                const idx = alphabet.indexOf(clean.charAt(i));
+                if (idx < 0) return base32;
+                value = (value << 5) | idx;
+                bits += 5;
+                if (bits >= 8) {
+                    bits -= 8;
+                    const byteVal = (value >>> bits) & 0xFF;
+                    let h = byteVal.toString(16);
+                    if (h.length < 2) h = "0" + h;
+                    hex += h;
+                }
+            }
+            return hex;
+        }
+
+        function normalizeMagnet(mag) {
+            if (!mag) return null;
+            let cleaned = mag.trim().replace(/&amp;/g, '&');
+            const m = cleaned.match(/(xt=urn:btih:)([A-Za-z2-7]{32})(?=&|$)/i);
+            if (m) {
+                const hex = base32ToHex(m[2]);
+                if (hex.length === 40) {
+                    cleaned = cleaned.replace(m[0], m[1] + hex);
+                }
+            }
+            return cleaned;
+        }
+
+        function resolveUrl(u) {
+            if (!u) return null;
+            u = u.trim();
+            if (u.startsWith("http://") || u.startsWith("https://") || u.startsWith("magnet:")) return u;
+            if (u.startsWith("//")) return "https:" + u;
+            if (u.startsWith("/")) return baseUrl + u;
+            return baseUrl + "/" + u;
+        }
+
+        function list_parse(url, html) {
+            const $ = cheerio.load(html);
+            let list = [];
+            $('table#topic_list tbody tr').each(function() {
+                const $$ = cheerio.load($(this).html() || "");
+                const tds = $$('td');
+                if (tds.length < 5) return;
+
+                const category = tds.eq(1).text().trim();
+                const teamName = $$('span.tag a').first().text().trim();
+                const topicLink = $$('a[href^="/topics/view/"]').first();
+                const href = topicLink.attr('href');
+                const rawTitle = topicLink.text().trim();
+                const fileSize = tds.eq(4).text().trim();
+
+                if (href && rawTitle) {
+                    const sizePrefix = fileSize ? "[" + fileSize + "] " : "";
+                    const groupLabel = teamName || category || "動漫花園";
+                    list.push({
+                        group: gbk2big5.traditionalized(groupLabel),
+                        name: gbk2big5.traditionalized(sizePrefix + rawTitle),
+                        url: resolveUrl(href)
+                    });
+                }
+            });
+            return JSON.stringify(list);
+        }
+
+        function book_parse(url, html) {
+            const $ = cheerio.load(html);
+            const title = $('div.topic-title h3').first().text().trim() || "動漫花園資源";
+
+            // 嘗試從內文擷取第一張預覽海報圖
+            let logo = null;
+            $('div.topic-nfo img').each(function() {
+                if (!logo) {
+                    const src = $(this).attr('src');
+                    if (src && !src.includes('smiley') && !src.includes('icon')) {
+                        logo = resolveUrl(src);
+                    }
+                }
+            });
+
+            // 提取作者/字幕組、發佈時間與檔案大小
+            const infoLis = $('div.topic-title li');
+            let author = "";
+            let updateTime = "";
+            let sizeInfo = "";
+            infoLis.each(function() {
+                const txt = $(this).text().trim();
+                if (txt.includes("發佈人") || txt.includes("聯盟")) {
+                    author = txt;
+                } else if (txt.includes("發佈時間")) {
+                    updateTime = txt.replace("發佈時間:", "").trim();
+                } else if (txt.includes("檔案大小")) {
+                    sizeInfo = txt;
+                }
+            });
+
+            const introText = (sizeInfo ? sizeInfo + "\n" : "") + $('div.topic-nfo').text().trim().substring(0, 600);
+
+            // 提取磁力連結 (優先取 40 碼 Hex 的 magnet2，並正規化 a_magnet)
+            const magHex = $('a#magnet2').attr('href');
+            const magBase32 = $('a#a_magnet').attr('href');
+            const primaryMagnet = normalizeMagnet(magBase32 || magHex);
+
+            let sections = [];
+            if (primaryMagnet) {
+                sections.push({
+                    group: "磁力串流 (邊下邊播)",
+                    name: gbk2big5.traditionalized(title),
+                    url: primaryMagnet
+                });
+            }
+
+            // 同時列出種子內包含的影片檔案清單資訊
+            $('div.file_list ul li').each(function() {
+                const fileText = $(this).text().trim();
+                if (fileText && (fileText.toLowerCase().includes('.mp4') || fileText.toLowerCase().includes('.mkv')) && primaryMagnet) {
+                    if (sections.length < 30) {
+                        sections.push({
+                            group: "種子內含影片",
+                            name: gbk2big5.traditionalized(fileText),
+                            url: primaryMagnet
+                        });
+                    }
+                }
+            });
+
+            return JSON.stringify({
+                name: gbk2big5.traditionalized(title),
+                author: gbk2big5.traditionalized(author),
+                updateTime: updateTime,
+                logo: logo,
+                intro: gbk2big5.traditionalized(introText),
+                sections: sections
+            });
+        }
+
+        function section_parse(url, html) {
+            if (url && url.indexOf("magnet:") === 0) {
+                return JSON.stringify({
+                    type: "video",
+                    data: normalizeMagnet(url)
+                });
+            }
+            if (html) {
+                const $ = cheerio.load(html);
+                const mag = $('a#a_magnet').attr('href') || $('a#magnet2').attr('href');
+                if (mag) {
+                    return JSON.stringify({
+                        type: "video",
+                        data: normalizeMagnet(mag)
+                    });
+                }
+            }
+            return JSON.stringify({
+                type: "webview",
+                data: url
+            });
+        }
+        ]]>
+    </script>
+</sited>

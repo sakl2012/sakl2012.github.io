@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited ver="1">
+    <meta>
+        <title>蜜柑計畫 Mikan</title>
+        <intro>Mikan Project - 新番動漫磁力訂閱與邊下邊播平台</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+        <url>mikanani.me</url>
+        <updateUrl>https://sakl2012.github.io/sited/mikan.sited.xml</updateUrl>
+    </meta>
+
+    <main>
+        <home url="https://mikanani.me/" parse="home_list_parse" />
+        <tags tagParse="tag_list_parse">
+            <item group="最新更新" title="最新資源列表" url="https://mikanani.me/Home/Classic/@page"/>
+
+            <item group="2026 季度新番" title="2026 秋季番 (10月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2026&amp;seasonStr=%E7%A7%8B"/>
+            <item group="2026 季度新番" title="2026 夏季番 (7月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2026&amp;seasonStr=%E5%A4%8F"/>
+            <item group="2026 季度新番" title="2026 春季番 (4月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2026&amp;seasonStr=%E6%98%A5"/>
+            <item group="2026 季度新番" title="2026 冬季番 (1月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2026&amp;seasonStr=%E5%86%AC"/>
+
+            <item group="2025 季度番劇" title="2025 秋季番 (10月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2025&amp;seasonStr=%E7%A7%8B"/>
+            <item group="2025 季度番劇" title="2025 夏季番 (7月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2025&amp;seasonStr=%E5%A4%8F"/>
+            <item group="2025 季度番劇" title="2025 春季番 (4月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2025&amp;seasonStr=%E6%98%A5"/>
+            <item group="2025 季度番劇" title="2025 冬季番 (1月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2025&amp;seasonStr=%E5%86%AC"/>
+
+            <item group="2024 季度番劇" title="2024 秋季番 (10月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2024&amp;seasonStr=%E7%A7%8B"/>
+            <item group="2024 季度番劇" title="2024 夏季番 (7月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2024&amp;seasonStr=%E5%A4%8F"/>
+            <item group="2024 季度番劇" title="2024 春季番 (4月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2024&amp;seasonStr=%E6%98%A5"/>
+            <item group="2024 季度番劇" title="2024 冬季番 (1月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2024&amp;seasonStr=%E5%86%AC"/>
+
+            <item group="2023 季度番劇" title="2023 秋季番 (10月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2023&amp;seasonStr=%E7%A7%8B"/>
+            <item group="2023 季度番劇" title="2023 夏季番 (7月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2023&amp;seasonStr=%E5%A4%8F"/>
+            <item group="2023 季度番劇" title="2023 春季番 (4月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2023&amp;seasonStr=%E6%98%A5"/>
+            <item group="2023 季度番劇" title="2023 冬季番 (1月)" url="https://mikanani.me/Home/BangumiCoverFlowByDayOfWeek?year=2023&amp;seasonStr=%E5%86%AC"/>
+        </tags>
+        <search parse="search_parse" url="https://mikanani.me/Home/Search?searchstr=@key"/>
+        <book parse="book_parse"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+
+    <script>
+        <![CDATA[
+        const baseUrl = "https://mikanani.me";
+
+        const dayMap = {
+            "1": "星期一",
+            "2": "星期二",
+            "3": "星期三",
+            "4": "星期四",
+            "5": "星期五",
+            "6": "星期六",
+            "0": "星期日",
+            "7": "劇場版",
+            "8": "OVA / 特別篇"
+        };
+
+        function resolveUrl(u) {
+            if (!u) return null;
+            u = u.trim();
+            if (u.startsWith("http://") || u.startsWith("https://") || u.startsWith("magnet:")) return u;
+            if (u.startsWith("//")) return "https:" + u;
+            if (u.startsWith("/")) return baseUrl + u;
+            return baseUrl + "/" + u;
+        }
+
+        function home_list_parse(url, html) {
+            const $ = cheerio.load(html);
+            let list = [];
+            $('div.sk-bangumi').each(function() {
+                const block = $(this);
+                const dow = block.attr('data-dayofweek') || "";
+                const groupName = dayMap[dow] || "當季番劇";
+                const $$ = cheerio.load(block.html() || "");
+
+                $$('ul.an-ul li').each(function() {
+                    const $$$ = cheerio.load($$(this).html() || "");
+                    const span = $$$('span').first();
+                    const dataSrc = span.attr('data-src');
+                    const bangumiId = span.attr('data-bangumiid');
+                    const aTag = $$$('a.an-text').first();
+                    const divText = $$$('.an-text').first();
+
+                    let itemUrl = aTag.attr('href');
+                    if (!itemUrl && bangumiId) {
+                        itemUrl = "/Home/Bangumi/" + bangumiId;
+                    }
+                    let title = aTag.attr('title') || aTag.text().trim() || divText.attr('title') || divText.text().trim();
+
+                    if (itemUrl && title) {
+                        list.push({
+                            group: groupName,
+                            name: gbk2big5.traditionalized(title),
+                            url: resolveUrl(itemUrl),
+                            logo: resolveUrl(dataSrc)
+                        });
+                    }
+                });
+            });
+            return JSON.stringify(list);
+        }
+
+        function tag_list_parse(url, html) {
+            if (url.indexOf("Classic") !== -1) {
+                const $ = cheerio.load(html);
+                let list = [];
+                $('table.table-striped tbody tr').each(function() {
+                    const $$ = cheerio.load($(this).html() || "");
+                    const epLink = $$('a.magnet-link-wrap').first();
+                    const href = epLink.attr('href');
+                    const title = epLink.text().trim();
+                    const tds = $$('td');
+                    const subGroup = tds.eq(1).text().trim();
+                    const size = tds.eq(3).text().trim();
+                    if (href && title) {
+                        const prefix = size ? "[" + size + "] " : "";
+                        list.push({
+                            group: subGroup ? gbk2big5.traditionalized(subGroup) : null,
+                            name: gbk2big5.traditionalized(prefix + title),
+                            url: resolveUrl(href)
+                        });
+                    }
+                });
+                return JSON.stringify(list);
+            }
+            return home_list_parse(url, html);
+        }
+
+        function search_parse(url, html) {
+            const $ = cheerio.load(html);
+            let list = [];
+
+            // 1. 匹配的番劇作品海報
+            $('ul.an-ul li').each(function() {
+                const $$ = cheerio.load($(this).html() || "");
+                const aTag = $$('a').first();
+                const href = aTag.attr('href');
+                const span = $$('span').first();
+                const dataSrc = span.attr('data-src');
+                const titleEl = $$('.an-text').first();
+                const title = titleEl.attr('title') || titleEl.text().trim();
+
+                if (href && title) {
+                    list.push({
+                        group: "番劇作品",
+                        name: gbk2big5.traditionalized(title),
+                        url: resolveUrl(href),
+                        logo: resolveUrl(dataSrc)
+                    });
+                }
+            });
+
+            // 2. 匹配的單集磁連資源 (取前 80 筆防止結果過大)
+            let epCount = 0;
+            $('tr.js-search-results-row').each(function() {
+                if (epCount >= 80) return;
+                const $$ = cheerio.load($(this).html() || "");
+                const epLink = $$('a.magnet-link-wrap').first();
+                const href = epLink.attr('href');
+                const title = epLink.text().trim();
+                const tds = $$('td');
+                const size = tds.eq(2).text().trim();
+
+                if (href && title) {
+                    epCount++;
+                    const prefix = size ? "[" + size + "] " : "";
+                    list.push({
+                        group: "單集資源",
+                        name: gbk2big5.traditionalized(prefix + title),
+                        url: resolveUrl(href)
+                    });
+                }
+            });
+
+            return JSON.stringify(list);
+        }
+
+        function extractPosterStyle(styleStr) {
+            if (!styleStr) return null;
+            const m = styleStr.match(/url\(['"]?([^'")]+)['"]?\)/i);
+            return m && m[1] ? resolveUrl(m[1]) : null;
+        }
+
+        function book_parse(url, html) {
+            const $ = cheerio.load(html);
+
+            // 情況 A：單集詳情頁 (/Home/Episode/...)
+            if (url.indexOf("/Home/Episode/") !== -1) {
+                const epTitle = $('p.episode-title').text().trim() || "單集播放";
+                const posterStyle = $('.bangumi-poster').attr('style');
+                const logo = extractPosterStyle(posterStyle);
+                const desc = $('.episode-desc').text().trim();
+                let magnet = $('a.episode-btn[href^="magnet:"]').attr('href');
+                if (!magnet) {
+                    const mMatch = html.match(/magnet:\?xt=urn:btih:[a-zA-Z0-9]+[^"'\s<>]*/i);
+                    if (mMatch) magnet = mMatch[0].replace(/&amp;/g, '&');
+                }
+                const sections = [];
+                if (magnet) {
+                    sections.push({
+                        group: "磁力串流 (邊下邊播)",
+                        name: gbk2big5.traditionalized(epTitle),
+                        url: magnet.replace(/&amp;/g, '&')
+                    });
+                }
+                return JSON.stringify({
+                    name: gbk2big5.traditionalized(epTitle),
+                    logo: logo,
+                    intro: gbk2big5.traditionalized(desc),
+                    sections: sections
+                });
+            }
+
+            // 情況 B：番劇詳情頁 (/Home/Bangumi/...)
+            const rawTitle = $('p.bangumi-title').text().trim();
+            const posterStyle = $('.bangumi-poster').attr('style');
+            const logo = extractPosterStyle(posterStyle);
+            const intro = $('p.header2-desc-text').text().trim();
+
+            let subgroupNames = [];
+            $('div.subgroup-text').each(function() {
+                const $$ = cheerio.load($(this).html() || "");
+                let gName = $$('a').first().text().trim();
+                if (!gName) {
+                    gName = $(this).text().split('\n')[0].trim() || "預設字幕組";
+                }
+                subgroupNames.push(gbk2big5.traditionalized(gName));
+            });
+
+            let sections = [];
+            $('table.table-striped').each(function(tableIdx) {
+                const groupName = subgroupNames[tableIdx] || "字幕組資源";
+                const $$ = cheerio.load($(this).html() || "");
+                $$('tr').each(function() {
+                    const $$$ = cheerio.load($$(this).html() || "");
+                    const epLink = $$$('a.magnet-link-wrap').first();
+                    const epName = epLink.text().trim();
+                    const magBtn = $$$('a.js-magnet').first();
+                    const magnetUrl = magBtn.attr('data-clipboard-text');
+                    const tds = $$$('td');
+                    const sizeText = tds.eq(1).text().trim() || tds.eq(2).text().trim();
+
+                    if (epName && magnetUrl) {
+                        const cleanMag = magnetUrl.replace(/&amp;/g, '&');
+                        const displayTitle = (sizeText && (sizeText.indexOf("MB") !== -1 || sizeText.indexOf("GB") !== -1))
+                            ? "[" + sizeText + "] " + epName
+                            : epName;
+                        sections.push({
+                            group: groupName,
+                            name: gbk2big5.traditionalized(displayTitle),
+                            url: cleanMag
+                        });
+                    }
+                });
+            });
+
+            return JSON.stringify({
+                name: gbk2big5.traditionalized(rawTitle || "蜜柑番劇"),
+                logo: logo,
+                intro: gbk2big5.traditionalized(intro),
+                sections: sections
+            });
+        }
+
+        function section_parse(url, html) {
+            if (url && url.indexOf("magnet:") === 0) {
+                return JSON.stringify({
+                    type: "video",
+                    data: url.replace(/&amp;/g, '&')
+                });
+            }
+            if (html) {
+                const m = html.match(/magnet:\?xt=urn:btih:[a-zA-Z0-9]+[^"'\s<>]*/i);
+                if (m && m[0]) {
+                    return JSON.stringify({
+                        type: "video",
+                        data: m[0].replace(/&amp;/g, '&')
+                    });
+                }
+            }
+            return JSON.stringify({
+                type: "webview",
+                data: url
+            });
+        }
+        ]]>
+    </script>
+</sited>

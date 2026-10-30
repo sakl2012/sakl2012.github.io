@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sited ver="1">
+    <meta>
+        <title>Nyaa</title>
+        <intro>Nyaa.si - 全球最大動漫、日劇、音樂與多語字幕組磁力資源庫</intro>
+        <author>sakl2012</author>
+        <encode>utf-8</encode>
+        <url>nyaa.si</url>
+        <updateUrl>https://sakl2012.github.io/sited/nyaa.sited.xml</updateUrl>
+    </meta>
+
+    <main>
+        <home url="https://nyaa.si/?p=@page" parse="list_parse" />
+        <tags tagParse="list_parse">
+            <item group="熱門排行" title="最多做種 (高熱度)" url="https://nyaa.si/?f=0&amp;c=0_0&amp;s=seeders&amp;o=desc&amp;p=@page"/>
+            <item group="熱門排行" title="最多完成下載" url="https://nyaa.si/?f=0&amp;c=0_0&amp;s=downloads&amp;o=desc&amp;p=@page"/>
+            <item group="熱門排行" title="動畫高做種排行" url="https://nyaa.si/?f=0&amp;c=1_0&amp;s=seeders&amp;o=desc&amp;p=@page"/>
+            <item group="熱門排行" title="中文字幕高做種" url="https://nyaa.si/?f=0&amp;c=1_3&amp;s=seeders&amp;o=desc&amp;p=@page"/>
+            <item group="熱門排行" title="僅限認證發布者 (Trusted)" url="https://nyaa.si/?f=2&amp;c=0_0&amp;p=@page"/>
+
+            <item group="動畫 (Anime)" title="全部動畫" url="https://nyaa.si/?f=0&amp;c=1_0&amp;p=@page"/>
+            <item group="動畫 (Anime)" title="非英文字幕 (含繁簡中文)" url="https://nyaa.si/?f=0&amp;c=1_3&amp;p=@page"/>
+            <item group="動畫 (Anime)" title="英文字幕 (English)" url="https://nyaa.si/?f=0&amp;c=1_2&amp;p=@page"/>
+            <item group="動畫 (Anime)" title="生肉 (Raw)" url="https://nyaa.si/?f=0&amp;c=1_4&amp;p=@page"/>
+            <item group="動畫 (Anime)" title="動畫音樂 MV (AMV)" url="https://nyaa.si/?f=0&amp;c=1_1&amp;p=@page"/>
+
+            <item group="真人影視 (Live Action)" title="全部真人影視" url="https://nyaa.si/?f=0&amp;c=4_0&amp;p=@page"/>
+            <item group="真人影視 (Live Action)" title="非英文字幕 (含中字日劇)" url="https://nyaa.si/?f=0&amp;c=4_3&amp;p=@page"/>
+            <item group="真人影視 (Live Action)" title="英文字幕 (English)" url="https://nyaa.si/?f=0&amp;c=4_1&amp;p=@page"/>
+            <item group="真人影視 (Live Action)" title="偶像 / 宣傳片 (Idol/PV)" url="https://nyaa.si/?f=0&amp;c=4_2&amp;p=@page"/>
+            <item group="真人影視 (Live Action)" title="生肉 (Raw)" url="https://nyaa.si/?f=0&amp;c=4_4&amp;p=@page"/>
+
+            <item group="音樂與其他" title="全部音樂 (Audio)" url="https://nyaa.si/?f=0&amp;c=2_0&amp;p=@page"/>
+            <item group="音樂與其他" title="無損音樂 (Lossless)" url="https://nyaa.si/?f=0&amp;c=2_1&amp;p=@page"/>
+            <item group="音樂與其他" title="有損音樂 (Lossy)" url="https://nyaa.si/?f=0&amp;c=2_2&amp;p=@page"/>
+            <item group="音樂與其他" title="輕小說與漫畫 (Literature)" url="https://nyaa.si/?f=0&amp;c=3_0&amp;p=@page"/>
+            <item group="音樂與其他" title="圖片與畫集 (Pictures)" url="https://nyaa.si/?f=0&amp;c=5_0&amp;p=@page"/>
+        </tags>
+        <search parse="list_parse" url="https://nyaa.si/?f=0&amp;c=0_0&amp;q=@key&amp;p=@page"/>
+        <book parse="book_parse"/>
+        <section parse="section_parse"/>
+    </main>
+
+    <require>
+        <item url="https://sakl2012.github.io/sited/cheerio.js" lib="cheerio" />
+        <item url="https://sakl2012.github.io/sited/gbk2big5.js" lib="gbk2big5" />
+    </require>
+
+    <script>
+        <![CDATA[
+        const baseUrl = "https://nyaa.si";
+
+        function resolveUrl(u) {
+            if (!u) return null;
+            u = u.trim();
+            if (u.startsWith("http://") || u.startsWith("https://") || u.startsWith("magnet:")) return u;
+            if (u.startsWith("//")) return "https:" + u;
+            if (u.startsWith("/")) return baseUrl + u;
+            return baseUrl + "/" + u;
+        }
+
+        function cleanMagnet(mag) {
+            if (!mag) return null;
+            return mag.trim().replace(/&amp;/g, '&');
+        }
+
+        function extractImageUrl(text) {
+            if (!text) return null;
+            const m = text.match(/https?:\/\/[^\s"'<>)\]]+\.(?:jpg|jpeg|png|webp|gif)(?:\?[^\s"'<>)\]]*)?/i);
+            return m ? m[0] : null;
+        }
+
+        function list_parse(url, html) {
+            const $ = cheerio.load(html);
+            let list = [];
+            $('table.torrent-list tbody tr').each(function() {
+                const $$ = cheerio.load($(this).html() || "");
+                const tds = $$('td');
+                if (tds.length < 6) return;
+
+                const catLink = $$('a[href^="/?c="]').first();
+                const category = catLink.attr('title') || "Nyaa";
+
+                // 標題單元格內可能有留言數量 a.comments，因此取最後一個指向 /view/ 的連結
+                let viewHref = null;
+                let rawTitle = null;
+                $$('a[href^="/view/"]').each(function() {
+                    const h = $$(this).attr('href') || "";
+                    if (h.indexOf("#comments") === -1) {
+                        viewHref = h;
+                        rawTitle = $$(this).attr('title') || $$(this).text().trim();
+                    }
+                });
+
+                const fileSize = tds.eq(3).text().trim();
+                const seeders = tds.eq(5).text().trim();
+
+                if (viewHref && rawTitle) {
+                    const metaPrefix = "[" + fileSize + (seeders ? " | ↑" + seeders : "") + "] ";
+                    list.push({
+                        group: category,
+                        name: gbk2big5.traditionalized(metaPrefix + rawTitle),
+                        url: resolveUrl(viewHref)
+                    });
+                }
+            });
+            return JSON.stringify(list);
+        }
+
+        function book_parse(url, html) {
+            const $ = cheerio.load(html);
+            const title = $('h3.panel-title').first().text().trim() || "Nyaa Torrent";
+
+            let author = "";
+            let updateTime = "";
+            let fileSize = "";
+            let seeders = "";
+            let completed = "";
+
+            $('div.panel-body div.row').each(function() {
+                const $$ = cheerio.load($(this).html() || "");
+                const cols = $$('div');
+                for (let i = 0; i < cols.length - 1; i++) {
+                    const label = cols.eq(i).text().trim();
+                    const val = cols.eq(i + 1).text().trim();
+                    if (label === "Submitter:") author = val;
+                    else if (label === "Date:") updateTime = val;
+                    else if (label === "File size:") fileSize = val;
+                    else if (label === "Seeders:") seeders = val;
+                    else if (label === "Completed:") completed = val;
+                }
+            });
+
+            const descRaw = $('#torrent-description').text() || "";
+            let logo = extractImageUrl(descRaw);
+            if (!logo) {
+                $('#torrent-description img').each(function() {
+                    if (!logo) {
+                        const s = $(this).attr('src');
+                        if (s) logo = resolveUrl(s);
+                    }
+                });
+            }
+
+            const statsLine = [
+                fileSize ? "大小: " + fileSize : "",
+                seeders ? "做種(S): " + seeders : "",
+                completed ? "完成: " + completed : ""
+            ].filter(Boolean).join(" | ");
+
+            const introText = (statsLine ? statsLine + "\n" : "") + descRaw.trim().substring(0, 600);
+
+            let primaryMagnet = null;
+            $('a[href^="magnet:"]').each(function() {
+                if (!primaryMagnet) {
+                    primaryMagnet = cleanMagnet($(this).attr('href'));
+                }
+            });
+
+            let sections = [];
+            if (primaryMagnet) {
+                sections.push({
+                    group: "磁力串流 (邊下邊播)",
+                    name: gbk2big5.traditionalized(title),
+                    url: primaryMagnet
+                });
+            }
+
+            $('div.torrent-file-list li').each(function() {
+                const fileText = $(this).text().trim();
+                const lower = fileText.toLowerCase();
+                if (fileText && (lower.includes('.mp4') || lower.includes('.mkv') || lower.includes('.avi') || lower.includes('.webm')) && primaryMagnet) {
+                    if (sections.length < 40) {
+                        sections.push({
+                            group: "種子內含影片",
+                            name: gbk2big5.traditionalized(fileText),
+                            url: primaryMagnet
+                        });
+                    }
+                }
+            });
+
+            return JSON.stringify({
+                name: gbk2big5.traditionalized(title),
+                author: author,
+                updateTime: updateTime,
+                logo: logo,
+                intro: gbk2big5.traditionalized(introText),
+                sections: sections
+            });
+        }
+
+        function section_parse(url, html) {
+            if (url && url.indexOf("magnet:") === 0) {
+                return JSON.stringify({
+                    type: "video",
+                    data: cleanMagnet(url)
+                });
+            }
+            if (html) {
+                const $ = cheerio.load(html);
+                const mag = $('a[href^="magnet:"]').first().attr('href');
+                if (mag) {
+                    return JSON.stringify({
+                        type: "video",
+                        data: cleanMagnet(mag)
+                    });
+                }
+            }
+            return JSON.stringify({
+                type: "webview",
+                data: url
+            });
+        }
+        ]]>
+    </script>
+</sited>
