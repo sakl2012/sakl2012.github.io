@@ -1015,12 +1015,12 @@
     <section class="strategy-section" id="sec-strategy-bstock">
         <div class="strategy-banner" style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); border-color: #065f46;">
             <div class="strategy-banner-title" style="color: #6ee7b7;">
-                <span>策略三：美股 bStock 科技權值配置</span>
+                <span>策略三：美股 bStock 科技權值配置 (跨板塊軟硬混編)</span>
                 <span style="font-size: 11.5px; background: rgba(110, 231, 183, 0.15); color: #a7f3d0; border: 1px solid rgba(110, 231, 183, 0.3); padding: 2px 8px; border-radius: 9999px;">純股權等權重 · 2% 再平衡</span>
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                採用幣安代幣化股票（bStock），將六大科技權值股拆分為「硬體半導體組」與「軟體生態組」兩組獨立三幣等權重組合（33.3% / 33.3% / 33.3%），維持 100% 股權部位以放大組內輪動再平衡效益。
+                採用幣安代幣化股票（bStock），將六大科技權值股依低相關性拆分為兩組「軟硬混編」獨立三幣組合（組合一：<strong>NVDAB + AVGOB + MSFTB</strong>；組合二：<strong>TSMB + AAPLB + GOOGLB</strong>，各 33.3%），透過單倉內部硬體與軟體股的走勢分化捕捉跨板塊輪動再平衡收益。
             </div>
         </div>
 
@@ -1047,7 +1047,7 @@
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
                     <span style="color: #76b900;">NVDAB (NVIDIA)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">硬體組</span>
+                    <span style="font-size: 10px; color: #059669; background: #ecfdf5; padding: 1px 5px; border-radius: 4px;">組合一</span>
                 </div>
                 <div class="bstock-price-val" id="live-nvdab-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-nvdab-chg">24h: --</div>
@@ -1055,15 +1055,23 @@
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
                     <span style="color: #cc092f;">AVGOB (Broadcom)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">硬體組</span>
+                    <span style="font-size: 10px; color: #059669; background: #ecfdf5; padding: 1px 5px; border-radius: 4px;">組合一</span>
                 </div>
                 <div class="bstock-price-val" id="live-avgob-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-avgob-chg">24h: --</div>
             </div>
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
+                    <span style="color: #00a4ef;">MSFTB (Microsoft)</span>
+                    <span style="font-size: 10px; color: #059669; background: #ecfdf5; padding: 1px 5px; border-radius: 4px;">組合一</span>
+                </div>
+                <div class="bstock-price-val" id="live-msftb-price">$--</div>
+                <div style="font-size: 11px; color: #64748b;" id="live-msftb-chg">24h: --</div>
+            </div>
+            <div class="bstock-live-card">
+                <div class="bstock-symbol-tag">
                     <span style="color: #dc2626;">TSMB (TSMC)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">硬體組</span>
+                    <span style="font-size: 10px; color: #0369a1; background: #e0f2fe; padding: 1px 5px; border-radius: 4px;">組合二</span>
                 </div>
                 <div class="bstock-price-val" id="live-tsmb-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-tsmb-chg">24h: --</div>
@@ -1071,7 +1079,7 @@
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
                     <span style="color: #475569;">AAPLB (Apple)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">軟體組</span>
+                    <span style="font-size: 10px; color: #0369a1; background: #e0f2fe; padding: 1px 5px; border-radius: 4px;">組合二</span>
                 </div>
                 <div class="bstock-price-val" id="live-aaplb-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-aaplb-chg">24h: --</div>
@@ -1079,32 +1087,24 @@
             <div class="bstock-live-card">
                 <div class="bstock-symbol-tag">
                     <span style="color: #4285f4;">GOOGLB (Alphabet)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">軟體組</span>
+                    <span style="font-size: 10px; color: #0369a1; background: #e0f2fe; padding: 1px 5px; border-radius: 4px;">組合二</span>
                 </div>
                 <div class="bstock-price-val" id="live-googlb-price">$--</div>
                 <div style="font-size: 11px; color: #64748b;" id="live-googlb-chg">24h: --</div>
-            </div>
-            <div class="bstock-live-card">
-                <div class="bstock-symbol-tag">
-                    <span style="color: #00a4ef;">MSFTB (Microsoft)</span>
-                    <span style="font-size: 10px; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">軟體組</span>
-                </div>
-                <div class="bstock-price-val" id="live-msftb-price">$--</div>
-                <div style="font-size: 11px; color: #64748b;" id="live-msftb-chg">24h: --</div>
             </div>
         </div>
 
         <!-- 兩大獨立三幣艦隊核心卡片 -->
         <div class="bstock-fleet-grid">
-            <!-- 組合一：算力硬體 -->
+            <!-- 組合一：NVDAB + AVGOB + MSFTB -->
             <div class="bstock-fleet-card" style="border-top: 4px solid #10b981;">
                 <div class="bstock-fleet-top">
                     <div>
                         <div style="font-size: 16px; font-weight: 800; color: #0f172a;">
-                            <span>組合一：半導體與算力硬體組</span>
+                            <span>組合一：AI 算力晶片與企業雲端組 (2硬 + 1軟)</span>
                         </div>
                         <div style="font-size: 12px; color: #64748b; margin-top: 2px;">
-                            涵蓋 GPU 架構、客製化 ASIC 與先進晶圓代工製程
+                            結合高波動 GPU/ASIC 雙晶片與低相關性微軟雲端現金流錨點
                         </div>
                     </div>
                     <span class="bstock-badge-tag" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">股權配置 50%</span>
@@ -1115,23 +1115,23 @@
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #76b900;">NVDAB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">資料中心加速運算與 CUDA 軟體生態</span>
+                            <span style="font-size: 11.5px; color: #64748b;">資料中心加速運算與 CUDA 軟體生態 (硬體)</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #cc092f;">AVGOB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">雲端客製化 ASIC 晶片與高速網通設備</span>
+                            <span style="font-size: 11.5px; color: #64748b;">雲端客製化 ASIC 晶片與高速網通設備 (硬體)</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-weight: 800; color: #dc2626;">TSMB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">先進製程晶圓代工與 CoWoS 先進封裝</span>
+                            <span style="font-weight: 800; color: #00a4ef;">MSFTB</span>
+                            <span style="font-size: 11.5px; color: #64748b;">企業級 SaaS 軟體、Azure 雲端與 AI 應用 (軟體)</span>
                         </div>
-                        <strong style="color: #0f172a;">33.3%</strong>
+                        <strong style="color: #0f172a;">33.4%</strong>
                     </div>
                 </div>
 
@@ -1139,15 +1139,15 @@
                 <div class="bstock-metrics-bar">
                     <div>
                         <div class="bstock-metric-sub">5年年化 (CAGR)</div>
-                        <div class="bstock-metric-num" style="color: #059669;">50.5%</div>
+                        <div class="bstock-metric-num" style="color: #059669;">40.8%</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">Sharpe Ratio</div>
-                        <div class="bstock-metric-num">1.16</div>
+                        <div class="bstock-metric-sub">5年 Sharpe</div>
+                        <div class="bstock-metric-num">1.15</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">近 180 日報酬</div>
-                        <div class="bstock-metric-num" style="color: #0284c7;">+34.4%</div>
+                        <div class="bstock-metric-sub">近 1 年調倉</div>
+                        <div class="bstock-metric-num" style="color: #0284c7;">20 次</div>
                     </div>
                     <div>
                         <div class="bstock-metric-sub">再平衡閾值</div>
@@ -1157,19 +1157,19 @@
 
                 <!-- 幣安建立指南 -->
                 <div style="font-size: 12px; background: #f8fafc; border-radius: 8px; padding: 10px 12px; line-height: 1.6; color: #475569;">
-                    <strong>參數規格：</strong>智能持倉 ➔ 手動創建 ➔ <code>NVDAB (33.3%) + AVGOB (33.3%) + TSMB (33.3%)</code> ➔ 按比例 2%。
+                    <strong>參數規格：</strong>智能持倉 ➔ 手動創建 ➔ <code>NVDAB (33.3%) + AVGOB (33.3%) + MSFTB (33.4%)</code> ➔ 按比例 2%。
                 </div>
             </div>
 
-            <!-- 組合二：軟體生態 -->
+            <!-- 組合二：TSMB + AAPLB + GOOGLB -->
             <div class="bstock-fleet-card" style="border-top: 4px solid #0284c7;">
                 <div class="bstock-fleet-top">
                     <div>
                         <div style="font-size: 16px; font-weight: 800; color: #0f172a;">
-                            <span>組合二：大型雲端與軟體生態組</span>
+                            <span>組合二：先進晶圓代工與終端/搜尋生態組 (1硬 + 2軟)</span>
                         </div>
                         <div style="font-size: 12px; color: #64748b; margin-top: 2px;">
-                            涵蓋消費終端生態、搜尋廣告引擎與企業雲端服務
+                            結合先進晶圓代工龍頭與零相關性蘋果終端及 Google 雲端生態
                         </div>
                     </div>
                     <span class="bstock-badge-tag" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">股權配置 50%</span>
@@ -1179,40 +1179,40 @@
                 <div class="bstock-asset-list">
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 800; color: #dc2626;">TSMB</span>
+                            <span style="font-size: 11.5px; color: #64748b;">先進製程晶圓代工與 CoWoS 先進封裝 (硬體)</span>
+                        </div>
+                        <strong style="color: #0f172a;">33.3%</strong>
+                    </div>
+                    <div class="bstock-asset-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #475569;">AAPLB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">全球硬體終端裝置與高毛利訂閱服務</span>
+                            <span style="font-size: 11.5px; color: #64748b;">全球硬體終端裝置與高毛利訂閱服務 (軟體生態)</span>
                         </div>
                         <strong style="color: #0f172a;">33.3%</strong>
                     </div>
                     <div class="bstock-asset-row">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-weight: 800; color: #4285f4;">GOOGLB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">全球搜尋引擎、YouTube 與 Gemini 雲端模型</span>
+                            <span style="font-size: 11.5px; color: #64748b;">全球搜尋引擎、YouTube 與 Gemini 雲端模型 (軟體生態)</span>
                         </div>
-                        <strong style="color: #0f172a;">33.3%</strong>
-                    </div>
-                    <div class="bstock-asset-row">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-weight: 800; color: #00a4ef;">MSFTB</span>
-                            <span style="font-size: 11.5px; color: #64748b;">企業級 SaaS 軟體、Azure 雲端與 AI 商業化應用</span>
-                        </div>
-                        <strong style="color: #0f172a;">33.3%</strong>
+                        <strong style="color: #0f172a;">33.4%</strong>
                     </div>
                 </div>
 
                 <!-- 回測量化指標 -->
                 <div class="bstock-metrics-bar">
                     <div>
-                        <div class="bstock-metric-sub">5年最大回撤</div>
-                        <div class="bstock-metric-num" style="color: #059669;">-35.7%</div>
+                        <div class="bstock-metric-sub">近 1 年報酬</div>
+                        <div class="bstock-metric-num" style="color: #059669;">+24.7%</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">近 180 日 Sharpe</div>
-                        <div class="bstock-metric-num" style="color: #0284c7;">2.87</div>
+                        <div class="bstock-metric-sub">近 1 年 Sharpe</div>
+                        <div class="bstock-metric-num" style="color: #0284c7;">1.09</div>
                     </div>
                     <div>
-                        <div class="bstock-metric-sub">近 180 日報酬</div>
-                        <div class="bstock-metric-num" style="color: #0284c7;">+36.8%</div>
+                        <div class="bstock-metric-sub">近 1 年調倉</div>
+                        <div class="bstock-metric-num" style="color: #0284c7;">22 次</div>
                     </div>
                     <div>
                         <div class="bstock-metric-sub">再平衡閾值</div>
@@ -1222,7 +1222,7 @@
 
                 <!-- 幣安建立指南 -->
                 <div style="font-size: 12px; background: #f8fafc; border-radius: 8px; padding: 10px 12px; line-height: 1.6; color: #475569;">
-                    <strong>參數規格：</strong>智能持倉 ➔ 手動創建 ➔ <code>AAPLB (33.3%) + GOOGLB (33.3%) + MSFTB (33.3%)</code> ➔ 按比例 2%。
+                    <strong>參數規格：</strong>智能持倉 ➔ 手動創建 ➔ <code>TSMB (33.3%) + AAPLB (33.3%) + GOOGLB (33.4%)</code> ➔ 按比例 2%。
                 </div>
             </div>
         </div>
@@ -1231,33 +1231,33 @@
         <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 18px 22px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
                 <div style="font-size: 15px; font-weight: 800; color: #0f172a;">
-                    <span>雙組合 50/50 等權重歷史回測指標 (5 年期日線數據)</span>
+                    <span>軟硬混編雙組合 50/50 歷史回測指標 (10 組窮舉最佳跨板塊配置)</span>
                 </div>
                 <span style="font-size: 11px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; padding: 3px 9px; border-radius: 9999px; font-weight: 700;">
-                    Calmar Ratio: 0.93
+                    倉內平均相關係數: 0.241 (較純分倉 0.380 大幅降低)
                 </span>
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">5年複合年化 (CAGR)</div>
-                    <div style="font-size: 22px; font-weight: 900; color: #059669;">38.14%</div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">同期 QQQ 基準為 18.2%</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">近1年總報酬 (再平衡Alpha)</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #059669;">+13.76% <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+2.75%)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">優於不調倉死拿 (+11.01%) 與純分倉 (+12.28%)</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">夏普比率 (Sharpe)</div>
-                    <div style="font-size: 22px; font-weight: 900; color: #0284c7;">1.08</div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">同期 QQQ 基準為 0.68</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">5年複合年化 / Sharpe</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #0284c7;">33.28% <span style="font-size: 12px; font-weight: 700; color: #0369a1;">(SR 1.10)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">同期 QQQ 基準年化為 18.2% (SR 0.68)</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">最大回撤 (MDD)</div>
-                    <div style="font-size: 22px; font-weight: 900; color: #0f172a;">-41.20%</div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">較單一硬體組 (-50.1%) 收斂</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">近1年最大回撤 (5年MDD)</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #0f172a;">-14.23% <span style="font-size: 12px; font-weight: 700; color: #64748b;">(-40.99%)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">全 10 種分倉組合中回撤最低</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">平均調倉頻率 (2% 閾值)</div>
-                    <div style="font-size: 22px; font-weight: 900; color: #d97706;">1.2 次/月</div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">年化交易摩擦成本 &lt; 0.15%</div>
+                    <div style="font-size: 11px; color: #64748b; font-weight: 700;">近1年調倉次數 (2% 閾值)</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #d97706;">42 次/年 <span style="font-size: 12px; font-weight: 700; color: #b45309;">(3.5次/月)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">較純硬體/軟體分倉 (31次) 提升 +35.5%</div>
                 </div>
             </div>
         </div>
@@ -1868,7 +1868,7 @@
                     </div>
                     <div class="metric-val" style="color: #0284c7; font-size: 21px;">1,200 ~ 1,500 USDT</div>
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
-                        先行部署核心 BTC/ETH (各 500U) + bStock 硬體組 (350~500U)。
+                        先行部署核心 BTC/ETH (各 500U) + bStock 組合一 (350~500U)。
                     </div>
                 </div>
 
@@ -1938,7 +1938,7 @@
                                 <td>2 組三幣等權重組合</td>
                                 <td><strong style="color: #dc2626;">700 USDT</strong></td>
                                 <td><strong style="color: #059669; font-size: 13.5px;">1,000 USDT</strong></td>
-                                <td>標準配置：硬體組 500U、軟體組 500U</td>
+                                <td>標準配置：組合一 500U (NVDAB/AVGOB/MSFTB)、組合二 500U (TSMB/AAPLB/GOOGLB)</td>
                             </tr>
                             <tr>
                                 <td><strong>策略四：DCA 量化網格</strong></td>
