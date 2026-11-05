@@ -975,7 +975,7 @@
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                篩選具備協議收入與鏈上結算需求的 9 項標的（UNI, HYPE, AAVE, ENA, PENDLE, ONDO, TAO, SUI, LINK），各佔總配置約 5.56%。Zone 0~3 固定採用 <strong>60% 標的 + 40% PAXG</strong> 雙幣結構（2% 偏離再平衡，建議單倉 &ge; 350 USDT），將單幣超額波動收斂為黃金部位。
+                篩選具備協議收入、代幣回購分潤與以太坊生態結算需求的 9 項標的（UNI, HYPE, AAVE, ENA, PENDLE, ONDO, TAO, SUI, LINK），各佔總配置約 5.56%。Zone 0~3 固定採用 <strong>60% 標的 + 40% PAXG</strong> 雙幣結構（2% 偏離再平衡，建議單倉 &ge; 350 USDT），將單幣超額波動收斂為黃金部位。
             </div>
         </div>
 
@@ -1273,7 +1273,7 @@
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                針對震盪均值回歸設計的馬丁格爾（DCA）網格配置。提供 <strong>現貨 SOL/FDUSD（1.0x 無強平 · 12 階覆蓋 -26.92% 跌幅）</strong>、<strong>合約多頭 ENA/USDC（牛市 3.0x 做多 · 9 階覆蓋 -32.35% · -35.00% 止損）</strong> 與 <strong>合約空頭 ENA/USDC（熊市 3.0x 做空 · 9 階覆蓋 +46.41% · +50.00% 止損）</strong> 三種模態，支援資金規模等比試算。
+                針對震盪均值回歸設計的馬丁格爾（DCA）網格配置。提供 <strong>現貨 ETH/FDUSD 或 SOL/FDUSD（1.0x 無強平 · 12 階覆蓋 -26.92% 跌幅）</strong>、<strong>合約多頭 ENA/USDC（牛市 3.0x 做多 · 9 階覆蓋 -32.35% · -35.00% 止損）</strong> 與 <strong>合約空頭 ENA/USDC（熊市 3.0x 做空 · 9 階覆蓋 +46.41% · +50.00% 止損）</strong> 三種模態，支援資金規模等比試算。
             </div>
         </div>
 
@@ -1287,7 +1287,7 @@
             <!-- Tab 切換按鈕 -->
             <div style="display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 9999px; border: 1px solid #e2e8f0; flex-wrap: wrap;">
                 <button id="dcaTabSpot" onclick="switchDcaTab('spot')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: #0284c7; color: #ffffff; box-shadow: 0 2px 8px rgba(2,132,199,0.3);">
-                    現貨模態：SOL/FDUSD (12 階無槓桿)
+                    現貨模態：ETH/FDUSD 或 SOL/FDUSD (12 階無槓桿)
                 </button>
                 <button id="dcaTabFutures" onclick="switchDcaTab('futures')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748b;">
                     合約多頭 (牛市)：ENA/USDC (3x 做多 · -35% 止損)
@@ -1298,7 +1298,7 @@
             </div>
         </div>
 
-        <!-- ======================= 模態一：現貨版本 (SOL/FDUSD) ======================= -->
+        <!-- ======================= 模態一：現貨版本 (ETH/FDUSD 或 SOL/FDUSD) ======================= -->
         <div id="dcaContentSpot" style="display: block;">
             <!-- 現貨資金等比即時換算滑桿與快捷列 -->
             <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
@@ -1386,9 +1386,9 @@
                             </tr>
                             <tr>
                                 <td><strong>交易對 / 方向</strong></td>
-                                <td><strong style="color: #0284c7;">SOL/FDUSD (買入)</strong></td>
-                                <td><strong style="color: #0284c7;">SOL/FDUSD (買入)</strong></td>
-                                <td>適用幣安 FDUSD 現貨掛單 0% Maker 費率</td>
+                                <td><strong style="color: #0284c7;">ETH/FDUSD 或 SOL/FDUSD (買入)</strong></td>
+                                <td><strong style="color: #0284c7;">ETH/FDUSD 或 SOL/FDUSD (買入)</strong></td>
+                                <td>適用幣安 FDUSD 現貨掛單 0% Maker 費率（ETH/FDUSD 盤口流動性較深，SOL/FDUSD 波動率較高）</td>
                             </tr>
                             <tr>
                                 <td><strong>價格下跌步驟</strong></td>
@@ -1622,13 +1622,13 @@
                                     <td><strong>啟動條件 / 停止條件</strong></td>
                                     <td><span style="color: #64748b;">不勾選 (留空)</span></td>
                                     <td><span style="color: #64748b;">不勾選 (留空)</span></td>
-                                    <td>建立後立即啟動，每輪止盈後<strong>無冷卻時間 (0 秒無縫開啟下一輪)</strong></td>
+                                    <td>預設留空（0 秒無縫開啟下一輪）；若於寬幅震盪箱體上沿止盈後，可手動暫停待回踩支撐再重啟</td>
                                 </tr>
                                 <tr>
                                     <td><strong>[✓] 止損 ➔ 止損目標</strong></td>
                                     <td><strong style="color: #dc2626;">35.00% (勾選止損)</strong></td>
                                     <td><strong style="color: #dc2626;">35.00% (勾選止損)</strong></td>
-                                    <td>第 9 階 (-32.35%) 下方預留 2.65% 緩衝，止損後留存 <span id="enaTblPreserve">$160.08U+</span> (64.03%)</td>
+                                    <td>第 9 階 (-32.35%) 下方預留 2.65% 緩衝，止損後留存 <span id="enaTblPreserve">$160.08U+</span> (64.03%)；若加倉達第 6~7 階以上且適逢代幣解鎖，可於反彈接近均價時先行減倉重置</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1797,7 +1797,7 @@
                                     <td><strong>啟動條件 / 停止條件</strong></td>
                                     <td><span style="color: #64748b;">不勾選 (留空)</span></td>
                                     <td><span style="color: #64748b;">不勾選 (留空)</span></td>
-                                    <td>建立後立即啟動，每輪止盈後<strong>無冷卻時間 (0 秒無縫開啟下一輪)</strong></td>
+                                    <td>預設留空（0 秒無縫開啟下一輪）；若於寬幅震盪箱體上沿止盈後，可手動暫停待回踩支撐再重啟</td>
                                 </tr>
                                 <tr>
                                     <td><strong>[✓] 止損 ➔ 止損目標</strong></td>
@@ -1942,7 +1942,7 @@
                             </tr>
                             <tr>
                                 <td><strong>策略四：DCA 量化網格</strong></td>
-                                <td>現貨 SOL DCA + 合約 ENA DCA</td>
+                                <td>現貨 ETH/SOL DCA + 合約 ENA DCA</td>
                                 <td><strong style="color: #dc2626;">300 USDT</strong></td>
                                 <td><strong style="color: #059669; font-size: 13.5px;">500 USDT</strong></td>
                                 <td>標準配置：現貨 250 FDUSD + 合約 250 USDC (含 70U 追加保證金)</td>
@@ -2368,7 +2368,7 @@
             ratios: {
                 CORE_BTC: { coin: 0.65, equity: 0.25, paxg: 0.10 },
                 CORE_ETH: { coin: 0.65, equity: 0.25, paxg: 0.10 },
-                CORE_TAO: { coin: 0.65, equity: 0.25, paxg: 0.10 },
+                CORE_NEAR: { coin: 0.65, equity: 0.25, paxg: 0.10 },
                 SAT_CELL: { coin: 0.65, equity: 0.25, paxg: 0.10 }
             }
         },
@@ -2378,7 +2378,7 @@
             ratios: {
                 CORE_BTC: { coin: 0.50, equity: 0.30, paxg: 0.20 },
                 CORE_ETH: { coin: 0.50, equity: 0.30, paxg: 0.20 },
-                CORE_TAO: { coin: 0.50, equity: 0.30, paxg: 0.20 },
+                CORE_NEAR: { coin: 0.50, equity: 0.30, paxg: 0.20 },
                 SAT_CELL: { coin: 0.50, equity: 0.30, paxg: 0.20 }
             }
         },
@@ -2388,7 +2388,7 @@
             ratios: {
                 CORE_BTC: { coin: 0.45, equity: 0.35, paxg: 0.20 },
                 CORE_ETH: { coin: 0.40, equity: 0.35, paxg: 0.25 },
-                CORE_TAO: { coin: 0.35, equity: 0.35, paxg: 0.30 },
+                CORE_NEAR: { coin: 0.35, equity: 0.35, paxg: 0.30 },
                 SAT_CELL: { coin: 0.35, equity: 0.35, paxg: 0.30 }
             }
         },
@@ -2398,7 +2398,7 @@
             ratios: {
                 CORE_BTC: { coin: 0.30, equity: 0.35, paxg: 0.35 },
                 CORE_ETH: { coin: 0.25, equity: 0.35, paxg: 0.40 },
-                CORE_TAO: { coin: 0.20, equity: 0.40, paxg: 0.40 },
+                CORE_NEAR: { coin: 0.20, equity: 0.40, paxg: 0.40 },
                 SAT_CELL: { coin: 0.20, equity: 0.40, paxg: 0.40 }
             }
         },
@@ -2408,7 +2408,7 @@
             ratios: {
                 CORE_BTC: { coin: 0.05, equity: 0.35, paxg: 0.60 },
                 CORE_ETH: { coin: 0.05, equity: 0.35, paxg: 0.60 },
-                CORE_TAO: { coin: 0.05, equity: 0.35, paxg: 0.60 },
+                CORE_NEAR: { coin: 0.05, equity: 0.35, paxg: 0.60 },
                 SAT_CELL: { coin: 0.00, equity: 0.35, paxg: 0.65 }
             }
         },
@@ -2418,7 +2418,7 @@
             ratios: {
                 CORE_BTC: { coin: 0.00, equity: 0.35, paxg: 0.65 },
                 CORE_ETH: { coin: 0.00, equity: 0.35, paxg: 0.65 },
-                CORE_TAO: { coin: 0.00, equity: 0.35, paxg: 0.65 },
+                CORE_NEAR: { coin: 0.00, equity: 0.35, paxg: 0.65 },
                 SAT_CELL: { coin: 0.00, equity: 0.35, paxg: 0.65 }
             }
         }
@@ -2557,21 +2557,21 @@
     let currentZone = 2;
     let activeEquitySym = 'QQQB';
     let latestPrices = {
-        BTC: 81300,
-        ETH: 2620,
-        PAXG: 4367,
-        TAO: 258.3,
-        QQQB: 720.4,
-        UNI: 9.02,
-        NEAR: 4.90,
-        HYPE: 94.4,
-        ONDO: 0.409,
-        PENDLE: 2.69,
-        SOL: 113.6,
-        AAVE: 144.3,
-        LINK: 12.44,
-        SUI: 0.83,
-        ENA: 0.48
+        BTC: 80720,
+        ETH: 2427,
+        PAXG: 4118,
+        TAO: 236.8,
+        QQQB: 687.6,
+        UNI: 7.66,
+        NEAR: 4.02,
+        HYPE: 84.3,
+        ONDO: 0.41,
+        PENDLE: 1.80,
+        SOL: 96.0,
+        AAVE: 131.6,
+        LINK: 11.44,
+        SUI: 0.93,
+        ENA: 0.182
     };
     let latest24hChange = {};
     let currentMa200 = 69538;
@@ -2904,7 +2904,7 @@
         },
         {
             sym: 'NEAR',
-            ratioKey: 'CORE_TAO',
+            ratioKey: 'CORE_NEAR',
             icon: 'icons/near.png',
             rank: '3',
             rankClass: 'rank-top1',
@@ -2916,7 +2916,7 @@
         }
     ];
 
-    // --- 渲染三大核心三幣卡片 (BTC, ETH, TAO 搭配 QQQB 與 PAXG) ---
+    // --- 渲染三大核心三幣卡片 (BTC, ETH, NEAR 搭配 QQQB 與 PAXG) ---
     function renderCoreCards() {
         const grid = document.getElementById('coreCardsGrid');
         if (!grid) return;
@@ -3271,7 +3271,7 @@
             const eqSym = activeEquitySym;
             const btcR = config.ratios.CORE_BTC;
             const ethR = config.ratios.CORE_ETH;
-            const taoR = config.ratios.CORE_TAO;
+            const nearR = config.ratios.CORE_NEAR;
 
             const c1 = row.querySelector('.col-c1');
             const c2 = row.querySelector('.col-c2');
@@ -3280,7 +3280,7 @@
 
             if (c1) c1.innerText = `BTC ${Math.round(btcR.coin*100)}% / ${eqSym} ${Math.round(btcR.equity*100)}% / PAXG ${Math.round(btcR.paxg*100)}%`;
             if (c2) c2.innerText = `ETH ${Math.round(ethR.coin*100)}% / ${eqSym} ${Math.round(ethR.equity*100)}% / PAXG ${Math.round(ethR.paxg*100)}%`;
-            if (c3) c3.innerText = `NEAR ${Math.round(taoR.coin*100)}% / ${eqSym} ${Math.round(taoR.equity*100)}% / PAXG ${Math.round(taoR.paxg*100)}%`;
+            if (c3) c3.innerText = `NEAR ${Math.round(nearR.coin*100)}% / ${eqSym} ${Math.round(nearR.equity*100)}% / PAXG ${Math.round(nearR.paxg*100)}%`;
 
             if (zone === 5) {
                 if (sat) sat.innerText = `維持 100% PAXG 避險`;

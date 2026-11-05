@@ -2,8 +2,8 @@
  * Triad 三元策略 (純現貨三幣 ＋ 雙壁避險全自動化版) - Google Apps Script 自動監控與 Email 警報
  * 主力：Binance Vision (免 451 封鎖) | 備援：OKX / Bybit / Gate.io / KuCoin / Coinbase | 具備防崩潰與自動切換機制
  * 最新架構：Triad 三元全天候狀態機 (Zone 0 深熊底 ~ Zone 4 逃頂鎖利 ~ Zone 5 熊市主跌防禦)
- * 資產配置：三大核心 50% (BTC 20% / ETH 20% / TAO 10%) ＋ 6 大菁英 Alpha 50% (各 8.33%)
- * 防禦機制：純現貨雙壁架構 (QQQB 35% + PAXG 60%~65%)，Zone 4 Alpha 率先清零、Zone 5 核心清零
+ * 資產配置：策略一核心三幣 50% (BTC 20% / ETH 20% / NEAR 10%) ＋ 策略二 9 大 Alpha 雙幣 50% (各 5.56%, COIN 60% / PAXG 40%)
+ * 防禦機制：純現貨雙避險架構 (QQQB 35% + PAXG 60%~65%)，Zone 4 Alpha 轉為 100% PAXG、Zone 5 核心清零
  */
 
 const YOUR_EMAIL = "sakl19930909@gmail.com"; // 您的信箱
@@ -102,12 +102,12 @@ function checkZoneAndAlert() {
     if (newZone !== currentZone) {
       const allocationText = getAllocationConfig(newZone);
       const zoneNames = {
-        0: "深熊大底 (頂級抄底模式 - 65%現貨/25%QQQB/10%PAXG)",
-        1: "初牛修復 (均勢動態積累 - 50%現貨/30%QQQB/20%PAXG)",
-        2: "牛市巡航 (穩健主升浪 - 45%現貨/35%QQQB/20%PAXG)",
-        3: "過熱警戒 (階梯獲利鎖利 - 30%現貨/35%QQQB/35%PAXG)",
-        4: "極度貪婪/逃頂鎖利 (Alpha率先清零，核心留5%底倉，QQQB 35%＋PAXG 60%~65%)",
-        5: "熊市確認/主跌防禦 (全盤現貨100%清零，純現貨雙壁終極防禦)"
+        0: "折價累積區 (65%現貨 / 25%QQQB / 10%PAXG)",
+        1: "均值回歸區 (50%現貨 / 30%QQQB / 20%PAXG)",
+        2: "多頭巡航區 (35%~45%現貨 / 35%QQQB / 20%~30%PAXG)",
+        3: "溢價調節區 (20%~30%現貨 / 35%~40%QQQB / 35%~40%PAXG)",
+        4: "右側鎖利區 (Alpha轉100%PAXG，核心留5%底倉 + QQQB 35% + PAXG 60%)",
+        5: "空頭防禦區 (核心現貨清零，QQQB 35% + PAXG 65% 避險)"
       };
       
       const subject = `🚨 Triad 三元策略狀態切換：Zone ${newZone} (${zoneNames[newZone]})`;
@@ -125,7 +125,7 @@ function checkZoneAndAlert() {
 - 週期大頂標記：${cyclePeakPrice > 0 ? '$' + cyclePeakPrice.toFixed(2) : '尚未觸發'}
 
 ==================================================
-🎯 建議全盤 9 大機器人最新配置目標 (三大核心 50% + 6大Alpha 50%)：
+🎯 各策略模組對應調整目標 (核心 3 倉 50% + Alpha 9 倉 50%)：
 ==================================================
 ${allocationText}
 ==================================================
@@ -148,48 +148,50 @@ ${allocationText}
 // ==========================================================
 function getAllocationConfig(zone) {
   if (zone === 0) {
-    return `【Zone 0: 深熊大底】(極限雙抄底進攻模式 - 5年全週期最佳化認證)
-👉 👑 核心 1 (20% 資金): BTC 65% | QQQB 25% | PAXG 10% (偏差2%)
-👉 🏛️ 核心 2 (20% 資金): ETH 65% | QQQB 25% | PAXG 10% (偏差2%)
-👉 🤖 核心 3 (10% 資金): TAO 65% | QQQB 25% | PAXG 10% (偏差2%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
+    return `【Zone 0: 折價累積區】(BTC/MA200 < 0.80)
+- 核心 1 (20%): BTC 65% | QQQB 25% | PAXG 10% (按比例 2%)
+- 核心 2 (20%): ETH 65% | QQQB 25% | PAXG 10% (按比例 2%)
+- 核心 3 (10%): NEAR 65% | QQQB 25% | PAXG 10% (按比例 2%)
+- 策略二 9 大 Alpha (UNI, HYPE, AAVE, ENA, PENDLE, ONDO, TAO, SUI, LINK 各 5.56%): 維持 COIN 60% | PAXG 40% (按比例 2%)`;
   }
   else if (zone === 1) {
-    return `【Zone 1: 初牛修復】(防震盪過渡模式 - 均勢動態累積)
-👉 👑 核心 1 (20% 資金): BTC 50% | QQQB 30% | PAXG 20% (偏差2%)
-👉 🏛️ 核心 2 (20% 資金): ETH 50% | QQQB 30% | PAXG 20% (偏差2%)
-👉 🤖 核心 3 (10% 資金): TAO 50% | QQQB 30% | PAXG 20% (偏差2%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
+    return `【Zone 1: 均值回歸區】(BTC/MA200 0.80 ~ 1.00)
+- 核心 1 (20%): BTC 50% | QQQB 30% | PAXG 20% (按比例 2%)
+- 核心 2 (20%): ETH 50% | QQQB 30% | PAXG 20% (按比例 2%)
+- 核心 3 (10%): NEAR 50% | QQQB 30% | PAXG 20% (按比例 2%)
+- 策略二 9 大 Alpha (各 5.56%): 維持 COIN 60% | PAXG 40% (按比例 2%)`;
   } 
   else if (zone === 2) {
-    return `【Zone 2: 牛市巡航】(穩健主升浪模式 - 現正運行 ⭐)
-👉 👑 核心 1 (20% 資金): BTC 45% | QQQB 35% | PAXG 20% (偏差2%)
-👉 🏛️ 核心 2 (20% 資金): ETH 40% | QQQB 35% | PAXG 25% (偏差2%)
-👉 🤖 核心 3 (10% 資金): TAO 35% | QQQB 35% | PAXG 30% (偏差2%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
+    return `【Zone 2: 多頭巡航區】(BTC/MA200 1.00 ~ 1.25)
+- 核心 1 (20%): BTC 45% | QQQB 35% | PAXG 20% (按比例 2%)
+- 核心 2 (20%): ETH 40% | QQQB 35% | PAXG 25% (按比例 2%)
+- 核心 3 (10%): NEAR 35% | QQQB 35% | PAXG 30% (按比例 2%)
+- 策略二 9 大 Alpha (各 5.56%): 維持 COIN 60% | PAXG 40% (按比例 2%)`;
   } 
   else if (zone === 3) {
-    return `【Zone 3: 過熱警戒】(高位鎖利模式 - 大幅沉澱美股與黃金)
-👉 👑 核心 1 (20% 資金): BTC 30% | QQQB 35% | PAXG 35% (偏差2%)
-👉 🏛️ 核心 2 (20% 資金): ETH 25% | QQQB 35% | PAXG 40% (偏差2%)
-👉 🤖 核心 3 (10% 資金): TAO 20% | QQQB 40% | PAXG 40% (偏差2%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 35% | QQQB 35% | PAXG 30% (全天候靜態 35/35/30，偏差2%)`;
+    return `【Zone 3: 溢價調節區】(BTC/MA200 1.25 ~ 1.40)
+- 核心 1 (20%): BTC 30% | QQQB 35% | PAXG 35% (按比例 2%)
+- 核心 2 (20%): ETH 25% | QQQB 35% | PAXG 40% (按比例 2%)
+- 核心 3 (10%): NEAR 20% | QQQB 40% | PAXG 40% (按比例 2%)
+- 策略二 9 大 Alpha (各 5.56%): 維持 COIN 60% | PAXG 40% (按比例 2%)`;
   } 
   else if (zone === 4) {
-    return `【Zone 4: 極度貪婪/逃頂鎖利】(逃頂鎖利模式 - Alpha 率先清零，核心留 5% 底倉防踏空)
-👉 👑 核心 1 (20% 資金): BTC 5% | QQQB 35% | PAXG 60% (偏差2%，核心留 5% 底倉防踏空)
-👉 🏛️ 核心 2 (20% 資金): ETH 5% | QQQB 35% | PAXG 60% (偏差2%)
-👉 🤖 核心 3 (10% 資金): TAO 5% | QQQB 35% | PAXG 60% (偏差2%)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 0% | QQQB 35% | PAXG 65% (山寨率先 100% 清零出清！轉入純現貨雙壁鎖利)
-📌【特別紀律】：此階段已觸發單向逃頂死鎖，絕不因短期回踩退回 Zone 3！若自大頂回撤 ≥20% 則直接進入 Zone 5 熊市防禦。`;
+    return `【Zone 4: 右側鎖利區】(BTC/MA200 >= 1.40，單向鎖定)
+- 核心 1 (20%): BTC 5% | QQQB 35% | PAXG 60% (按比例 2%)
+- 核心 2 (20%): ETH 5% | QQQB 35% | PAXG 60% (按比例 2%)
+- 核心 3 (10%): NEAR 5% | QQQB 35% | PAXG 60% (按比例 2%)
+- 策略二 9 大 Alpha (各 5.56%): Alpha 出清 (0%)，轉為 100% PAXG
+- 策略四 合約 DCA: 多頭網格停止，可切換為 ENA/USDC 3x 空頭 DCA (+50% 止損)
+註：此階段為單向鎖定，不因短期回調退回 Zone 3；若自週期高點回撤達 20% 則進入 Zone 5。`;
   } 
   else if (zone === 5) {
-    return `【Zone 5: 熊市確認/主跌防禦】(全盤清零雙壁避險模式 - 大頂回撤 ≥20% 轉熊)
-👉 👑 核心 1 (20% 資金): BTC 0% | QQQB 35% | PAXG 65% (核心最後 5% 正式清零)
-👉 🏛️ 核心 2 (20% 資金): ETH 0% | QQQB 35% | PAXG 65% (全額純現貨雙壁)
-👉 🤖 核心 3 (10% 資金): TAO 0% | QQQB 35% | PAXG 65% (全額純現貨雙壁)
-👉 ⚡ 6大 Alpha 艦隊 (各 8.33% = 50%): 各幣 0% | QQQB 35% | PAXG 65% (全盤 9 大組合全面現貨清零，純現貨雙壁終極防禦)
-📌【特別紀律】：全盤 100% 現貨清零，由 QQQB 35% ＋ PAXG 65% 純現貨雙壁避險，死鎖直至跌透至 Zone 0 深熊抄底線 (BTC/MA200 < 0.80)！`;
+    return `【Zone 5: 空頭防禦區】(自週期高點回撤 >= 20%)
+- 核心 1 (20%): BTC 0% | QQQB 35% | PAXG 65%
+- 核心 2 (20%): ETH 0% | QQQB 35% | PAXG 65%
+- 核心 3 (10%): NEAR 0% | QQQB 35% | PAXG 65%
+- 策略二 9 大 Alpha (各 5.56%): 維持 100% PAXG 避險
+- 策略四 合約 DCA: 運行 ENA/USDC 3x 空頭 DCA (+50% 止損)
+註：維持防禦配置直至 BTC/MA200 < 0.80 重回 Zone 0。`;
   }
   else {
     return `尚未定義此 Zone 的持倉配置。`;
