@@ -1273,7 +1273,7 @@
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                針對震盪均值回歸設計的馬丁格爾（DCA）網格配置。提供 <strong>現貨 ETH/FDUSD 或 SOL/FDUSD（1.0x 無強平 · 12 階覆蓋 -26.92% 跌幅）</strong>、<strong>合約多頭 ENA/USDC（牛市 3.0x 做多 · 9 階覆蓋 -32.35% · -35.00% 止損）</strong> 與 <strong>合約空頭 ENA/USDC（熊市 3.0x 做空 · 9 階覆蓋 +46.41% · +50.00% 止損）</strong> 三種模態，支援資金規模等比試算。
+                針對震盪均值回歸設計的馬丁格爾（DCA）網格配置。提供 <strong>現貨 ETH/FDUSD（1.0x 無強平 · 12 階覆蓋 -32.88% 跌幅 · 0.01 精度優化）</strong>、<strong>合約多頭 ENA/USDC（牛市 3.0x 做多 · 9 階覆蓋 -32.35% · -35.00% 止損）</strong> 與 <strong>合約空頭 ENA/USDC（熊市 3.0x 做空 · 9 階覆蓋 +46.41% · +50.00% 止損）</strong> 三種模態，支援資金規模等比試算。
             </div>
         </div>
 
@@ -1287,7 +1287,7 @@
             <!-- Tab 切換按鈕 -->
             <div style="display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 9999px; border: 1px solid #e2e8f0; flex-wrap: wrap;">
                 <button id="dcaTabSpot" onclick="switchDcaTab('spot')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: #0284c7; color: #ffffff; box-shadow: 0 2px 8px rgba(2,132,199,0.3);">
-                    現貨模態：ETH/FDUSD 或 SOL/FDUSD (12 階無槓桿)
+                    現貨模態：ETH/FDUSD (12 階無槓桿 · -32.88% 覆蓋)
                 </button>
                 <button id="dcaTabFutures" onclick="switchDcaTab('futures')" style="padding: 5px 14px; font-size: 12px; font-weight: 800; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #64748b;">
                     合約多頭 (牛市)：ENA/USDC (3x 做多 · -35% 止損)
@@ -1298,7 +1298,7 @@
             </div>
         </div>
 
-        <!-- ======================= 模態一：現貨版本 (ETH/FDUSD 或 SOL/FDUSD) ======================= -->
+        <!-- ======================= 模態一：現貨版本 (ETH/FDUSD 12 階 0.01 精度優化) ======================= -->
         <div id="dcaContentSpot" style="display: block;">
             <!-- 現貨資金等比即時換算滑桿與快捷列 -->
             <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
@@ -1337,25 +1337,25 @@
             <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;">
                 <span class="c-pill c-pill-green">1.0x 現貨無強平風險</span>
                 <span class="c-pill" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:9999px; padding:3px 9px; font-size:11px; font-weight:700;">FDUSD 掛單 0% Maker 費率</span>
-                <span class="c-pill c-pill-gold" id="spotPillFunds">250 FDUSD 全額部署 (12 階覆蓋 -26.92% 跌幅)</span>
+                <span class="c-pill c-pill-gold" id="spotPillFunds">250 FDUSD 全額部署 (12 階覆蓋 -32.88% 跌幅)</span>
             </div>
 
             <!-- 現貨四大核心量化指標卡 -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px;">
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                     <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">180天回測淨收益 (年化)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #0284c7;"><span id="spotCardProfit">+$51.48</span> FDUSD <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+40.1% APR)</span></div>
+                    <div style="font-size: 20px; font-weight: 900; color: #0284c7;"><span id="spotCardProfit">+$59.66</span> FDUSD <span style="font-size: 12px; font-weight: 700; color: #10b981;">(+47.0% APR)</span></div>
                     <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">基於 <span id="spotNarrativeCapital">250 FDUSD 本金</span> 與 60 秒冷卻期回測</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                     <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">止盈完成輪次 (日均週轉)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #0f172a;">374 輪 <span style="font-size: 12px; font-weight: 700; color: #0284c7;">(日均 2.1 輪)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">持倉均價反彈 0.50% 觸發限價止盈</div>
+                    <div style="font-size: 20px; font-weight: 900; color: #0f172a;">208 輪 <span style="font-size: 12px; font-weight: 700; color: #0284c7;">(日均 1.1 輪)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">持倉均價反彈 0.67% 觸發限價止盈 (0% 手續費)</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                     <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">最大浮動回撤 (網格覆蓋深度)</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #10b981;">23.09% <span style="font-size: 12px; font-weight: 700; color: #059669;">(覆蓋 -26.92%)</span></div>
-                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">回測最低淨值 <span id="spotCardMinEq">$192.28</span> (12 階加倉)</div>
+                    <div style="font-size: 20px; font-weight: 900; color: #10b981;">25.73% <span style="font-size: 12px; font-weight: 700; color: #059669;">(覆蓋 -32.88%)</span></div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">回測最低淨值 <span id="spotCardMinEq">$209.15</span> (12 階加倉)</div>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;">
                     <div style="font-size: 11px; color: #64748b; font-weight: 700; margin-bottom: 3px;">槓桿與強平風險</div>
@@ -1386,21 +1386,21 @@
                             </tr>
                             <tr>
                                 <td><strong>交易對 / 方向</strong></td>
-                                <td><strong style="color: #0284c7;">ETH/FDUSD 或 SOL/FDUSD (買入)</strong></td>
-                                <td><strong style="color: #0284c7;">ETH/FDUSD 或 SOL/FDUSD (買入)</strong></td>
-                                <td>適用幣安 FDUSD 現貨掛單 0% Maker 費率（ETH/FDUSD 盤口流動性較深，SOL/FDUSD 波動率較高）</td>
+                                <td><strong style="color: #0284c7;">ETH/FDUSD (買入)</strong></td>
+                                <td><strong style="color: #0284c7;">ETH/FDUSD (買入)</strong></td>
+                                <td>適用幣安 FDUSD 現貨掛單 0% Maker 費率（ETH/FDUSD 盤口流動性極深，1.0x 現貨無強平風險）</td>
                             </tr>
                             <tr>
                                 <td><strong>價格下跌步驟</strong></td>
-                                <td><strong style="color: #059669;">0.60%</strong></td>
-                                <td><strong style="color: #059669;">0.60%</strong></td>
-                                <td>第 1 階加倉單與首單之初始價格間距</td>
+                                <td><strong style="color: #059669;">0.39%</strong></td>
+                                <td><strong style="color: #059669;">0.39%</strong></td>
+                                <td>第 1 階加倉單與首單之初始價格間距 (0.01% 精度優化)</td>
                             </tr>
                             <tr>
                                 <td><strong>止盈比例</strong></td>
-                                <td><strong style="color: #0284c7;">0.50%</strong> <span style="font-size: 11px; color: #64748b;">(固定)</span></td>
-                                <td><strong style="color: #0284c7;">0.50%</strong> <span style="font-size: 11px; color: #64748b;">(固定)</span></td>
-                                <td>持倉均價反彈 0.50% 觸發限價賣出止盈</td>
+                                <td><strong style="color: #0284c7;">0.67%</strong> <span style="font-size: 11px; color: #64748b;">(固定)</span></td>
+                                <td><strong style="color: #0284c7;">0.67%</strong> <span style="font-size: 11px; color: #64748b;">(固定)</span></td>
+                                <td>持倉均價反彈 0.67% 觸發限價賣出止盈 (0% Maker 手續費)</td>
                             </tr>
                             <tr style="background: #f8fafc;">
                                 <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【投資額配置】</td>
@@ -1408,13 +1408,13 @@
                             <tr>
                                 <td><strong>首單金額</strong></td>
                                 <td><strong style="color: #d97706;" id="spotTblBaseInt">10.00 FDUSD</strong></td>
-                                <td><strong style="color: #d97706;" id="spotTblBaseExact">10.00 FDUSD</strong></td>
-                                <td>每輪起始市價建倉金額 (佔總本金約 4.0%)</td>
+                                <td><strong style="color: #d97706;" id="spotTblBaseExact">15.88 FDUSD</strong></td>
+                                <td>每輪起始市價建倉金額 (整數版 4.0% / 0.01 精確版 6.35%)</td>
                             </tr>
                             <tr>
                                 <td><strong>DCA 訂單金額</strong></td>
                                 <td><strong style="color: #d97706;" id="spotTblDcaInt">20.00 FDUSD</strong></td>
-                                <td><strong style="color: #d97706;" id="spotTblDcaExact">20.00 FDUSD</strong></td>
+                                <td><strong style="color: #d97706;" id="spotTblDcaExact">19.51 FDUSD</strong></td>
                                 <td>單階限價加倉金額 (共 12 階等額加倉)</td>
                             </tr>
                             <tr>
@@ -1427,16 +1427,16 @@
                                 <td><strong>總投資額 (自動計算)</strong></td>
                                 <td><strong style="color: #0f172a;" id="spotTblTotalInt">250.00 FDUSD</strong></td>
                                 <td><strong style="color: #0f172a;" id="spotTblTotalExact">250.00 FDUSD</strong></td>
-                                <td><span id="spotTblFormula">10 + (20 &times; 12) = 250 FDUSD (100% 部署)</span></td>
+                                <td><span id="spotTblFormula">整數 10 + (20 &times; 12) = 250U ｜ 精確 15.88 + (19.51 &times; 12) = 250.00 FDUSD</span></td>
                             </tr>
                             <tr style="background: #f8fafc;">
                                 <td colspan="4" style="font-weight: 800; color: #0284c7; padding: 6px 10px; font-size: 11.5px;">【進階參數】</td>
                             </tr>
                             <tr>
                                 <td><strong>價格偏差乘數</strong></td>
-                                <td><strong style="color: #059669;">1.22</strong></td>
-                                <td><strong style="color: #059669;">1.22</strong></td>
-                                <td>各階加倉間距按 1.22 倍幾何遞增，總覆蓋跌幅 <strong>-26.92%</strong></td>
+                                <td><strong style="color: #059669;">1.32</strong></td>
+                                <td><strong style="color: #059669;">1.32</strong></td>
+                                <td>各階加倉間距按 1.32 倍幾何遞增，總覆蓋跌幅 <strong>-32.88%</strong></td>
                             </tr>
                             <tr>
                                 <td><strong>DCA 訂單金額乘數</strong></td>
@@ -2222,16 +2222,16 @@
         let dcaInt = Math.max(5, Math.round((cap - baseInt) / 12));
         let totalInt = baseInt + dcaInt * 12;
 
-        let baseExact = Math.max(5.0, 10.00 * s);
-        let dcaExact = Math.max(5.0, (cap - baseExact) / 12.0);
-        let totalExact = baseExact + dcaExact * 12.0;
+        let baseExact = Math.max(5.0, +(15.88 * s).toFixed(2));
+        let dcaExact = Math.max(5.0, +((cap - baseExact) / 12.0).toFixed(2));
+        let totalExact = +(baseExact + dcaExact * 12.0).toFixed(2);
 
-        const profit = (51.48 * s).toFixed(2);
-        const minEquity = (192.28 * s).toFixed(2);
+        const profit = (59.66 * s).toFixed(2);
+        const minEquity = (209.15 * s).toFixed(2);
 
         // Update DOM
         const pill = document.getElementById('spotPillFunds');
-        if (pill) pill.innerText = `${Math.round(cap)} FDUSD 全額部署 (12 階覆蓋 -26.92% 跌幅)`;
+        if (pill) pill.innerText = `${Math.round(cap)} FDUSD 全額部署 (12 階覆蓋 -32.88% 跌幅)`;
 
         const narrCap = document.getElementById('spotNarrativeCapital');
         if (narrCap) narrCap.innerText = `${Math.round(cap)} FDUSD 本金`;
@@ -2259,7 +2259,7 @@
         if (tblTotalExact) tblTotalExact.innerText = `${totalExact.toFixed(2)} FDUSD`;
 
         const tblFormula = document.getElementById('spotTblFormula');
-        if (tblFormula) tblFormula.innerHTML = `$${baseInt} + (${dcaInt} &times; 12) = ${totalInt} FDUSD (資金利用率 ${((totalInt/cap)*100).toFixed(1)}%)`;
+        if (tblFormula) tblFormula.innerHTML = `整數 $${baseInt} + (${dcaInt} &times; 12) = ${totalInt}U ｜ 精確 $${baseExact.toFixed(2)} + (${dcaExact.toFixed(2)} &times; 12) = ${totalExact.toFixed(2)} FDUSD`;
 
         const tblDcaNote = document.getElementById('spotTblDcaNote');
         if (tblDcaNote) tblDcaNote.innerText = `${dcaInt.toFixed(2)}`;
