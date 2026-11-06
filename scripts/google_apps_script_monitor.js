@@ -2,7 +2,7 @@
  * Triad 三元策略 (純現貨三幣 ＋ 雙壁避險全自動化版) - Google Apps Script 自動監控與 Email 警報
  * 主力：Binance Vision (免 451 封鎖) | 備援：OKX / Bybit / Gate.io / KuCoin / Coinbase | 具備防崩潰與自動切換機制
  * 最新架構：Triad 三元全天候狀態機 (Zone 0 深熊底 ~ Zone 4 逃頂鎖利 ~ Zone 5 熊市主跌防禦)
- * 資產配置：策略一核心三幣 50% (BTC 20% / ETH 20% / NEAR 10%) ＋ 策略二 9 大 Alpha 雙幣 50% (各 5.56%, COIN 60% / PAXG 40%)
+ * 資產配置：策略一核心三幣 50% (BTC 20% / ETH 20% / NEAR 10%) ＋ 策略二 6 大 Alpha 雙幣 50% (UNI, HYPE, AAVE, PENDLE, RAY, LINK 各 8.33%, 標的 60% / PAXG 40%)
  * 防禦機制：純現貨雙避險架構 (QQQB 35% + PAXG 60%~65%)，Zone 4 Alpha 轉為 100% PAXG、Zone 5 核心清零
  */
 
@@ -125,7 +125,7 @@ function checkZoneAndAlert() {
 - 週期大頂標記：${cyclePeakPrice > 0 ? '$' + cyclePeakPrice.toFixed(2) : '尚未觸發'}
 
 ==================================================
-🎯 各策略模組對應調整目標 (核心 3 倉 50% + Alpha 9 倉 50%)：
+🎯 各策略模組對應調整目標 (核心 3 倉 50% + Alpha 6 倉 50%)：
 ==================================================
 ${allocationText}
 ==================================================
@@ -152,35 +152,35 @@ function getAllocationConfig(zone) {
 - 核心 1 (20%): BTC 65% | QQQB 25% | PAXG 10% (按比例 2%)
 - 核心 2 (20%): ETH 65% | QQQB 25% | PAXG 10% (按比例 2%)
 - 核心 3 (10%): NEAR 65% | QQQB 25% | PAXG 10% (按比例 2%)
-- 策略二 9 大 Alpha (UNI, HYPE, AAVE, ENA, PENDLE, ONDO, TAO, SUI, LINK 各 5.56%): 維持 COIN 60% | PAXG 40% (按比例 2%)`;
+- 策略二 6 大 Alpha (UNI, HYPE, AAVE, PENDLE, RAY, LINK 各 8.33%): 維持 標的 60% | PAXG 40% (按比例 2%)`;
   }
   else if (zone === 1) {
     return `【Zone 1: 均值回歸區】(BTC/MA200 0.80 ~ 1.00)
 - 核心 1 (20%): BTC 50% | QQQB 30% | PAXG 20% (按比例 2%)
 - 核心 2 (20%): ETH 50% | QQQB 30% | PAXG 20% (按比例 2%)
 - 核心 3 (10%): NEAR 50% | QQQB 30% | PAXG 20% (按比例 2%)
-- 策略二 9 大 Alpha (各 5.56%): 維持 COIN 60% | PAXG 40% (按比例 2%)`;
+- 策略二 6 大 Alpha (各 8.33%): 維持 標的 60% | PAXG 40% (按比例 2%)`;
   } 
   else if (zone === 2) {
     return `【Zone 2: 多頭巡航區】(BTC/MA200 1.00 ~ 1.25)
 - 核心 1 (20%): BTC 45% | QQQB 35% | PAXG 20% (按比例 2%)
 - 核心 2 (20%): ETH 40% | QQQB 35% | PAXG 25% (按比例 2%)
 - 核心 3 (10%): NEAR 35% | QQQB 35% | PAXG 30% (按比例 2%)
-- 策略二 9 大 Alpha (各 5.56%): 維持 COIN 60% | PAXG 40% (按比例 2%)`;
+- 策略二 6 大 Alpha (各 8.33%): 維持 標的 60% | PAXG 40% (按比例 2%)`;
   } 
   else if (zone === 3) {
     return `【Zone 3: 溢價調節區】(BTC/MA200 1.25 ~ 1.40)
 - 核心 1 (20%): BTC 30% | QQQB 35% | PAXG 35% (按比例 2%)
 - 核心 2 (20%): ETH 25% | QQQB 35% | PAXG 40% (按比例 2%)
 - 核心 3 (10%): NEAR 20% | QQQB 40% | PAXG 40% (按比例 2%)
-- 策略二 9 大 Alpha (各 5.56%): 維持 COIN 60% | PAXG 40% (按比例 2%)`;
+- 策略二 6 大 Alpha (各 8.33%): 維持 標的 60% | PAXG 40% (按比例 2%)`;
   } 
   else if (zone === 4) {
     return `【Zone 4: 右側鎖利區】(BTC/MA200 >= 1.40，單向鎖定)
 - 核心 1 (20%): BTC 5% | QQQB 35% | PAXG 60% (按比例 2%)
 - 核心 2 (20%): ETH 5% | QQQB 35% | PAXG 60% (按比例 2%)
 - 核心 3 (10%): NEAR 5% | QQQB 35% | PAXG 60% (按比例 2%)
-- 策略二 9 大 Alpha (各 5.56%): Alpha 出清 (0%)，轉為 100% PAXG
+- 策略二 6 大 Alpha (各 8.33%): Alpha 出清 (0%)，轉為 100% PAXG
 - 策略四 合約 DCA: 多頭網格停止，可切換為 ENA/USDC 3x 空頭 DCA (+50% 止損)
 註：此階段為單向鎖定，不因短期回調退回 Zone 3；若自週期高點回撤達 20% 則進入 Zone 5。`;
   } 
@@ -189,7 +189,7 @@ function getAllocationConfig(zone) {
 - 核心 1 (20%): BTC 0% | QQQB 35% | PAXG 65%
 - 核心 2 (20%): ETH 0% | QQQB 35% | PAXG 65%
 - 核心 3 (10%): NEAR 0% | QQQB 35% | PAXG 65%
-- 策略二 9 大 Alpha (各 5.56%): 維持 100% PAXG 避險
+- 策略二 6 大 Alpha (各 8.33%): 維持 100% PAXG 避險
 - 策略四 合約 DCA: 運行 ENA/USDC 3x 空頭 DCA (+50% 止損)
 註：維持防禦配置直至 BTC/MA200 < 0.80 重回 Zone 0。`;
   }
