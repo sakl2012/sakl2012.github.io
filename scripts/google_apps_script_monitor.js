@@ -2,7 +2,7 @@
  * Triad 三元策略 (純現貨三幣 ＋ 雙壁避險全自動化版) - Google Apps Script 自動監控與 Email 警報
  * 主力：Binance Vision (免 451 封鎖) | 備援：OKX / Bybit / Gate.io / KuCoin / Coinbase | 具備防崩潰與自動切換機制
  * 最新架構：Triad 三元全天候狀態機 (Zone 0 深熊底 ~ Zone 4 逃頂鎖利 ~ Zone 5 熊市主跌防禦)
- * 資產配置：策略一核心三幣 50% (BTC 20% / ETH 20% / NEAR 10%) ＋ 策略二 6 大 Alpha 雙幣 50% (UNI, HYPE, AAVE, PENDLE, RAY, LINK 各 8.33%, 標的 60% / PAXG 40%)
+ * 資產配置：策略一核心三幣 50% (BTC 20% / ETH 20% / NEAR 10%) ＋ 策略二 6 大 Alpha 雙幣 50% (UNI, HYPE, AAVE, ZEC, RAY, LINK 各 8.33%, 標的 60% / PAXG 40%)
  * 防禦機制：純現貨雙避險架構 (QQQB 35% + PAXG 60%~65%)，Zone 4 Alpha 轉為 100% PAXG、Zone 5 核心清零
  */
 
@@ -152,7 +152,7 @@ function getAllocationConfig(zone) {
 - 核心 1 (20%): BTC 65% | QQQB 25% | PAXG 10% (按比例 2%)
 - 核心 2 (20%): ETH 65% | QQQB 25% | PAXG 10% (按比例 2%)
 - 核心 3 (10%): NEAR 65% | QQQB 25% | PAXG 10% (按比例 2%)
-- 策略二 6 大 Alpha (UNI, HYPE, AAVE, PENDLE, RAY, LINK 各 8.33%): 維持 標的 60% | PAXG 40% (按比例 2%)`;
+- 策略二 6 大 Alpha (UNI, HYPE, AAVE, ZEC, RAY, LINK 各 8.33%): 維持 標的 60% | PAXG 40% (按比例 2%)`;
   }
   else if (zone === 1) {
     return `【Zone 1: 均值回歸區】(BTC/MA200 0.80 ~ 1.00)
