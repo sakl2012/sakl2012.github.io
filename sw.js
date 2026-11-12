@@ -1,5 +1,5 @@
-// Service Worker v17 - Instant Dual-Pipeline (REST Snapshot + WebSocket Stream)
-const CACHE_NAME = '5zone-pwa-v17';
+// Service Worker v18 - Pure Spot Architecture (REST Snapshot + WebSocket Stream)
+const CACHE_NAME = '5zone-pwa-v18';
 const ASSETS = [
   './',
   './index.html',
