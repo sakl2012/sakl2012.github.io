@@ -975,7 +975,7 @@
                 <button onclick="openCapitalModal()" style="background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; cursor: pointer;">資金規格 ➔</button>
             </div>
             <div class="strategy-banner-desc">
-                篩選具備協議收入、代幣回購分潤、跨鏈結算與隱私價值儲存的 6 項細分賽道頭部標的（UNI, HYPE, AAVE, ZEC, RAY, LINK），各佔配置約 8.33%。Zone 0~3 固定採用 <strong>60% 標的 + 40% PAXG</strong> 雙幣結構（2% 偏離再平衡，建議單倉 &ge; 350 USDT），將單幣波動轉化為黃金部位。
+                篩選具備協議收入、代幣回購分潤、基差收益、跨鏈結算與隱私價值儲存的 6 項細分賽道頭部標的（UNI, HYPE, ENA, ZEC, RAY, LINK），各佔配置約 8.33%。Zone 0~3 固定採用 <strong>60% 標的 + 40% PAXG</strong> 雙幣結構（2% 偏離再平衡，建議單倉 &ge; 350 USDT），將單幣波動轉化為黃金部位。
             </div>
         </div>
 
@@ -1000,7 +1000,7 @@
             <div class="c-filter-tabs">
                 <button class="c-filter-btn active" data-filter="all" onclick="filterSatFleet('all')">全部標的 (6)</button>
                 <button class="c-filter-btn" data-filter="defi" onclick="filterSatFleet('defi')">DEX 與交易協議 (UNI, HYPE, RAY)</button>
-                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">借貸、隱私與預言機 (AAVE, ZEC, LINK)</button>
+                <button class="c-filter-btn" data-filter="infra" onclick="filterSatFleet('infra')">基差穩定幣、隱私與預言機 (ENA, ZEC, LINK)</button>
             </div>
 
             <!-- 雙幣卡片網格 -->
@@ -1711,7 +1711,7 @@
                             </tr>
                             <tr>
                                 <td><strong>策略二：Alpha 雙幣配置</strong></td>
-                                <td>6 組雙幣 60/40 組合 (UNI/HYPE/AAVE/ZEC/RAY/LINK)</td>
+                                <td>6 組雙幣 60/40 組合 (UNI/HYPE/ENA/ZEC/RAY/LINK)</td>
                                 <td><strong style="color: #dc2626;">1,500 USDT</strong></td>
                                 <td><strong style="color: #059669; font-size: 13.5px;">2,100 USDT</strong></td>
                                 <td>標準配置：6 組各 350U (單次 2% 調倉金額約 7.0 USDT；小資可精選 1~2 組)</td>
@@ -2053,15 +2053,15 @@
             active: true
         },
         {
-            sym: 'AAVE',
-            name: 'AAVE',
-            icon: 'icons/aave.png',
+            sym: 'ENA',
+            name: 'ENA',
+            icon: 'icons/ena.png',
             rank: '3',
             rankClass: 'rank-top2',
-            tier: '鏈上超額抵押借貸龍頭 (Lending)',
+            tier: '合成美元與基差收益協議 (Basis)',
             capitalPct: '權重 8.33%',
-            title: '多鏈流動性池與借貸利率市場',
-            quote: '涵蓋機構級託管介面與 V4 統一流動性架構，放貸利差、閃電貸與清算收入直接歸入協議國庫並執行回購。',
+            title: 'Delta 中性合成美元 USDe 發行協議',
+            quote: '結合現貨質押與永續合約空頭對沖捕捉資金費率與美債利差，具備 sENA 協議收益分配機制。',
             baseWeight: 0.0833,
             isSpot: true,
             active: true
@@ -2123,9 +2123,8 @@
         ZEC: 1319.4,
         RAY: 1.66,
         SOL: 90.2,
-        AAVE: 126.0,
         LINK: 10.90,
-        ENA: 0.161
+        ENA: 0.1018
     };
     let latest24hChange = {};
     let currentMa200 = 69538;
@@ -2371,7 +2370,7 @@
         const spotSymbols = [
             'btcusdt', 'ethusdt', 'paxgusdt', 'taousdt', 'qqqbusdt',
             'uniusdt', 'nearusdt', 'rayusdt', 'zecusdt',
-            'solusdt', 'aaveusdt', 'linkusdt', 'suiusdt', 'enausdt', 'hypeusdt',
+            'solusdt', 'linkusdt', 'suiusdt', 'enausdt', 'hypeusdt',
             'spcxbusdt', 'avgobusdt', 'msftbusdt', 'tsmbusdt', 'aaplbusdt', 'googlbusdt', 'mubusdt', 'metabusdt', 'amznbusdt'
         ];
         const streams = spotSymbols.map(s => `${s}@ticker`).join('/');
@@ -2586,7 +2585,7 @@
         C_SATELLITE_CANDIDATES.forEach((c, idx) => {
             let match = true;
             if (currentFleetFilter === 'defi') match = ['UNI', 'HYPE', 'RAY'].includes(c.sym);
-            else if (currentFleetFilter === 'infra') match = ['AAVE', 'ZEC', 'LINK'].includes(c.sym);
+            else if (currentFleetFilter === 'infra') match = ['ENA', 'ZEC', 'LINK'].includes(c.sym);
             if (!match) return;
 
             const p = latestPrices[c.sym] || 0;
@@ -2852,7 +2851,7 @@
             const spotSymbols = [
                 "BTCUSDT", "ETHUSDT", "TAOUSDT", "PAXGUSDT", "QQQBUSDT",
                 "UNIUSDT", "NEARUSDT", "RAYUSDT", "ZECUSDT", "SOLUSDT",
-                "AAVEUSDT", "LINKUSDT", "SUIUSDT", "ENAUSDT", "HYPEUSDT"
+                "LINKUSDT", "SUIUSDT", "ENAUSDT", "HYPEUSDT"
             ];
             const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(spotSymbols))}`);
             if (res.ok) {
