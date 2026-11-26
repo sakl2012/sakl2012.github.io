@@ -1,5 +1,5 @@
-// Service Worker v18 - Pure Spot Architecture (REST Snapshot + WebSocket Stream)
-const CACHE_NAME = '5zone-pwa-v18';
+// Service Worker v19 - Pure Spot Architecture (REST Snapshot + WebSocket Stream)
+const CACHE_NAME = '5zone-pwa-v19';
 const ASSETS = [
   './',
   './index.html',
